@@ -5,4 +5,12 @@
     <Version>0.1.0</Version>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="1.68.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\iChronoMe.Core\iChronoMe.Core.csproj" />
+  </ItemGroup>
+
 </Project>
