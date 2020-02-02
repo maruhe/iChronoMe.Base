@@ -43,28 +43,19 @@ namespace iChronoMe.Core.DynamicCalendar
 
         #endregion
 
+        private void init()
+        { }
+
         public DateTime GetTimeFromLocal(DateTime tTimeZoneTimeNow, TimeType? tType = null)
         {
             if (tType == null)
                 tType = timeType;
-            return locationTimeHolder.GetTime((TimeType)tType, tTimeZoneTimeNow.ToUniversalTime());
+            return LocationTimeHolder.LocalInstance.GetTime((TimeType)tType, tTimeZoneTimeNow.ToUniversalTime());
         }
-
-        public LocationTimeHolder locationTimeHolder { get; private set; }
 
         public TimeType timeType { get; set; } = AppConfigHolder.MainConfig.DefaultTimeType;
 
         public string CalendarFilter { get; set; }
-
-        private void init()
-        {
-            Location mLoc = sys.lastUserLocation;
-
-            if (locationTimeHolder == null)
-                locationTimeHolder = new LocationTimeHolder(mLoc.Latitude, mLoc.Longitude);
-            else
-                locationTimeHolder.ChangePosition(mLoc.Latitude, mLoc.Longitude, false);
-        }
 
         public async Task LoadCalendarEventsGrouped(DateTime dStart, DateTime dEnd)
         {
@@ -157,10 +148,7 @@ namespace iChronoMe.Core.DynamicCalendar
             {
                 int iMs = 0;
                 var newEvents = new SortedDictionary<DateTime, CalendarEvent>();
-                LocationTimeHolder lthCheck = new LocationTimeHolder(locationTimeHolder.Latitude, locationTimeHolder.Longitude);
-                lthCheck.TimeZoneOffsetDst = locationTimeHolder.TimeZoneOffsetDst;
-                lthCheck.TimeZoneOffsetGmt = locationTimeHolder.TimeZoneOffsetGmt;
-                lthCheck.timeZoneInfo = locationTimeHolder.timeZoneInfo;
+                LocationTimeHolder lthCheck = LocationTimeHolder.LocalInstanceClone;
 
                 DateTime swStart = DateTime.Now;
                 if (sys.Windows)
@@ -304,8 +292,8 @@ namespace iChronoMe.Core.DynamicCalendar
                         double nLng = extEvent.Longitude;
                         if (nLat == 0 && nLng == 0)
                         {
-                            nLat = locationTimeHolder.Latitude;
-                            nLng = locationTimeHolder.Longitude;
+                            nLat = sys.lastUserLocation.Latitude;
+                            nLng = sys.lastUserLocation.Longitude;
                         }
 
                         if (extEvent.TimeType == timeType)

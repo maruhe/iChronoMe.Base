@@ -8,6 +8,7 @@ namespace iChronoMe.Widgets
 {
     public class WidgetView_ClockAnalog
     {
+        private string cfgInstance = Guid.NewGuid().ToString();
         public string BackgroundImage { get; set; } = string.Empty;
 
         public xColor ColorBackground { get; set; } = xColor.Transparent;
@@ -80,6 +81,8 @@ namespace iChronoMe.Widgets
 
         public void ReadConfig(WidgetCfg_ClockAnalog cfg)
         {
+            cfgInstance = Guid.NewGuid().ToString();
+
             BackgroundImage = cfg.BackgroundImage;
 
             ColorBackground = cfg.ColorBackground;
@@ -100,6 +103,9 @@ namespace iChronoMe.Widgets
             FlowSecondHand = cfg.FlowSecondHand;
         }
 
+        string cBackCacheInstance = "_";
+        SKBitmap backCache = null;
+
         public void DrawCanvas(SKCanvas canvas, DateTime dateTime, int width = 512, int height = 512, bool bDrawBackImage = false)
         {
             DateTime swStart = DateTime.Now;
@@ -111,12 +117,22 @@ namespace iChronoMe.Widgets
             {
                 try
                 {
-                    using (var bitmap = SKBitmap.Decode(BackgroundImage)) {
-                        int x = Math.Min(width, height);
+                    if (backCache != null && cfgInstance == cBackCacheInstance)
+                        canvas.DrawBitmap(backCache, (width - backCache.Width) / 2, (height - backCache.Height) / 2);
+                    else
+                    {
+                        using (var bitmap = SKBitmap.Decode(BackgroundImage))
+                        {
+                            int x = Math.Min(width, height);
 
-                        var resizedBitmap = bitmap.Resize(new SKImageInfo(x, x), SKFilterQuality.High);
+                            var resizedBitmap = bitmap.Resize(new SKImageInfo(x, x), SKFilterQuality.High);
 
-                        canvas.DrawBitmap(resizedBitmap, (width - resizedBitmap.Width) / 2, (height - resizedBitmap.Height) / 2);
+                            canvas.DrawBitmap(resizedBitmap, (width - resizedBitmap.Width) / 2, (height - resizedBitmap.Height) / 2);
+
+                            backCache?.Dispose();
+                            backCache = resizedBitmap;
+                            cBackCacheInstance = cfgInstance;
+                        }
                     }
                 } catch { }
             }

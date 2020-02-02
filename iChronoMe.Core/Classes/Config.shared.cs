@@ -10,9 +10,29 @@ namespace iChronoMe.Core.Classes
 {
     public static class AppConfigHolder
     {
+        private static LocationConfig _locationConfig = null;
         private static MainConfig _mainConfig = null;
         private static DashboardConfig _dashboardConfig = null;
         private static CalendarViewConfig _calendarViewConfig = null;
+
+        public static LocationConfig LocationConfig
+        {
+            get
+            {
+                if (_locationConfig == null)
+                {
+                    _locationConfig = LoadFromFile<LocationConfig>();
+                }
+                return _locationConfig;
+            }
+        }
+
+        public static void SaveLocationConfig()
+        {
+            if (_locationConfig != null)
+                SaveConfig(_locationConfig);
+        }
+
         public static MainConfig MainConfig
         {
             get
@@ -119,6 +139,25 @@ namespace iChronoMe.Core.Classes
         }
     }
 
+    public class LocationConfig
+    {
+        public LocationConfig()
+        {
+
+        }
+
+        public bool UseStaticLocaltion { get; set; } = false;
+
+        public double Latitude { get; set; } = 0;
+        public double Longitude { get; set; } = 0;
+        public string AreaName { get; set; } = "searching for location...";
+        public string CountryName { get; set; } = "searching for location...";
+        public string TimeZoneID { get; set; }
+        public string TimeZoneName { get; set; }
+        public double TimeZoneOffsetGmt { get; set; } = 0;
+        public double TimeZoneOffsetDst { get; set; } = 0;
+    }
+
     public class MainConfig
     {
         public MainConfig()
@@ -134,7 +173,7 @@ namespace iChronoMe.Core.Classes
         public bool AlwaysShowForegroundNotification { get; set; } = false;
         public bool SendErrorLogs { get; set; } = false;
         public DateTime LastCheckClockFaces { get; set; } = DateTime.MinValue;
-        public WidgetCfg_ClockAnalog MainClock { get; set; } = new WidgetCfg_ClockAnalog();
+        public WidgetCfg_ClockAnalog MainClock { get; set; } = new WidgetCfg_ClockAnalog() { ShowSeconds = true, FlowMinuteHand = true };
     }
 
     public class CalendarViewConfig

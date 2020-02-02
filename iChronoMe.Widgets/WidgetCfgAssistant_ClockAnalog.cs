@@ -40,7 +40,7 @@ namespace iChronoMe.Widgets
             loader = new ImageLoader();
             cImageDir = loader.GetImagePathThumb("clockface");
 
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("ohne Hintergrund", EmptyBackSample));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("einfärbig", EmptyBackSample));
             LoadSamples();
             
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_HandColorType);
@@ -114,9 +114,8 @@ namespace iChronoMe.Widgets
                     {
                         handler.StartProgress("download full size image..");
 
-                        string cUrlDir = "https://apps.ichrono.me/_appdata/";
                         WebClient webClient = new WebClient();
-                        webClient.DownloadFile(cUrlDir + System.IO.Path.GetFileName(cfg.BackgroundImage), cFullSizeImg + "_");
+                        webClient.DownloadFile(ImageLoader.cUrlDir + System.IO.Path.GetFileName(cfg.BackgroundImage), cFullSizeImg + "_");
 
                         if (File.Exists(cFullSizeImg))
                             File.Delete(cFullSizeImg);
@@ -145,7 +144,8 @@ namespace iChronoMe.Widgets
             BaseSample = baseSample;
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_HandColorType);
 
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("", BaseSample.GetConfigClone()));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("current", BaseSample.GetConfigClone()));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("transparent", BaseSample.GetConfigClone()));
 
             int i = 0;
             List<string> clrS = new List<string>();
@@ -173,16 +173,29 @@ namespace iChronoMe.Widgets
             BaseSample = baseSample;
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_HandColors);
 
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("current", BaseSample.GetConfigClone()));
             LoadSamples();
         }
 
         void LoadSamples()
         {
-            AddSample("Schwarz/Treansparent", xColor.Black, xColor.Transparent, xColor.Black, xColor.Transparent, xColor.Black, "SetDone");
+            var clrs = DynamicColors.SampleColorSetS[5];
+
+            AddSample("Schwarz/Transparent", xColor.Black, xColor.Transparent, xColor.Black, xColor.Transparent, xColor.Black, "SetDone");
 
             AddSample("Schwarz/Weiß", xColor.Black, xColor.White, xColor.Black, xColor.White, xColor.Black, "SetDone");
 
-            var clrs = DynamicColors.SampleColorSetS[5];
+            AddSample("Schwarz", xColor.Black, xColor.Black, xColor.Black, xColor.Black, xColor.Black, "SetDone");
+
+            AddSample("Schwarz/Custom", xColor.Black, clrs[1], xColor.Black, clrs[1], xColor.Black,         new object[] { xColor.Black, 1, xColor.Black, 1, xColor.Black });
+
+            AddSample("Weiß/Transparent", xColor.White, xColor.Transparent, xColor.White, xColor.Transparent, xColor.White, "SetDone");
+
+            AddSample("Weiß/Schwarz", xColor.White, xColor.Black, xColor.White, xColor.Black, xColor.White, "SetDone");
+
+            AddSample("Weiß", xColor.White, xColor.White, xColor.White, xColor.White, xColor.White, "SetDone");
+
+            AddSample("Weiß/Custom", xColor.White, clrs[1], xColor.White, clrs[1], xColor.White, new object[] { xColor.White, 1, xColor.White, 1, xColor.White });
 
             AddSample("Einfärbig", clrs[0], xColor.Transparent, clrs[0], xColor.Transparent, clrs[0],       new object[] { 0, xColor.Transparent, 0, xColor.Transparent, 0});
 
@@ -232,6 +245,7 @@ namespace iChronoMe.Widgets
             Title = "clock-faces";
             BaseSample = baseSample;
 
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("current", BaseSample.GetConfigClone()));
             LoadSamples();
         }
 

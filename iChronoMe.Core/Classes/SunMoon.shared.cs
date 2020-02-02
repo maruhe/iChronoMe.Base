@@ -54,6 +54,7 @@ namespace iChronoMe.Core.Classes
         };
         #endregion
 
+        /*
         #region RealSunTime
         public double LocWoz12
         {
@@ -100,6 +101,7 @@ namespace iChronoMe.Core.Classes
             }
         }
 #endregion
+    */
 
 #region Eigenschaften
         /// <summary>

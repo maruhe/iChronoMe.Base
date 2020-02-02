@@ -47,8 +47,7 @@ namespace iChronoMe.Core.Classes
 
             tStart = DateTime.Now;
 
-            String cGApiKey = "AIzaSyC-RHUo4rY_YetalRLiotpenDKJ12pD7mo";
-            string cUri = "https://maps.googleapis.com/maps/api/geocode/xml?key=" + cGApiKey + "&latlng=" + Latitude.ToString("0.######", CultureInfo.InvariantCulture) + "," + Longitude.ToString("0.######", CultureInfo.InvariantCulture) + "&sensor=true";
+            string cUri = "https://maps.googleapis.com/maps/api/geocode/xml?key=" + Secrets.GApiKey + "&latlng=" + Latitude.ToString("0.######", CultureInfo.InvariantCulture) + "," + Longitude.ToString("0.######", CultureInfo.InvariantCulture) + "&sensor=true";
             string cGeoInfo = sys.GetUrlContent(cUri).Result;
 
             try

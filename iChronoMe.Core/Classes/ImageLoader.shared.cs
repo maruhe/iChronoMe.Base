@@ -13,7 +13,7 @@ namespace iChronoMe.Core.Classes
         static string cSelImg;
         static bool bDone;
         int iPrevSize = 150;
-        string cUrlDir = "https://apps.ichrono.me/_appdata/";
+        public const string cUrlDir = "http://test2.ichrono.me/_appdata/";
 
         public string GetImagePathThumb(string imageFilter)
         {
@@ -118,7 +118,7 @@ namespace iChronoMe.Core.Classes
                             handler.SetProgress(iSuccess, cLoadImgS.Count, iSuccess.ToString() + " von " + cLoadImgS.Count.ToString() + " Bildern " + sys.EzMzText(iSuccess, "wurde", "wurden") + " geladen...");
 
 #if DEBUG
-                            if (iSuccess > 2)
+                            if (iSuccess > 200)
                                 break;
 #endif
                         }

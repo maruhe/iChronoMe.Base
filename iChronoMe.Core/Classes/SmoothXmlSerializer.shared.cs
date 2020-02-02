@@ -701,13 +701,13 @@ namespace iChronoMe.Core.Classes
             else if (t == typeof(double))
             {
                 double d;
-                double.TryParse(cXmlValue, out d);
+                double.TryParse(cXmlValue, NumberStyles.Float, CultureInfo.InvariantCulture, out d);
                 oVal = d;
             }
             else if (t == typeof(float))
             {
                 float d;
-                float.TryParse(cXmlValue, out d);
+                float.TryParse(cXmlValue, NumberStyles.Float, CultureInfo.InvariantCulture, out d);
                 oVal = d;
             }
             else if (t == typeof(DateTime))

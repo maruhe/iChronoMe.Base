@@ -306,6 +306,10 @@ namespace iChronoMe.Core.Classes
         {
             return new DateTime(tSource.Year, tSource.Month, tSource.Day, tSource.Hour, tSource.Minute, 0);
         }
+        public static DateTime GetTimeWithoutMilliSeconds(DateTime tSource)
+        {
+            return new DateTime(tSource.Year, tSource.Month, tSource.Day, tSource.Hour, tSource.Minute, tSource.Second);
+        }
 
         public static string CalculateMD5Hash(string input)
         {
