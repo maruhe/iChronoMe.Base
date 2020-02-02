@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
@@ -11,8 +10,10 @@ namespace iChronoMe.Core.DynamicCalendar
     {
         static DynamicDateFormatInfo _invariantInfo;
         [XmlIgnore]
-        public static DynamicDateFormatInfo InvariantInfo {
-            get {
+        public static DynamicDateFormatInfo InvariantInfo
+        {
+            get
+            {
                 if (_invariantInfo == null)
                     _invariantInfo = new DynamicDateFormatInfo(DateTimeFormatInfo.InvariantInfo);
                 return _invariantInfo;
@@ -25,7 +26,7 @@ namespace iChronoMe.Core.DynamicCalendar
 
         [XmlAttribute] public DateFormatOrderStyle OrderStyle { get; set; }
         [XmlAttribute] public string ShortDatePattern { get; set; }
-        [XmlAttribute] public string MiddleDatePattern { get; set; }        
+        [XmlAttribute] public string MiddleDatePattern { get; set; }
         [XmlAttribute] public string LongDatePattern { get; set; }
 
         [XmlAttribute] public string ShortDayPattern { get; set; }
@@ -71,7 +72,8 @@ namespace iChronoMe.Core.DynamicCalendar
             try
             {
                 OrderStyle = (DateFormatOrderStyle)Enum.Parse(typeof(DateFormatOrderStyle), cOrderStyle.ToUpper());
-            } catch { }
+            }
+            catch { }
 
             MiddleDatePattern = xf(dtfi.ShortDatePattern);
             ShortDatePattern = MiddleDatePattern.Replace("dd", "d").Replace("MM", "M").Replace("yyyy", "yy");
@@ -189,8 +191,8 @@ namespace iChronoMe.Core.DynamicCalendar
             var inf = new DynamicDateFormatInfo(x);
 
             if (string.IsNullOrEmpty(calendarModelId))
-               return (DynamicDateFormatInfo)inf.Clone();
-            
+                return (DynamicDateFormatInfo)inf.Clone();
+
             var model = DynamicCalendarModel.GetCachedModel(calendarModelId);
             if (model != null && model.FormatInfo != null)
             {
@@ -218,7 +220,8 @@ namespace iChronoMe.Core.DynamicCalendar
                         {
                             if (key.StartsWith(calendarModelId))
                                 infoCacheS.Remove(key);
-                        } catch (Exception ex)
+                        }
+                        catch (Exception ex)
                         {
                             ex.ToString();
                         }
@@ -274,7 +277,7 @@ namespace iChronoMe.Core.DynamicCalendar
                 case "_ly":
                     return ddfi.LongYearPattern;
                 case "_lwd":
-                    return ddfi.LongWeekDayDayPattern;                    
+                    return ddfi.LongWeekDayDayPattern;
                 case "_lMd":
                     return ddfi.LongMonthDayPattern;
                 case "_lyM":

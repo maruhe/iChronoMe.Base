@@ -1,8 +1,10 @@
-﻿using iChronoMe.Core.Classes;
-using iChronoMe.Core.Types;
-using SkiaSharp;
-using System;
+﻿using System;
 using System.IO;
+
+using iChronoMe.Core.Classes;
+using iChronoMe.Core.Types;
+
+using SkiaSharp;
 
 namespace iChronoMe.Widgets
 {
@@ -134,7 +136,8 @@ namespace iChronoMe.Widgets
                             cBackCacheInstance = cfgInstance;
                         }
                     }
-                } catch { }
+                }
+                catch { }
             }
 
             // Set transforms

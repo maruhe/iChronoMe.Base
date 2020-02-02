@@ -1,8 +1,7 @@
-﻿using iChronoMe.Core.Types;
+﻿using System;
+
 using iChronoMe.Core.Classes;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using iChronoMe.Core.Types;
 
 namespace iChronoMe.Widgets
 {
@@ -24,7 +23,8 @@ namespace iChronoMe.Widgets
 
         public T WidgetConfig { get; set; }
 
-        public T GetConfigClone() {
+        public T GetConfigClone()
+        {
             return (T)WidgetConfig?.Clone();
         }
 

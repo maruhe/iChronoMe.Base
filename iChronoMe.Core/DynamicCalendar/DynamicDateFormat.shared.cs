@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+
 using iChronoMe.Core.Classes;
 
 /*  
@@ -215,7 +215,7 @@ namespace iChronoMe.Core.DynamicCalendar
             format = GetRealFormat(format, ddfi);
             return (format);
         }
-        
+
         internal const String RoundtripFormat = "yyyy'-'MM'-'dd'T'";//HH':'mm':'ss.fffffffK";
         internal const String RoundtripDateTimeUnfixed = "yyyy'-'MM'-'ddT";// HH':'mm':'ss zzz";
 

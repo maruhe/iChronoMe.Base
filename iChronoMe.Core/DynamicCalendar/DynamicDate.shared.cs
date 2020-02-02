@@ -1,9 +1,7 @@
-﻿using iChronoMe.Core.Classes;
-using iChronoMe.Core.Types;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Globalization;
-using System.Text;
+
+using iChronoMe.Core.Types;
 
 namespace iChronoMe.Core.DynamicCalendar
 {
@@ -12,7 +10,7 @@ namespace iChronoMe.Core.DynamicCalendar
         public static bool FormatLBMode = false;
 
         public static readonly DynamicDate EmptyDate = new DynamicDate();
-        
+
         public string ModelID { get; }
         public int Year { get; }
         public int Month { get; }
@@ -39,9 +37,9 @@ namespace iChronoMe.Core.DynamicCalendar
             }
             while (Day < 0)
             {
-                Day += Month > 0 
-                    ? mModel.GetDaysOfMonth(Year, Month - 1) + mModel.GetOutOfTimeDays(Year, Month - 1) 
-                    : mModel.GetDaysOfMonth(Year - 1, mModel.GetMonthsOfYear(Year - 1) - 1) + mModel.GetOutOfTimeDays(Year - 1, mModel.GetMonthsOfYear(Year - 1) -1) + mModel.GetOutOfTimeDays(Year - 1, mModel.GetMonthsOfYear(Year - 1));
+                Day += Month > 0
+                    ? mModel.GetDaysOfMonth(Year, Month - 1) + mModel.GetOutOfTimeDays(Year, Month - 1)
+                    : mModel.GetDaysOfMonth(Year - 1, mModel.GetMonthsOfYear(Year - 1) - 1) + mModel.GetOutOfTimeDays(Year - 1, mModel.GetMonthsOfYear(Year - 1) - 1) + mModel.GetOutOfTimeDays(Year - 1, mModel.GetMonthsOfYear(Year - 1));
                 Month--;
                 while (Month < 0)
                 {
@@ -91,12 +89,12 @@ namespace iChronoMe.Core.DynamicCalendar
         {
             get => !HasData;
         }
-        
+
         public bool IsOutOfTime
         {
             get => HasData && (Day < Model.GetOutOfTimeDays(Year, Month));
         }
-        
+
         public DynamicCalendarModel Model { get => DynamicCalendarModel.GetCachedModel(ModelID); }
 
         public DateTime UtcDate
@@ -105,7 +103,8 @@ namespace iChronoMe.Core.DynamicCalendar
             {
                 if (IsEmpty)
                     return DateTime.Now;
-                if (_utcYear < 0) {
+                if (_utcYear < 0)
+                {
                     DateTime t = Model.GetUtcDateFromDate(Year, Month, Day);
                     _utcYear = t.Year;
                     _utcDayOfYear = t.DayOfYear;
@@ -113,7 +112,7 @@ namespace iChronoMe.Core.DynamicCalendar
                 return new DateTime(_utcYear.Value, 1, 1).AddDays(_utcDayOfYear.Value - 1);
             }
         }
-        
+
         public int DayNumber
         {
             get
@@ -199,7 +198,7 @@ namespace iChronoMe.Core.DynamicCalendar
                 return Model.GetYearNumber(Year);
             }
         }
-        
+
         public int DayOfWeek
         {
             get
@@ -236,8 +235,8 @@ namespace iChronoMe.Core.DynamicCalendar
 
             var yi = Model.GetYearInfo(Year);
             int iWeekLength = Model.WeekLength;
-            
-            int dayOfYear = Model.GetMonthStartDayNumber(Year, Month) + Day ; //?? -1??
+
+            int dayOfYear = Model.GetMonthStartDayNumber(Year, Month) + Day; //?? -1??
             if (!Model.ContinueWeeksOutOfTime)
             {
                 for (int i = 0; i < Month; i++)
@@ -245,7 +244,7 @@ namespace iChronoMe.Core.DynamicCalendar
             }
             int dayForYearDay1 = DayOfWeek - (dayOfYear % iWeekLength);
 
-            int offset = (firstDayOfWeek - dayForYearDay1 + (iWeekLength*2)) % iWeekLength;
+            int offset = (firstDayOfWeek - dayForYearDay1 + (iWeekLength * 2)) % iWeekLength;
             if (offset != 0 && offset >= minFullDays)
             {
                 offset -= iWeekLength;
@@ -280,10 +279,10 @@ namespace iChronoMe.Core.DynamicCalendar
         }
 
         public string MonthNameShort
-        { 
+        {
             get => IsEmpty || Model.Months.Count <= Month ? "-" : Model.Months[Month].ShortName;
         }
-        
+
         public string MonthNameFull
         {
             get => IsEmpty || Model.Months.Count <= Month ? "-" : Model.Months[Month].FullName;
@@ -304,7 +303,8 @@ namespace iChronoMe.Core.DynamicCalendar
                 return AddDays(count);
             else if (unit == TimeUnit.Week)
                 return AddDays(count * Model.WeekLength);
-            else {
+            else
+            {
                 if (Year - Model.ModelStartYearID > 200 || Model.ModelStartYearID - Year > 200)
                     return Model.GetDateFromUtcDate(DateTime.Now);
 
@@ -319,8 +319,8 @@ namespace iChronoMe.Core.DynamicCalendar
                 {
                     iYear--;
                     iMonth += Model.GetMonthsOfYear(iYear);
-                } 
-                while (iMonth > Model.GetMonthsOfYear(iYear)-1)
+                }
+                while (iMonth > Model.GetMonthsOfYear(iYear) - 1)
                 {
                     iMonth -= Model.GetMonthsOfYear(iYear);
                     iYear++;
@@ -334,7 +334,7 @@ namespace iChronoMe.Core.DynamicCalendar
 
         public (xColor TextColor, xColor BackgroundColor) GetDayColors(xColor clTextDefault, xColor clBackDefault)
         {
-            
+
             WeekDay wd = Model.GetWeekDay(DayOfWeek);
             if (wd.HasSpecialTextColor)
                 clTextDefault = wd.SpecialTextColor;
@@ -410,7 +410,7 @@ namespace iChronoMe.Core.DynamicCalendar
 
         public override string ToString()
             => ToString(string.Empty, null);
-        
+
         public string ToString(string format)
             => ToString(format, null);
 
@@ -430,7 +430,7 @@ namespace iChronoMe.Core.DynamicCalendar
             //if (ddfi == null) ddfi = DynamicDateFormatInfo.CurrentCulture;
             return DynamicDateFormat.Format(this, format, ddfi);
         }
-        
+
         public override bool Equals(object other)
         {
             if (other is DynamicDate)
@@ -464,17 +464,17 @@ namespace iChronoMe.Core.DynamicCalendar
             throw new ArgumentException();
         }
 
-        public static bool operator == (DynamicDate d1, DynamicDate d2)
+        public static bool operator ==(DynamicDate d1, DynamicDate d2)
         {
             return d1.Equals(d2);
         }
 
-        public static bool operator != (DynamicDate d1, DynamicDate d2)
+        public static bool operator !=(DynamicDate d1, DynamicDate d2)
         {
             return !d1.Equals(d2);
         }
 
-        public static bool operator <= (DynamicDate d1, DynamicDate d2)
+        public static bool operator <=(DynamicDate d1, DynamicDate d2)
         {
             if (d1.ModelID != d2.ModelID)
                 return (d1.UtcDate <= d2.UtcDate);
@@ -482,7 +482,7 @@ namespace iChronoMe.Core.DynamicCalendar
             return d1.ID <= d2.ID;
         }
 
-        public static bool operator >= (DynamicDate d1, DynamicDate d2)
+        public static bool operator >=(DynamicDate d1, DynamicDate d2)
         {
             if (d1.ModelID != d2.ModelID)
                 return (d1.UtcDate >= d2.UtcDate);
@@ -490,7 +490,7 @@ namespace iChronoMe.Core.DynamicCalendar
             return d1.ID >= d2.ID;
         }
 
-        public static bool operator < (DynamicDate d1, DynamicDate d2)
+        public static bool operator <(DynamicDate d1, DynamicDate d2)
         {
             if (d1.ModelID != d2.ModelID)
                 return (d1.UtcDate < d2.UtcDate);
@@ -498,7 +498,7 @@ namespace iChronoMe.Core.DynamicCalendar
             return d1.ID < d2.ID;
         }
 
-        public static bool operator > (DynamicDate d1, DynamicDate d2)
+        public static bool operator >(DynamicDate d1, DynamicDate d2)
         {
             if (d1.ModelID != d2.ModelID)
                 return (d1.UtcDate > d2.UtcDate);
@@ -506,7 +506,7 @@ namespace iChronoMe.Core.DynamicCalendar
             return d1.ID > d2.ID;
         }
 
-        public static TimeSpan operator - (DynamicDate d1, DynamicDate d2)
+        public static TimeSpan operator -(DynamicDate d1, DynamicDate d2)
         {
             return (d1.UtcDate - d2.UtcDate);
         }

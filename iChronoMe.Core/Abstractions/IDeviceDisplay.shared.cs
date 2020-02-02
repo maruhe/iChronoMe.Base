@@ -1,8 +1,4 @@
-﻿using iChronoMe.Core.Types;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Essentials;
+﻿using Xamarin.Essentials;
 
 namespace iChronoMe.Core.Abstractions
 {

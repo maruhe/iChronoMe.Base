@@ -1,9 +1,8 @@
-﻿using iChronoMe.Abstractions;
-using iChronoMe.Core.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+
+using iChronoMe.Abstractions;
+using iChronoMe.Core.Classes;
 
 namespace iChronoMe.Core.DynamicCalendar
 {
@@ -28,7 +27,7 @@ namespace iChronoMe.Core.DynamicCalendar
         {
             var Model = new DynamicCalendarModel();
             Model.Name = "my" + sample.ToString();
-            Model.ID = sample.ToString()+"_"+ Guid.NewGuid().ToString();
+            Model.ID = sample.ToString() + "_" + Guid.NewGuid().ToString();
             Model.BaseSample = sample.ToString();
 
             int iSameName = 0;
@@ -115,7 +114,7 @@ namespace iChronoMe.Core.DynamicCalendar
                     Model.ModelStartPoint = new TimePoint(new DateTime(iNowYear, 01, 01));
                     Model.ModelStartYearNumber = iNowYear;
                     Model.MonthsTitle = "Zyklus";
-                    Model.Months.Add(new Month() { Number = 1, Length = to28, FullName = Model.MonthsTitle+" 1", EndType = MonthEndType.ManualEndOrOpen });
+                    Model.Months.Add(new Month() { Number = 1, Length = to28, FullName = Model.MonthsTitle + " 1", EndType = MonthEndType.ManualEndOrOpen });
                     Model.Months.Add(new Month() { Number = 2, Length = to28, FullName = Model.MonthsTitle + " 2", EndType = MonthEndType.ManualEndOrOpen });
                     Model.Months.Add(new Month() { Number = 3, Length = to28, FullName = Model.MonthsTitle + " 3", EndType = MonthEndType.ManualEndOrOpen });
                     Model.Months.Add(new Month() { Number = 4, Length = to28, FullName = Model.MonthsTitle + " 4", EndType = MonthEndType.ManualEndOrOpen });
@@ -172,7 +171,7 @@ namespace iChronoMe.Core.DynamicCalendar
                     break;
 
                 case CalendarModelSample.WorldSeasons:
-                    Model.ModelStartPoint = new TimePoint(new DateTime(iNowYear-1, 12, 21));
+                    Model.ModelStartPoint = new TimePoint(new DateTime(iNowYear - 1, 12, 21));
                     Model.ModelStartYearNumber = iNowYear;
                     Model.Months.Add(new Month() { Number = 1, Length = new TimeOffsetStatic(91), FullName = "Winter", ShortName = "Win" });
                     Model.Months.Add(new Month() { Number = 2, Length = new TimeOffsetStatic(91), FullName = "Frühling", ShortName = "Frü" });
@@ -217,25 +216,25 @@ namespace iChronoMe.Core.DynamicCalendar
 
                     Model.FormatInfo.OverrideMaxYearDigits = 2;
 
-                    Model.Months.Add(new Month() { Number = 1, Length = to20, FullName ="Pop", ShortName ="Pop", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 2, Length = to20, FullName ="Uo", ShortName ="Uo", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 3, Length = to20, FullName ="Zip", ShortName ="Zip", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 4, Length = to20, FullName ="Zotz", ShortName ="Zotz", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 5, Length = to20, FullName ="Zec", ShortName ="Zec", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 6, Length = to20, FullName ="Xul", ShortName ="Xul", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 7, Length = to20, FullName ="Yaxkin", ShortName ="Yaxkin", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 8, Length = to20, FullName ="Mol", ShortName ="Mol", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 9, Length = to20, FullName ="Chen", ShortName ="Chen", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 10, Length = to20, FullName ="Yax", ShortName ="Yax", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 11, Length = to20, FullName ="Zac", ShortName ="Zac", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 12, Length = to20, FullName ="Ceh", ShortName ="Ceh", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 13, Length = to20, FullName ="Mac", ShortName ="Mac", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 14, Length = to20, FullName ="Kankin", ShortName ="Kankin", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 15, Length = to20, FullName ="Muan", ShortName ="Muan", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 16, Length = to20, FullName ="Pax", ShortName ="Pax", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 17, Length = to20, FullName ="Kayab", ShortName ="Kayab", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 18, Length = to20, FullName ="Cumku", ShortName ="Cumku", DayNumberType = DayNumberType.ZeroBased });
-                    Model.Months.Add(new Month() { Number = 19, Length = new TimeOffsetStatic(5), FullName ="Wayeb", ShortName ="Wayeb", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 1, Length = to20, FullName = "Pop", ShortName = "Pop", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 2, Length = to20, FullName = "Uo", ShortName = "Uo", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 3, Length = to20, FullName = "Zip", ShortName = "Zip", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 4, Length = to20, FullName = "Zotz", ShortName = "Zotz", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 5, Length = to20, FullName = "Zec", ShortName = "Zec", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 6, Length = to20, FullName = "Xul", ShortName = "Xul", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 7, Length = to20, FullName = "Yaxkin", ShortName = "Yaxkin", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 8, Length = to20, FullName = "Mol", ShortName = "Mol", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 9, Length = to20, FullName = "Chen", ShortName = "Chen", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 10, Length = to20, FullName = "Yax", ShortName = "Yax", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 11, Length = to20, FullName = "Zac", ShortName = "Zac", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 12, Length = to20, FullName = "Ceh", ShortName = "Ceh", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 13, Length = to20, FullName = "Mac", ShortName = "Mac", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 14, Length = to20, FullName = "Kankin", ShortName = "Kankin", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 15, Length = to20, FullName = "Muan", ShortName = "Muan", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 16, Length = to20, FullName = "Pax", ShortName = "Pax", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 17, Length = to20, FullName = "Kayab", ShortName = "Kayab", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 18, Length = to20, FullName = "Cumku", ShortName = "Cumku", DayNumberType = DayNumberType.ZeroBased });
+                    Model.Months.Add(new Month() { Number = 19, Length = new TimeOffsetStatic(5), FullName = "Wayeb", ShortName = "Wayeb", DayNumberType = DayNumberType.ZeroBased });
                     Model.CommonYearLength = new TimeOffsetStatic(365);
                     Model.LeapModel = new LeapModel();
                     break;
@@ -560,7 +559,8 @@ namespace iChronoMe.Core.DynamicCalendar
                     {
                         m.FullName = FullNames[i].Replace("%M", iMonth.ToString());
                         m.ShortName = ShortNames[i].Replace("%M", iMonth.ToString());
-                    } catch { }
+                    }
+                    catch { }
 
                     i++;
                     iMonth++;

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using iChronoMe.Core.Types;
 
 namespace iChronoMe.DeviceCalendar
@@ -79,7 +77,7 @@ namespace iChronoMe.DeviceCalendar
         public string ExternalID { get; set; }
 
         public int AccessLevel { get; set; }
-                
+
         /// <summary>
         /// Simple ToString helper, to assist with debugging.
         /// </summary>

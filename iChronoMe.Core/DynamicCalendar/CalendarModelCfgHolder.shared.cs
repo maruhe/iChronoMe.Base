@@ -1,9 +1,9 @@
-﻿using iChronoMe.Core.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Xml.Serialization;
+
+using iChronoMe.Core.Classes;
 
 namespace iChronoMe.Core.DynamicCalendar
 {
@@ -354,7 +354,7 @@ namespace iChronoMe.Core.DynamicCalendar
 #endif
 
                     return model;
-                }                
+                }
             }
             catch (Exception e)
             {
@@ -373,7 +373,7 @@ namespace iChronoMe.Core.DynamicCalendar
             }
             string cCfgFile = Path.Combine(CfgPath, model.ID);
             try
-            {                
+            {
                 DynamicCalendarModel.AddCachedModel(model);
                 try
                 {
@@ -386,7 +386,7 @@ namespace iChronoMe.Core.DynamicCalendar
                 TextWriter writer = new StreamWriter(cCfgFile + ".new");
                 x.Serialize(writer, model);
                 writer.Flush();
-                writer.Close();                
+                writer.Close();
                 TimeSpan tsSera = DateTime.Now - swStart;
 
                 swStart = DateTime.Now;
@@ -396,7 +396,7 @@ namespace iChronoMe.Core.DynamicCalendar
                 y.Serialize(writer, model);
                 writer.Flush();
                 writer.Close();
-                               
+
                 TimeSpan tsSera2 = DateTime.Now - swStart;
 
                 swStart = DateTime.Now;
@@ -419,7 +419,8 @@ namespace iChronoMe.Core.DynamicCalendar
                         System.IO.File.Copy(cCfgFile + ".bak", cCfgFile, true);
                 }
                 catch { }
-            } finally
+            }
+            finally
             {
                 if (!string.IsNullOrEmpty(cEditModeID))
                     model.ID = cEditModeID;

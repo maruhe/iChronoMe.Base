@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace iChronoMe.Core.Classes
 {
@@ -103,7 +102,7 @@ namespace iChronoMe.Core.Classes
 #endregion
     */
 
-#region Eigenschaften
+        #region Eigenschaften
         /// <summary>
         /// Östl. geografische Länge
         /// </summary>
@@ -600,9 +599,9 @@ namespace iChronoMe.Core.Classes
                 return _MoonSign.Value;
             }
         }
-#endregion
+        #endregion
 
-#region internal Fields
+        #region internal Fields
 
         //die internen Felder werden in den Berechnungsgruppen gesetzt sobald auf eine entsprechende Eigenschaft zugegriffen wird
         double _JD;
@@ -679,9 +678,9 @@ namespace iChronoMe.Core.Classes
         SIGN? _MoonSign;
 
 
-#endregion
+        #endregion
 
-#region Berechnungsfunktionen
+        #region Berechnungsfunktionen
         private double sqr(double x) { return x * x; }
         private int Int(double x) { return (x < 0) ? (int)Math.Ceiling(x) : (int)Math.Floor(x); }
         private double frac(double x) { return (x - Math.Floor(x)); }
@@ -1216,9 +1215,9 @@ namespace iChronoMe.Core.Classes
             }
             return rise;
         }
-#endregion
+        #endregion
 
-#region Initiale Berechnungen und Berechnungsgruppen
+        #region Initiale Berechnungen und Berechnungsgruppen
         double __JD0;
         double __jd;
         double __TDT;
@@ -1281,7 +1280,8 @@ namespace iChronoMe.Core.Classes
             this._SunDistanceObserver = round10(Math.Sqrt(sqr(sunCart["x"] - observerCart["x"]) + sqr(sunCart["y"] - observerCart["y"]) + sqr(sunCart["z"] - observerCart["z"])));
         }
 
-        private void ComputeSunRise() {
+        private void ComputeSunRise()
+        {
             // JD0: JD of 0h UTC time
             lock (oLock)
             {
@@ -1349,9 +1349,9 @@ namespace iChronoMe.Core.Classes
                 this._MoonSet = HHMM(moonRise["set"]);
             }
         }
-#endregion
+        #endregion
 
-#region Konstruktoren
+        #region Konstruktoren
         public SunMoon()
         {
             this._Lat = 50.0;
@@ -1375,6 +1375,6 @@ namespace iChronoMe.Core.Classes
                 this._Zone = (datetime - datetime.ToUniversalTime()).Hours;
             Init();
         }
-#endregion
+        #endregion
     }
 }

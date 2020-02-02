@@ -1,8 +1,9 @@
-﻿using iChronoMe.Core.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+
+using iChronoMe.Core.Interfaces;
 
 namespace iChronoMe.Core.Classes
 {

@@ -1,18 +1,17 @@
-﻿using iChronoMe.Core.Classes;
-using iChronoMe.Core.DynamicCalendar;
-using iChronoMe.Core.Interfaces;
-using iChronoMe.Core.Types;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+
+using iChronoMe.Core.Classes;
+using iChronoMe.Core.DynamicCalendar;
+using iChronoMe.Core.Interfaces;
+using iChronoMe.Core.Types;
 
 namespace iChronoMe.Widgets
 {
     public class WidgetCfgAssistant_ClockAnalog_Start : WidgetConfigAssistant<WidgetCfg_ClockAnalog>
-    {       
+    {
         public WidgetCfgAssistant_ClockAnalog_Start(WidgetCfgSample<WidgetCfg_ClockAnalog> baseSample)
         {
             Title = "Standort-Typ";
@@ -42,7 +41,7 @@ namespace iChronoMe.Widgets
 
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("einfärbig", EmptyBackSample));
             LoadSamples();
-            
+
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_HandColorType);
         }
 
@@ -63,7 +62,7 @@ namespace iChronoMe.Widgets
 
         public override bool NeedsPreperation()
         {
-            return AppConfigHolder.MainConfig.LastCheckClockFaces.AddDays(1) < DateTime.Now; 
+            return AppConfigHolder.MainConfig.LastCheckClockFaces.AddDays(1) < DateTime.Now;
         }
 
         public override void PerformPreperation(IProgressChangedHandler handler)
@@ -91,7 +90,8 @@ namespace iChronoMe.Widgets
                     cfg.ColorTickMarks = xColor.Transparent;
                     Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(Path.GetFileNameWithoutExtension(cFile).Replace("_", " "), cfg));
                 }
-            } catch { }
+            }
+            catch { }
         }
 
         public override void AfterSelect(IProgressChangedHandler handler, WidgetCfgSample<WidgetCfg_ClockAnalog> sample)
@@ -187,7 +187,7 @@ namespace iChronoMe.Widgets
 
             AddSample("Schwarz", xColor.Black, xColor.Black, xColor.Black, xColor.Black, xColor.Black, "SetDone");
 
-            AddSample("Schwarz/Custom", xColor.Black, clrs[1], xColor.Black, clrs[1], xColor.Black,         new object[] { xColor.Black, 1, xColor.Black, 1, xColor.Black });
+            AddSample("Schwarz/Custom", xColor.Black, clrs[1], xColor.Black, clrs[1], xColor.Black, new object[] { xColor.Black, 1, xColor.Black, 1, xColor.Black });
 
             AddSample("Weiß/Transparent", xColor.White, xColor.Transparent, xColor.White, xColor.Transparent, xColor.White, "SetDone");
 
@@ -197,13 +197,13 @@ namespace iChronoMe.Widgets
 
             AddSample("Weiß/Custom", xColor.White, clrs[1], xColor.White, clrs[1], xColor.White, new object[] { xColor.White, 1, xColor.White, 1, xColor.White });
 
-            AddSample("Einfärbig", clrs[0], xColor.Transparent, clrs[0], xColor.Transparent, clrs[0],       new object[] { 0, xColor.Transparent, 0, xColor.Transparent, 0});
+            AddSample("Einfärbig", clrs[0], xColor.Transparent, clrs[0], xColor.Transparent, clrs[0], new object[] { 0, xColor.Transparent, 0, xColor.Transparent, 0 });
 
-            AddSample("Einfärbig gefüllt", clrs[0], clrs[1], clrs[0], clrs[1], clrs[0],                     new object[] { 0, 1, 0, 1, 0 });
+            AddSample("Einfärbig gefüllt", clrs[0], clrs[1], clrs[0], clrs[1], clrs[0], new object[] { 0, 1, 0, 1, 0 });
 
-            AddSample("Mehrfärbig", clrs[0], xColor.Transparent, clrs[2], xColor.Transparent, clrs[4],      new object[] { 0, xColor.Transparent, 2, xColor.Transparent, 4 });
+            AddSample("Mehrfärbig", clrs[0], xColor.Transparent, clrs[2], xColor.Transparent, clrs[4], new object[] { 0, xColor.Transparent, 2, xColor.Transparent, 4 });
 
-            AddSample("Mehrfärbig gefüllt", clrs[0], clrs[1], clrs[2], clrs[3], clrs[4],                    new object[] { 0, 1, 2, 3, 4 });
+            AddSample("Mehrfärbig gefüllt", clrs[0], clrs[1], clrs[2], clrs[3], clrs[4], new object[] { 0, 1, 2, 3, 4 });
 
         }
 
@@ -266,11 +266,11 @@ namespace iChronoMe.Widgets
 
             object[] mapping = BaseSample.Tag as object[];
 
-            xColor clrHourStorke =   mapping[0] is xColor ? (xColor)mapping[0] : (xColor)sampleClrS[(int)mapping[0]];
-            xColor clrHourFill =     mapping[1] is xColor ? (xColor)mapping[1] : (xColor)sampleClrS[(int)mapping[1]];
+            xColor clrHourStorke = mapping[0] is xColor ? (xColor)mapping[0] : (xColor)sampleClrS[(int)mapping[0]];
+            xColor clrHourFill = mapping[1] is xColor ? (xColor)mapping[1] : (xColor)sampleClrS[(int)mapping[1]];
             xColor clrMinuteStorke = mapping[2] is xColor ? (xColor)mapping[2] : (xColor)sampleClrS[(int)mapping[2]];
-            xColor clrMinuteFill =   mapping[3] is xColor ? (xColor)mapping[3] : (xColor)sampleClrS[(int)mapping[3]];
-            xColor clrSecond =       mapping[4] is xColor ? (xColor)mapping[4] : (xColor)sampleClrS[(int)mapping[4]];
+            xColor clrMinuteFill = mapping[3] is xColor ? (xColor)mapping[3] : (xColor)sampleClrS[(int)mapping[3]];
+            xColor clrSecond = mapping[4] is xColor ? (xColor)mapping[4] : (xColor)sampleClrS[(int)mapping[4]];
 
             if (clrHourStorke == BaseSample.WidgetConfig.ColorBackground ||
                 clrMinuteStorke == BaseSample.WidgetConfig.ColorBackground ||

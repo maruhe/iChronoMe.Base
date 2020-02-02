@@ -1,11 +1,13 @@
-﻿using iChronoMe.Core.Types;
-using Newtonsoft.Json.Linq;
-using SQLite;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Globalization;
 using System.Threading.Tasks;
 using System.Xml;
+
+using Newtonsoft.Json.Linq;
+
+using SQLite;
+
 using Xamarin.Essentials;
 
 namespace iChronoMe.Core.Classes
@@ -229,7 +231,8 @@ namespace iChronoMe.Core.Classes
 
             public DateTime BoxTimeStamp = DateTime.MinValue;
 
-            public bool CheckBoxIsUpToDate(double nLatitude, double nLongitude) {
+            public bool CheckBoxIsUpToDate(double nLatitude, double nLongitude)
+            {
 
                 if (BoxTimeStamp.Equals(DateTime.MinValue))
                     return false;
@@ -248,11 +251,13 @@ namespace iChronoMe.Core.Classes
 
             public override void OnInstanceCreatedDB()
             {
-                try {
+                try
+                {
                     if (!string.IsNullOrEmpty(timezoneId))
                         timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timezoneId);
                 }
-                catch {
+                catch
+                {
                     timeZoneInfo = null;
                 }
             }

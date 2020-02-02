@@ -1,10 +1,11 @@
-﻿using iChronoMe.Core.Types;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
+
+using iChronoMe.Core.Types;
 
 namespace iChronoMe.Core.Classes
 {
@@ -37,7 +38,8 @@ namespace iChronoMe.Core.Classes
         {
             get
             {
-                if (_mainConfig == null) {
+                if (_mainConfig == null)
+                {
                     _mainConfig = LoadFromFile<MainConfig>();
                 }
                 return _mainConfig;
@@ -200,7 +202,7 @@ namespace iChronoMe.Core.Classes
         public xColor WeekNumbersColor { get; set; } = xColor.Black;
         public xColor DayNamesColor { get; set; } = xColor.Black;
         public xColor DayNamesBackgroundColor { get; set; } = xColor.AliceBlue;
-        public xColor TodayBackgroundColor { get; set; } = xColor.Khaki;        
+        public xColor TodayBackgroundColor { get; set; } = xColor.Khaki;
 
         [XmlIgnore]
         public bool ShowDualCalendarModel

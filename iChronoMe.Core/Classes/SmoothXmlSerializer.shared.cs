@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Xml;
-using System.Reflection;
-using System.Xml.Serialization;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.Reflection;
+using System.Xml;
+using System.Xml.Serialization;
+
 using iChronoMe.Core.Types;
 
 namespace iChronoMe.Core.Classes
@@ -19,7 +19,7 @@ namespace iChronoMe.Core.Classes
             var doc = new XmlDocument();
 
             if (o.GetType().Namespace.StartsWith("System.Collections") || o.GetType().IsArray)
-                {
+            {
                 string cName = "Array";
                 string cType = null;
                 foreach (var gt in o.GetType().GenericTypeArguments)
@@ -41,7 +41,7 @@ namespace iChronoMe.Core.Classes
 
             doc.Save(textWriter);
         }
-        
+
         public T Deserialize<T>(TextReader textReader)
         {
             //return default(T);
@@ -144,7 +144,7 @@ namespace iChronoMe.Core.Classes
             else if (val is double)
                 cVal = ((double)val).ToString(CultureInfo.InvariantCulture);
             else if (val is float)
-                cVal = ((float)val).ToString(CultureInfo.InvariantCulture);            
+                cVal = ((float)val).ToString(CultureInfo.InvariantCulture);
             else if (val is DateTime)
                 cVal = ((DateTime)val).ToString("s", CultureInfo.InvariantCulture);
             else if (val is Enum)
@@ -326,7 +326,8 @@ namespace iChronoMe.Core.Classes
                         if (tSub.IsSubclassOf(t))
                             CheckObjectMapping(tSub);
                     }
-                } catch (Exception ex )
+                }
+                catch (Exception ex)
                 {
                     ex.ToString();
                 }
@@ -352,7 +353,7 @@ namespace iChronoMe.Core.Classes
                         }
                     }
                 }
-                                             
+
                 foreach (var x in Enum.GetValues(t))
                 {
                     string cId = string.Format("{0}{1}", cT, x);
@@ -405,11 +406,12 @@ namespace iChronoMe.Core.Classes
                         }
                         else
                             this.ToString();
-                    }             
+                    }
                     if (o != null)
                         add.Invoke(collection, new object[] { o });
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ex.ToString();
             }
@@ -564,8 +566,8 @@ namespace iChronoMe.Core.Classes
 
                     if (t.Namespace.StartsWith("System.Collections") || t.IsArray)
                     {
-                        var tItem = t.IsArray ? 
-                            Type.GetType(t.Namespace+"."+t.Name.Substring(0, t.Name.Length-2)) : 
+                        var tItem = t.IsArray ?
+                            Type.GetType(t.Namespace + "." + t.Name.Substring(0, t.Name.Length - 2)) :
                             t.GenericTypeArguments[0];
 
                         if ((elSub.HasChildNodes && IsSimple(tItem)))
@@ -591,7 +593,7 @@ namespace iChronoMe.Core.Classes
                                     field.SetValue(instance, oVal);
                             }
                             var add = t.GetMethod("Add");
-                           
+
                             object o = null;
                             if (elSub is XmlText)
                                 o = GetObjectFromXmlValue(tItem, elSub.InnerText, null);
@@ -605,7 +607,7 @@ namespace iChronoMe.Core.Classes
                             if (o != null)
                             {
                                 if (t.IsArray)
-                                    (oVal as Array).SetValue(o, iNode-1);
+                                    (oVal as Array).SetValue(o, iNode - 1);
                                 else
                                     add.Invoke(oVal, new object[] { o });
                             }

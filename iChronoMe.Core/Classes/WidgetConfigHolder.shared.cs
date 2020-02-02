@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Xml.Serialization;
+
 using iChronoMe.Core.DynamicCalendar;
 using iChronoMe.Core.Types;
 
@@ -28,7 +28,7 @@ namespace iChronoMe.Core.Classes
 
         public T GetWidgetCfg<T>(int iWidgetId, bool bCreateIfNotExisting = true)
         {
-            xLog.Debug("GetWidgetCfg: " + iWidgetId.ToString() + " " + bTest.ToString()+": "+iTest.ToString());
+            xLog.Debug("GetWidgetCfg: " + iWidgetId.ToString() + " " + bTest.ToString() + ": " + iTest.ToString());
 
             bTest = true;
             iTest++;
@@ -52,7 +52,8 @@ namespace iChronoMe.Core.Classes
             try
             {
                 typeof(T).GetField("WidgetId").SetValue(res, iWidgetId);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             { ex.ToString(); }
             return res;
         }
@@ -114,7 +115,7 @@ namespace iChronoMe.Core.Classes
                 writer.Close();
                 TimeSpan tsSera = DateTime.Now - swStart;
                 swStart = DateTime.Now;
-                
+
                 File.Delete(CfgFile);
                 File.Move(CfgFile + ".new", CfgFile);
 
@@ -158,7 +159,7 @@ namespace iChronoMe.Core.Classes
     [XmlInclude(typeof(WidgetCfg_Clock))]
     [XmlInclude(typeof(WidgetCfg_Lifetime))]
     [XmlInclude(typeof(WidgetCfg_Moon))]
-    [XmlInclude(typeof(WidgetCfg_ActionButton))]    
+    [XmlInclude(typeof(WidgetCfg_ActionButton))]
     [XmlInclude(typeof(WidgetCfg_CalendarTimetable))]
     [XmlInclude(typeof(WidgetCfg_CalendarMonthView))]
     [XmlInclude(typeof(WidgetCfg_CalendarCircleWave))]
@@ -189,7 +190,7 @@ namespace iChronoMe.Core.Classes
 
         public TimeType ShowTimeType = TimeType.RealSunTime;
         public string CalendarModelId;
-        
+
         public xColor ColorTitleText = xColor.White;
         public xColor ColorBackground = xColor.FromRgba(0, 0, 0, 120);
 
@@ -272,7 +273,7 @@ namespace iChronoMe.Core.Classes
             }
         }
     }
-    
+
     public class WidgetCfg_ActionButton : WidgetCfg
     {
         public WidgetCfg_ActionButton()
@@ -338,7 +339,7 @@ namespace iChronoMe.Core.Classes
 
     [XmlInclude(typeof(WidgetCfg_CalendarTimetable))]
     [XmlInclude(typeof(WidgetCfg_CalendarMonthView))]
-    [XmlInclude(typeof(WidgetCfg_CalendarCircleWave))]    
+    [XmlInclude(typeof(WidgetCfg_CalendarCircleWave))]
     public abstract class WidgetCfg_Calendar : WidgetCfg
     {
         public bool ShowAllCalendars = true;
@@ -426,7 +427,7 @@ namespace iChronoMe.Core.Classes
         }
 
         public DayNumberStyle DayNumberStyle = DayNumberStyle.CalendarModell;
-        
+
         public xColor ColorGridLines = xColor.Transparent;
 
         public bool ShowEventColor = true;
@@ -549,7 +550,7 @@ namespace iChronoMe.Core.Classes
         public int MaxFutureDays { get; set; } = 21;
 
         public int MaxLoadCount { get; set; } = 100;
-               
+
         public xColor ColorSeparatorText = xColor.White;
 
         public xColor ColorEventNameText = xColor.White;
@@ -636,10 +637,10 @@ namespace iChronoMe.Core.Classes
     }
 
     public enum WidgetTheme
-    {        
+    {
         Transparent,
         Light,
-        Dark, 
+        Dark,
         White,
         Black,
         LightGlass1,

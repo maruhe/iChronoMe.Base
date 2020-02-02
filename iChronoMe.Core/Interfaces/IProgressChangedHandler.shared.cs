@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace iChronoMe.Core.Interfaces
+﻿namespace iChronoMe.Core.Interfaces
 {
     public interface IProgressChangedHandler
     {

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.Types;
 
@@ -211,7 +211,8 @@ namespace iChronoMe.Core.DynamicCalendar
         }
 
         bool? _hasAstronomics = null;
-        public bool HasAstronomics {
+        public bool HasAstronomics
+        {
             get
             {
                 if (_hasAstronomics == null)
@@ -405,7 +406,8 @@ namespace iChronoMe.Core.DynamicCalendar
                             yi.DayOfWeekStart -= GetOutOfTimeDays(iYear - 1);
                         while (yi.DayOfWeekStart >= WeekLength)
                             yi.DayOfWeekStart -= WeekLength;
-                    } else if (iYear < ModelStartYearID)
+                    }
+                    else if (iYear < ModelStartYearID)
                     {
                         //todo set YearStart here for Calcling => set real start later.. ~~
 
@@ -458,8 +460,8 @@ namespace iChronoMe.Core.DynamicCalendar
                         else if (iYear > ModelStartYearID)
                         {
                             var yiLast = GetYearInfo(iYear - 1);
-                            int iLastYearLastMonth = GetMonthsOfYear(iYear - 1)-1;
-                            int iLastYearLastDay = GetDaysOfMonth(iYear - 1, iLastYearLastMonth)-1;
+                            int iLastYearLastMonth = GetMonthsOfYear(iYear - 1) - 1;
+                            int iLastYearLastDay = GetDaysOfMonth(iYear - 1, iLastYearLastMonth) - 1;
                             var tLastYearLastMonthStart = yiLast.UtcStart.AddDays(_beginsOfMonths[GetYearMonth(iYear - 1, iLastYearLastMonth)]);
                             int iLastYearLastMonthLength = Months[iLastYearLastMonth - 1].Length.GetOffsetDays(tLastYearLastMonthStart, this);
                             if (iLastYearLastMonthLength > iLastYearLastDay)
@@ -518,7 +520,7 @@ namespace iChronoMe.Core.DynamicCalendar
                     }
 
                     _yearInfos.Add(iYear, yi);
-                    if (bSaveToCache&&false)
+                    if (bSaveToCache && false)
                     {
                         dbCache.Insert(yi);
                         var zCache = dbCache.Query<YearInfo>("select * from YearInfo", new object[0]);
@@ -1080,7 +1082,7 @@ namespace iChronoMe.Core.DynamicCalendar
             if (LeapModel.DaysAssignment == ExtraDaysAssignment.AttachToMonth && LeapModel.LeapBeforeMonth - 1 == iMonth)
                 iRes += LeapModel.LeapOffset.GetMaxOffsetDays(this);
             //ToDo if (YearLengthAssignment == ExtraDaysAssignment.AttachToMonth && YearLengthAssigAfterMonthNo == iMonth)
-              //  iRes += CommonYearLength - GetMonthLengthSum();
+            //  iRes += CommonYearLength - GetMonthLengthSum();
 
             if (Months[iMonth - 1].EndType == MonthEndType.ManualEndOrOpen)
                 iRes = iRes * 2;
@@ -1104,7 +1106,7 @@ namespace iChronoMe.Core.DynamicCalendar
             YearInfo yi = GetYearInfo(iYearNumber);
             if (yi.UtcStart < tUtcDate)
             {
-                while (yi.UtcStart.AddDays(yi.DayCount-1) < tUtcDate)
+                while (yi.UtcStart.AddDays(yi.DayCount - 1) < tUtcDate)
                 { //ToDo Check +-1
                     iYearNumber++;
                     yi = GetYearInfo(iYearNumber);
@@ -1126,7 +1128,8 @@ namespace iChronoMe.Core.DynamicCalendar
         public async Task<DynamicDate> GetDateFromUtcDateAsync(DateTime tUtcDate)
         {
             DynamicDate dDate = new DynamicDate();
-            await Task.Factory.StartNew(() => {
+            await Task.Factory.StartNew(() =>
+            {
                 dDate = GetDateFromUtcDate(tUtcDate);
             });
             return dDate;
@@ -1388,11 +1391,11 @@ namespace iChronoMe.Core.DynamicCalendar
         {
             return AfterMonth + " " + Year + ": " + Length;
         }
-    }    
+    }
 
     public class YearInfo : dbObject
     {
-        [SQLite.Indexed(Unique =true)]
+        [SQLite.Indexed(Unique = true)]
         public int Year { get; set; }
 
         public int FirstMonthFirstDayNumber { get; set; } = 0;
@@ -1457,7 +1460,7 @@ namespace iChronoMe.Core.DynamicCalendar
                 hash = (hash * HashingMultiplier) ^ LeapBeforeMonth.GetHashCode();
                 if (LeapYearAlgo != null)
                 {
-                    foreach(var alg in LeapYearAlgo)
+                    foreach (var alg in LeapYearAlgo)
                         hash = (hash * HashingMultiplier) ^ alg.GetHashCode();
                 }
                 hash = (hash * HashingMultiplier) ^ AstroConditionYearDay.GetHashCode();
@@ -1535,6 +1538,6 @@ namespace iChronoMe.Core.DynamicCalendar
         public string Name { get; set; }
 
         public TimeOffset Length { get; set; }
-        
+
     }
 }

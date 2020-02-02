@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using iChronoMe.Core.Types;
 
 namespace iChronoMe.Core.DynamicCalendar
 {
     public static class DynamicColors
-    {               
+    {
         private static void StepCheck(Int32 numOfSteps, ref Int32 step)
         {
             if (step > numOfSteps)

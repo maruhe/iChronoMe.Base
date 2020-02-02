@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace iChronoMe.Core.DynamicCalendar
+﻿namespace iChronoMe.Core.DynamicCalendar
 {
     public interface IComputingDialog
     {

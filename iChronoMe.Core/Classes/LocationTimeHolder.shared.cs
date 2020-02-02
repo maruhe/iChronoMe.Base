@@ -1,9 +1,9 @@
-﻿using iChronoMe.Core.Classes;
-using iChronoMe.Core.Types;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
+
+using iChronoMe.Core.Classes;
+
 using Xamarin.Essentials;
 
 namespace iChronoMe.Core
@@ -28,7 +28,9 @@ namespace iChronoMe.Core
         public double Longitude { get; private set; } = 0;
         public string CountryName { get; private set; }
         public string AreaName { get; private set; }
-        public double TimeZoneOffset { get
+        public double TimeZoneOffset
+        {
+            get
             {
                 if (timeZoneInfo != null)
                 {
@@ -506,7 +508,7 @@ namespace iChronoMe.Core
             }
         }
 
-            public DateTime GetTime(TimeType type = TimeType.RealSunTime, DateTime? tUtcNow = null)
+        public DateTime GetTime(TimeType type = TimeType.RealSunTime, DateTime? tUtcNow = null)
         {
             DateTime oldNow = _UtcNow;
             if (tUtcNow != null)
@@ -529,7 +531,8 @@ namespace iChronoMe.Core
 
         private void SetTime(DateTime tSet, TimeType type, bool bInternal)
         {
-            switch (type) {
+            switch (type)
+            {
                 case TimeType.UtcTime:
                     UtcNow = tSet;
                     break;
@@ -584,7 +587,7 @@ namespace iChronoMe.Core
             try
             {
                 //if (locType == TimeType.TimeZoneTime)
-                  //  GetLocationInfo(true);
+                //  GetLocationInfo(true);
                 return GetTime(locType);
             }
             finally

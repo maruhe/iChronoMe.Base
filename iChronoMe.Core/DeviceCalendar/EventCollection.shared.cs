@@ -6,10 +6,10 @@ using System.Net;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.Types;
 using iChronoMe.DeviceCalendar;
-using Xamarin.Essentials;
 
 namespace iChronoMe.Core.DynamicCalendar
 {
@@ -117,7 +117,7 @@ namespace iChronoMe.Core.DynamicCalendar
             {
                 base.Clear();
                 ex.ToString();
-                Console.WriteLine("Error reading Calendar Events: "+ex.GetType().Name+": " + ex.Message);
+                Console.WriteLine("Error reading Calendar Events: " + ex.GetType().Name + ": " + ex.Message);
             }
         }
 
@@ -135,7 +135,7 @@ namespace iChronoMe.Core.DynamicCalendar
         static bool bIsLoadingCalendarEventsListed = false;
         public async Task DoLoadCalendarEventsListed(DateTime dStart, DateTime dEnd, int iMax = 0, int iError = 0)
         {
-            Console.WriteLine("DoLoadCalendarEventsListed: Start: "+ bIsLoadingCalendarEventsListed.ToString());
+            Console.WriteLine("DoLoadCalendarEventsListed: Start: " + bIsLoadingCalendarEventsListed.ToString());
             if (bIsLoadingCalendarEventsListed)
             {
                 while (bIsLoadingCalendarEventsListed)
@@ -154,7 +154,7 @@ namespace iChronoMe.Core.DynamicCalendar
                 if (sys.Windows)
                 {
                     var rnd = new Random(DateTime.Now.Second);
-                    for (int i = 0; i < rnd.Next(5)*2; i++)
+                    for (int i = 0; i < rnd.Next(5) * 2; i++)
                     {
                         string name = "win";
                         var calEvent = new CalendarEvent();
@@ -170,7 +170,7 @@ namespace iChronoMe.Core.DynamicCalendar
                     }
                 }
                 else
-                {                
+                {
                     var calendars = new List<DeviceCalendar.Calendar>(await DeviceCalendar.DeviceCalendar.GetCalendarsAsync());
                     foreach (DeviceCalendar.Calendar calendar in calendars)
                     {
@@ -204,9 +204,10 @@ namespace iChronoMe.Core.DynamicCalendar
                 {
                     await Task.Delay(250 + new Random().Next(250));
                     bIsLoadingCalendarEventsListed = false;
-                    await DoLoadCalendarEventsListed(dStart, dEnd, iMax, iError+1);
+                    await DoLoadCalendarEventsListed(dStart, dEnd, iMax, iError + 1);
                 }
-            } finally { bIsLoadingCalendarEventsListed = false; }
+            }
+            finally { bIsLoadingCalendarEventsListed = false; }
             Console.WriteLine("DoLoadCalendarEventsListed: Stop");
         }
 
@@ -271,7 +272,7 @@ namespace iChronoMe.Core.DynamicCalendar
         static List<CalendarEvent> eventsToCheck = new List<CalendarEvent>();
         static Task eventsChecker = null;
         static Dictionary<string, string> eventsCheckerStates = new Dictionary<string, string>();
-        
+
         void CheckEventLocationTime(LocationTimeHolder lthCheck, DeviceCalendar.Calendar calendar, CalendarEvent calEvent)
         {
             DateTime swStart = DateTime.Now;
@@ -336,7 +337,7 @@ namespace iChronoMe.Core.DynamicCalendar
                     }
                 }
                 if (!extEvent.UseTypedTime && !calEvent.AllDay)
-                {                    
+                {
                     tStart = GetTimeFromLocal(calEvent.Start, timeType);
                     tEnd = GetTimeFromLocal(calEvent.End, timeType);
                 }
@@ -350,7 +351,7 @@ namespace iChronoMe.Core.DynamicCalendar
                 tEnd = GetTimeFromLocal(calEvent.End, timeType);
                 calEvent.DisplayStart = tStart;
                 calEvent.DisplayEnd = tEnd;
-            }   
+            }
 
 #if DEBUG
             //calEvent.Description = (DateTime.Now - swStart).TotalMilliseconds.ToString() + " ms checking";
@@ -430,7 +431,7 @@ namespace iChronoMe.Core.DynamicCalendar
                                             iChecked++;
                                             Console.WriteLine("EventCollection: EventsChecker: Updateposition: " + checkEvent.ExternalID + ": " + checkEvent.Location);
                                         }
-                                    }                                    
+                                    }
                                     if (extEventLoc.RecNo < 0)
                                         db.dbCalendarExtention.Insert(extEventLoc);
                                     else

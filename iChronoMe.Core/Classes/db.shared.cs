@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Text;
-using static iChronoMe.Core.Classes.GeoInfo;
+
 using iChronoMe.Core.DataModels;
-using SQLite;
-using iChronoMe.Core.Extentions;
 using iChronoMe.Core.DynamicCalendar;
+using iChronoMe.Core.Extentions;
 using iChronoMe.DeviceCalendar;
+
+using SQLite;
+
+using static iChronoMe.Core.Classes.GeoInfo;
 
 namespace iChronoMe.Core.Classes
 {
@@ -20,7 +22,8 @@ namespace iChronoMe.Core.Classes
         {
             get
             {
-                if (_dbConfig == null) {
+                if (_dbConfig == null)
+                {
                     _dbConfig = new mySQLiteConnection(Path.Combine(sys.PathDBdata, "config.db"), SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.FullMutex);
                     var c = _dbConfig.GetTableInfo("SelectPositionResult");
                     try { _dbConfig.CreateTable<SelectPositionResult>(); }
@@ -99,7 +102,7 @@ namespace iChronoMe.Core.Classes
 
     public class mySQLiteConnection : SQLiteConnection
     {
-        
+
         public mySQLiteConnection(SQLiteConnectionString connectionString)
             : base(connectionString)
         {
@@ -118,7 +121,7 @@ namespace iChronoMe.Core.Classes
             this.ExecuteScalar<string>("PRAGMA journal_mode = TRUNCATE");
         }
 
-        public List<AreaInfo> QueryByLocation(double lat, double lng, double radius) 
+        public List<AreaInfo> QueryByLocation(double lat, double lng, double radius)
         {
             PointF center = new PointF((float)lat, (float)lng);
             double mult = 1.1; // mult = 1.1; is more reliable
@@ -139,7 +142,7 @@ namespace iChronoMe.Core.Classes
         public static PointF calculateDerivedPosition(PointF point, double range, double bearing)
         {
             double EarthRadius = 6371000; // m
-            
+
             double latA = DoubleExtensions.ToRadians(point.X);
             double lonA = DoubleExtensions.ToRadians(point.Y);
             double angularDistance = range / EarthRadius;

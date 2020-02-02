@@ -1,15 +1,14 @@
-﻿using iChronoMe.Core.Abstractions;
-using iChronoMe.Core.Types;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Globalization;
 using System.IO;
 using System.Net.Http;
-using System.Resources;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+
+using iChronoMe.Core.Abstractions;
+
 using Xamarin.Essentials;
 
 namespace iChronoMe.Core.Classes
@@ -96,7 +95,8 @@ namespace iChronoMe.Core.Classes
                     DisplayLongSite = DisplayHeight;
                     DisplayShortSite = DisplayWidth;
                 }
-            } catch { }
+            }
+            catch { }
         }
 
         private static string _DataPath;
@@ -254,12 +254,12 @@ namespace iChronoMe.Core.Classes
             if (iDecimals > 0)
             {
                 cFormat += ".";
-                for(int i=0;i<iDecimals;i++)
+                for (int i = 0; i < iDecimals; i++)
                 {
                     cFormat += "#";
                 }
             }
-            return Latitude.ToString(cFormat, CultureInfo.InvariantCulture)+cSeparator+Longitude.ToString(cFormat, CultureInfo.InvariantCulture);
+            return Latitude.ToString(cFormat, CultureInfo.InvariantCulture) + cSeparator + Longitude.ToString(cFormat, CultureInfo.InvariantCulture);
         }
 
         public async static Task<string> GetUrlContent(string cUrl)
@@ -359,7 +359,7 @@ namespace iChronoMe.Core.Classes
             {
                 if (obj1 == null || obj2 == null)
                     return false;
-                
+
                 XmlSerializer x1 = new XmlSerializer(typeof(T));
                 var mem1 = new StringWriter();
                 x1.Serialize(mem1, obj1);
@@ -400,7 +400,8 @@ namespace iChronoMe.Core.Classes
                     cRes += "\nMessage:\n" + ex.Message;
                 if (!string.IsNullOrEmpty(ex.StackTrace))
                     cRes += "\nStackTrace:\n" + ex.StackTrace;
-            } catch { }
+            }
+            catch { }
             while (ex?.InnerException != null)
             {
                 try
@@ -416,7 +417,8 @@ namespace iChronoMe.Core.Classes
                             cRes += "\n\t" + dat.ToString();
                     }
                     cRes += "\nMessage:\n" + ex.Message + "\nStackTrace:\n" + ex.StackTrace;
-                } catch { }
+                }
+                catch { }
             }
 
             if (!string.IsNullOrEmpty(cDeviceInfo))

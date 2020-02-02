@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace iChronoMe.Core.Classes
 {
@@ -132,7 +130,7 @@ namespace iChronoMe.Core.Classes
             {
                 return "Julian-Day lest of MayaCorrelation";
             }
-            var md = Gregorian2MayaDate(julian_day, MayaCorrelation) ;
+            var md = Gregorian2MayaDate(julian_day, MayaCorrelation);
 
             return string.Format("{0:d}.{1:D}.{2:D}.{3:D}.{4:D}", md.baktun, md.katun, md.tun, md.uinal, md.kin);
         }
@@ -198,7 +196,7 @@ namespace iChronoMe.Core.Classes
             if (MayaCorrelation == MayaCorrelation.Default)
                 MayaCorrelation = DefaultMayaCorrelation;
             int maya_day = julian_day - (int)MayaCorrelation;
-            
+
             int x, myhaab;
             x = maya_day + 348;     // 0.0.0.0.0 is (8 Cunku = 348 days)
             Math.DivRem(x, 365, out myhaab);   // haab calender of 365 days
@@ -256,20 +254,20 @@ namespace iChronoMe.Core.Classes
 
     public enum MayaCorrelation
     {
-        Default       = -1,
-        Thompson      = 584283,
-        Lounsbury     = 584285,
-        Martin        = 563334,
-        Kelley        = 553279,
-        Spinden       = 489384,
-        Makenson      = 489138,
-        Owen          = 487410,
-        Smiley        = 482699,
-        Bowditch      = 394483,
-        Böhm          = 622261,
-        Kreichgauer   = 626927,
+        Default = -1,
+        Thompson = 584283,
+        Lounsbury = 584285,
+        Martin = 563334,
+        Kelley = 553279,
+        Spinden = 489384,
+        Makenson = 489138,
+        Owen = 487410,
+        Smiley = 482699,
+        Bowditch = 394483,
+        Böhm = 622261,
+        Kreichgauer = 626927,
         EscalonaRamos = 679108,
-        Weitzel       = 774078,
-        Vaillant      = 774083
+        Weitzel = 774078,
+        Vaillant = 774083
     }
 }

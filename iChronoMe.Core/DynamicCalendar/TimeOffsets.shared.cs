@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml.Serialization;
+
 using iChronoMe.Core.Classes;
 
 namespace iChronoMe.Core.DynamicCalendar
@@ -49,7 +48,7 @@ namespace iChronoMe.Core.DynamicCalendar
         {
             //if (!_value.HasValue)
             {
-                 Resync(tStart, model, nOffsetDays);
+                Resync(tStart, model, nOffsetDays);
                 if (AddOnOffset != null)
                     _value += AddOnOffset.GetOffset(tStart + _value.Value, model);
             }
@@ -268,7 +267,9 @@ namespace iChronoMe.Core.DynamicCalendar
         [XmlAttribute]
         public int Count { get; set; } = 1;
 
-        public override string Info { get
+        public override string Info
+        {
+            get
             {
                 if (DynamicCalendarModelAssistent.AstroSamples.ContainsKey(this))
                     return DynamicCalendarModelAssistent.AstroSamples[this];
@@ -335,7 +336,7 @@ namespace iChronoMe.Core.DynamicCalendar
             }
             throw new Exception("Invalid TimeOffsetAstronomic-Config");
         }
-        
+
         public override int GetHashCode()
         {
             unchecked

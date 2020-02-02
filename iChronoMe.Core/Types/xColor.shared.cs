@@ -1,10 +1,9 @@
-﻿using iChronoMe.Core.Extentions;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
-using System.Text;
+
+using iChronoMe.Core.Extentions;
 
 //Xamarin Forms Color clone
 

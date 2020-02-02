@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml.Serialization;
+
 using iChronoMe.Core.DynamicCalendar;
 
 namespace iChronoMe.Core.Classes
@@ -122,7 +122,7 @@ namespace iChronoMe.Core.Classes
                 if (nPrev > nMaxVal && nNext < nMaxVal)
                 {
                     var next = FindPeakAfter(tStartPoint.AddHours(12), iDirection * -1, cMember, zone, iJumpSize, lth);
-                    tsJump = next.DateTime-tStartPoint;
+                    tsJump = next.DateTime - tStartPoint;
                     nMaxVal = getValue(fld.GetValue(new SunMoon(sys.lastUserLocation.Latitude, sys.lastUserLocation.Longitude, mNow + tsJump, zone, lth)), cMember) * iDirection;
                     xPoints.Clear();
                     xPoints.Add(mNow + tsJump, nMaxVal);
@@ -319,7 +319,8 @@ namespace iChronoMe.Core.Classes
                         tsJump -= TimeSpan.FromSeconds(iJumpSize * 2);
                         iJumpSize = iJumpSize / 10;
 
-                    } else
+                    }
+                    else
                         nLastDist = nDist;
                     tsJump += TimeSpan.FromSeconds(iJumpSize);
                     if (iJumpSize < 0.01)

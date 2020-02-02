@@ -1,8 +1,8 @@
-﻿using iChronoMe.Core.Classes;
+﻿using System;
+
+using iChronoMe.Core.Classes;
+
 using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace iChronoMe.Core.DataModels
 {

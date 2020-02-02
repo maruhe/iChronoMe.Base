@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace iChronoMe.Core.Abstractions
@@ -37,7 +36,7 @@ namespace iChronoMe.Core.Abstractions
         int Update(object obj);
         int Update(object obj, Type objType);
         int UpdateAll(IEnumerable objects, bool runInTransaction = true);
-        
+
         int Delete(object objectToDelete);
         int Delete<T>(IEnumerable<T> objects);
         int Delete<T>(IEnumerable primaryKey);
