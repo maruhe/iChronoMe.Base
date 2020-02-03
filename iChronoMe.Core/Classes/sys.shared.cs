@@ -16,6 +16,8 @@ namespace iChronoMe.Core.Classes
     public static partial class sys
     {
 
+        public static TimeType DefaultTimeType = TimeType.RealSunTime;
+
         public const double OneYear = 365.24219052;
         public static int DisplayWidth { get; private set; } = 1024;
         public static int DisplayHeight { get; private set; } = 768;

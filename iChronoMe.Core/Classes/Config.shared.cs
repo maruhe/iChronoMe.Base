@@ -167,7 +167,7 @@ namespace iChronoMe.Core.Classes
 
         }
 
-        public TimeType DefaultTimeType { get; set; } = TimeType.RealSunTime;
+        public TimeType DefaultTimeType { get => sys.DefaultTimeType; set => sys.DefaultTimeType = value; }
 
         public float WelcomeScreenDone { get; set; } = 0;
 

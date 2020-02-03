@@ -188,7 +188,7 @@ namespace iChronoMe.Core.Classes
         public int WidgetWidth;
         public int WidgetHeight;
 
-        public TimeType ShowTimeType = AppConfigHolder.MainConfig.DefaultTimeType;
+        public TimeType ShowTimeType = sys.DefaultTimeType;
         public string CalendarModelId;
 
         public xColor ColorTitleText = xColor.White;
