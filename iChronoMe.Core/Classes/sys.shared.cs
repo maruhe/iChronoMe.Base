@@ -426,9 +426,28 @@ namespace iChronoMe.Core.Classes
             return cRes;
         }
 
-        public static void LogException(Exception ex)
-        {
+        private static string cAppVersionInfo = "?";
+        private static string cDeviceInfo = "?";
 
+        public static void LogException(Exception exception)
+        {
+            try
+            {
+                string errorFileName = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss_fff") + ".log";
+                var libraryPath = Path.Combine(Path.GetTempPath(), "ErrorLog"); // iOS: Environment.SpecialFolder.Resources
+                if (!Directory.Exists(libraryPath))
+                    Directory.CreateDirectory(libraryPath);
+
+                var errorFilePath = Path.Combine(libraryPath, errorFileName);
+                var errorMessage = sys.GetExceptionFullLogText(exception, cAppVersionInfo, cDeviceInfo);
+                File.WriteAllText(errorFilePath, errorMessage);
+
+                xLog.Error("Crash Report", errorMessage);
+            }
+            catch
+            {
+                // just suppress any error logging exceptions
+            }
         }
 
         public static Location lastUserLocation = new Location(0, 0);

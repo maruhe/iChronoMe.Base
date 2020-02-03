@@ -14,7 +14,7 @@ namespace iChronoMe.Core.DynamicCalendar
         public static Dictionary<string, CalendarModelInfo> LastModelCfgList { get; private set; } = null;
 
         public static string CfgPath { get; } = sys.ConfigPathCalCfg;
-        public static string CfgFile { get; } = System.IO.Path.Combine(sys.ConfigPathCalCfg, "calendarmodelcfg.xml");
+        public static string CfgFile { get; } = Path.Combine(sys.ConfigPathCalCfg, "calendarmodelcfg.xml");
 
         public CalendarModelCfgHolder()
         {
@@ -47,7 +47,7 @@ namespace iChronoMe.Core.DynamicCalendar
                     }
                     catch (Exception ex)
                     {
-                        xLog.Debug("CalendarModelCfgHolder", ex, "load model from cache: " + cModelId);
+                        xLog.Debug(ex, "load model from cache: " + cModelId);
                     }
 
                     try
@@ -62,7 +62,7 @@ namespace iChronoMe.Core.DynamicCalendar
                     }
                     catch (Exception ex)
                     {
-                        xLog.Debug("CalendarModelCfgHolder", ex, "load model from file: " + cModelId);
+                        xLog.Debug(ex, "load model from file: " + cModelId);
                     }
                 }
                 if (bGetDefaultIfNotFound)

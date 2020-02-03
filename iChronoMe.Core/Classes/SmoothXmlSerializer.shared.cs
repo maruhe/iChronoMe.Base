@@ -500,7 +500,7 @@ namespace iChronoMe.Core.Classes
                     }
                     catch (Exception ex)
                     {
-                        xLog.Error("SmoothXmlSerializer", ex, "try get memeber type and value");
+                        xLog.Error(ex, "DeserializeObject: try get memeber type and value");
                     }
                     if (t == null)
                         continue;
@@ -559,7 +559,7 @@ namespace iChronoMe.Core.Classes
                     }
                     catch (Exception ex)
                     {
-                        xLog.Error("SmoothXmlSerializer", ex, "try get memeber type and value");
+                        xLog.Error(ex, "DeserializeObject: SubNode: try get memeber type and value");
                     }
                     if (t == null)
                         continue;

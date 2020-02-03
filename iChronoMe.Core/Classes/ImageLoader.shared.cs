@@ -32,7 +32,7 @@ namespace iChronoMe.Core.Classes
             string cBasePath = GetImagePathThumb(imageFilter);
             try
             {
-                
+
                 handler.StartProgress(ml.strings.ImageLoader_progress_title);
                 string cImgList = sys.GetUrlContent(cUrlDir + "_imglist.php?filter=" + imageFilter + "&size=" + iPrevSize).Result;
 
@@ -139,7 +139,7 @@ namespace iChronoMe.Core.Classes
             }
             catch (Exception e)
             {
-                xLog.Error("ImagePickerDialogPopupPage", e, "OnAppearing");
+                xLog.Error(e);
                 handler.ShowError(e.Message);
                 return false;
             }

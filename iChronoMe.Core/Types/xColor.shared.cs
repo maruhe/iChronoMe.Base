@@ -1,8 +1,37 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+
+/* Unmerged change from project 'iChronoMe.Core (uap10.0.16299)'
+Before:
 using System.Globalization;
 using iChronoMe.Core.Classes;
+After:
+using System.Globalization;
+
+using iChronoMe.Core.Classes;
+*/
+
+/* Unmerged change from project 'iChronoMe.Core (Xamarin.iOS10)'
+Before:
+using System.Globalization;
+using iChronoMe.Core.Classes;
+After:
+using System.Globalization;
+
+using iChronoMe.Core.Classes;
+*/
+
+/* Unmerged change from project 'iChronoMe.Core (MonoAndroid90)'
+Before:
+using System.Globalization;
+using iChronoMe.Core.Classes;
+After:
+using System.Globalization;
+
+using iChronoMe.Core.Classes;
+*/
+using System.Globalization;
 
 //Xamarin Forms Color clone
 

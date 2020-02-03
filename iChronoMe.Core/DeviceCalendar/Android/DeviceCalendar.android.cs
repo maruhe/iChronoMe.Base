@@ -8,7 +8,6 @@ using Android.App;
 using Android.Content;
 using Android.Database;
 using Android.Provider;
-using Android.Util;
 
 using iChronoMe.Core.Types;
 
@@ -77,11 +76,19 @@ namespace iChronoMe.DeviceCalendar
         {
             return Task.Run<IList<Calendar>>(() =>
             {
-                var cursor = Query(_calendarsUri, _calendarsProjection);
+                try
+                {
+                    var cursor = Query(_calendarsUri, _calendarsProjection);
 
-                var calendars = IterateCursor(cursor, () => GetCalendar(cursor));
+                    var calendars = IterateCursor(cursor, () => GetCalendar(cursor));
 
-                return calendars;
+                    return calendars;
+                }
+                catch (Exception ex)
+                {
+                    xLog.Error(ex);
+                    return null;
+                }
             });
         }
 
@@ -652,7 +659,7 @@ namespace iChronoMe.DeviceCalendar
             }
             catch (System.Exception ex)
             {
-                Log.Error("CalendarsImplementation", Java.Lang.Throwable.FromException(ex), "onParseColors");
+                xLog.Error(ex, "onParseColors");
             }
 
             return calendarEvent;

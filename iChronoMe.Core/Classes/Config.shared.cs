@@ -178,10 +178,15 @@ namespace iChronoMe.Core.Classes
         public WidgetCfg_ClockAnalog MainClock { get; set; } = new WidgetCfg_ClockAnalog() { ShowSeconds = true, FlowMinuteHand = true };
     }
 
-    public class CalendarViewConfig
+    public partial class CalendarViewConfig
     {
-        public CalendarGroupViewConfig MainGroupViewConfig { get; set; } = new CalendarGroupViewConfig();
+        public int LastViewType { get; set; } = 1;
+        public int DefaultViewType { get; set; } = -1;
+        public int AppointmentDisplayMode { get; set; } = 0;
+        public int AppointmentIndicatorCount { get; set; } = 4;
+        public bool ShowInlineEvents { get; set; } = true;
 
+        public CalendarGroupViewConfig MainGroupViewConfig { get; set; } = new CalendarGroupViewConfig();
         public List<string> CustomGroupViewConfigS { get; set; } = new List<string>();
     }
 

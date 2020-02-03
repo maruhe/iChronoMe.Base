@@ -199,13 +199,6 @@ namespace iChronoMe.Core.DynamicCalendar
                 base.Clear();
                 ex.ToString();
                 Console.WriteLine("Error reading Calendar Events: " + ex.GetType().Name + ": " + ex.Message);
-
-                if (iError < 3)
-                {
-                    await Task.Delay(250 + new Random().Next(250));
-                    bIsLoadingCalendarEventsListed = false;
-                    await DoLoadCalendarEventsListed(dStart, dEnd, iMax, iError + 1);
-                }
             }
             finally { bIsLoadingCalendarEventsListed = false; }
             Console.WriteLine("DoLoadCalendarEventsListed: Stop");

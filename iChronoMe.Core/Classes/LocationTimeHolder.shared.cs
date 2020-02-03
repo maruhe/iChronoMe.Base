@@ -398,7 +398,7 @@ namespace iChronoMe.Core
             }
             catch (Exception ex)
             {
-                xLog.Error("LocationTimeHolder", ex, "StopTimeChangedHandler");
+                xLog.Error(ex);
                 return 0;
             }
         }
@@ -440,7 +440,7 @@ namespace iChronoMe.Core
                         }
                         catch (Exception ex)
                         {
-                            xLog.Error("LocationTimeHolder", ex, "TimeChangedHandler: " + id);
+                            xLog.Error(ex, "StartTimeChangedHandler: " + id);
                         }
                         finally
                         {
@@ -456,7 +456,7 @@ namespace iChronoMe.Core
                 }
                 catch (Exception ex)
                 {
-                    xLog.Error("LocationTimeHolder", ex, "StartTimeChangedHandler: " + id);
+                    xLog.Error(ex, "StartTimeChangedHandler: " + id);
                     return false;
                 }
             }

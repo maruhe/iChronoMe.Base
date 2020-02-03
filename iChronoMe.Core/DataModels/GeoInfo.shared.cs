@@ -36,7 +36,7 @@ namespace iChronoMe.Core.Classes
                 }
                 catch (Exception e)
                 {
-                    xLog.Error("GeoInfo", e, "GetAreaInfo");
+                    xLog.Error(e);
                 }
                 finally
                 {
