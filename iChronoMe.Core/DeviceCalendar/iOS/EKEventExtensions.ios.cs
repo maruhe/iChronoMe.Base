@@ -1,5 +1,6 @@
-using EventKit;
 using System.Linq;
+
+using EventKit;
 
 namespace iChronoMe.DeviceCalendar
 {
@@ -26,7 +27,7 @@ namespace iChronoMe.DeviceCalendar
                 CalendarColorString = cClr,
                 DisplayColorString = cClr,
 
-                
+
 
                 // EventKit treats a one-day AllDay event as starting/ending on the same day,
                 // but WinPhone/Android (and thus Calendars.Plugin) define it as ending on the following day.

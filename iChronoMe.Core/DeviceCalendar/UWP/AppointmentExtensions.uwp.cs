@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 using Windows.ApplicationModel.Appointments;
 
 namespace iChronoMe.DeviceCalendar

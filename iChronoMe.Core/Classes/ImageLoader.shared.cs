@@ -11,10 +11,9 @@ namespace iChronoMe.Core.Classes
     {
         public const string filter_clockfaces = "clockface";
 
-        static string cSelImg;
         static bool bDone;
         int iPrevSize = 150;
-        public const string cUrlDir = "http://test2.ichrono.me/_appdata/";
+        public const string cUrlDir = "http://test.ichrono.me/_appdata/";
 
         public string GetImagePathThumb(string imageFilter)
         {
@@ -33,16 +32,17 @@ namespace iChronoMe.Core.Classes
             string cBasePath = GetImagePathThumb(imageFilter);
             try
             {
-                handler.StartProgress("updating preview-images...");
+                
+                handler.StartProgress(ml.strings.ImageLoader_progress_title);
                 string cImgList = sys.GetUrlContent(cUrlDir + "_imglist.php?filter=" + imageFilter + "&size=" + iPrevSize).Result;
 
                 if (string.IsNullOrEmpty(cImgList))
-                    throw new Exception("Liste nicht ladbar");
+                    throw new Exception(ml.strings.ImageLoader_error_list_unloadable);
 
                 cImgList = cImgList.Trim().Replace("<br>", "").Replace("<BR>", "");
 
                 if (!cImgList.StartsWith("path:"))
-                    throw new Exception("Liste fehlerhaft!");
+                    throw new Exception(ml.strings.ImageLoader_error_list_broken);
 
                 List<string> cLoadImgS = new List<string>();
                 var list = cImgList.Split(new char[] { '\n' });
@@ -88,7 +88,7 @@ namespace iChronoMe.Core.Classes
                 int iSuccess = 0;
                 if (cLoadImgS.Count > 0)
                 {
-                    handler.SetProgress(0, 0, sys.EzMzText(cLoadImgS.Count, "Ein Bild wird", "{0} Bilder werden") + " geladen...");
+                    handler.SetProgress(0, 0, sys.EzMzText(cLoadImgS.Count, ml.strings.ImageLoader_progress_one_image, ml.strings.ImageLoader_progress_n_images));
 
                     WebClient webClient = new WebClient();
                     int iImg = 0;
@@ -116,7 +116,8 @@ namespace iChronoMe.Core.Classes
                             catch { }
 
                             iSuccess++;
-                            handler.SetProgress(iSuccess, cLoadImgS.Count, iSuccess.ToString() + " von " + cLoadImgS.Count.ToString() + " Bildern " + sys.EzMzText(iSuccess, "wurde", "wurden") + " geladen...");
+                            handler.SetProgress(iSuccess, cLoadImgS.Count,
+                                sys.EzMzText(cLoadImgS.Count, ml.strings.ImageLoader_success_one_image, string.Format(ml.strings.ImageLoader_success_n_images, iSuccess, cLoadImgS.Count)));
 
 #if DEBUG
                             if (iSuccess > 200)

@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppName" xml:space="preserve">
+    <value>iChronoMe</value>
+  </data>
+  <data name="AppTitle" xml:space="preserve">
+    <value>iChronoMe</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="OnClick" xml:space="preserve">
+    <value>on click</value>
+  </data>
+  <data name="ContentAnColors" xml:space="preserve">
+    <value>Content and Colors</value>
+  </data>
+  <data name="Background" xml:space="preserve">
+    <value>Hintergrund</value>
+  </data>
+  <data name="Color" xml:space="preserve">
+    <value>Farbe</value>
+  </data>
+  <data name="TickMarks" xml:space="preserve">
+    <value>Skala</value>
+  </data>
+  <data name="TextColor" xml:space="preserve">
+    <value>Textfarbe</value>
+  </data>
+  <data name="Border" xml:space="preserve">
+    <value>Rahmen</value>
+  </data>
+  <data name="Filling" xml:space="preserve">
+    <value>Füllung</value>
+  </data>
+  <data name="TimeType" xml:space="preserve">
+    <value>Zeit-Typ</value>
+  </data>
+  <data name="CalendarModel" xml:space="preserve">
+    <value>Kalendermodell</value>
+  </data>
+  <data name="TimeScale" xml:space="preserve">
+    <value>Zeitraum</value>
+  </data>
+  <data name="MaxCount" xml:space="preserve">
+    <value>Maximale Anzahl</value>
+  </data>
+  <data name="Contents" xml:space="preserve">
+    <value>Inhalte</value>
+  </data>
+  <data name="FunctionInTitle" xml:space="preserve">
+    <value>Funktionen im Titel</value>
+  </data>
+  <data name="Colors" xml:space="preserve">
+    <value>Farben</value>
+  </data>
+  <data name="WidgetTitle" xml:space="preserve">
+    <value>Widget-Titel</value>
+  </data>
+  <data name="HeaderColor" xml:space="preserve">
+    <value>Knopffarbe</value>
+  </data>
+  <data name="DayTitle" xml:space="preserve">
+    <value>Tagestitel</value>
+  </data>
+  <data name="Appointments" xml:space="preserve">
+    <value>Termine</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Zeit</value>
+  </data>
+  <data name="Offset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Beschreibung</value>
+  </data>
+  <data name="TimeOffset" xml:space="preserve">
+    <value>Zeitunterschied</value>
+  </data>
+  <data name="Symbols" xml:space="preserve">
+    <value>Symbole</value>
+  </data>
+  <data name="Problems" xml:space="preserve">
+    <value>Probleme</value>
+  </data>
+  <data name="SaveWidget" xml:space="preserve">
+    <value>Widget speichern</value>
+  </data>
+  <data name="SetAllColorsAtOnce" xml:space="preserve">
+    <value>Alle Farben auf einmal</value>
+  </data>
+  <data name="OtherAdditional" xml:space="preserve">
+    <value>Weiteres</value>
+  </data>
+  <data name="AppointmentSymbols" xml:space="preserve">
+    <value>Termin-Symbole</value>
+  </data>
+  <data name="AppointmentName" xml:space="preserve">
+    <value>Termin-Name</value>
+  </data>
+  <data name="AppointmentTime" xml:space="preserve">
+    <value>Termin-Zeit</value>
+  </data>
+  <data name="ButtonColor" xml:space="preserve">
+    <value>Knopffarben</value>
+  </data>
+  <data name="ShowAllCalendars" xml:space="preserve">
+    <value>Alle Kalender anzeigen</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Optionen</value>
+  </data>
+  <data name="ShowAppointmentColors" xml:space="preserve">
+    <value>Terminfarben anzeigen</value>
+  </data>
+  <data name="ShowLocation" xml:space="preserve">
+    <value>Ort anzeigen</value>
+  </data>
+  <data name="Lines" xml:space="preserve">
+    <value>Zeilen</value>
+  </data>
+  <data name="BackgroundColor" xml:space="preserve">
+    <value>Hintergrundfarbe</value>
+  </data>
+  <data name="WidgetHeaderAndSeparatingLine" xml:space="preserve">
+    <value>Widget-Kopf und Trennzeile</value>
+  </data>
+  <data name="TitleColor" xml:space="preserve">
+    <value>Titelfarbe</value>
+  </data>
+  <data name="ErrorsOrProblems" xml:space="preserve">
+    <value>Fehler oder Probleme</value>
+  </data>
+  <data name="TickMarksColor" xml:space="preserve">
+    <value>Skala-Farbe</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Stunden</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minuten</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>Sekunden</value>
+  </data>
+  <data name="Flow" xml:space="preserve">
+    <value>flow</value>
+    <comment>flow ClockHands</comment>
+  </data>
+  <data name="LifeTimeStart" xml:space="preserve">
+    <value>Lebensstart</value>
+  </data>
+  <data name="LifeTime" xml:space="preserve">
+    <value>Lebenszeit</value>
+  </data>
+  <data name="ImageLoader_error_list_broken" xml:space="preserve">
+    <value>unable to interprete image-list</value>
+  </data>
+  <data name="ImageLoader_error_list_unloadable" xml:space="preserve">
+    <value>unable to load image-list</value>
+  </data>
+  <data name="ImageLoader_progress_n_images" xml:space="preserve">
+    <value>loading {0} images...</value>
+  </data>
+  <data name="ImageLoader_progress_one_image" xml:space="preserve">
+    <value>loading one image...</value>
+  </data>
+  <data name="ImageLoader_progress_title" xml:space="preserve">
+    <value>updating preview-images...</value>
+  </data>
+  <data name="ImageLoader_success_n_images" xml:space="preserve">
+    <value>{0} of {1} images loadet...</value>
+  </data>
+  <data name="ImageLoader_success_one_image" xml:space="preserve">
+    <value>one image loadet...</value>
+  </data>
+</root>

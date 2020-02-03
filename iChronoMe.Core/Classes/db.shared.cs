@@ -6,7 +6,7 @@ using System.IO;
 
 using iChronoMe.Core.DataModels;
 using iChronoMe.Core.DynamicCalendar;
-using iChronoMe.Core.Extentions;
+using iChronoMe.Core.Types;
 using iChronoMe.DeviceCalendar;
 
 using SQLite;

@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
+
 using Android.App;
-using Android.Provider;
 using Android.Content;
 using Android.Database;
-using System.Globalization;
+using Android.Provider;
 using Android.Util;
-using System.Linq;
+
 using iChronoMe.Core.Types;
 
 namespace iChronoMe.DeviceCalendar

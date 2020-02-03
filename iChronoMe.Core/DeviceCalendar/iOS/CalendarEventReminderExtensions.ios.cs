@@ -9,7 +9,7 @@ namespace iChronoMe.DeviceCalendar
             // iOS stores in negative seconds before the event, but CalendarEventReminder.TimeBefore uses
             // a positive TimeSpan before the event
             var seconds = -calendarEventReminder.TimeBefore.TotalSeconds;
-            return EKAlarm.FromTimeInterval(seconds); 
+            return EKAlarm.FromTimeInterval(seconds);
         }
     }
 }

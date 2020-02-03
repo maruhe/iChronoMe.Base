@@ -262,12 +262,12 @@ namespace iChronoMe.Core.Classes
             return Latitude.ToString(cFormat, CultureInfo.InvariantCulture) + cSeparator + Longitude.ToString(cFormat, CultureInfo.InvariantCulture);
         }
 
-        public async static Task<string> GetUrlContent(string cUrl)
+        public async static Task<string> GetUrlContent(string cUrl, int iMaxTimeout = 10)
         {
             try
             {
                 xLog.Debug("gogo: " + cUrl);
-                using (HttpClient client = new HttpClient())
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(iMaxTimeout) })
                 using (HttpResponseMessage response = await client.GetAsync(cUrl))
                 using (HttpContent content = response.Content)
                 {

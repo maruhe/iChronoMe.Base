@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Android.Database;
 
 namespace iChronoMe.DeviceCalendar

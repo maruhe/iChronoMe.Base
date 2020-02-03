@@ -1,7 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
+
 using Windows.ApplicationModel.Appointments;
 
 namespace iChronoMe.DeviceCalendar
@@ -270,9 +271,9 @@ namespace iChronoMe.DeviceCalendar
             }
 
             await EnsureInitializedAsync().ConfigureAwait(false);
-            
+
             var existingAppt = await _localApptStore.GetAppointmentAsync(calendarEvent.ExternalID);
-            
+
             if (existingAppt == null)
             {
                 throw new ArgumentException("Specified calendar event not found on device");
@@ -291,7 +292,7 @@ namespace iChronoMe.DeviceCalendar
             }
 
             existingAppt.Reminder = reminder.TimeBefore;
-            
+
             await appCalendar.SaveAppointmentAsync(existingAppt);
         }
 
@@ -402,7 +403,7 @@ namespace iChronoMe.DeviceCalendar
             return deleted;
         }
 
-#endregion
+        #endregion
 
         #region Private Methods
 

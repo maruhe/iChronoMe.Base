@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace iChronoMe.Core.Extentions
+namespace iChronoMe.Core.Types
 {
     public static class DoubleExtensions
     {

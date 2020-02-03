@@ -1,14 +1,10 @@
-﻿using iChronoMe.Core.Classes;
-using iChronoMe.Core.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+
+using iChronoMe.Core.Classes;
 
 namespace iChronoMe.DeviceCalendar
 {
-    public partial class CalendarEvent 
+    public partial class CalendarEvent
     {
         public Java.Util.Calendar javaStart
         {

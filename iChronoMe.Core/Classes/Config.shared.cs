@@ -153,8 +153,8 @@ namespace iChronoMe.Core.Classes
         public double Latitude { get; set; } = 0;
         public double Longitude { get; set; } = 0;
         public string AreaName { get; set; } = "searching for location...";
-        public string CountryName { get; set; } = "searching for location...";
-        public string TimeZoneID { get; set; }
+        public string CountryName { get; set; } = string.Empty;
+        public string TimeZoneID { get; set; } = TimeZone.CurrentTimeZone.StandardName;
         public string TimeZoneName { get; set; }
         public double TimeZoneOffsetGmt { get; set; } = 0;
         public double TimeZoneOffsetDst { get; set; } = 0;

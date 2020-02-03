@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 
-namespace iChronoMe.Core.Extentions
+namespace iChronoMe.Core.Types
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static class NumericExtensions

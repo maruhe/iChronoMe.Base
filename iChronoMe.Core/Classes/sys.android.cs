@@ -1,9 +1,8 @@
-﻿using Android.App;
+﻿using System;
+
+using Android.App;
 using Android.Appwidget;
 using Android.Content;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace iChronoMe.Core.Classes
 {

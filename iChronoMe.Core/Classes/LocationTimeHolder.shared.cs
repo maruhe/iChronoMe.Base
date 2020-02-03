@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,8 +27,8 @@ namespace iChronoMe.Core
 
         public double Latitude { get; private set; } = 0;
         public double Longitude { get; private set; } = 0;
-        public string CountryName { get; private set; }
-        public string AreaName { get; private set; }
+        public string CountryName { get; private set; } = String.Empty;
+        public string AreaName { get; private set; } = string.Empty;
         public double TimeZoneOffset
         {
             get
@@ -58,7 +59,6 @@ namespace iChronoMe.Core
             }
         }
 
-        Thread mSecondThread;
         public delegate void ChangedEvent();
         public EventHandler<TimeChangedEventArgs> TimeChanged;
         public EventHandler<AreaChangedEventArgs> AreaChanged;
@@ -158,6 +158,7 @@ namespace iChronoMe.Core
                 if (bClearAreaInfo)
                 {
                     AreaName = "";
+                    CountryName += "?";
                     if (nDistance > 25)
                     {
                         AreaName = "...";
@@ -168,6 +169,9 @@ namespace iChronoMe.Core
 
             Latitude = nLatitude;
             Longitude = nLongitude;
+
+            try { AreaChanged?.Invoke(this, new AreaChangedEventArgs(AreaChangedFlag.LocationUpdate)); } catch { }
+            try { TimeChanged?.Invoke(this, new TimeChangedEventArgs(TimeChangedFlag.LocationUpdate)); } catch { }
 
             return true;
         }
@@ -212,7 +216,7 @@ namespace iChronoMe.Core
             Longitude = nLongitude;
 
             AreaName = cAreaName;
-            CountryName = cCountryName;// timezone.DisplayName + " & " + timezone.StandardName + " & " + timezone.DaylightName;
+            CountryName = cCountryName;
             TimeZoneName = timezone.Id;
             TimeZoneOffsetGmt = nTimeZoneOffsetGmt.HasValue ? nTimeZoneOffsetGmt.Value : timezone.BaseUtcOffset.TotalHours;
             TimeZoneOffsetDst = nTimeZoneOffsetDst.HasValue ? nTimeZoneOffsetDst.Value : timezone.BaseUtcOffset.TotalHours + (timezone.SupportsDaylightSavingTime ? 1 : 0);
@@ -242,7 +246,8 @@ namespace iChronoMe.Core
             Latitude = nLatitude;
             Longitude = nLongitude;
 
-            CountryName = timezone.DisplayName + " & " + timezone.StandardName + " & " + timezone.DaylightName;
+            AreaName = "searching for location...";
+            CountryName = string.Empty;
             TimeZoneName = timezone.Id;
             TimeZoneOffsetGmt = timezone.BaseUtcOffset.TotalHours;
             TimeZoneOffsetDst = timezone.BaseUtcOffset.TotalHours + (timezone.SupportsDaylightSavingTime ? 1 : 0);
@@ -290,6 +295,8 @@ namespace iChronoMe.Core
         {
             if (FetchAreaInfoType == FetchAreaInfoType.FullOffline && !bForceDemeterAreaInfo)
                 return;
+            if (Latitude == 0 && Longitude == 0)
+                return;
             if (this == _localInstance)
             {
                 sys.lastUserLocation.Latitude = Latitude;
@@ -305,7 +312,8 @@ namespace iChronoMe.Core
                     return; //wenn's z'lang dauert..
                 if (ai == null)
                 {
-                    AreaName = "";
+                    AreaName = string.Empty;
+                    CountryName = string.Empty;
                 }
                 else
                 {
@@ -343,6 +351,116 @@ namespace iChronoMe.Core
                 cfg.TimeZoneOffsetDst = TimeZoneOffsetDst;
                 AppConfigHolder.SaveLocationConfig();
             }
+        }
+
+        private SortedDictionary<string, Thread> timeHandlers = new SortedDictionary<string, Thread>();
+
+        public int StopTimeChangedHandler(object senderTag)
+        {
+            if (senderTag == null)
+                return 0;
+            string id = senderTag.GetType().Name + "_" + senderTag.GetHashCode().ToString() + "_";
+            List<string> idS = new List<string>(timeHandlers.Keys);
+
+            int iRes = 0;
+            foreach (string c in idS)
+            {
+                if (c.StartsWith(id))
+                    iRes += StopTimeChangedHandlerById(c);
+            }
+
+            if (iRes < 1)
+                iRes.ToString();
+            return iRes;
+        }
+
+        public int StopTimeChangedHandler(object senderTag, TimeType timeType)
+        {
+            if (senderTag == null)
+                return 0;
+            string id = senderTag.GetType().Name + "_" + senderTag.GetHashCode().ToString() + "_" + timeType.ToString();
+            if (!timeHandlers.ContainsKey(id))
+                return 0;
+            return StopTimeChangedHandlerById(id);
+        }
+
+        private int StopTimeChangedHandlerById(string id)
+        {
+            try
+            {
+                lock (timeHandlers)
+                {
+                    var tr = timeHandlers[id];
+                    try { timeHandlers.Remove(id); } catch { }
+                    tr.Abort();
+                }
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                xLog.Error("LocationTimeHolder", ex, "StopTimeChangedHandler");
+                return 0;
+            }
+        }
+
+        public bool StartTimeChangedHandler(object senderTag, TimeType timeType, EventHandler<TimeChangedEventArgs> timeChanged)
+        {
+            if (senderTag == null || timeChanged == null)
+                return false;
+            string id = senderTag.GetType().Name + "_" + senderTag.GetHashCode().ToString() + "_" + timeType.ToString();
+
+            lock (timeHandlers)
+            {
+                try
+                {
+                    if (timeHandlers.ContainsKey(id))
+                    {
+                        StopTimeChangedHandlerById(id);
+                        if (timeHandlers.ContainsKey(id))
+                        {
+                            this.ToString();
+                        }
+                    }
+
+                    var thread = new Thread(() =>
+                    {
+                        try
+                        {
+                            timeChanged?.Invoke(this, new TimeChangedEventArgs(TimeChangedFlag.Initial));
+                            while (timeHandlers.ContainsKey(id))
+                            {
+                                Thread.Sleep(1000 - this.GetTime(timeType).Millisecond);
+                                if (bIsRunning)
+                                    timeChanged?.Invoke(this, new TimeChangedEventArgs(TimeChangedFlag.SecondChanged));
+                            }
+                        }
+                        catch (ThreadAbortException)
+                        {
+                            //all fine, handler has been removed
+                        }
+                        catch (Exception ex)
+                        {
+                            xLog.Error("LocationTimeHolder", ex, "TimeChangedHandler: " + id);
+                        }
+                        finally
+                        {
+                            lock (timeHandlers)
+                            {
+                                if (timeHandlers.ContainsKey(id))
+                                    timeHandlers.Remove(id);
+                            }
+                        }
+                    });
+                    timeHandlers.Add(id, thread);
+                    thread.Start();
+                }
+                catch (Exception ex)
+                {
+                    xLog.Error("LocationTimeHolder", ex, "StartTimeChangedHandler: " + id);
+                    return false;
+                }
+            }
+            return true;
         }
 
         #region Obsolete
@@ -400,7 +518,6 @@ namespace iChronoMe.Core
             AreaName = pos.Title;
         }
 
-        */
         public void Start(bool observeRealSunTime, bool observeMiddleSunTime, bool observeWorldTime)
         {
             if (!bIsRunning || mSecondThread == null)
@@ -439,7 +556,7 @@ namespace iChronoMe.Core
             bIsRunning = false;
             mSecondThread = null;
         }
-
+        */
 
         #endregion
 
