@@ -3,7 +3,7 @@ iChrono.me cause time is dynamic
 
 currently working features:
 
-supplying middle and real solar time:
+supplying real and middle solar time:
 
     var lth = await iChronoMe.Core.LocationTimeHolder.NewInstanceAsync(41.7448, 12.6703);
     lth.RealSunTime.ToString();
