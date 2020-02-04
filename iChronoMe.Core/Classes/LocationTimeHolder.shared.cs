@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using iChronoMe.Core.Classes;
 
 using Xamarin.Essentials;
+using static iChronoMe.Core.AreaChangedEventArgs;
+using static iChronoMe.Core.TimeChangedEventArgs;
 
 namespace iChronoMe.Core
 {
@@ -65,37 +67,37 @@ namespace iChronoMe.Core
 
         public static LocationTimeHolder NewInstance()
         {
-            var lth = new LocationTimeHolder(FetchAreaInfoType.FullAreaInfo);
+            var lth = new LocationTimeHolder(FetchAreaInfoFlag.FullAreaInfo);
 
             return lth;
         }
         public static LocationTimeHolder NewInstanceDelay(double nLatitude, double nLongitude)
         {
-            var lth = new LocationTimeHolder(FetchAreaInfoType.FullAreaInfo);
+            var lth = new LocationTimeHolder(FetchAreaInfoFlag.FullAreaInfo);
             lth.ChangePositionDelay(nLatitude, nLongitude);
             return lth;
         }
         public static LocationTimeHolder NewInstanceOffline(double nLatitude, double nLongitude, string cTimeZoneID, bool bDemeterAreaInfo = false)
         {
-            var lth = new LocationTimeHolder(bDemeterAreaInfo ? FetchAreaInfoType.FullAreaInfo : FetchAreaInfoType.FullOffline);
+            var lth = new LocationTimeHolder(bDemeterAreaInfo ? FetchAreaInfoFlag.FullAreaInfo : FetchAreaInfoFlag.FullOffline);
             lth.ChangePositionDelay(nLatitude, nLongitude, cTimeZoneID, bDemeterAreaInfo);
             return lth;
         }
 
         public static async Task<LocationTimeHolder> NewInstanceAsync(double nLatitude, double nLongitude, bool bDisableAreaInfo = false)
         {
-            var lth = new LocationTimeHolder(bDisableAreaInfo ? FetchAreaInfoType.EssentialOnly : FetchAreaInfoType.FullAreaInfo);
+            var lth = new LocationTimeHolder(bDisableAreaInfo ? FetchAreaInfoFlag.EssentialOnly : FetchAreaInfoFlag.FullAreaInfo);
             await lth.ChangePositionAsync(nLatitude, nLongitude);
             return lth;
         }
         public static LocationTimeHolder NewInstanceDelay(double nLatitude, double nLongitude, bool bDisableAreaInfo = false)
         {
-            var lth = new LocationTimeHolder(bDisableAreaInfo ? FetchAreaInfoType.EssentialOnly : FetchAreaInfoType.FullAreaInfo);
+            var lth = new LocationTimeHolder(bDisableAreaInfo ? FetchAreaInfoFlag.EssentialOnly : FetchAreaInfoFlag.FullAreaInfo);
             lth.ChangePositionAsync(nLatitude, nLongitude).Start();
             return lth;
         }
 
-        public static LocationTimeHolder NewInstanceOffline(double nLatitude, double nLongitude, string cTimeZoneID, string AreaName, string CountryName, FetchAreaInfoType faiType = FetchAreaInfoType.FullOffline)
+        public static LocationTimeHolder NewInstanceOffline(double nLatitude, double nLongitude, string cTimeZoneID, string AreaName, string CountryName, FetchAreaInfoFlag faiType = FetchAreaInfoFlag.FullOffline)
         {
             var lth = new LocationTimeHolder(faiType);
             lth.ChangePosition(nLatitude, nLongitude, cTimeZoneID, AreaName, CountryName);
@@ -104,7 +106,7 @@ namespace iChronoMe.Core
 
         private static LocationTimeHolder TryRestoreLocalInstance()
         {
-            var lth = new LocationTimeHolder(LocalFetchAreaInfoType);
+            var lth = new LocationTimeHolder(LocalFetchAreaInfoFlag);
             var cfg = AppConfigHolder.LocationConfig;
             lth.ChangePosition(cfg.Latitude, cfg.Longitude, cfg.TimeZoneID, cfg.AreaName, cfg.CountryName, cfg.TimeZoneOffsetGmt, cfg.TimeZoneOffsetDst);
             if (sys.lastUserLocation.Latitude == 0 && sys.lastUserLocation.Longitude == 0)
@@ -134,12 +136,12 @@ namespace iChronoMe.Core
             }
         }
 
-        protected FetchAreaInfoType FetchAreaInfoType = FetchAreaInfoType.FullAreaInfo;
-        public static FetchAreaInfoType LocalFetchAreaInfoType { get; set; } = FetchAreaInfoType.FullAreaInfo;
+        protected FetchAreaInfoFlag AreaInfoFlag = FetchAreaInfoFlag.FullAreaInfo;
+        public static FetchAreaInfoFlag LocalFetchAreaInfoFlag { get; set; } = FetchAreaInfoFlag.FullAreaInfo;
 
-        protected LocationTimeHolder(FetchAreaInfoType faiType)
+        protected LocationTimeHolder(FetchAreaInfoFlag faiType)
         {
-            FetchAreaInfoType = faiType;
+            AreaInfoFlag = faiType;
         }
 
         private bool ChangePositionParameters(double nLatitude, double nLongitude, bool bClearAreaInfo = false)
@@ -225,7 +227,7 @@ namespace iChronoMe.Core
             try { AreaChanged?.Invoke(this, new AreaChangedEventArgs(AreaChangedFlag.LocationUpdate)); } catch { }
             try { TimeChanged?.Invoke(this, new TimeChangedEventArgs(TimeChangedFlag.LocationUpdate)); } catch { }
 
-            if (FetchAreaInfoType != FetchAreaInfoType.FullOffline)
+            if (AreaInfoFlag != FetchAreaInfoFlag.FullOffline)
             {
                 Task.Factory.StartNew(() =>
                 {
@@ -293,7 +295,7 @@ namespace iChronoMe.Core
         GeoInfo.AreaInfo ai = null;
         private void GetLocationInfo(bool bForceDemeterAreaInfo = false)
         {
-            if (FetchAreaInfoType == FetchAreaInfoType.FullOffline && !bForceDemeterAreaInfo)
+            if (AreaInfoFlag == FetchAreaInfoFlag.FullOffline && !bForceDemeterAreaInfo)
                 return;
             if (Latitude == 0 && Longitude == 0)
                 return;
@@ -305,7 +307,7 @@ namespace iChronoMe.Core
             double nLatitude = Latitude;
             double nLongitude = Longitude;
 
-            if (FetchAreaInfoType == FetchAreaInfoType.FullAreaInfo || bForceDemeterAreaInfo)
+            if (AreaInfoFlag == FetchAreaInfoFlag.FullAreaInfo || bForceDemeterAreaInfo)
             {
                 ai = GeoInfo.GetAreaInfo(Latitude, Longitude);
                 if (nLatitude != Latitude || nLongitude != Longitude)
@@ -328,13 +330,13 @@ namespace iChronoMe.Core
                     }
                 }
             }
-            else if (FetchAreaInfoType == FetchAreaInfoType.EssentialOnly)
+            else if (AreaInfoFlag == FetchAreaInfoFlag.EssentialOnly)
             {
                 ai = new GeoInfo.AreaInfo();
                 GeoInfo.FillTimeZoneID(ai, Latitude, Longitude);
             }
             else
-                xLog.Wtf("Should not happen: GetLocationInfo: " + FetchAreaInfoType.ToString());
+                xLog.Wtf("Should not happen: GetLocationInfo: " + AreaInfoFlag.ToString());
 
             try { AreaChanged?.Invoke(this, new AreaChangedEventArgs(AreaChangedFlag.LocationUpdate)); } catch { }
             try { TimeChanged?.Invoke(this, new TimeChangedEventArgs(TimeChangedFlag.LocationUpdate)); } catch { }
@@ -468,7 +470,7 @@ namespace iChronoMe.Core
         [Obsolete("This construrctor is obsoleted use static NewInstance or LocalInstance")]
         public LocationTimeHolder(double nLatitude, double nLongitude, bool bAsync = true)
         {
-            FetchAreaInfoType = FetchAreaInfoType.FullAreaInfo;
+            FetchAreaInfoFlag = FetchAreaInfoFlag.FullAreaInfo;
             ChangePosition(nLatitude, nLongitude, true, bAsync);
         }
 
@@ -716,6 +718,12 @@ namespace iChronoMe.Core
             }
             return DateTime.MinValue;
         }
+        public enum FetchAreaInfoFlag
+        {
+            FullAreaInfo = 0,
+            EssentialOnly = 10,
+            FullOffline = -1
+        }
     }
 
     public enum TimeType
@@ -729,19 +737,21 @@ namespace iChronoMe.Core
         UtcTime = 22,
     }
 
-    public enum FetchAreaInfoType
-    {
-        FullAreaInfo = 0,
-        EssentialOnly = 10,
-        FullOffline = -1
-    }
-
     public class TimeChangedEventArgs : EventArgs
     {
         public TimeChangedFlag Flag { get; }
         public TimeChangedEventArgs(TimeChangedFlag flag)
         {
             Flag = flag;
+        }
+
+        public enum TimeChangedFlag
+        {
+            SecondChanged,
+            LocationUpdate,
+            TimeSourceUpdate,
+            Initial,
+            Unspecific
         }
     }
 
@@ -752,21 +762,12 @@ namespace iChronoMe.Core
         {
             Flag = flag;
         }
-    }
 
-    public enum TimeChangedFlag
-    {
-        SecondChanged,
-        LocationUpdate,
-        TimeSourceUpdate,
-        Initial,
-        Unspecific
-    }
-
-    public enum AreaChangedFlag
-    {
-        LocationUpdate,
-        Initial,
-        Unspecific
+        public enum AreaChangedFlag
+        {
+            LocationUpdate,
+            Initial,
+            Unspecific
+        }
     }
 }
