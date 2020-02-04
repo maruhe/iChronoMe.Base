@@ -41,7 +41,7 @@ namespace iChronoMe.Core.DynamicCalendar
                         if (!string.IsNullOrEmpty(cCachedModel) && cCachedModel.Equals(ModelCfgList[cModelId].VersionID))
                         {
                             var cache = DynamicCalendarModel.GetCachedModel(cModelId);
-                            xLog.Debug("CalendarModelCfgHolder", "load model from cache: " + cache.Name + ", Version: " + cache.VersionID);
+                            xLog.Debug("load model from cache: " + cache.Name + ", Version: " + cache.VersionID);
                             return cache;
                         }
                     }
@@ -56,7 +56,7 @@ namespace iChronoMe.Core.DynamicCalendar
                         if (model != null)
                         {
                             DynamicCalendarModel.AddCachedModel(model);
-                            xLog.Debug("CalendarModelCfgHolder", "load model from file: " + model.Name + ", Version: " + model.VersionID);
+                            xLog.Debug("load model from file: " + model.Name + ", Version: " + model.VersionID);
                             return model;
                         }
                     }
@@ -73,13 +73,13 @@ namespace iChronoMe.Core.DynamicCalendar
 
         public DynamicCalendarModel GetEditableModelCfg(string cModelId)
         {
-            xLog.Debug("CalendarModelCfgHolder", "load model editable: " + cModelId);
+            xLog.Debug("load model editable: " + cModelId);
 
             if ("_baseGregorian".Equals(cModelId))
             {
                 var model = DynamicCalendarModelAssistent.CreateModel(CalendarModelSample.Gregorian);
                 model.EnterEditableMode();
-                xLog.Debug("CalendarModelCfgHolder", "loaded model model editable: " + model.Name + ", Version: " + model.VersionID);
+                xLog.Debug("loaded model model editable: " + model.Name + ", Version: " + model.VersionID);
                 return model;
             }
 
@@ -89,7 +89,7 @@ namespace iChronoMe.Core.DynamicCalendar
                 if (model == null)
                     model = DynamicCalendarModelAssistent.CreateModel(CalendarModelSample.Gregorian);
                 model.EnterEditableMode();
-                xLog.Debug("CalendarModelCfgHolder", "loaded model model editable: " + model.Name + ", Version: " + model.VersionID);
+                xLog.Debug("loaded model model editable: " + model.Name + ", Version: " + model.VersionID);
 
                 return model;
             }
@@ -98,19 +98,19 @@ namespace iChronoMe.Core.DynamicCalendar
 
         public DynamicCalendarModel GetTemporaryModelCfg(string cModelId)
         {
-            xLog.Debug("CalendarModelCfgHolder", "load model editable: " + cModelId);
+            xLog.Debug("load model editable: " + cModelId);
 
             var model = LoadModelFromFile(cModelId);
             if (model != null)
             {
                 model.EnterTemporaryMode();
-                xLog.Debug("CalendarModelCfgHolder", "loaded model model editable: " + model.Name + ", Version: " + model.VersionID);
+                xLog.Debug("loaded model model editable: " + model.Name + ", Version: " + model.VersionID);
                 return model;
             }
 
             model = DynamicCalendarModelAssistent.CreateModel(CalendarModelSample.Gregorian);
             model.EnterTemporaryMode();
-            xLog.Debug("CalendarModelCfgHolder", "loaded model model editable: " + model.Name + ", Version: " + model.VersionID);
+            xLog.Debug("loaded model model editable: " + model.Name + ", Version: " + model.VersionID);
             return model;
         }
 
@@ -406,7 +406,7 @@ namespace iChronoMe.Core.DynamicCalendar
 
                 TimeSpan tsRepl = DateTime.Now - swStart;
 
-                xLog.Debug("CalendarModelCfgHolder", "stored CalendarModel " + model.Name + ", " + model.ID + ", Version: " + model.VersionID);
+                xLog.Debug("stored CalendarModel " + model.Name + ", " + model.ID + ", Version: " + model.VersionID);
 
                 return true;
             }

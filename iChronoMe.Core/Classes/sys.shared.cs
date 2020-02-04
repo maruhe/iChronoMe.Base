@@ -444,7 +444,7 @@ namespace iChronoMe.Core.Classes
                 var errorMessage = sys.GetExceptionFullLogText(exception, cAppVersionInfo, cDeviceInfo);
                 File.WriteAllText(errorFilePath, errorMessage);
 
-                xLog.Error("Crash Report", errorMessage);
+                xLog.Error("Crash Report\n"+ errorMessage);
             }
             catch
             {

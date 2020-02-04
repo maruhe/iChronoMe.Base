@@ -34,9 +34,9 @@ namespace iChronoMe.Widgets
 
         public virtual bool NeedsPreperation() { return false; }
 
-        public virtual void PerformPreperation(IProgressChangedHandler handler) { }
+        public virtual void PerformPreperation(IUserIO handler) { }
 
-        public virtual void AfterSelect(IProgressChangedHandler handler, WidgetCfgSample<T> sample) { }
+        public virtual void AfterSelect(IUserIO handler, WidgetCfgSample<T> sample) { }
 
         public object PrevStepAssistant { get; set; }
 
@@ -58,8 +58,8 @@ namespace iChronoMe.Widgets
         string Title { get; }
         bool ShowPreviewImage { get; set; }
         bool NeedsPreperation();
-        void PerformPreperation(IProgressChangedHandler handler);
-        void AfterSelect(IProgressChangedHandler handler, WidgetCfgSample<T> sample);
+        void PerformPreperation(IUserIO handler);
+        void AfterSelect(IUserIO handler, WidgetCfgSample<T> sample);
         object PrevStepAssistant { get; set; }
         Type NextStepAssistantType { get; set; }
         bool AllowCustom { get; }

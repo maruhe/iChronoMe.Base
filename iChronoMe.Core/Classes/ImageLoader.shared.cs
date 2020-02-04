@@ -120,7 +120,7 @@ namespace iChronoMe.Core.Classes
                                 sys.EzMzText(cLoadImgS.Count, ml.strings.ImageLoader_success_one_image, string.Format(ml.strings.ImageLoader_success_n_images, iSuccess, cLoadImgS.Count)));
 
 #if DEBUG
-                            if (iSuccess > 200)
+                            if (iSuccess >= 2)
                                 break;
 #endif
                         }

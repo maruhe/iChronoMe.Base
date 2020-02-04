@@ -43,7 +43,7 @@ namespace iChronoMe.DeviceCalendar
         public DateTime CalendarTimeStart { get; set; }
         public DateTime CalendarTimeEnd { get; set; }
 
-        public TimeType TimeType { get; set; } = AppConfigHolder.MainConfig.DefaultTimeType;
+        public TimeType TimeType { get; set; } = sys.DefaultTimeType;
         public DateTime TimeTypeStart { get; set; }
         public DateTime TimeTypeEnd { get; set; }
 

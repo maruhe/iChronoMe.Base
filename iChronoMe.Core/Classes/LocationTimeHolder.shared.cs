@@ -161,7 +161,7 @@ namespace iChronoMe.Core
                     CountryName += "?";
                     if (nDistance > 25)
                     {
-                        AreaName = "...";
+                        AreaName = "";
                         CountryName = "";
                     }
                 }
@@ -246,7 +246,7 @@ namespace iChronoMe.Core
             Latitude = nLatitude;
             Longitude = nLongitude;
 
-            AreaName = "searching for location...";
+            AreaName = string.Empty;// "searching for location...";
             CountryName = string.Empty;
             TimeZoneName = timezone.Id;
             TimeZoneOffsetGmt = timezone.BaseUtcOffset.TotalHours;
@@ -334,7 +334,7 @@ namespace iChronoMe.Core
                 GeoInfo.FillTimeZoneID(ai, Latitude, Longitude);
             }
             else
-                xLog.Wtf("LocationTimeHolder", "Should not happen: GetLocationInfo: " + FetchAreaInfoType.ToString());
+                xLog.Wtf("Should not happen: GetLocationInfo: " + FetchAreaInfoType.ToString());
 
             try { AreaChanged?.Invoke(this, new AreaChangedEventArgs(AreaChangedFlag.LocationUpdate)); } catch { }
             try { TimeChanged?.Invoke(this, new TimeChangedEventArgs(TimeChangedFlag.LocationUpdate)); } catch { }

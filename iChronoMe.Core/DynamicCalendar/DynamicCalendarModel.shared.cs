@@ -327,7 +327,7 @@ namespace iChronoMe.Core.DynamicCalendar
 
                 if (dbUserData == null || _yearInfos.Count == 0)
                 {
-                    xLog.Debug("DynamicCalendarModel", "Load dbUserData");
+                    xLog.Debug("Load dbUserData");
                     //Load Cache on first Access
                     dbUserData = db.GetCalendarModelUserData(ModelID);
 
@@ -337,7 +337,7 @@ namespace iChronoMe.Core.DynamicCalendar
                 }
                 if (dbCache == null || _yearInfos.Count == 0)
                 {
-                    xLog.Debug("DynamicCalendarModel", "Load dbCache");
+                    xLog.Debug("Load dbCache");
                     //Load Cache on first Access
                     dbCache = db.GetCalendarModelCache(ModelID);
 
@@ -348,7 +348,7 @@ namespace iChronoMe.Core.DynamicCalendar
                 }
                 if (!_loadetMonthCacheYears.Contains(iYear))
                 {
-                    xLog.Debug("DynamicCalendarModel", "Load Months from DB " + iYear);
+                    xLog.Debug("Load Months from DB " + iYear);
                     _loadetMonthCacheYears.Add(iYear);
                     //Load UserData
                     var mData = dbUserData.Query<MonthInfo>("select * from MonthInfo where Year = ?", iYear);
@@ -369,7 +369,7 @@ namespace iChronoMe.Core.DynamicCalendar
                 YearInfo yi = null;
                 if (!_yearInfos.TryGetValue(iYear, out yi) || yi == null)
                 {
-                    xLog.Debug("DynamicCalendarModel", "compute new year " + iYear);
+                    xLog.Debug("compute new year " + iYear);
                     ComputingDialog?.Prepare("computing year " + GetYearNumber(iYear) + "...");
                     //ein neues Jahr berechnen..
                     yi = new YearInfo();
@@ -667,14 +667,14 @@ namespace iChronoMe.Core.DynamicCalendar
                                     iAddMonth++;
                                     if (iDaysOfYear < yi.DayCount && OutOfTimeSectionsDict.ContainsKey(iAddMonth))
                                         aOutATime(OutOfTimeSectionsDict[iAddMonth], yi.UtcStart);
-                                    xLog.Debug("DynamicCalendarModel", "compute CreateExtraLeapMonth " + iYear);
+                                    xLog.Debug("compute CreateExtraLeapMonth " + iYear);
                                     _daysOfMonths.Add(GetYearMonth(iYear, iAddMonth), iAdd);
                                     mi = new MonthInfo(iYear, iAddMonth, iAdd);
                                     MonthInfosToSave.Add(mi);
                                 }
                                 else if (LeapModel.DaysAssignment == ExtraDaysAssignment.OutOfTime)
                                 {
-                                    xLog.Debug("DynamicCalendarModel", "compute CreateExtraLeapMonth " + iYear);
+                                    xLog.Debug("compute CreateExtraLeapMonth " + iYear);
                                     int ym = GetYearMonth(iYear, LeapModel.LeapBeforeMonth);
                                     if (_daysOutOfTime.ContainsKey(ym))
                                         _daysOutOfTime[ym] += iDays;
@@ -694,7 +694,7 @@ namespace iChronoMe.Core.DynamicCalendar
                     //for MonthEndType.ManualEndOrOpen: Aktuellen Monat finden und eventuell Länge anpassen
                     if (iYear >= ModelStartYearID && yi.UtcStart < DateTime.Now)
                     {
-                        xLog.Debug("DynamicCalendarModel", "check ManualEndOrOpen " + iYear);
+                        xLog.Debug("check ManualEndOrOpen " + iYear);
                         int iOpenMonth = -1;
                         foreach (var m in Months)
                         {
@@ -750,7 +750,7 @@ namespace iChronoMe.Core.DynamicCalendar
                         int iAssiMonth = YearLengthAssigBeforeMonth;
                         if (iAssiMonth < 0)
                             iAssiMonth = iAddMonth;
-                        xLog.Debug("DynamicCalendarModel", "ajust year-length " + iYear);
+                        xLog.Debug("ajust year-length " + iYear);
                         var mYearLengthAssignment = YearLengthAssignment;
                         int iDiff = myYearLengthTarget - iDaysOfYear;
                         if (iDiff < 0 && (mYearLengthAssignment == ExtraDaysAssignment.OutOfTime || mYearLengthAssignment == ExtraDaysAssignment.None))
@@ -828,7 +828,7 @@ namespace iChronoMe.Core.DynamicCalendar
                     if (bSaveToCache && MonthInfosToSave.Count > 0)
                         dbCache.InsertAll(MonthInfosToSave);
 
-                    xLog.Debug("DynamicCalendarModel", "computing year done " + iYear);
+                    xLog.Debug("computing year done " + iYear);
 
                     if (_daysOfMonths.TryGetValue(iYearMonth, out iRes))
                         return iRes;

@@ -78,6 +78,18 @@ namespace iChronoMe.Core.Classes
             WidgetConfigList.Keys.CopyTo(idS, 0);
             return idS;
         }
+
+        public int[] AllIds<T>()
+        {
+            List<int> idS = new List<int>();
+            foreach (var o in WidgetConfigList.Values)
+            {
+                if (o.GetType().Equals(typeof(T)) || o.GetType().IsSubclassOf(typeof(T)))
+                    idS.Add(o.WidgetId);
+            }
+            return idS.ToArray();
+        }
+
         public WidgetCfg[] AllCfgs()
         {
             WidgetCfg[] cfgS = new WidgetCfg[WidgetConfigList.Count];
@@ -621,7 +633,7 @@ namespace iChronoMe.Core.Classes
         [XmlEnum(Name = "0")]
         None = 0,
         [XmlEnum(Name = "10")]
-        FixedPosition = 10,
+        StaticPosition = 10,
         [XmlEnum(Name = "20")]
         LivePosition = 20
     }

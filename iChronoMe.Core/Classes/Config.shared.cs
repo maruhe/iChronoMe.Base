@@ -152,7 +152,7 @@ namespace iChronoMe.Core.Classes
 
         public double Latitude { get; set; } = 0;
         public double Longitude { get; set; } = 0;
-        public string AreaName { get; set; } = "searching for location...";
+        public string AreaName { get; set; } = string.Empty;
         public string CountryName { get; set; } = string.Empty;
         public string TimeZoneID { get; set; } = TimeZone.CurrentTimeZone.StandardName;
         public string TimeZoneName { get; set; }
@@ -253,7 +253,7 @@ namespace iChronoMe.Core.Classes
     public class DashboardItemConfig
     {
         public string Title { get; set; }
-        public TimeType TimeType { get; set; } = AppConfigHolder.MainConfig.DefaultTimeType;
+        public TimeType TimeType { get; set; } = sys.DefaultTimeType;
         public string CalendarModelID { get; set; }
         public DashboardItemPositionType PositionType { get; set; } = DashboardItemPositionType.LivePosition;
         public double Latitude { get; set; }

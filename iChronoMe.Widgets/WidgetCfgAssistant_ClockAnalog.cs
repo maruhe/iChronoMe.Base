@@ -18,8 +18,8 @@ namespace iChronoMe.Widgets
             ShowPreviewImage = false;
             var cfg = baseSample == null ? new WidgetCfg_ClockAnalog() : baseSample.GetConfigClone();
             cfg.PositionType = WidgetCfgPositionType.LivePosition;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("Aktueller Standort", cfg));
-            cfg.PositionType = WidgetCfgPositionType.FixedPosition;
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("Aktueller Standort", (WidgetCfg_ClockAnalog)cfg.Clone()));
+            cfg.PositionType = WidgetCfgPositionType.StaticPosition;
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("Festen Standort wählen", cfg));
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_BackgroundImage);
         }
@@ -62,15 +62,29 @@ namespace iChronoMe.Widgets
 
         public override bool NeedsPreperation()
         {
-            return AppConfigHolder.MainConfig.LastCheckClockFaces.AddDays(1) < DateTime.Now;
+            return AppConfigHolder.MainConfig.LastCheckClockFaces.AddDays(1) < DateTime.Now 
+                || BaseSample.WidgetConfig.PositionType != WidgetCfgPositionType.LivePosition;
         }
 
-        public override void PerformPreperation(IProgressChangedHandler handler)
+        public override void PerformPreperation(IUserIO handler)
         {
-            if (NeedsPreperation())
+            if (BaseSample.WidgetConfig.PositionType != WidgetCfgPositionType.LivePosition)
             {
-                loader.CheckImageThumbCache(handler, "clockface");
+                var pos = handler.TriggerSelectMapsLocation().Result;
+                if (pos == null)
+                {
+                    Samples.Clear();
+                    handler.ShowError("solar time needs a location!");
+                    handler.TriggerNegativeButtonClicked();
+                }
+                BaseSample.WidgetConfig.PositionType = WidgetCfgPositionType.StaticPosition;
+                BaseSample.WidgetConfig.WidgetTitle = pos.Title;
+                BaseSample.WidgetConfig.Latitude = pos.Latitude;
+                BaseSample.WidgetConfig.Longitude = pos.Longitude;
             }
+            if (AppConfigHolder.MainConfig.LastCheckClockFaces.AddDays(1) < DateTime.Now)
+                loader.CheckImageThumbCache(handler, "clockface");
+
             Samples.Clear();
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("ohne Hintergrund", EmptyBackSample));
             LoadSamples();
@@ -94,7 +108,7 @@ namespace iChronoMe.Widgets
             catch { }
         }
 
-        public override void AfterSelect(IProgressChangedHandler handler, WidgetCfgSample<WidgetCfg_ClockAnalog> sample)
+        public override void AfterSelect(IUserIO handler, WidgetCfgSample<WidgetCfg_ClockAnalog> sample)
         {
             base.AfterSelect(handler, sample);
 
@@ -230,7 +244,7 @@ namespace iChronoMe.Widgets
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(cTitle, clrS.ToArray(), cfg, tag));
         }
 
-        public override void AfterSelect(IProgressChangedHandler handler, WidgetCfgSample<WidgetCfg_ClockAnalog> sample)
+        public override void AfterSelect(IUserIO handler, WidgetCfgSample<WidgetCfg_ClockAnalog> sample)
         {
             base.AfterSelect(handler, sample);
             if (sample.Tag is string)
