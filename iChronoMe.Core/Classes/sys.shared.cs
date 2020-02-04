@@ -431,12 +431,14 @@ namespace iChronoMe.Core.Classes
         private static string cAppVersionInfo = "?";
         private static string cDeviceInfo = "?";
 
+        public static string ErrorLogPath { get => Path.Combine(Path.GetTempPath(), "ErrorLog"); }
+
         public static void LogException(Exception exception)
         {
             try
             {
                 string errorFileName = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss_fff") + ".log";
-                var libraryPath = Path.Combine(Path.GetTempPath(), "ErrorLog"); // iOS: Environment.SpecialFolder.Resources
+                var libraryPath = ErrorLogPath; // iOS: Environment.SpecialFolder.Resources
                 if (!Directory.Exists(libraryPath))
                     Directory.CreateDirectory(libraryPath);
 
@@ -444,7 +446,7 @@ namespace iChronoMe.Core.Classes
                 var errorMessage = sys.GetExceptionFullLogText(exception, cAppVersionInfo, cDeviceInfo);
                 File.WriteAllText(errorFilePath, errorMessage);
 
-                xLog.Error("Crash Report\n"+ errorMessage);
+                xLog.Error("Crash Report\n" + errorMessage);
             }
             catch
             {

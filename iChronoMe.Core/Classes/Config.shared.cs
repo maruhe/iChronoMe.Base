@@ -180,6 +180,19 @@ namespace iChronoMe.Core.Classes
 
     public partial class CalendarViewConfig
     {
+        public bool HasDefautlTimeType { get; set; } = false;
+
+        private TimeType _defaultTimeType = sys.DefaultTimeType; 
+        public TimeType DefaultTimeType
+        {
+            get => HasDefautlTimeType ? _defaultTimeType : sys.DefaultTimeType;
+            set
+            {
+                _defaultTimeType = value;
+                HasDefautlTimeType = true;
+            }
+        }
+
         public int LastViewType { get; set; } = 1;
         public int DefaultViewType { get; set; } = -1;
         public int AppointmentDisplayMode { get; set; } = 0;

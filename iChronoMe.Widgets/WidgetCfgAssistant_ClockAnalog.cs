@@ -62,7 +62,7 @@ namespace iChronoMe.Widgets
 
         public override bool NeedsPreperation()
         {
-            return AppConfigHolder.MainConfig.LastCheckClockFaces.AddDays(1) < DateTime.Now 
+            return AppConfigHolder.MainConfig.LastCheckClockFaces.AddDays(1) < DateTime.Now
                 || BaseSample.WidgetConfig.PositionType != WidgetCfgPositionType.LivePosition;
         }
 
