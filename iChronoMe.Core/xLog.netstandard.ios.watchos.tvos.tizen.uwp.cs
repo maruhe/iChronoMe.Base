@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace iChronoMe.Core
+namespace iChronoMe
 {
     public static class xLog
     {

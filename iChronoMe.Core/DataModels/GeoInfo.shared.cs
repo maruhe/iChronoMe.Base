@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 using System.Xml;
 
 using Newtonsoft.Json.Linq;
-
 using SQLite;
-
 using Xamarin.Essentials;
 
 namespace iChronoMe.Core.Classes
@@ -346,8 +344,7 @@ namespace iChronoMe.Core.Classes
                     ti.gmtOffset = (double)ts["gmtOffset"];
                     ti.dstOffset = (double)ts["dstOffset"];
 
-                    if (sys.Windows)
-                        ti.timezoneId = TimeZoneConverter.TZConvert.IanaToWindows(ti.timezoneId);
+                    ti.timezoneId = sys.ConvertTimeZoneToSystem(ti.timezoneId);
                     return ti;
                 }
                 catch (Exception e) { e.ToString(); }

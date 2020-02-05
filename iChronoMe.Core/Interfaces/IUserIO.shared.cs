@@ -9,6 +9,7 @@ namespace iChronoMe.Core.Interfaces
         void TriggerSingleChoiceClicked(int which);
         void TriggerNegativeButtonClicked();
         void TriggerDialogCanceled();
+        void TriggerAbortProzess();
         Task<SelectPositionResult> TriggerSelectMapsLocation();
     }
 }

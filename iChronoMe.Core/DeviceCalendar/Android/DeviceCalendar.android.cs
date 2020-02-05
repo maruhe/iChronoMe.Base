@@ -8,7 +8,7 @@ using Android.App;
 using Android.Content;
 using Android.Database;
 using Android.Provider;
-
+using iChronoMe.Core;
 using iChronoMe.Core.Types;
 
 namespace iChronoMe.DeviceCalendar
@@ -70,11 +70,11 @@ namespace iChronoMe.DeviceCalendar
         /// Gets a list of all calendars on the device.
         /// </summary>
         /// <returns>Calendars</returns>
-        /// <exception cref="System.UnauthorizedAccessException">Calendar access denied</exception>
+        /// <exception cref="UnauthorizedAccessException">Calendar access denied</exception>
         /// <exception cref="Plugin.Calendars.Abstractions.PlatformException">Unexpected platform-specific error</exception>
         public static Task<IList<Calendar>> GetCalendarsAsync()
         {
-            return Task.Run<IList<Calendar>>(() =>
+            return Task.Run(() =>
             {
                 try
                 {
@@ -97,7 +97,7 @@ namespace iChronoMe.DeviceCalendar
         /// </summary>
         /// <param name="externalId">Platform-specific calendar identifier</param>
         /// <returns>The corresponding calendar, or null if not found</returns>
-        /// <exception cref="System.UnauthorizedAccessException">Calendar access denied</exception>
+        /// <exception cref="UnauthorizedAccessException">Calendar access denied</exception>
         /// <exception cref="Plugin.Calendars.Abstractions.PlatformException">Unexpected platform-specific error</exception>
         public static Task<Calendar> GetCalendarByIdAsync(string externalId)
         {
@@ -108,7 +108,7 @@ namespace iChronoMe.DeviceCalendar
                 return null;
             }
 
-            return Task.Run<Calendar>(() =>
+            return Task.Run(() =>
             {
                 var cursor = Query(
                     ContentUris.WithAppendedId(_calendarsUri, calendarId),
@@ -127,8 +127,8 @@ namespace iChronoMe.DeviceCalendar
         /// <param name="start">Start of event range</param>
         /// <param name="end">End of event range</param>
         /// <returns>Calendar events</returns>
-        /// <exception cref="System.ArgumentException">Calendar does not exist on device</exception>
-        /// <exception cref="System.UnauthorizedAccessException">Calendar access denied</exception>
+        /// <exception cref="ArgumentException">Calendar does not exist on device</exception>
+        /// <exception cref="UnauthorizedAccessException">Calendar access denied</exception>
         /// <exception cref="Plugin.Calendars.Abstractions.PlatformException">Unexpected platform-specific error</exception>
         public static async Task<IList<CalendarEvent>> GetEventsAsync(Calendar calendar, DateTime start, DateTime end)
         {
@@ -203,7 +203,7 @@ namespace iChronoMe.DeviceCalendar
         /// </summary>
         /// <param name="externalId">Platform-specific calendar event identifier</param>
         /// <returns>The corresponding calendar event, or null if not found</returns>
-        /// <exception cref="System.UnauthorizedAccessException">Calendar access denied</exception>
+        /// <exception cref="UnauthorizedAccessException">Calendar access denied</exception>
         /// <exception cref="Plugin.Calendars.Abstractions.PlatformException">Unexpected platform-specific error</exception>
         public static Task<CalendarEvent> GetEventByIdAsync(string externalId)
         {
@@ -216,8 +216,8 @@ namespace iChronoMe.DeviceCalendar
         /// to support future queries/updates.
         /// </summary>
         /// <param name="calendar">The calendar to create/update</param>
-        /// <exception cref="System.ArgumentException">Calendar does not exist on device or is read-only</exception>
-        /// <exception cref="System.UnauthorizedAccessException">Calendar access denied</exception>
+        /// <exception cref="ArgumentException">Calendar does not exist on device or is read-only</exception>
+        /// <exception cref="UnauthorizedAccessException">Calendar access denied</exception>
         /// <exception cref="Plugin.Calendars.Abstractions.PlatformException">Unexpected platform-specific error</exception>
         public static async Task AddOrUpdateCalendarAsync(Calendar calendar)
         {
@@ -301,9 +301,9 @@ namespace iChronoMe.DeviceCalendar
         /// </summary>
         /// <param name="calendar">Destination calendar</param>
         /// <param name="calendarEvent">Event to add or update</param>
-        /// <exception cref="System.ArgumentException">Calendar is not specified, does not exist on device, or is read-only</exception>
-        /// <exception cref="System.UnauthorizedAccessException">Calendar access denied</exception>
-        /// <exception cref="System.InvalidOperationException">Editing recurring events is not supported</exception>
+        /// <exception cref="ArgumentException">Calendar is not specified, does not exist on device, or is read-only</exception>
+        /// <exception cref="UnauthorizedAccessException">Calendar access denied</exception>
+        /// <exception cref="InvalidOperationException">Editing recurring events is not supported</exception>
         /// <exception cref="Plugin.Calendars.Abstractions.PlatformException">Unexpected platform-specific error</exception>
         public static async Task AddOrUpdateEventAsync(Calendar calendar, CalendarEvent calendarEvent)
         {
@@ -429,7 +429,7 @@ namespace iChronoMe.DeviceCalendar
         /// <param name="calendarEvent">Event to add the reminder to</param>
         /// <param name="reminder">The reminder</param>
         /// <exception cref="ArgumentException">Calendar event is not created or not valid</exception>
-        /// <exception cref="System.InvalidOperationException">Editing recurring events is not supported</exception>
+        /// <exception cref="InvalidOperationException">Editing recurring events is not supported</exception>
         /// <exception cref="Plugin.Calendars.Abstractions.PlatformException">Unexpected platform-specific error</exception>
         public static async Task AddEventReminderAsync(CalendarEvent calendarEvent, CalendarEventReminder reminder)
         {
@@ -462,8 +462,8 @@ namespace iChronoMe.DeviceCalendar
         /// </summary>
         /// <param name="calendar">Calendar to delete</param>
         /// <returns>True if successfully removed</returns>
-        /// <exception cref="System.ArgumentException">Calendar is read-only</exception>
-        /// <exception cref="System.UnauthorizedAccessException">Calendar access denied</exception>
+        /// <exception cref="ArgumentException">Calendar is read-only</exception>
+        /// <exception cref="UnauthorizedAccessException">Calendar access denied</exception>
         /// <exception cref="Plugin.Calendars.Abstractions.PlatformException">Unexpected platform-specific error</exception>
         public static async Task<bool> DeleteCalendarAsync(Calendar calendar)
         {
@@ -487,9 +487,9 @@ namespace iChronoMe.DeviceCalendar
         /// <param name="calendar">Calendar to remove event from</param>
         /// <param name="calendarEvent">Event to remove</param>
         /// <returns>True if successfully removed</returns>
-        /// <exception cref="System.ArgumentException">Calendar is read-only</exception>
-        /// <exception cref="System.UnauthorizedAccessException">Calendar access denied</exception>
-        /// <exception cref="System.InvalidOperationException">Editing recurring events is not supported</exception>
+        /// <exception cref="ArgumentException">Calendar is read-only</exception>
+        /// <exception cref="UnauthorizedAccessException">Calendar access denied</exception>
+        /// <exception cref="InvalidOperationException">Editing recurring events is not supported</exception>
         /// <exception cref="Plugin.Calendars.Abstractions.PlatformException">Unexpected platform-specific error</exception>
         public static async Task<bool> DeleteEventAsync(Calendar calendar, CalendarEvent calendarEvent)
         {
@@ -512,7 +512,7 @@ namespace iChronoMe.DeviceCalendar
 
             if (long.TryParse(calendarEvent.ExternalID, out existingId))
             {
-                return await Task.Run<bool>(() =>
+                return await Task.Run(() =>
                 {
                     if (IsEventRecurring(calendarEvent.ExternalID))
                     {
@@ -597,7 +597,7 @@ namespace iChronoMe.DeviceCalendar
         /// </summary>
         /// <param name="externalId">Platform-specific calendar event identifier</param>
         /// <returns>The corresponding calendar event, or null if not found</returns>
-        /// <exception cref="System.UnauthorizedAccessException">Calendar access denied</exception>
+        /// <exception cref="UnauthorizedAccessException">Calendar access denied</exception>
         /// <exception cref="Plugin.Calendars.Abstractions.PlatformException">Unexpected platform-specific error</exception>
         private static CalendarEvent GetEventById(string externalId)
         {
@@ -657,7 +657,7 @@ namespace iChronoMe.DeviceCalendar
                 if (!string.IsNullOrEmpty(calendarEvent.EventColorString) && calendarEvent.EventColorString.StartsWith('-'))
                     calendarEvent.EventColorString = new Android.Graphics.Color(int.Parse(calendarEvent.EventColorString)).ToColor().ToHex();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 xLog.Error(ex, "onParseColors");
             }

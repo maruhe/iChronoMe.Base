@@ -197,7 +197,7 @@ namespace iChronoMe.Core.Classes
         public int DefaultViewType { get; set; } = -1;
         public int AppointmentDisplayMode { get; set; } = 0;
         public int AppointmentIndicatorCount { get; set; } = 4;
-        public bool ShowInlineEvents { get; set; } = true;
+        public bool ShowInlineEvents { get; set; } = false;
 
         public CalendarGroupViewConfig MainGroupViewConfig { get; set; } = new CalendarGroupViewConfig();
         public List<string> CustomGroupViewConfigS { get; set; } = new List<string>();

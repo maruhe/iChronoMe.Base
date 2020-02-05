@@ -2,39 +2,136 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-
+using System.Threading;
 using iChronoMe.Core.Interfaces;
 
 namespace iChronoMe.Core.Classes
 {
-    public class ImageLoader
+    public static class ImageLoader
     {
         public const string filter_clockfaces = "clockface";
 
         static bool bDone;
-        int iPrevSize = 150;
-        public const string cUrlDir = "http://test.ichrono.me/_appdata/";
+        public const string cUrlDir = "https://apps.ichrono.me/_appdata/";
 
-        public string GetImagePathThumb(string imageFilter)
+        public static string GetImagePathThumb(string imageGroup, int size = 150)
         {
-            string cPath = Path.Combine(sys.PathShare, "imgCache_" + imageFilter);
+            string cPath = Path.Combine(sys.PathShare, "imgCache_" + imageGroup);
             if (!Directory.Exists(cPath))
                 Directory.CreateDirectory(cPath);
-            cPath = Path.Combine(cPath, "thumb_" + iPrevSize);
+            cPath = Path.Combine(cPath, "thumb_" + size);
             if (!Directory.Exists(cPath))
                 Directory.CreateDirectory(cPath);
 
             return cPath;
         }
 
-        public bool CheckImageThumbCache(IProgressChangedHandler handler, string imageFilter)
+        private static Thread loaderThread = null;
+        private static List<string> imagesToLoad = new List<string>();
+        private static List<Action> actionsAfterLoad = new List<Action>();
+        public static void AddIamgeToLoadQue(string cImageFilter, string cImageName, Action afterComplete = null)
         {
-            string cBasePath = GetImagePathThumb(imageFilter);
+            try
+            {
+                string cID = cImageFilter + "/" + cImageName;
+                lock (imagesToLoad)
+                {
+                    if (imagesToLoad.Contains(cID))
+                        return;
+                    imagesToLoad.Add(cID);
+                    if (afterComplete != null)
+                        actionsAfterLoad.Add(afterComplete);
+
+                    if (loaderThread != null)
+                        return;
+
+                    loaderThread = GetNewLoaderThread();
+                    loaderThread.Start();
+                }
+            }
+            catch (Exception ex)
+            {
+                sys.LogException(ex);
+                imagesToLoad = new List<string>();
+                actionsAfterLoad = new List<Action>();
+                loaderThread = null;
+            }
+        }
+
+        private static Thread GetNewLoaderThread()
+            => new Thread(() =>
+            {
+                Thread.Sleep(150);
+                try
+                {
+                    while (imagesToLoad.Count > 0)
+                    {
+                        string cImgId = null;
+                        try
+                        {
+                            lock (imagesToLoad)
+                            {
+                                if (imagesToLoad.Count > 0)
+                                    cImgId = imagesToLoad[0];
+                            }
+                            if (string.IsNullOrEmpty(cImgId))
+                                return;
+
+                            var x = cImgId.Split('/');
+                            string cImageGroup = x[0];
+                            string cImageName = x[1];
+
+                            string cFolder = ImageLoader.GetImagePathThumb(cImageGroup);
+                            string cImagePath = Path.Combine(cFolder, cImageName);
+
+                            WebClient webClient = new WebClient();
+                            webClient.DownloadFile(ImageLoader.cUrlDir + cImageGroup + "/" + cImageName, cImagePath + "_");
+
+                            if (File.Exists(cImagePath))
+                                File.Delete(cImagePath);
+                            File.Move(cImagePath + "_", cImagePath);
+                        }
+                        catch
+                        {
+
+                        }
+                        finally
+                        {
+                            lock (imagesToLoad)
+                            {
+                                if (imagesToLoad.Contains(cImgId))
+                                    imagesToLoad.Remove(cImgId);
+                            }
+                        }
+                    }
+                }
+                finally
+                {
+                    lock (imagesToLoad)
+                    {
+                        loaderThread = null;
+                    }
+                    Thread.Sleep(100);
+                    lock (imagesToLoad)
+                    {
+                        if (imagesToLoad.Count > 0 && loaderThread == null)
+                        {
+                            sys.LogException(new Exception("ImageThread was stopped while an Image was added => restart loaderThread"));
+                            loaderThread = GetNewLoaderThread();
+                            loaderThread.Start();
+                        }
+                    }
+                }
+            });
+
+        public static bool CheckImageThumbCache(IProgressChangedHandler handler, string imageGroup, int size = 150)
+        {
+            string cBasePath = GetImagePathThumb(imageGroup, size);
             try
             {
 
                 handler.StartProgress(ml.strings.ImageLoader_progress_title);
-                string cImgList = sys.GetUrlContent(cUrlDir + "_imglist.php?filter=" + imageFilter + "&size=" + iPrevSize).Result;
+                string cImgList = sys.GetUrlContent(cUrlDir + "_imglist.php?filter=" + imageGroup + "&size=" + size).Result;
 
                 if (string.IsNullOrEmpty(cImgList))
                     throw new Exception(ml.strings.ImageLoader_error_list_unloadable);
@@ -102,7 +199,7 @@ namespace iChronoMe.Core.Classes
                             iImg++;
 
                             string cDestPath = Path.Combine(cBasePath, cLoadImage);
-                            webClient.DownloadFile(cUrlDir + "_imageprev.php?image=" + cLoadImage + "&max=" + iPrevSize, cDestPath + "_");
+                            webClient.DownloadFile(cUrlDir + "_imageprev.php?image=" + cLoadImage + "&max=" + size, cDestPath + "_");
 
                             if (File.Exists(cDestPath))
                                 File.Delete(cDestPath);
@@ -120,7 +217,7 @@ namespace iChronoMe.Core.Classes
                                 sys.EzMzText(cLoadImgS.Count, ml.strings.ImageLoader_success_one_image, string.Format(ml.strings.ImageLoader_success_n_images, iSuccess, cLoadImgS.Count)));
 
 #if DEBUG
-                            if (iSuccess >= 2)
+                            if (iSuccess >= 200)
                                 break;
 #endif
                         }
@@ -130,7 +227,7 @@ namespace iChronoMe.Core.Classes
                         }
                     }
                 }
-                if (iSuccess == cLoadImgS.Count && "clockface".Equals(imageFilter))
+                if (iSuccess == cLoadImgS.Count && "clockface".Equals(imageGroup))
                 {
                     AppConfigHolder.MainConfig.LastCheckClockFaces = DateTime.Now;
                     AppConfigHolder.SaveMainConfig();
@@ -140,7 +237,7 @@ namespace iChronoMe.Core.Classes
             catch (Exception e)
             {
                 xLog.Error(e);
-                handler.ShowError(e.Message);
+                handler.ShowToast(e.Message);
                 return false;
             }
 

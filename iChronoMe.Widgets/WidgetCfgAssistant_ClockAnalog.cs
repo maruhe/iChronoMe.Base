@@ -23,11 +23,29 @@ namespace iChronoMe.Widgets
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("Festen Standort wählen", cfg));
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_BackgroundImage);
         }
+
+        public override void AfterSelect(IUserIO handler, WidgetCfgSample<WidgetCfg_ClockAnalog> sample)
+        {
+            base.AfterSelect(handler, sample);
+
+            if (sample.WidgetConfig.PositionType != WidgetCfgPositionType.LivePosition)
+            {
+                var pos = handler.TriggerSelectMapsLocation().Result;
+                if (pos == null)
+                {
+                    handler.ShowError("solar time needs a location!");
+                    handler.TriggerAbortProzess();
+                }
+                sample.WidgetConfig.PositionType = WidgetCfgPositionType.StaticPosition;
+                sample.WidgetConfig.WidgetTitle = pos.Title;
+                sample.WidgetConfig.Latitude = pos.Latitude;
+                sample.WidgetConfig.Longitude = pos.Longitude;
+            }
+        }
     }
 
     public class WidgetCfgAssistant_ClockAnalog_BackgroundImage : WidgetConfigAssistant<WidgetCfg_ClockAnalog>
     {
-        ImageLoader loader;
         string cImageDir = "";
 
         public WidgetCfgAssistant_ClockAnalog_BackgroundImage(WidgetCfgSample<WidgetCfg_ClockAnalog> baseSample)
@@ -36,8 +54,7 @@ namespace iChronoMe.Widgets
             BaseSample = baseSample;
             BaseSample.WidgetConfig.BackgroundImage = string.Empty;
 
-            loader = new ImageLoader();
-            cImageDir = loader.GetImagePathThumb("clockface");
+            cImageDir = ImageLoader.GetImagePathThumb("clockface");
 
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("einfärbig", EmptyBackSample));
             LoadSamples();
@@ -62,28 +79,13 @@ namespace iChronoMe.Widgets
 
         public override bool NeedsPreperation()
         {
-            return AppConfigHolder.MainConfig.LastCheckClockFaces.AddDays(1) < DateTime.Now
-                || BaseSample.WidgetConfig.PositionType != WidgetCfgPositionType.LivePosition;
+            return AppConfigHolder.MainConfig.LastCheckClockFaces.AddDays(1) < DateTime.Now;
         }
 
         public override void PerformPreperation(IUserIO handler)
-        {
-            if (BaseSample.WidgetConfig.PositionType != WidgetCfgPositionType.LivePosition)
-            {
-                var pos = handler.TriggerSelectMapsLocation().Result;
-                if (pos == null)
-                {
-                    Samples.Clear();
-                    handler.ShowError("solar time needs a location!");
-                    handler.TriggerNegativeButtonClicked();
-                }
-                BaseSample.WidgetConfig.PositionType = WidgetCfgPositionType.StaticPosition;
-                BaseSample.WidgetConfig.WidgetTitle = pos.Title;
-                BaseSample.WidgetConfig.Latitude = pos.Latitude;
-                BaseSample.WidgetConfig.Longitude = pos.Longitude;
-            }
-            if (AppConfigHolder.MainConfig.LastCheckClockFaces.AddDays(1) < DateTime.Now)
-                loader.CheckImageThumbCache(handler, "clockface");
+        {            
+            if (NeedsPreperation())
+                ImageLoader.CheckImageThumbCache(handler, "clockface");
 
             Samples.Clear();
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("ohne Hintergrund", EmptyBackSample));
@@ -119,7 +121,7 @@ namespace iChronoMe.Widgets
 
             if (!string.IsNullOrEmpty(cfg.BackgroundImage) && cfg.BackgroundImage.Contains("/thumb_"))
             {
-                string cFullSizeImg = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(cfg.BackgroundImage)), System.IO.Path.GetFileName(cfg.BackgroundImage));
+                string cFullSizeImg = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(cfg.BackgroundImage)), Path.GetFileName(cfg.BackgroundImage));
                 if (File.Exists(cFullSizeImg))
                     cfg.BackgroundImage = cFullSizeImg;
                 else
@@ -129,7 +131,7 @@ namespace iChronoMe.Widgets
                         handler.StartProgress("download full size image..");
 
                         WebClient webClient = new WebClient();
-                        webClient.DownloadFile(ImageLoader.cUrlDir + System.IO.Path.GetFileName(cfg.BackgroundImage), cFullSizeImg + "_");
+                        webClient.DownloadFile(ImageLoader.cUrlDir + Path.GetFileName(cfg.BackgroundImage), cFullSizeImg + "_");
 
                         if (File.Exists(cFullSizeImg))
                             File.Delete(cFullSizeImg);
@@ -256,7 +258,7 @@ namespace iChronoMe.Widgets
     {
         public WidgetCfgAssistant_ClockAnalog_HandColors(WidgetCfgSample<WidgetCfg_ClockAnalog> baseSample)
         {
-            Title = "clock-faces";
+            Title = "hand-colors";
             BaseSample = baseSample;
 
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("current", BaseSample.GetConfigClone()));

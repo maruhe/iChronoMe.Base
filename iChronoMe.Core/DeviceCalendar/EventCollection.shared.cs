@@ -151,7 +151,7 @@ namespace iChronoMe.Core.DynamicCalendar
                 LocationTimeHolder lthCheck = LocationTimeHolder.LocalInstanceClone;
 
                 DateTime swStart = DateTime.Now;
-                if (sys.Windows)
+                if (sys.isWindows)
                 {
                     var rnd = new Random(DateTime.Now.Second);
                     for (int i = 0; i < rnd.Next(5) * 2; i++)

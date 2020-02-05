@@ -5,7 +5,10 @@ using System.Reflection;
 using Android.App;
 using Android.Appwidget;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
+using Android.Views;
+using static Android.Graphics.Bitmap;
 
 namespace iChronoMe.Core.Classes
 {
@@ -104,6 +107,53 @@ namespace iChronoMe.Core.Classes
             {
                 ex.ToString();
             }
+        }
+
+        public static Exception currentError;
+        public static Activity currentActivity;
+
+        public const string action_ErrorReceiver = "me.ichrono.droid.Receivers.ErrorReceiver";
+
+        public static void AfterExceptionLog(Exception ex, bool bTryShowUser, string cLogFilePath)
+        {
+            currentError = ex;
+
+            Intent intent = new Intent(action_ErrorReceiver);
+            if (!string.IsNullOrEmpty(cLogFilePath))
+                intent.PutExtra("LogFilePath", cLogFilePath);
+
+            try
+            {
+                if (currentActivity != null)
+                {
+                    var bmp = getScreenShot(currentActivity.Window.DecorView.RootView);
+                    string cFile = string.IsNullOrEmpty(cLogFilePath) ? System.IO.Path.Combine(System.IO.Path.GetTempPath(), DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss_fff") + ".png") : cLogFilePath + ".png";
+
+                    using (System.IO.FileStream fs = new System.IO.FileStream(cFile, System.IO.FileMode.OpenOrCreate))
+                    {
+                        bmp.Compress(Bitmap.CompressFormat.Png, 0, fs);
+                    }
+                    bmp.Recycle();
+                    intent.PutExtra("ScreenFilePath", cFile);
+                }
+            }
+            catch { }
+
+            if (bTryShowUser)
+                Application.Context.SendBroadcast(intent);
+            //Android.Support.V4.Content.LocalBroadcastManager.GetInstance(Application.Context).SendBroadcast(intent);
+        }
+
+        public static string ConvertTimeZoneToSystem(string cTimeZoneID)
+            => cTimeZoneID;
+
+        public static Bitmap getScreenShot(View view)
+        {
+            View screenView = view.RootView;
+            screenView.DrawingCacheEnabled = true;
+            Bitmap bitmap = Bitmap.CreateBitmap(screenView.GetDrawingCache(true));
+            screenView.DrawingCacheEnabled = false;
+            return bitmap;
         }
     }
 }

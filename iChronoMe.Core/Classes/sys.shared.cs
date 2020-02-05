@@ -55,10 +55,10 @@ namespace iChronoMe.Core.Classes
         public static DisplayRotation DisplayRotation { get => DeviceDisplay.GetMainDisplayInfo().Rotation; }
 
         static OsType _osType = OsType.Undefined;
-        public static bool Android { get => OsType.Android.Equals(_osType); }
-        public static bool Windows { get => OsType.Windows.Equals(_osType); }
-        public static bool iOS { get => OsType.iOS.Equals(_osType); }
-        public static bool macOS { get => OsType.macOS.Equals(_osType); }
+        public static bool isAndroid { get => OsType.Android.Equals(_osType); }
+        public static bool isWindows { get => OsType.Windows.Equals(_osType); }
+        public static bool isIOS { get => OsType.iOS.Equals(_osType); }
+        public static bool isMacOS { get => OsType.macOS.Equals(_osType); }
         public static OsType OsType { get => _osType; }
 
         private static void Init(OsType os)//, IDataBaseEngine dbEngine, IDeviceDisplay display)
@@ -108,9 +108,9 @@ namespace iChronoMe.Core.Classes
             {
                 if (string.IsNullOrEmpty(_DataPath))
                 {
-                    if (sys.Windows)
+                    if (sys.isWindows)
                         _DataPath = Path.Combine(Path.GetTempPath(), "icmData"); //Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), "iChronoMe");
-                    else if (sys.macOS)
+                    else if (sys.isMacOS)
                         Path.Combine(Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "iChronoMe"), "icmData");
                     else
                         _DataPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
@@ -196,9 +196,9 @@ namespace iChronoMe.Core.Classes
             {
                 if (string.IsNullOrEmpty(_CachePath))
                 {
-                    if (sys.Windows)
+                    if (sys.isWindows)
                         _CachePath = Path.Combine(Path.GetTempPath(), "icmCache"); //Path.Combine(Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), "iChronoMe"), "AppCache");
-                    else if (sys.macOS)
+                    else if (sys.isMacOS)
                         Path.Combine(Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "iChronoMe"), "icmCache");
                     else
                         _CachePath = System.IO.Path.GetTempPath();
@@ -433,8 +433,9 @@ namespace iChronoMe.Core.Classes
 
         public static string ErrorLogPath { get => Path.Combine(Path.GetTempPath(), "ErrorLog"); }
 
-        public static void LogException(Exception exception)
+        public static void LogException(Exception exception, bool bTryShowUser = true)
         {
+            string errorFilePath = null;
             try
             {
                 string errorFileName = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss_fff") + ".log";
@@ -442,7 +443,7 @@ namespace iChronoMe.Core.Classes
                 if (!Directory.Exists(libraryPath))
                     Directory.CreateDirectory(libraryPath);
 
-                var errorFilePath = Path.Combine(libraryPath, errorFileName);
+                errorFilePath = Path.Combine(libraryPath, errorFileName);
                 var errorMessage = sys.GetExceptionFullLogText(exception, cAppVersionInfo, cDeviceInfo);
                 File.WriteAllText(errorFilePath, errorMessage);
 
@@ -452,6 +453,8 @@ namespace iChronoMe.Core.Classes
             {
                 // just suppress any error logging exceptions
             }
+
+            try { AfterExceptionLog(exception, bTryShowUser, errorFilePath); } catch { }
         }
 
         public static Location lastUserLocation = new Location(0, 0);

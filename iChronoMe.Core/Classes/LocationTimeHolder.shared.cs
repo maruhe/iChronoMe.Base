@@ -159,13 +159,11 @@ namespace iChronoMe.Core
             {
                 if (bClearAreaInfo)
                 {
-                    AreaName = "";
-                    CountryName += "?";
+                    AreaName = string.Empty;
                     if (nDistance > 25)
-                    {
-                        AreaName = "";
-                        CountryName = "";
-                    }
+                        CountryName += "?";
+                    else
+                        CountryName = string.Empty;
                 }
             }
 
