@@ -96,7 +96,7 @@ namespace iChronoMe.Core.Classes
             }
         }
 
-        public bool UseAppDefautlTimeType { get; set; }
+        public bool UseAppDefautlTimeType { get; set; } = true;
         public int LastViewType { get; set; } = 1;
         public int DefaultViewType { get; set; } = -1;
         public int AppointmentDisplayMode { get; set; } = 0;
