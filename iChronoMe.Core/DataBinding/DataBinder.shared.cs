@@ -14,7 +14,9 @@ namespace iChronoMe.Core.DataBinding
         public int PushToViewDelayInterval { get; set; } = 15;
         public int PushToViewMaxDelay { get; set; } = 100;
 
-        public bool BindViewProperty<T>(object view, string viewProperty, BaseObservable bindable, string bindableProperty, BindMode bindMode)
+        public event EventHandler<UserChangedPropertyEventArgs> UserChangedProperty;
+
+        public bool BindViewProperty(object view, string viewProperty, BaseObservable bindable, string bindableProperty, BindMode bindMode)
         {
             if (view == null)
                 return false;
@@ -32,8 +34,8 @@ namespace iChronoMe.Core.DataBinding
             if (bProp == null) 
                 return false;
 
-            if (!bProp.PropertyType.Equals(typeof(T)) && !bProp.PropertyType.IsSubclassOf(typeof(T)))
-                return false;
+            //if (!bProp.PropertyType.Equals(typeof(T)) && !bProp.PropertyType.IsSubclassOf(typeof(T)))
+              //  return false;
 
             string cViewPropID = string.Concat(view.GetType().Name, view.GetHashCode(), viewProperty);
             if (ObjectLinks.ContainsKey(cViewPropID))
@@ -73,15 +75,25 @@ namespace iChronoMe.Core.DataBinding
             ProcessBindable_PropertyChanged(sender, e.PropertyName);
         }
 
-        private void ProcessBindable_PropertyChanged(object bindable, string property, bool isInitial = false ) 
+        public void ProcessBindable_PropertyChanged(object bindable, string property, bool isInitial = false ) 
         {
-            string cObjectPropID = string.Concat(bindable.GetType().Name, bindable.GetHashCode(), property);
-
-            var links = ViewLinks.Where(x => x.Key == cObjectPropID);
-            if (links.Count() > 0)
+            if ("*".Equals(property))
             {
-                var newVal = bindable.GetType().GetProperty(property).GetValue(bindable);
-                SendNewValueToViews(newVal, links, isInitial);
+                foreach (var olnk in ObjectLinks)
+                {
+                    ProcessBindable_PropertyChanged(olnk.Value.Object, olnk.Value.Property.Name, isInitial);
+                }
+            }
+            else
+            {
+                string cObjectPropID = string.Concat(bindable.GetType().Name, bindable.GetHashCode(), property);
+
+                var links = ViewLinks.Where(x => x.Key == cObjectPropID);
+                if (links.Count() > 0)
+                {
+                    var newVal = bindable.GetType().GetProperty(property).GetValue(bindable);
+                    SendNewValueToViews(newVal, links, isInitial);
+                }
             }
         }
 
@@ -170,7 +182,7 @@ namespace iChronoMe.Core.DataBinding
                         myQue.AddRange(ValuesToViewsQue);
                         ValuesToViewsQue.Clear();
                         trSendNewValueToViews = null;
-                        
+
                         DoWriteQueToView(myQue);
                     }
                 }
@@ -212,8 +224,24 @@ namespace iChronoMe.Core.DataBinding
 
     public enum BindMode
     {
-        OneTime = 0,
+        //OneTime = 0,
         OneWay = 10,
         TwoWay = 20
+    }
+
+    public class UserChangedPropertyEventArgs : EventArgs
+    {
+        public object Bindable { get; }
+        public string PropertyName { get; }
+        public object OldValue { get; }
+        public object NewValue { get; }
+
+        public UserChangedPropertyEventArgs(object bindable, string propName, object oldVal, object newVal)
+        {
+            Bindable = bindable;
+            PropertyName = propName;
+            OldValue = oldVal;
+            NewValue = newVal;
+        }
     }
 }

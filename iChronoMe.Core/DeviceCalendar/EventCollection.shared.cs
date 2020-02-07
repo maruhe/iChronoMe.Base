@@ -53,7 +53,7 @@ namespace iChronoMe.Core.DynamicCalendar
             return LocationTimeHolder.LocalInstance.GetTime((TimeType)tType, tTimeZoneTimeNow.ToUniversalTime());
         }
 
-        public TimeType timeType { get; set; } = sys.DefaultTimeType;
+        public TimeType timeType { get; set; } = AppConfigHolder.CalendarViewConfig.TimeType;
 
         public string CalendarFilter { get; set; }
 

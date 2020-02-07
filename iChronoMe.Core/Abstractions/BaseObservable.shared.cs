@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace iChronoMe.Core.Abstractions
+namespace iChronoMe.Core.DataBinding
 {
-    public abstract class BaseObservable
+    public abstract class BaseObservable : IBaseObservable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -14,5 +14,12 @@ namespace iChronoMe.Core.Abstractions
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+    }
+
+    public interface IBaseObservable
+    {
+        event PropertyChangedEventHandler PropertyChanged;
+
+        void OnPropertyChanged([CallerMemberName]string propertyName = null);
     }
 }

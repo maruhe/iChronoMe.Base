@@ -62,8 +62,8 @@ namespace iChronoMe.Core
         }
 
         public delegate void ChangedEvent();
-        public EventHandler<TimeChangedEventArgs> TimeChanged;
-        public EventHandler<AreaChangedEventArgs> AreaChanged;
+        public event EventHandler<TimeChangedEventArgs> TimeChanged;
+        public event EventHandler<AreaChangedEventArgs> AreaChanged;
 
         public static LocationTimeHolder NewInstance()
         {
