@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
-
+using iChronoMe.Core.Abstractions;
 using iChronoMe.Core.Types;
 
 namespace iChronoMe.Core.Classes
@@ -160,29 +160,80 @@ namespace iChronoMe.Core.Classes
         public double TimeZoneOffsetDst { get; set; } = 0;
     }
 
-    public class MainConfig
+    public class MainConfig : BaseObservable
     {
         public MainConfig()
         {
 
         }
 
-        public TimeType DefaultTimeType { get => sys.DefaultTimeType; set => sys.DefaultTimeType = value; }
+        public TimeType DefaultTimeType
+        {
+            get => sys.DefaultTimeType;
+            set
+            {
+                sys.DefaultTimeType = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public float WelcomeScreenDone { get; set; } = 0;
-
+        float _welcomeScreenDone = 0;
+        public float WelcomeScreenDone
+        {
+            get => _welcomeScreenDone;
+            set
+            {
+                _welcomeScreenDone = value;
+                OnPropertyChanged();
+            }
+        }
         public string ThemeName { get; set; }
         public bool AlwaysShowForegroundNotification { get; set; } = false;
         public bool SendErrorLogs { get; set; } = false;
         public DateTime LastCheckClockFaces { get; set; } = DateTime.MinValue;
         public WidgetCfg_ClockAnalog MainClock { get; set; } = new WidgetCfg_ClockAnalog() { ShowSeconds = true, FlowMinuteHand = true };
+
+
+        private string _cTest1 = "lala";
+        public string cTest1
+        {
+            get => _cTest1;
+            set { _cTest1 = value; OnPropertyChanged(); }
+        }
+        private string _cTest2 = "gfdgfdgsdgf";
+        public string cTest2
+        {
+            get => _cTest2;
+            set { _cTest2 = value; OnPropertyChanged(); }
+        }
+        private string _cTest3 = "123231231";
+        public string cTest3
+        {
+            get => _cTest3;
+            set { _cTest3 = value; OnPropertyChanged(); OnPropertyChanged(nameof(cTest4)); }
+        }
+
+        public string cTest4
+        {
+            get => _cTest3 + "__AddOn";
+            set
+            {
+                cTest3 = value.EndsWith("__AddOn") ? value.Substring(0, value.Length-7) : value;
+            }
+        }
     }
 
     public partial class CalendarViewConfig
     {
+        public float WelcomeScreenDone { get; set; } = 0;
+
+        public bool ShowAllCalendars { get; set; } = true;
+
+        public List<string> HideCalendars { get; set; } = new List<string>();
+
         public bool HasDefautlTimeType { get; set; } = false;
 
-        private TimeType _defaultTimeType = sys.DefaultTimeType; 
+        private TimeType _defaultTimeType = sys.DefaultTimeType;
         public TimeType DefaultTimeType
         {
             get => HasDefautlTimeType ? _defaultTimeType : sys.DefaultTimeType;

@@ -25,5 +25,18 @@ namespace iChronoMe.DeviceCalendar
             catch { }
             return res;
         }
+
+        public async static Task<IList<Calendar>> GetEditableCalendarsAsync()
+        {
+            List<Calendar> res = new List<Calendar>();
+
+            foreach (var cal in await GetCalendarsAsync())
+            {
+                if (cal.CanEditEvents)
+                    res.Add(cal);
+            }
+
+            return res;
+        }
     }
 }
