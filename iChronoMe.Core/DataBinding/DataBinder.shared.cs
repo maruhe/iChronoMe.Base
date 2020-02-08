@@ -70,6 +70,14 @@ namespace iChronoMe.Core.DataBinding
             StartViewChangeListener();
         }
 
+        public void PushDataToViewOnce()
+        {
+            foreach (var olnk in ObjectLinks)
+            {
+                ProcessBindable_PropertyChanged(olnk.Value.Object, olnk.Value.Property.Name, true);
+            }
+        }
+
         private void Bindable_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             ProcessBindable_PropertyChanged(sender, e.PropertyName);

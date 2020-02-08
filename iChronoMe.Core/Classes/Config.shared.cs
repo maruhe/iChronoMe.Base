@@ -99,12 +99,13 @@ namespace iChronoMe.Core.Classes
         public bool UseAppDefautlTimeType { get; set; } = true;
         public int LastViewType { get; set; } = 1;
         public int DefaultViewType { get; set; } = -1;
-        public int AppointmentDisplayMode { get; set; } = 0;
-        public int AppointmentIndicatorCount { get; set; } = 4;
-        public bool ShowInlineEvents { get; set; } = false;
+        public int MonthViewAppointmentDisplayMode { get; set; } = 0;
+        public int MonthViewAppointmentIndicatorCount { get; set; } = 4;
+        public bool MonthViewShowInlineEvents { get; set; } = false;
+        public bool MonthViewShowAgenda { get; set; } = true;
 
-        public CalendarGroupViewConfig MainGroupViewConfig { get; set; } = new CalendarGroupViewConfig();
-        public List<string> CustomGroupViewConfigS { get; set; } = new List<string>();
+        //public CalendarGroupViewConfig MainGroupViewConfig { get; set; } = new CalendarGroupViewConfig();
+        //public List<string> CustomGroupViewConfigS { get; set; } = new List<string>();
     }
 
     public class CalendarGroupViewConfig : INotifyPropertyChanged
