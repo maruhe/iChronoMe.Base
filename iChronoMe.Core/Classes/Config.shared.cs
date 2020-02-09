@@ -43,7 +43,7 @@ namespace iChronoMe.Core.Classes
             set { sys.DefaultTimeType = value; }
         }
 
-        public float WelcomeScreenDone { get; set; } = 0;
+        public float WelcomeScreenDone { get; set; } = sys.Debugmode ? 100 : 0;
         public string ThemeName { get; set; }
         public bool AlwaysShowForegroundNotification { get; set; } = false;
         public bool SendErrorLogs { get; set; } = false;
@@ -99,16 +99,48 @@ namespace iChronoMe.Core.Classes
         public bool UseAppDefautlTimeType { get; set; } = true;
         public int LastViewType { get; set; } = 1;
         public int DefaultViewType { get; set; } = -1;
-        public int MonthViewAppointmentDisplayMode { get; set; } = 0;
-        public int MonthViewAppointmentIndicatorCount { get; set; } = 4;
-        public bool MonthViewShowInlineEvents { get; set; } = false;
-        public bool MonthViewShowAgenda { get; set; } = true;
+
+        public SfScheduldeConfig SfScheduldeConfig { get; set; } = new SfScheduldeConfig();
 
         //public CalendarGroupViewConfig MainGroupViewConfig { get; set; } = new CalendarGroupViewConfig();
         //public List<string> CustomGroupViewConfigS { get; set; } = new List<string>();
     }
 
-    public class CalendarGroupViewConfig : INotifyPropertyChanged
+    public class SfScheduldeConfig
+    {
+        public ICollection<int> NonWorkingDays = new List<int>(new int[] { 0, 6 });
+
+        public int TimeLineHourStart { get; set; } = 0;
+        public int TimeLineHourEnd { get; set; } = 24;
+        public int TimeLineDaysCount { get; set; } = -1;
+
+        public int DayViewHourStart { get; set; } = 0;
+        public int DayViewHourEnd { get; set; } = 0;
+        public int DayViewWorkHourStart { get; set; } = 8;
+        public int DayViewWorkHourEnd { get; set; } = 18;
+        public bool DayViewShowAllDay { get; set; } = true;
+
+        public int WeekViewHourStart { get; set; } = 0;
+        public int WeekViewHourEnd { get; set; } = 24;
+        public int WeekViewWorkHourStart { get; set; } = 8;
+        public int WeekViewWorkHourEnd { get; set; } = 18;
+        public bool WeekViewShowAllDay { get; set; } = true;
+
+        public int WorkWeekHourStart { get; set; } = 0;
+        public int WorkWeekHourEnd { get; set; } = 24;
+        public int WorkWeekWorkHourStart { get; set; } = 8;
+        public int WorkWeekWorkHourEnd { get; set; } = 18;
+        public bool WorkWeekShowAllDay { get; set; } = true;
+
+        public bool MonthViewShowWeekNumber { get; set; } = true;
+        public int MonthViewAppointmentDisplayMode { get; set; } = 0;
+        public int MonthViewAppointmentIndicatorCount { get; set; } = 4;
+        public int MonthViewNavigationDirection { get; set; } = 0;
+        public bool MonthViewShowInlineEvents { get; set; } = false;
+        public bool MonthViewShowAgenda { get; set; } = true;
+    }
+
+    public class CalendarGroupViewConfig
     {
         public DualCalendarModelType DualCalendarModelType { get; set; }
         public List<int> DualCalendarWeekDayS { get; set; } = new List<int>();
@@ -137,12 +169,6 @@ namespace iChronoMe.Core.Classes
         public bool ShowCustomDualCalendarModel
         {
             get => DualCalendarModelType == DualCalendarModelType.Custom;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 

@@ -39,7 +39,10 @@ namespace iChronoMe.Core.DataBinding
         private bool IsWritingToView = false;
         private void DoWriteQueToView(List<KeyValuePair<ViewLink, object>> que)
         {
+            xLog.Debug("start writer-thread " + que.Count);
             Activity.RunOnUiThread(() => {
+                xLog.Debug("start write " + que.Count + " values to view");
+                int iDone = 0;
                 IsWritingToView = true;
                 foreach (var kv in que)
                 {
@@ -63,6 +66,7 @@ namespace iChronoMe.Core.DataBinding
                             if (view is EditText)
                                 iPos = (view as EditText).SelectionStart;
                             prop.SetValue(view, newVal);
+                            iDone++;
                             if (view is EditText && iPos > 0)
                                 (view as EditText).SetSelection(Math.Min(iPos, newVal.ToString().Length));
                         }
@@ -72,6 +76,7 @@ namespace iChronoMe.Core.DataBinding
                             {
                                 case nameof(Spinner.SelectedItemPosition):
                                     (view as Spinner).SetSelection((int)newVal);
+                                    iDone++;
                                     break;
 
                                 default:
@@ -82,6 +87,7 @@ namespace iChronoMe.Core.DataBinding
                     }
                 }
                 IsWritingToView = false;
+                xLog.Debug("writing finished, {iDone} values changed");
             });
         }
 
