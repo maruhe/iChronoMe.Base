@@ -14,14 +14,24 @@ namespace iChronoMe.Widgets
             Tag = tag;
         }
 
-        public WidgetCfgSample(string title, xColor[] colors, T cfg, object tag = null) : this(title, cfg, tag)
+        public WidgetCfgSample(string title, xColor[] colors, T cfg, object tag = null, T previewOverride = null) : this(title, cfg, tag)
         {
             Colors = colors;
+            PreviewConfig = previewOverride;
+        }
+        public WidgetCfgSample(string title, xColor[] colors, T cfg, int previewImage, object tag = null) : this(title, cfg, tag)
+        {
+            Colors = colors;
+            PreviewImage = previewImage;
         }
 
         public string Title { get; set; }
 
         public T WidgetConfig { get; set; }
+        
+        public T PreviewConfig { get; set; }
+
+        public int PreviewImage { get; set; }
 
         public T GetConfigClone()
         {
@@ -30,8 +40,6 @@ namespace iChronoMe.Widgets
 
         public xColor[] Colors { get; set; }
 
-        public object Tag { get; set; }
-
-        public Action RunAfterSelect { get; set; }
+        public object Tag { get; set; }        
     }
 }
