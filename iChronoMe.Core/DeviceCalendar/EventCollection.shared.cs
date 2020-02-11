@@ -44,7 +44,9 @@ namespace iChronoMe.Core.DynamicCalendar
         #endregion
 
         private void init()
-        { }
+        {
+            RefreshCalendarFilter(AppConfigHolder.CalendarViewConfig.HideCalendars);
+        }
 
         public DateTime GetTimeFromLocal(DateTime tTimeZoneTimeNow, TimeType? tType = null)
         {
@@ -56,6 +58,18 @@ namespace iChronoMe.Core.DynamicCalendar
         public TimeType timeType { get; set; } = AppConfigHolder.CalendarViewConfig.TimeType;
 
         public string CalendarFilter { get; set; }
+
+        public void RefreshCalendarFilter(ICollection<string> hiddenCalendars)
+        {
+            string cFilter = "";
+            if (hiddenCalendars.Count > 0)
+            {
+                cFilter = "|";
+                foreach (string c in hiddenCalendars)
+                    cFilter += c + "|";
+            }
+            CalendarFilter = cFilter;
+        }
 
         public async Task LoadCalendarEventsGrouped(DateTime dStart, DateTime dEnd)
         {
@@ -174,7 +188,7 @@ namespace iChronoMe.Core.DynamicCalendar
                     var calendars = new List<DeviceCalendar.Calendar>(await DeviceCalendar.DeviceCalendar.GetCalendarsAsync());
                     foreach (DeviceCalendar.Calendar calendar in calendars)
                     {
-                        if (string.IsNullOrEmpty(CalendarFilter) || CalendarFilter.Contains("|" + calendar.ExternalID + "|"))
+                        if (string.IsNullOrEmpty(CalendarFilter) || !CalendarFilter.Contains("|" + calendar.ExternalID + "|"))
                         {
 
                             var calEvents = await DeviceCalendar.DeviceCalendar.GetEventsAsync(calendar, dStart, dEnd);

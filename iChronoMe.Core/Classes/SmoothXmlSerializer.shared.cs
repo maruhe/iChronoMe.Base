@@ -570,11 +570,13 @@ namespace iChronoMe.Core.Classes
                             Type.GetType(t.Namespace + "." + t.Name.Substring(0, t.Name.Length - 2)) :
                             t.GenericTypeArguments[0];
 
-                        if ((elSub.HasChildNodes && IsSimple(tItem)))
+                        if (elSub.HasChildNodes && IsSimple(tItem))
+                            elSub.ToString();
+
+                        if ((elSub.HasChildNodes && IsSimple(tItem) && string.IsNullOrEmpty(elSub.InnerText)))
                             oVal = DeserializeCollection((XmlElement)elSub, tItem, t);
                         else
                         {
-
                             if (oVal == null)
                             {
                                 if (t.IsArray)
@@ -752,7 +754,8 @@ namespace iChronoMe.Core.Classes
             return type.IsPrimitive
               || type.IsEnum
               || type.Equals(typeof(string))
-              || type.Equals(typeof(decimal));
+              || type.Equals(typeof(decimal))
+              || type.Equals(typeof(DateTime));
         }
     }
 }

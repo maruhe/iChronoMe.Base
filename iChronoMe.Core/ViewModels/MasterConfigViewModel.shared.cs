@@ -60,17 +60,6 @@ namespace iChronoMe.Core.ViewModels
             }
         }
 
-        public bool ShowAllCalendars
-        {
-            get => cal.ShowAllCalendars;
-            set
-            {
-                cal.ShowAllCalendars = value;
-                saveCal();
-                OnPropertyChanged();
-            }
-        }
-
         public List<string> HideCalendars { get; set; } = new List<string>();
 
         private TimeType CalendarTimeType

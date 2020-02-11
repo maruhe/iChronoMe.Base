@@ -57,14 +57,14 @@ namespace iChronoMe.Widgets
         int iAllCount = 0;
         SKBitmap bitmap;
 
-        public Stream GetBitmap(DateTime dateTime, int width = 512, int height = 512)
+        public Stream GetBitmap(DateTime dateTime, int width = 512, int height = 512, bool bDrawBackImage = false)
         {
             if (bitmap == null || bitmap.Width != width || bitmap.Height != height)
                 bitmap = new SKBitmap(width, height);
 
             SKCanvas canvas = new SKCanvas(bitmap);
 
-            DrawCanvas(canvas, dateTime, width, height, true);
+            DrawCanvas(canvas, dateTime, width, height, bDrawBackImage);
 
             // create an image COPY
             //SKImage image = SKImage.FromBitmap(bitmap);

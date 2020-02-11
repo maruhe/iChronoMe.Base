@@ -42,6 +42,8 @@
         /// </summary>
         public string AccountName { get; set; }
 
+        public string OwnerAccount { get; set; }
+
         public bool IsPrimary { get; set; }
     }
 }

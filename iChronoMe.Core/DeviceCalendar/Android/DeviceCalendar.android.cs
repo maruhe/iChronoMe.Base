@@ -27,6 +27,7 @@ namespace iChronoMe.DeviceCalendar
                 CalendarContract.Calendars.InterfaceConsts.CalendarDisplayName,
                 CalendarContract.Calendars.InterfaceConsts.CalendarColor,
                 CalendarContract.Calendars.InterfaceConsts.AccountName,
+                CalendarContract.Calendars.InterfaceConsts.OwnerAccount,
                 CalendarContract.Calendars.InterfaceConsts.CalendarAccessLevel,
                 CalendarContract.Calendars.InterfaceConsts.AccountType,
                 CalendarContract.Calendars.InterfaceConsts.IsPrimary
@@ -771,6 +772,7 @@ namespace iChronoMe.DeviceCalendar
                 CanEditEvents = IsCalendarWriteable(accessLevel),
                 Color = colorString,
                 AccountName = cursor.GetString(CalendarContract.Calendars.InterfaceConsts.AccountName),
+                OwnerAccount = cursor.GetString(CalendarContract.Calendars.InterfaceConsts.OwnerAccount),
                 IsPrimary = cursor.GetBoolean(CalendarContract.Calendars.InterfaceConsts.IsPrimary)
             };
         }

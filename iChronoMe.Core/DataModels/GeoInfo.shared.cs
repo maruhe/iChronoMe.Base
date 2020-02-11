@@ -330,7 +330,7 @@ namespace iChronoMe.Core.Classes
             public static TimeZoneInfoCache OnlineFromLocation(double Latitude, double Longitude)
             {
                 //get TimezoneInfo online
-                string cUri = "http://api.geonames.org/timezoneJSON?style=full&lat=" + Latitude.ToString("0.######", CultureInfo.InvariantCulture) + "&lng=" + Longitude.ToString("0.######", CultureInfo.InvariantCulture) + "&username=" + Secrets.GeoNamesOrg_User;
+                string cUri = "https://secure.geonames.org/timezoneJSON?style=full&lat=" + Latitude.ToString("0.######", CultureInfo.InvariantCulture) + "&lng=" + Longitude.ToString("0.######", CultureInfo.InvariantCulture) + "&username=" + Secrets.GeoNamesOrg_User;
                 string cGeoInfo = sys.GetUrlContent(cUri).Result;
 
                 try

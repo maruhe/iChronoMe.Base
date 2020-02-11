@@ -378,12 +378,14 @@ namespace iChronoMe.Core.Classes
             return false;
         }
 
-        public static string GetExceptionFullLogText(Exception ex, string cAppVersionInfo, string cDeviceInfo = "")
+        public static string GetExceptionFullLogText(Exception ex, string cMessage, string cAppVersionInfo, string cDeviceInfo = "")
         {
             if (ex == null)
                 return "Empty Exception @ " + DateTime.Now.ToString("s");
 
             string cRes = ex.GetType().FullName + "\n" + DateTime.Now.ToString("s");
+            if (!string.IsNullOrEmpty(cMessage))
+                cRes += "\n" + cMessage;
 
             try
             {
@@ -433,7 +435,7 @@ namespace iChronoMe.Core.Classes
 
         public static string ErrorLogPath { get => Path.Combine(Path.GetTempPath(), "ErrorLog"); }
 
-        public static void LogException(Exception exception, bool bTryShowUser = true)
+        public static void LogException(Exception exception, string cMessage = null, bool bTryShowUser = true)
         {
             string errorFilePath = null;
             try
@@ -444,7 +446,7 @@ namespace iChronoMe.Core.Classes
                     Directory.CreateDirectory(libraryPath);
 
                 errorFilePath = Path.Combine(libraryPath, errorFileName);
-                var errorMessage = sys.GetExceptionFullLogText(exception, cAppVersionInfo, cDeviceInfo);
+                var errorMessage = sys.GetExceptionFullLogText(exception, cMessage, cAppVersionInfo, cDeviceInfo);
                 File.WriteAllText(errorFilePath, errorMessage);
 
                 xLog.Error("Crash Report\n" + errorMessage);

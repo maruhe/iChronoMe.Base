@@ -92,8 +92,7 @@ namespace iChronoMe.Widgets
 
             cImageDir = ImageLoader.GetImagePathThumb("clockface");
 
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("einfärbig", EmptyBackSample));
-            LoadSamples();
+            //create samples on PerformPreperation()
 
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase);
         }
@@ -125,7 +124,7 @@ namespace iChronoMe.Widgets
                 ImageLoader.CheckImageThumbCache(handler, "clockface");
 
             Samples.Clear();
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("ohne Hintergrund", EmptyBackSample));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("einfärbig", EmptyBackSample));
             LoadSamples();
             base.PerformPreperation(handler);
         }

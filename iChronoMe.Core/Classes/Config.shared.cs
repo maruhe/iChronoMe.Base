@@ -78,9 +78,7 @@ namespace iChronoMe.Core.Classes
     public partial class CalendarViewConfig
     {
         public float WelcomeScreenDone { get; set; } = 0;
-
-        public bool ShowAllCalendars { get; set; } = true;
-
+        
         public List<string> HideCalendars { get; set; } = new List<string>();
 
         public TimeType CalendarTimeType { get; set; } = sys.DefaultTimeType;
