@@ -15,6 +15,8 @@ namespace iChronoMe.Core
     {
         bool bIsRunning = true;
 
+        private string _id { get; } = Guid.NewGuid().ToString();
+
         private DateTime _UtcNow = DateTime.MinValue;
         public DateTime UtcNow
         {
@@ -144,6 +146,8 @@ namespace iChronoMe.Core
             AreaInfoFlag = faiType;
         }
 
+        static  object oTZlock = new object();
+
         private bool ChangePositionParameters(double nLatitude, double nLongitude, bool bClearAreaInfo = false)
         {
             if ((Latitude == nLatitude) && (Longitude == nLongitude))
@@ -196,12 +200,7 @@ namespace iChronoMe.Core
                 return;
 
             if ((ai == null || !ai.CheckBoxIsUpToDate(nLatitude, nLongitude) || bClearAreaInfo || bForceRefreshAreaInfo))
-            {
-                Task.Factory.StartNew(() =>
-                {
-                    GetLocationInfo();
-                });
-            }
+                StartRefreshLocationInfo();
         }
 
         public bool ChangePosition(double nLatitude, double nLongitude, string cTimeZoneID, string cAreaName, string cCountryName, double? nTimeZoneOffsetGmt = null, double? nTimeZoneOffsetDst = null)
@@ -226,12 +225,7 @@ namespace iChronoMe.Core
             try { TimeChanged?.Invoke(this, new TimeChangedEventArgs(TimeChangedFlag.LocationUpdate)); } catch { }
 
             if (AreaInfoFlag != FetchAreaInfoFlag.FullOffline)
-            {
-                Task.Factory.StartNew(() =>
-                {
-                    GetLocationInfo();
-                });
-            }
+                StartRefreshLocationInfo();
             return true;
         }
 
@@ -265,12 +259,7 @@ namespace iChronoMe.Core
                 return false;
 
             if (bDemeterAreaInfo)
-            {
-                Task.Factory.StartNew(() =>
-                {
-                    GetLocationInfo();
-                });
-            }
+                StartRefreshLocationInfo();
             return true;
         }
 
@@ -288,6 +277,26 @@ namespace iChronoMe.Core
                 return true;
             }
             return true;
+        }
+
+        Task locationTask = null;
+        bool bStartLocationTaskAgain = false;
+        private void StartRefreshLocationInfo()
+        {
+            xLog.Debug("StartRefreshLocationInfo: " + (locationTask != null).ToString());
+            bStartLocationTaskAgain = true;
+            if (locationTask != null)
+                return;
+
+            locationTask = Task.Factory.StartNew(() =>
+            {
+                bStartLocationTaskAgain = false;
+                GetLocationInfo();
+                Task.Delay(1000).Wait();
+                locationTask = null;
+                if (bStartLocationTaskAgain)
+                    StartRefreshLocationInfo();
+            });
         }
 
         GeoInfo.AreaInfo ai = null;
@@ -716,6 +725,20 @@ namespace iChronoMe.Core
             }
             return DateTime.MinValue;
         }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                // Choose large primes to avoid hashing collisions
+                int HashingBase = GetType().GetHashCode();
+                const int HashingMultiplier = 16777619;
+                int hash = HashingBase;
+                hash = (hash * HashingMultiplier) ^ _id.GetHashCode();
+                return hash;
+            }
+        }
+
         public enum FetchAreaInfoFlag
         {
             FullAreaInfo = 0,
