@@ -13,7 +13,7 @@ namespace iChronoMe.DeviceCalendar
         /// <summary>
         /// Calendar event name/title/subject
         /// </summary>
-        public string Name { get; set; }
+        public string Title { get; set; }
 
         public string CalendarId { get; set; }
 
@@ -84,7 +84,7 @@ namespace iChronoMe.DeviceCalendar
         /// <returns></returns>
         public override string ToString()
         {
-            return "Name=" + Name + ", AllDay=" + AllDay + ", Start=" + Start + ", End=" + End + ", Location=" + Location;
+            return "Name=" + Title + ", AllDay=" + AllDay + ", Start=" + Start + ", End=" + End + ", Location=" + Location;
         }
 
         private CalendarEventExtention _extention = null;

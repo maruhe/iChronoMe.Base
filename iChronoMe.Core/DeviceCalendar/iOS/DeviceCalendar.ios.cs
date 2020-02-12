@@ -251,7 +251,7 @@ namespace iChronoMe.DeviceCalendar
                 iosEvent = EKEvent.FromStore(_eventStore);
             }
 
-            iosEvent.Title = calendarEvent.Name;
+            iosEvent.Title = calendarEvent.Title;
             iosEvent.Notes = calendarEvent.Description;
             iosEvent.AllDay = calendarEvent.AllDay;
             iosEvent.Location = calendarEvent.Location ?? string.Empty;

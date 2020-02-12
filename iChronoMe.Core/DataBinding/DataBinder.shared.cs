@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using iChronoMe.Core.Abstractions;
+using iChronoMe.Core.Interfaces;
 
 namespace iChronoMe.Core.DataBinding
 {
@@ -64,6 +65,8 @@ namespace iChronoMe.Core.DataBinding
 
             foreach(var olnk in ObjectLinks)
             {
+                if (olnk.Value.Object is ICanBeReady && !((ICanBeReady)olnk.Value.Object).IsReady)
+                    continue;
                 ProcessBindable_PropertyChanged(olnk.Value.Object, olnk.Value.Property.Name, true);
             }
 

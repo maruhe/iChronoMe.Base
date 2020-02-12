@@ -57,14 +57,14 @@ namespace iChronoMe.Widgets
         int iAllCount = 0;
         SKBitmap bitmap;
 
-        public Stream GetBitmap(DateTime dateTime, int width = 512, int height = 512, bool bDrawBackImage = false)
+        public Stream GetBitmap(DateTime dateTime, int width = 512, int height = 512, bool bDrawBackImage = false, float? nSecondHandOverrideSecond = null)
         {
             if (bitmap == null || bitmap.Width != width || bitmap.Height != height)
                 bitmap = new SKBitmap(width, height);
 
             SKCanvas canvas = new SKCanvas(bitmap);
 
-            DrawCanvas(canvas, dateTime, width, height, bDrawBackImage);
+            DrawCanvas(canvas, dateTime, width, height, bDrawBackImage, nSecondHandOverrideSecond);
 
             // create an image COPY
             //SKImage image = SKImage.FromBitmap(bitmap);
@@ -108,7 +108,7 @@ namespace iChronoMe.Widgets
         string cBackCacheInstance = "_";
         SKBitmap backCache = null;
 
-        public void DrawCanvas(SKCanvas canvas, DateTime dateTime, int width = 512, int height = 512, bool bDrawBackImage = false)
+        public void DrawCanvas(SKCanvas canvas, DateTime dateTime, int width = 512, int height = 512, bool bDrawBackImage = false, float? nSecondHandOverrideSecond = null)
         {
             DateTime swStart = DateTime.Now;
 
@@ -191,6 +191,8 @@ namespace iChronoMe.Widgets
                 strokePaint.Color = ColorSecondHandStorke.ToSKColor();
                 canvas.Save();
                 float seconds = dateTime.Second + (FlowSecondHand ? dateTime.Millisecond / 1000f : 0);
+                if (nSecondHandOverrideSecond.HasValue)
+                    seconds = nSecondHandOverrideSecond.Value;
                 canvas.RotateDegrees(6 * seconds);
                 canvas.DrawLine(0, 10, 0, -80, strokePaint);
                 canvas.Restore();

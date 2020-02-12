@@ -9,6 +9,7 @@ using Android.Content;
 using Android.Database;
 using Android.Provider;
 using iChronoMe.Core;
+using iChronoMe.Core.Classes;
 using iChronoMe.Core.Types;
 
 namespace iChronoMe.DeviceCalendar
@@ -28,6 +29,7 @@ namespace iChronoMe.DeviceCalendar
                 CalendarContract.Calendars.InterfaceConsts.CalendarColor,
                 CalendarContract.Calendars.InterfaceConsts.AccountName,
                 CalendarContract.Calendars.InterfaceConsts.OwnerAccount,
+                CalendarContract.Calendars.InterfaceConsts.Visible,
                 CalendarContract.Calendars.InterfaceConsts.CalendarAccessLevel,
                 CalendarContract.Calendars.InterfaceConsts.AccountType,
                 CalendarContract.Calendars.InterfaceConsts.IsPrimary
@@ -149,7 +151,6 @@ namespace iChronoMe.DeviceCalendar
             {
                 CalendarContract.Instances.EventId,
                 CalendarContract.Events.InterfaceConsts.Title,
-                CalendarContract.Events.InterfaceConsts.CalendarColor,
                 CalendarContract.Events.InterfaceConsts.DisplayColor,
                 CalendarContract.Events.InterfaceConsts.EventColor,
                 CalendarContract.Events.InterfaceConsts.Description,
@@ -171,28 +172,42 @@ namespace iChronoMe.DeviceCalendar
 
                 var events = IterateCursor(cursor, () =>
                 {
-                    bool allDay = cursor.GetBoolean(CalendarContract.Events.InterfaceConsts.AllDay);
-
-                    var calendarEvent = new CalendarEvent
+                    try
                     {
-                        ExternalID = cursor.GetString(CalendarContract.Instances.EventId),
-                        Name = cursor.GetString(CalendarContract.Events.InterfaceConsts.Title),
-                        CalendarColorString = string.Format("#{0:x8}", cursor.GetInt(CalendarContract.Events.InterfaceConsts.CalendarColor)),
-                        DisplayColorString = string.Format("#{0:x8}", cursor.GetInt(CalendarContract.Events.InterfaceConsts.DisplayColor)),
-                        EventColorString = string.Format("#{0:x8}", cursor.GetInt(CalendarContract.Events.InterfaceConsts.EventColor)),
-                        Description = cursor.GetString(CalendarContract.Events.InterfaceConsts.Description),
-                        Start = cursor.GetDateTime(CalendarContract.Instances.Begin, allDay),
-                        End = cursor.GetDateTime(CalendarContract.Instances.End, allDay),
-                        Location = cursor.GetString(CalendarContract.Events.InterfaceConsts.EventLocation),
-                        //AccessLevel = cursor.GetInt(CalendarContract.Events.InterfaceConsts.AccessLevel),
-                        //tmp = cursor.GetString(CalendarContract.Events.InterfaceConsts.HasExtendedProperties), int mit Count?
-                        //tmp = "1" + cursor.GetString(CalendarContract.Events.InterfaceConsts.IsPrimary),
+                        bool allDay = cursor.GetBoolean(CalendarContract.Events.InterfaceConsts.AllDay);
 
-                        AllDay = allDay
-                    };
-                    //calendarEvent.Reminders = GetEventReminders(calendarEvent.ExternalID); => Dauert zu lange!
+                        var calendarEvent = new CalendarEvent
+                        {
+                            ExternalID = cursor.GetString(CalendarContract.Instances.EventId),
+                            CalendarId = calendar.ExternalID,
+                            Title = cursor.GetString(CalendarContract.Events.InterfaceConsts.Title),
+                            DisplayColorString = string.Format("#{0:x8}", cursor.GetInt(CalendarContract.Events.InterfaceConsts.DisplayColor)),
+                            EventColorString = string.Format("#{0:x8}", cursor.GetInt(CalendarContract.Events.InterfaceConsts.EventColor)),
+                            Description = cursor.GetString(CalendarContract.Events.InterfaceConsts.Description),
+                            Start = cursor.GetDateTime(CalendarContract.Instances.Begin, allDay),
+                            End = cursor.GetDateTime(CalendarContract.Instances.End, allDay),
+                            Location = cursor.GetString(CalendarContract.Events.InterfaceConsts.EventLocation),
+                            //AccessLevel = cursor.GetInt(CalendarContract.Events.InterfaceConsts.AccessLevel),
+                            //tmp = cursor.GetString(CalendarContract.Events.InterfaceConsts.HasExtendedProperties), int mit Count?
+                            //tmp = "1" + cursor.GetString(CalendarContract.Events.InterfaceConsts.IsPrimary),
 
-                    return calendarEvent;
+                            AllDay = allDay
+                        };
+                        //calendarEvent.Reminders = GetEventReminders(calendarEvent.ExternalID); => Dauert zu lange!
+
+                        return calendarEvent;
+                    } 
+                    catch (Exception ex)
+                    {
+                        sys.LogException(ex);
+                        int rnd = new Random().Next(8);
+                        return new CalendarEvent()
+                        {
+                            Start = DateTime.Today.AddHours(10 + rnd),
+                            End = DateTime.Today.AddHours(11 + rnd),
+                            Title = ex.Message
+                        };
+                    }
                 });
 
                 return events;
@@ -364,7 +379,7 @@ namespace iChronoMe.DeviceCalendar
                 eventValues.Put(CalendarContract.Events.InterfaceConsts.CalendarId,
                     calendar.ExternalID);
                 eventValues.Put(CalendarContract.Events.InterfaceConsts.Title,
-                    calendarEvent.Name);
+                    calendarEvent.Title);
                 eventValues.Put(CalendarContract.Events.InterfaceConsts.Description,
                     calendarEvent.Description);
                 eventValues.Put(CalendarContract.Events.InterfaceConsts.Dtstart,
@@ -610,7 +625,6 @@ namespace iChronoMe.DeviceCalendar
                 CalendarContract.Events.InterfaceConsts.Id,
                 CalendarContract.Events.InterfaceConsts.CalendarId,
                 CalendarContract.Events.InterfaceConsts.Title,
-                CalendarContract.Events.InterfaceConsts.CalendarColor,
                 CalendarContract.Events.InterfaceConsts.DisplayColor,
                 CalendarContract.Events.InterfaceConsts.EventColor,
                 CalendarContract.Events.InterfaceConsts.Description,
@@ -633,8 +647,7 @@ namespace iChronoMe.DeviceCalendar
                 {
                     ExternalID = externalId,
                     CalendarId = cursor.GetString(CalendarContract.Events.InterfaceConsts.CalendarId),
-                    Name = cursor.GetString(CalendarContract.Events.InterfaceConsts.Title),
-                    CalendarColorString = cursor.GetString(CalendarContract.Events.InterfaceConsts.CalendarColor),
+                    Title = cursor.GetString(CalendarContract.Events.InterfaceConsts.Title),
                     DisplayColorString = cursor.GetString(CalendarContract.Events.InterfaceConsts.DisplayColor),
                     EventColorString = cursor.GetString(CalendarContract.Events.InterfaceConsts.EventColor),
 
@@ -763,6 +776,7 @@ namespace iChronoMe.DeviceCalendar
             var accountType = cursor.GetString(CalendarContract.Calendars.InterfaceConsts.AccountType);
             var colorInt = cursor.GetInt(CalendarContract.Calendars.InterfaceConsts.CalendarColor);
             var colorString = string.Format("#{0:x8}", colorInt);
+            var visible = cursor.GetInt(CalendarContract.Calendars.InterfaceConsts.Visible);
 
             return new Calendar
             {
@@ -772,6 +786,7 @@ namespace iChronoMe.DeviceCalendar
                 CanEditEvents = IsCalendarWriteable(accessLevel),
                 Color = colorString,
                 AccountName = cursor.GetString(CalendarContract.Calendars.InterfaceConsts.AccountName),
+                AccountType = accountType,
                 OwnerAccount = cursor.GetString(CalendarContract.Calendars.InterfaceConsts.OwnerAccount),
                 IsPrimary = cursor.GetBoolean(CalendarContract.Calendars.InterfaceConsts.IsPrimary)
             };

@@ -242,7 +242,7 @@ namespace iChronoMe.DeviceCalendar
                 appt = new Appointment();
             }
 
-            appt.Subject = calendarEvent.Name;
+            appt.Subject = calendarEvent.Title;
             appt.Details = calendarEvent.Description ?? string.Empty;
             appt.StartTime = calendarEvent.Start;
             appt.Duration = calendarEvent.End - calendarEvent.Start;

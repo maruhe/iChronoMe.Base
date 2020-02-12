@@ -172,7 +172,7 @@ namespace iChronoMe.Core.DynamicCalendar
                     {
                         string name = "win";
                         var calEvent = new CalendarEvent();
-                        calEvent.Name = $"{name} event {i}";
+                        calEvent.Title = $"{name} event {i}";
                         calEvent.Description = $"This is {name} event{i}'s description!";
                         calEvent.Start = dStart.AddHours(new Random().Next(8) + 10).AddMinutes(new Random().Next(50));
                         calEvent.End = calEvent.Start.AddHours(new Random().Next(5) + 1);

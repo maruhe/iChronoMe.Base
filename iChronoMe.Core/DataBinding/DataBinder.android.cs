@@ -46,44 +46,60 @@ namespace iChronoMe.Core.DataBinding
                 IsWritingToView = true;
                 foreach (var kv in que)
                 {
-                    var view = kv.Key.View;
-                    var prop = kv.Key.Property;
-                    object newVal = kv.Value;
-
-                    if (prop.Name == nameof(View.Visibility))
+                    try
                     {
-                        if (newVal is bool)
-                            newVal = (bool)newVal == true ? ViewStates.Visible : ViewStates.Gone;
-                        else if (newVal is int)
-                            newVal = (int)newVal > 0 ? ViewStates.Visible : ViewStates.Gone;
-                    }
+                        var view = kv.Key.View;
+                        var prop = kv.Key.Property;
+                        object newVal = kv.Value;
 
-                    if (!Equals(prop.GetValue(view), newVal))
-                    {
-                        if (prop.CanWrite)
+                        if (prop.Name == nameof(View.Visibility))
                         {
-                            int iPos = -1;
-                            if (view is EditText)
-                                iPos = (view as EditText).SelectionStart;
-                            prop.SetValue(view, newVal);
-                            iDone++;
-                            if (view is EditText && iPos > 0)
-                                (view as EditText).SetSelection(Math.Min(iPos, newVal.ToString().Length));
+                            if (newVal is bool)
+                                newVal = (bool)newVal == true ? ViewStates.Visible : ViewStates.Gone;
+                            else if (newVal is int)
+                                newVal = (int)newVal > 0 ? ViewStates.Visible : ViewStates.Gone;
                         }
-                        else if (view is Spinner)
+
+                        if (newVal is DateTime)
                         {
-                            switch (prop.Name)
+                            newVal = ((DateTime)newVal).ToShortDateString();
+                        }
+                        else if (newVal is TimeSpan)
+                        {
+                            newVal = ((TimeSpan)newVal).ToString();
+                        }
+
+                        if (!Equals(prop.GetValue(view), newVal))
+                        {
+                            if (prop.CanWrite)
                             {
-                                case nameof(Spinner.SelectedItemPosition):
-                                    (view as Spinner).SetSelection((int)newVal);
-                                    iDone++;
-                                    break;
-
-                                default:
-                                    throw new NotImplementedException("only SelectedItemPosition can be bound with a Spinner");
+                                int iPos = -1;
+                                if (view is EditText)
+                                    iPos = (view as EditText).SelectionStart;
+                                prop.SetValue(view, newVal);
+                                iDone++;
+                                if (view is EditText && iPos > 0 && (view as EditText).Selected)
+                                    (view as EditText).SetSelection(Math.Min(iPos, newVal.ToString().Length));
                             }
-                            
+                            else if (view is Spinner)
+                            {
+                                switch (prop.Name)
+                                {
+                                    case nameof(Spinner.SelectedItemPosition):
+                                        (view as Spinner).SetSelection((int)newVal);
+                                        iDone++;
+                                        break;
+
+                                    default:
+                                        throw new NotImplementedException("only SelectedItemPosition can be bound with a Spinner");
+                                }
+
+                            }
                         }
+                    } 
+                    catch (Exception ex)
+                    {
+                        Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
                     }
                 }
                 IsWritingToView = false;

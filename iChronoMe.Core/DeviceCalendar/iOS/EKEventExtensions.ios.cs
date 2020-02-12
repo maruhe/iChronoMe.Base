@@ -20,7 +20,7 @@ namespace iChronoMe.DeviceCalendar
 
             return new CalendarEvent
             {
-                Name = ekEvent.Title,
+                Title = ekEvent.Title,
                 Description = ekEvent.Notes,
                 Start = ekEvent.StartDate.ToDateTime(),
                 EventColorString = cClr,

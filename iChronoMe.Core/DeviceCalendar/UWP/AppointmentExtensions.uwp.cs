@@ -20,7 +20,7 @@ namespace iChronoMe.DeviceCalendar
 
             return new CalendarEvent
             {
-                Name = appt.Subject,
+                Title = appt.Subject,
                 Description = appt.Details,
                 Start = appt.StartTime.LocalDateTime,
                 End = appt.StartTime.Add(appt.Duration).LocalDateTime,
