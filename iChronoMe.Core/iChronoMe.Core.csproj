@@ -57,9 +57,6 @@
     <Compile Include="**\*.shared.*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Resources\ne_10m_time_zones.geojson" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Update="ml\strings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -70,10 +67,6 @@
     <EmbeddedResource Update="ml\strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>strings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
@@ -118,17 +111,5 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ml\strings.Designer.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\ne_10m_time_zones.geojson">
-      <CustomToolNamespace>iChronoMe.Core.Classes</CustomToolNamespace>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </None>
   </ItemGroup>
 </Project>
