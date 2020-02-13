@@ -8,6 +8,7 @@ using iChronoMe.Core.Classes;
 using Xamarin.Essentials;
 
 using static iChronoMe.Core.AreaChangedEventArgs;
+using static iChronoMe.Core.Classes.GeoInfo;
 using static iChronoMe.Core.TimeChangedEventArgs;
 
 namespace iChronoMe.Core
@@ -160,8 +161,30 @@ namespace iChronoMe.Core
             if (nDistance > 2.5)
                 bClearAreaInfo = true;
 
-            if ((Latitude == 0 && Longitude == 0) || nDistance > 100)
+            if ((Latitude == 0 && Longitude == 0))// || nDistance > 100)
                 TimeZoneOffsetGmt = (long)Math.Floor((nLongitude - 7.500000001) / 15) + 1; //mal so ein ungefär..
+
+            DateTime swStart = DateTime.Now;
+            var xxTZ = TimeZoneMap.GetTimeZone((float)nLatitude, (float)nLongitude);
+            var stDiff = DateTime.Now - swStart;
+            int iOff = (int)(swStart.Ticks / 1000);
+            if (xxTZ != null)
+            {
+                //sys.MainUserIO?.ShowToast("Found TZ after " + (int)((DateTime.Now - swStart).TotalMilliseconds) + "ms");
+                try
+                {
+                    var tz = TimeZoneInfo.FindSystemTimeZoneById(xxTZ.Replace(" ", ""));
+                    TimeZoneName = tz.Id;
+                    TimeZoneOffsetGmt = tz.BaseUtcOffset.TotalHours;
+                    TimeZoneOffsetDst = tz.BaseUtcOffset.TotalHours + (tz.SupportsDaylightSavingTime ? 1 : 0);
+                    timeZoneInfo = tz;
+                } 
+                catch (Exception ex)
+                {
+                    xLog.Error(ex);
+                }
+            }
+
             if (Latitude != 0 || Longitude != 0)
             {
                 if (bClearAreaInfo)
@@ -339,12 +362,12 @@ namespace iChronoMe.Core
                 {
                     AreaName = ai.toponymName;
                     CountryName = ai.countryName;
-                    TimeZoneName = ai.timezoneId;
-                    TimeZoneOffsetGmt = ai.gmtOffset;
-                    TimeZoneOffsetDst = ai.dstOffset;
-                    if (ai.timeZoneInfo != null)
+                    //TimeZoneName = ai.timezoneId;
+                    //TimeZoneOffsetGmt = ai.gmtOffset;
+                    //TimeZoneOffsetDst = ai.dstOffset;
+                    //if (ai.timeZoneInfo != null)
                     {
-                        timeZoneInfo = ai.timeZoneInfo;
+                        //  timeZoneInfo = ai.timeZoneInfo;
                     }
                 }
             }

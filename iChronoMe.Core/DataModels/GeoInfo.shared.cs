@@ -138,7 +138,7 @@ namespace iChronoMe.Core.Classes
 
                 if (string.IsNullOrEmpty(ai.timezoneId))
                 {
-                    FillTimeZoneID(ai, Latitude, Longitude);
+                    //FillTimeZoneID(ai, Latitude, Longitude);
                 }
                 try
                 {
@@ -150,7 +150,8 @@ namespace iChronoMe.Core.Classes
 
                 try
                 {
-                    db.dbAreaCache.Insert(ai);
+                    if (Location.CalculateDistance(ai.boxSouth, ai.boxWest, ai.boxNorth, ai.boxEast, DistanceUnits.Kilometers) < 25)
+                        db.dbAreaCache.Insert(ai);
                 }
                 catch (Exception e) { e.ToString(); }
 
@@ -175,6 +176,7 @@ namespace iChronoMe.Core.Classes
         }
         public static bool FillTimeZoneID(AreaInfo ai, double Latitude, double Longitude)
         {
+            return false;
             if (ai == null)
                 return false;
 
@@ -263,7 +265,7 @@ namespace iChronoMe.Core.Classes
 
         public class TimeZoneInfoCache : dbObject
         {
-            public static TimeZoneInfoCache FromLocation(double Latitude, double Longitude)
+            public static TimeZoneInfoCache FromLocation(double Latitude, double Longitude, bool bCacheOnly = false)
             {
                 //check TimeZoneInfoCache
                 var cache = db.dbAreaCache.Query<TimeZoneInfoCache>("select * from TimeZoneInfoCache where boxWest <= ? and boxNorth >= ? and boxEast >= ? and boxSouth <= ?", Longitude, Latitude, Longitude, Latitude);
@@ -275,7 +277,8 @@ namespace iChronoMe.Core.Classes
                         cache.ToString();
                     return cache[0];
                 }
-
+                if (bCacheOnly)
+                    return null;
                 TimeZoneInfoCache tziNew = OnlineFromLocation(Latitude, Longitude);
                 if (!string.IsNullOrEmpty(tziNew.timezoneId))
                 {

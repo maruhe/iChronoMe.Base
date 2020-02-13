@@ -47,6 +47,8 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" PrivateAssets="All" />    
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="GeoJSON.Net" Version="1.2.14" />
+    <PackageReference Include="NetTopologySuite.IO.GeoJSON" Version="2.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="sqlite-net-pcl" Version="1.6.292" />
     <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
@@ -55,7 +57,7 @@
     <Compile Include="**\*.shared.*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="timezones.json" />
+    <None Remove="Resources\ne_10m_time_zones.geojson" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="ml\strings.Designer.cs">
@@ -116,6 +118,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ml\strings.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ne_10m_time_zones.geojson">
+      <CustomToolNamespace>iChronoMe.Core.Classes</CustomToolNamespace>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Update="Properties\Resources.Designer.cs">

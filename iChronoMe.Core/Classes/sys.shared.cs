@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 using iChronoMe.Core.Abstractions;
-
+using iChronoMe.Core.Interfaces;
 using Xamarin.Essentials;
 
 namespace iChronoMe.Core.Classes
@@ -25,6 +25,8 @@ namespace iChronoMe.Core.Classes
         public static int DisplayShortSite { get; private set; } = 768;
         public static int DisplayDensity { get; private set; } = 1;
         public static int DisplayShortSiteDp { get => DisplayShortSite / DisplayDensity; }
+
+        public static IProgressChangedHandler MainUserIO { get; set; } = null;
 
 #if DEBUG
         public const bool Debugmode = true;
