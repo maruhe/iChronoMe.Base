@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.Types;
 
@@ -28,7 +27,7 @@ namespace iChronoMe.Widgets
         public string Title { get; set; }
 
         public T WidgetConfig { get; set; }
-        
+
         public T PreviewConfig { get; set; }
 
         public int PreviewImage { get; set; }
@@ -40,6 +39,6 @@ namespace iChronoMe.Widgets
 
         public xColor[] Colors { get; set; }
 
-        public object Tag { get; set; }        
+        public object Tag { get; set; }
     }
 }

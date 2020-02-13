@@ -27,7 +27,7 @@
     <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
     <PackageLicenseUrl>https://go.microsoft.com/fwlink/?linkid=868961</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageProjectUrl>https://go.microsoft.com/fwlink/?linkid=868960</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/maruhe/ichronome</PackageProjectUrl>
     <MDocDocumentationDirectory>$(MSBuildThisFileDirectory)..\docs\en</MDocDocumentationDirectory>
     <Configurations>Debug;Release;Samples;Docs</Configurations>
     <DebugType>portable</DebugType>
@@ -116,9 +116,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ml\strings.Designer.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="timezones.json" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Properties\Resources.Designer.cs">

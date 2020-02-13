@@ -1,7 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (MonoAndroid90)"
+Vor:
 using System.Text;
+using iChronoMe.Core.Classes;
+Nach:
+using System.Text;
+
+using iChronoMe.Core.Classes;
+*/
+
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (uap10.0.16299)"
+Vor:
+using System.Text;
+using iChronoMe.Core.Classes;
+Nach:
+using System.Text;
+
+using iChronoMe.Core.Classes;
+*/
+
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (Xamarin.iOS10)"
+Vor:
+using System.Text;
+using iChronoMe.Core.Classes;
+Nach:
+using System.Text;
+
+using iChronoMe.Core.Classes;
+*/
+
+
 using iChronoMe.Core.Classes;
 
 namespace iChronoMe

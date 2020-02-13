@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using iChronoMe.Core.Abstractions;
 
 namespace iChronoMe.Core.DataBinding
 {
@@ -40,7 +35,8 @@ namespace iChronoMe.Core.DataBinding
         private void DoWriteQueToView(List<KeyValuePair<ViewLink, object>> que)
         {
             xLog.Debug("start writer-thread " + que.Count);
-            Activity.RunOnUiThread(() => {
+            Activity.RunOnUiThread(() =>
+            {
                 xLog.Debug("start write " + que.Count + " values to view");
                 int iDone = 0;
                 IsWritingToView = true;
@@ -96,7 +92,7 @@ namespace iChronoMe.Core.DataBinding
 
                             }
                         }
-                    } 
+                    }
                     catch (Exception ex)
                     {
                         Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
@@ -176,9 +172,11 @@ namespace iChronoMe.Core.DataBinding
             if (link == null)
                 return;
 
-            if (link.Property.CanWrite) {
+            if (link.Property.CanWrite)
+            {
                 var old = link.Property.GetValue(link.Object);
-                if (!Equals(old, value)) {
+                if (!Equals(old, value))
+                {
                     {
                         link.Property.SetValue(link.Object, value);
                         UserChangedProperty?.Invoke(view, new UserChangedPropertyEventArgs(link.Object, link.Property.Name, old, value));

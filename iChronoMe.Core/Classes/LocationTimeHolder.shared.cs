@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using iChronoMe.Core.Classes;
 
 using Xamarin.Essentials;
+
 using static iChronoMe.Core.AreaChangedEventArgs;
 using static iChronoMe.Core.TimeChangedEventArgs;
 
@@ -134,7 +135,9 @@ namespace iChronoMe.Core
         {
             get
             {
-                return (LocationTimeHolder)LocalInstance.MemberwiseClone();
+                var res = LocationTimeHolder.NewInstanceOffline(LocalInstance.Latitude, LocalInstance.Longitude, LocalInstance.TimeZoneName, false);
+                res.AreaInfoFlag = FetchAreaInfoFlag.FullAreaInfo;
+                return res;
             }
         }
 
@@ -146,7 +149,7 @@ namespace iChronoMe.Core
             AreaInfoFlag = faiType;
         }
 
-        static  object oTZlock = new object();
+        static object oTZlock = new object();
 
         private bool ChangePositionParameters(double nLatitude, double nLongitude, bool bClearAreaInfo = false)
         {
@@ -157,9 +160,9 @@ namespace iChronoMe.Core
             if (nDistance > 2.5)
                 bClearAreaInfo = true;
 
-            if (Latitude == 0 && Longitude == 0)
+            if ((Latitude == 0 && Longitude == 0) || nDistance > 100)
                 TimeZoneOffsetGmt = (long)Math.Floor((nLongitude - 7.500000001) / 15) + 1; //mal so ein ungefär..
-            else
+            if (Latitude != 0 || Longitude != 0)
             {
                 if (bClearAreaInfo)
                 {
@@ -196,7 +199,7 @@ namespace iChronoMe.Core
 
         public void ChangePositionDelay(double nLatitude, double nLongitude, bool bClearAreaInfo = false, bool bForceRefreshAreaInfo = false)
         {
-            if (!ChangePositionParameters(nLatitude, nLongitude, bClearAreaInfo))
+            if (!ChangePositionParameters(nLatitude, nLongitude, bClearAreaInfo) && !bClearAreaInfo && !bForceRefreshAreaInfo)
                 return;
 
             if ((ai == null || !ai.CheckBoxIsUpToDate(nLatitude, nLongitude) || bClearAreaInfo || bForceRefreshAreaInfo))
@@ -290,10 +293,18 @@ namespace iChronoMe.Core
 
             locationTask = Task.Factory.StartNew(() =>
             {
-                bStartLocationTaskAgain = false;
-                GetLocationInfo();
-                Task.Delay(1000).Wait();
-                locationTask = null;
+                try
+                {
+                    bStartLocationTaskAgain = false;
+                    GetLocationInfo();
+                    Task.Delay(1000).Wait();
+                }
+                catch (ThreadAbortException) { return; }
+                catch { }
+                finally
+                {
+                    locationTask = null;
+                }
                 if (bStartLocationTaskAgain)
                     StartRefreshLocationInfo();
             });

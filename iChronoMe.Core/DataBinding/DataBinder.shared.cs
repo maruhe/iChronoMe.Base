@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
-using iChronoMe.Core.Abstractions;
+
 using iChronoMe.Core.Interfaces;
 
 namespace iChronoMe.Core.DataBinding
@@ -32,11 +31,11 @@ namespace iChronoMe.Core.DataBinding
             if (vProp == null)
                 return false;
             var bProp = bindable.GetType().GetProperty(bindableProperty);
-            if (bProp == null) 
+            if (bProp == null)
                 return false;
 
             //if (!bProp.PropertyType.Equals(typeof(T)) && !bProp.PropertyType.IsSubclassOf(typeof(T)))
-              //  return false;
+            //  return false;
 
             string cViewPropID = string.Concat(view.GetType().Name, view.GetHashCode(), viewProperty);
             if (ObjectLinks.ContainsKey(cViewPropID))
@@ -63,7 +62,7 @@ namespace iChronoMe.Core.DataBinding
             foreach (var o in ObservedObjects)
                 o.PropertyChanged += Bindable_PropertyChanged;
 
-            foreach(var olnk in ObjectLinks)
+            foreach (var olnk in ObjectLinks)
             {
                 if (olnk.Value.Object is ICanBeReady && !((ICanBeReady)olnk.Value.Object).IsReady)
                     continue;
@@ -86,7 +85,7 @@ namespace iChronoMe.Core.DataBinding
             ProcessBindable_PropertyChanged(sender, e.PropertyName);
         }
 
-        public void ProcessBindable_PropertyChanged(object bindable, string property, bool isInitial = false ) 
+        public void ProcessBindable_PropertyChanged(object bindable, string property, bool isInitial = false)
         {
             if ("*".Equals(property))
             {
@@ -151,7 +150,7 @@ namespace iChronoMe.Core.DataBinding
                 foreach (var vl in links)
                 {
                     //if (isInitial || BindModes[vl.Key] > BindMode.OneTime)
-                        ValuesToViewsQue.Add(new KeyValuePair<ViewLink, object>(vl.Value, newVal));
+                    ValuesToViewsQue.Add(new KeyValuePair<ViewLink, object>(vl.Value, newVal));
                 }
             }
             tSendLastPropertyChanged = DateTime.Now;
@@ -166,7 +165,7 @@ namespace iChronoMe.Core.DataBinding
             }
         }
 
-        private Thread GetNewSenderThread() 
+        private Thread GetNewSenderThread()
             => new Thread(() =>
             {
                 DateTime tThreadStart = DateTime.Now;

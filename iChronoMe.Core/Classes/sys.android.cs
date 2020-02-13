@@ -8,7 +8,6 @@ using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Views;
-using static Android.Graphics.Bitmap;
 
 namespace iChronoMe.Core.Classes
 {

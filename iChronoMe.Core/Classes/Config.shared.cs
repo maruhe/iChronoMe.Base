@@ -1,10 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Runtime.CompilerServices;
+using System.
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (MonoAndroid90)"
+Vor:
 using System.Xml.Serialization;
 using iChronoMe.Core.Abstractions;
+Nach:
+using System.Xml.Serialization;
+
+using iChronoMe.Core.Abstractions;
+*/
+
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (uap10.0.16299)"
+Vor:
+using System.Xml.Serialization;
+using iChronoMe.Core.Abstractions;
+Nach:
+using System.Xml.Serialization;
+
+using iChronoMe.Core.Abstractions;
+*/
+
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (Xamarin.iOS10)"
+Vor:
+using System.Xml.Serialization;
+using iChronoMe.Core.Abstractions;
+Nach:
+using System.Xml.Serialization;
+
+using iChronoMe.Core.Abstractions;
+*/
+Xml.Serialization;
+
 using iChronoMe.Core.Types;
 
 namespace iChronoMe.Core.Classes
@@ -78,7 +105,7 @@ namespace iChronoMe.Core.Classes
     public partial class CalendarViewConfig
     {
         public float WelcomeScreenDone { get; set; } = 0;
-        
+
         public List<string> HideCalendars { get; set; } = new List<string>();
 
         public TimeType CalendarTimeType { get; set; } = sys.DefaultTimeType;

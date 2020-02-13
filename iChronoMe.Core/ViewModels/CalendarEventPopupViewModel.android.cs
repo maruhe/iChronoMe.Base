@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+
 using iChronoMe.Core.Classes;
 
 namespace iChronoMe.Core.ViewModels

@@ -8,7 +8,7 @@ using Android.App;
 using Android.Content;
 using Android.Database;
 using Android.Provider;
-using iChronoMe.Core;
+
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.Types;
 
@@ -196,7 +196,7 @@ namespace iChronoMe.DeviceCalendar
                         //calendarEvent.Reminders = GetEventReminders(calendarEvent.ExternalID); => Dauert zu lange!
 
                         return calendarEvent;
-                    } 
+                    }
                     catch (Exception ex)
                     {
                         sys.LogException(ex);

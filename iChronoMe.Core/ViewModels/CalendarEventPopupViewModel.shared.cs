@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.DataBinding;
 using iChronoMe.Core.Interfaces;
@@ -33,7 +33,7 @@ namespace iChronoMe.Core.ViewModels
                     extEvent = calEvent.Extention;
                     locationTimeHolder.ChangePositionDelay(extEvent.Latitude, extEvent.Longitude);
                     bIsReady = true;
-                } 
+                }
                 catch (Exception ex)
                 {
                     bIsReady = false;

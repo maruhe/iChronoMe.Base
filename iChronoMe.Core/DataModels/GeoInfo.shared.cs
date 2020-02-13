@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using System.Xml;
 
 using Newtonsoft.Json.Linq;
+
 using SQLite;
+
 using Xamarin.Essentials;
 
 namespace iChronoMe.Core.Classes
