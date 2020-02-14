@@ -135,20 +135,22 @@ namespace iChronoMe.DeviceCalendar
         /// <exception cref="Plugin.Calendars.Abstractions.PlatformException">Unexpected platform-specific error</exception>
         public static async Task<IList<CalendarEvent>> GetEventsAsync(Calendar calendar, DateTime start, DateTime end)
         {
-            var deviceCalendar = await GetCalendarByIdAsync(calendar.ExternalID).ConfigureAwait(false);
-
-            if (deviceCalendar == null)
+            try
             {
-                throw new ArgumentException("Specified calendar not found on device");
-            }
+                var deviceCalendar = await GetCalendarByIdAsync(calendar.ExternalID).ConfigureAwait(false);
 
-            var eventsUriBuilder = CalendarContract.Instances.ContentUri.BuildUpon();
+                if (deviceCalendar == null)
+                {
+                    throw new ArgumentException("Specified calendar not found on device");
+                }
 
-            // Note that this is slightly different from the GetEventById projection
-            // due to the Instances API vs. Event API (specifically, IDs and start/end times)
-            //
-            string[] eventsProjection =
-            {
+                var eventsUriBuilder = CalendarContract.Instances.ContentUri.BuildUpon();
+
+                // Note that this is slightly different from the GetEventById projection
+                // due to the Instances API vs. Event API (specifically, IDs and start/end times)
+                //
+                string[] eventsProjection =
+                {
                 CalendarContract.Instances.EventId,
                 CalendarContract.Events.InterfaceConsts.Title,
                 CalendarContract.Events.InterfaceConsts.DisplayColor,
@@ -160,58 +162,72 @@ namespace iChronoMe.DeviceCalendar
                 CalendarContract.Events.InterfaceConsts.EventLocation
             };
 
-            ContentUris.AppendId(eventsUriBuilder, DateConversions.GetDateAsAndroidMS(start));
-            ContentUris.AppendId(eventsUriBuilder, DateConversions.GetDateAsAndroidMS(end));
-            var eventsUri = eventsUriBuilder.Build();
+                ContentUris.AppendId(eventsUriBuilder, DateConversions.GetDateAsAndroidMS(start));
+                ContentUris.AppendId(eventsUriBuilder, DateConversions.GetDateAsAndroidMS(end));
+                var eventsUri = eventsUriBuilder.Build();
 
-            return await Task.Run(() =>
-            {
-                var cursor = Query(eventsUri, eventsProjection,
-                   string.Format("{0} = {1}", CalendarContract.Events.InterfaceConsts.CalendarId, calendar.ExternalID),
-                   null, CalendarContract.Events.InterfaceConsts.Dtstart + " ASC");
-
-                var events = IterateCursor(cursor, () =>
+                return await Task.Run(() =>
                 {
                     try
                     {
-                        bool allDay = cursor.GetBoolean(CalendarContract.Events.InterfaceConsts.AllDay);
+                        var cursor = Query(eventsUri, eventsProjection,
+                           string.Format("{0} = {1}", CalendarContract.Events.InterfaceConsts.CalendarId, calendar.ExternalID),
+                           null, CalendarContract.Events.InterfaceConsts.Dtstart + " ASC");
 
-                        var calendarEvent = new CalendarEvent
+                        var events = IterateCursor(cursor, () =>
                         {
-                            ExternalID = cursor.GetString(CalendarContract.Instances.EventId),
-                            CalendarId = calendar.ExternalID,
-                            Title = cursor.GetString(CalendarContract.Events.InterfaceConsts.Title),
-                            DisplayColorString = string.Format("#{0:x8}", cursor.GetInt(CalendarContract.Events.InterfaceConsts.DisplayColor)),
-                            EventColorString = string.Format("#{0:x8}", cursor.GetInt(CalendarContract.Events.InterfaceConsts.EventColor)),
-                            Description = cursor.GetString(CalendarContract.Events.InterfaceConsts.Description),
-                            Start = cursor.GetDateTime(CalendarContract.Instances.Begin, allDay),
-                            End = cursor.GetDateTime(CalendarContract.Instances.End, allDay),
-                            Location = cursor.GetString(CalendarContract.Events.InterfaceConsts.EventLocation),
-                            //AccessLevel = cursor.GetInt(CalendarContract.Events.InterfaceConsts.AccessLevel),
-                            //tmp = cursor.GetString(CalendarContract.Events.InterfaceConsts.HasExtendedProperties), int mit Count?
-                            //tmp = "1" + cursor.GetString(CalendarContract.Events.InterfaceConsts.IsPrimary),
+                            try
+                            {
+                                bool allDay = cursor.GetBoolean(CalendarContract.Events.InterfaceConsts.AllDay);
 
-                            AllDay = allDay
-                        };
-                        //calendarEvent.Reminders = GetEventReminders(calendarEvent.ExternalID); => Dauert zu lange!
+                                var calendarEvent = new CalendarEvent
+                                {
+                                    ExternalID = cursor.GetString(CalendarContract.Instances.EventId),
+                                    CalendarId = calendar.ExternalID,
+                                    Title = cursor.GetString(CalendarContract.Events.InterfaceConsts.Title),
+                                    DisplayColorString = string.Format("#{0:x8}", cursor.GetInt(CalendarContract.Events.InterfaceConsts.DisplayColor)),
+                                    EventColorString = string.Format("#{0:x8}", cursor.GetInt(CalendarContract.Events.InterfaceConsts.EventColor)),
+                                    Description = cursor.GetString(CalendarContract.Events.InterfaceConsts.Description),
+                                    Start = cursor.GetDateTime(CalendarContract.Instances.Begin, allDay),
+                                    End = cursor.GetDateTime(CalendarContract.Instances.End, allDay),
+                                    Location = cursor.GetString(CalendarContract.Events.InterfaceConsts.EventLocation),
+                                //AccessLevel = cursor.GetInt(CalendarContract.Events.InterfaceConsts.AccessLevel),
+                                //tmp = cursor.GetString(CalendarContract.Events.InterfaceConsts.HasExtendedProperties), int mit Count?
+                                //tmp = "1" + cursor.GetString(CalendarContract.Events.InterfaceConsts.IsPrimary),
 
-                        return calendarEvent;
-                    }
+                                AllDay = allDay
+                                };
+                            //calendarEvent.Reminders = GetEventReminders(calendarEvent.ExternalID); => Dauert zu lange!
+
+                            return calendarEvent;
+                            }
+                            catch (Exception ex)
+                            {
+                                sys.LogException(ex);
+                                int rnd = new Random().Next(8);
+                                return new CalendarEvent()
+                                {
+                                    Start = DateTime.Today.AddHours(10 + rnd),
+                                    End = DateTime.Today.AddHours(11 + rnd),
+                                    Title = ex.Message
+                                };
+                            }
+                        });
+
+                        return events;
+                    } 
                     catch (Exception ex)
                     {
                         sys.LogException(ex);
-                        int rnd = new Random().Next(8);
-                        return new CalendarEvent()
-                        {
-                            Start = DateTime.Today.AddHours(10 + rnd),
-                            End = DateTime.Today.AddHours(11 + rnd),
-                            Title = ex.Message
-                        };
+                        return null;
                     }
-                });
-
-                return events;
-            }).ConfigureAwait(false);
+                }).ConfigureAwait(false);
+            } 
+            catch (Exception ex)
+            {
+                sys.LogException(ex);
+                return null;
+            }
         }
 
         /// <summary>

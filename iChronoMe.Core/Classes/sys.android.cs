@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 
@@ -24,20 +25,25 @@ namespace iChronoMe.Core.Classes
 #else
                 cAppVersionInfo += ", release";
 #endif
+            List<string> infos = new List<string>();
 
+            string cX = "23";
             var props = typeof(Android.OS.Build).GetProperties(BindingFlags.Public | BindingFlags.Static);
             foreach (var prop in props)
             {
                 try
                 {
-                    if ("serial".Equals(prop.Name.ToLower()))
-                        cDeviceInfo += "DeviceToken".PadRight(15) + ": " + sys.CalculateMD5Hash("iChr" + sys.CalculateMD5Hash("iChr" + (string)prop.GetValue(null) + "onoMe") + "onoMe") + "\n";
+                    if ("serial".Equals(prop.Name.ToLower())) //try to generate a anonym device-token for better error-logging
+                        infos.Add("DeviceToken".PadRight(15) + ": " + sys.CalculateMD5Hash("iChr" + sys.CalculateMD5Hash("iChr" + (string)prop.GetValue(null) + "onoMe") + cX + "onoMe"));
                     else if (prop.PropertyType == typeof(string))
-                        cDeviceInfo += prop.Name.PadRight(15) + ": " + (string)prop.GetValue(null) + "\n";
+                        infos.Add(prop.Name.PadRight(15) + ": " + (string)prop.GetValue(null));
                     else if (prop.PropertyType == typeof(int))
-                        cDeviceInfo += prop.Name.PadRight(15) + ": " + ((int)prop.GetValue(null)).ToString() + "\n";
+                        infos.Add(prop.Name.PadRight(15) + ": " + ((int)prop.GetValue(null)).ToString());
                     else
                         prop.ToString();
+
+                    if ("device".Equals(prop.Name.ToLower()) || "id".Equals(prop.Name.ToLower()) || "model".Equals(prop.Name.ToLower()))
+                        cX += ": " + (string)prop.GetValue(null);
                 }
                 catch (Exception e)
                 {
@@ -51,11 +57,11 @@ namespace iChronoMe.Core.Classes
                 try
                 {
                     if (prop.PropertyType == typeof(string))
-                        cDeviceInfo += "Version." + prop.Name.PadRight(15) + ": " + (string)prop.GetValue(null) + "\n";
+                        infos.Add("Version." + prop.Name.PadRight(15) + ": " + (string)prop.GetValue(null));
                     else if (prop.PropertyType == typeof(int))
-                        cDeviceInfo += "Version." + prop.Name.PadRight(15) + ": " + ((int)prop.GetValue(null)).ToString() + "\n";
+                        infos.Add("Version." + prop.Name.PadRight(15) + ": " + ((int)prop.GetValue(null)).ToString());
                     else if (prop.PropertyType == typeof(BuildVersionCodes))
-                        cDeviceInfo += "Version." + prop.Name.PadRight(15) + ": " + ((int)prop.GetValue(null)).ToString() + "-" + prop.GetValue(null).ToString() + "\n";
+                        infos.Add("Version." + prop.Name.PadRight(15) + ": " + ((int)prop.GetValue(null)).ToString() + "-" + prop.GetValue(null).ToString());
 
                     else
                         prop.ToString();
@@ -65,15 +71,19 @@ namespace iChronoMe.Core.Classes
                     e.ToString();
                 }
             }
+            infos.Sort();
             try
             {
-                cDeviceInfo += "Display.Width".PadRight(23) + ": " + sys.DisplayWidth + "\n";
-                cDeviceInfo += "Display.Height".PadRight(23) + ": " + sys.DisplayHeight + "\n";
-                cDeviceInfo += "Display.Density".PadRight(23) + ": " + sys.DisplayDensity + "\n";
-                cDeviceInfo += "Display.Orientation".PadRight(23) + ": " + sys.DisplayOrientation + "\n";
-                cDeviceInfo += "Display.Rotation".PadRight(23) + ": " + sys.DisplayRotation + "\n";
+                infos.Add("Display.Width".PadRight(23) + ": " + sys.DisplayWidth);
+                infos.Add("Display.Height".PadRight(23) + ": " + sys.DisplayHeight);
+                infos.Add("Display.Density".PadRight(23) + ": " + sys.DisplayDensity);
+                infos.Add("Display.Orientation".PadRight(23) + ": " + sys.DisplayOrientation);
+                infos.Add("Display.Rotation".PadRight(23) + ": " + sys.DisplayRotation);
             }
             catch { }
+            cDeviceInfo = string.Empty;
+            foreach (string c in infos)
+                cDeviceInfo += c + "\n";
         }
 
         public static DateTime DateTimeFromJava(Java.Util.Calendar d)

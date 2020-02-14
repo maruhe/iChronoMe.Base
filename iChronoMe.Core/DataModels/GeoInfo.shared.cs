@@ -91,11 +91,7 @@ namespace iChronoMe.Core.Classes
                                         break;
                                     case "locality":
                                         ai.locality = cPartNameLong;
-                                        if ("Unnamed Road".Equals(cAreaTitle))
-                                            cAreaTitle += ", " + cPartNameLong;
-
                                         cAreaTitle = cPartNameLong;
-
                                         break;
                                     case "administrative_area_level_2":
                                         ai.adminArea2 = cPartNameLong;
@@ -131,15 +127,19 @@ namespace iChronoMe.Core.Classes
                     }
                     if (!string.IsNullOrEmpty(cAreaTitle))
                     {
+                        if ("Unnamed Road".Equals(cAreaTitle))
+                        {
+                            if (!string.IsNullOrEmpty(ai.adminArea2))
+                                cAreaTitle = ai.adminArea2;
+                            if (!string.IsNullOrEmpty(ai.adminArea1))
+                                cAreaTitle += ", " + ai.adminArea1;
+                        }
+
                         ai.toponymName = cAreaTitle;
                         xLog.Debug("Final title: " + cAreaTitle);
                     }
                 }
 
-                if (string.IsNullOrEmpty(ai.timezoneId))
-                {
-                    //FillTimeZoneID(ai, Latitude, Longitude);
-                }
                 try
                 {
                     var delS = db.dbAreaCache.Query<AreaInfo>("select * from AreaInfo where boxWest = ? and boxNorth = ? and boxEast = ? and boxSouth = ?", ai.boxWest, ai.boxNorth, ai.boxEast, ai.boxSouth);
@@ -170,30 +170,9 @@ namespace iChronoMe.Core.Classes
                 e.ToString();
 
                 AreaInfo ai = new AreaInfo();
-                FillTimeZoneID(ai, Latitude, Longitude);
+
                 return ai;
             }
-        }
-        public static bool FillTimeZoneID(AreaInfo ai, double Latitude, double Longitude)
-        {
-            return false;
-            if (ai == null)
-                return false;
-
-            try
-            {
-                TimeZoneInfoCache inf = TimeZoneInfoCache.FromLocation(Latitude, Longitude);
-
-                ai.timezoneId = inf.timezoneId;
-                ai.gmtOffset = inf.gmtOffset;
-                ai.dstOffset = inf.dstOffset;
-
-                ai.timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(ai.timezoneId);
-                return ai.timeZoneInfo != null;
-            }
-            catch (Exception e) { e.ToString(); ai.timeZoneInfo = null; }
-
-            return false;
         }
 
         public class AreaInfo : dbObject
@@ -208,11 +187,6 @@ namespace iChronoMe.Core.Classes
             public string postalCode { get; set; }
 
             public string toponymName { get; set; }
-            [Ignore]
-            public TimeZoneInfo timeZoneInfo { get; set; }
-            public string timezoneId { get; set; }
-            public double gmtOffset { get; set; }
-            public double dstOffset { get; set; }
 
             [Indexed]
             public double boxWest { get; set; }
@@ -251,15 +225,7 @@ namespace iChronoMe.Core.Classes
 
             public override void OnInstanceCreatedDB()
             {
-                try
-                {
-                    if (!string.IsNullOrEmpty(timezoneId))
-                        timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timezoneId);
-                }
-                catch
-                {
-                    timeZoneInfo = null;
-                }
+
             }
         }
     }

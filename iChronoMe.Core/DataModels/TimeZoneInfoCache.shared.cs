@@ -1,6 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Drawing;
+using System.Globalization;
+using System.Threading.Tasks;
+using System.Xml;
+
+using Newtonsoft.Json.Linq;
+
+using SQLite;
+
+using Xamarin.Essentials;
 
 namespace iChronoMe.Core.Classes
 {
@@ -59,15 +67,19 @@ namespace iChronoMe.Core.Classes
         private static bool CheckTimeZoneEnd(TimeZoneInfoCache info, PointF pn, PointF pe, PointF ps, PointF pw)
         {
             TimeZoneInfoCache check = OnlineFromLocation(pe.X, pe.Y);
+            if (check == null) return true;
             if (info.timezoneId != check.timezoneId)
                 return false;
             check = OnlineFromLocation(pw.X, pw.Y);
+            if (check == null) return true;
             if (info.timezoneId != check.timezoneId)
                 return false;
             check = OnlineFromLocation(pn.X, pn.Y);
+            if (check == null) return true;
             if (info.timezoneId != check.timezoneId)
                 return false;
             check = OnlineFromLocation(ps.X, ps.Y);
+            if (check == null) return true;
             if (info.timezoneId != check.timezoneId)
                 return false;
             return true;
@@ -101,6 +113,9 @@ namespace iChronoMe.Core.Classes
         public double gmtOffset { get; set; }
         public double dstOffset { get; set; }
 
+        [Ignore]
+        public string Notes { get; set; }
+
         [Indexed]
         public double boxWest { get; set; }
         [Indexed]
@@ -111,5 +126,10 @@ namespace iChronoMe.Core.Classes
         public double boxSouth { get; set; }
         public int BoxWidth { get => (int)(Location.CalculateDistance(boxNorth, boxWest, boxNorth, boxEast, DistanceUnits.Kilometers) * 1000); set { } }
         public int BoxHeitgh { get => (int)(Location.CalculateDistance(boxNorth, boxWest, boxSouth, boxWest, DistanceUnits.Kilometers) * 1000); set { } }
+
+        public override string ToString()
+        {
+            return string.Concat(timezoneId, " GMT ", gmtOffset, " DST ", dstOffset);
+        }
     }
 }

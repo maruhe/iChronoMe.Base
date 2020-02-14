@@ -16,11 +16,13 @@ namespace iChronoMe.Core.Classes
 {
     public static class TimeZoneMap
     {
-        public static Dictionary<Polygon, Feature> timeZonePolygons = new Dictionary<Polygon, Feature>();
+        public static Dictionary<Polygon, TimeZoneInfoCache> timeZonePolygons = new Dictionary<Polygon, TimeZoneInfoCache>();
 
         private static bool ready = false;
 
-        public static string GetTimeZone(float lat, float lng)
+        public static bool MapIsReady { get => ready; }
+
+        public static TimeZoneInfoCache GetTimeZone(float lat, float lng)
         {
             if (!ready)
                 return null;
@@ -29,13 +31,7 @@ namespace iChronoMe.Core.Classes
             {
                 if (poly.Contains(new Point(lat, lng)))
                 {
-                    var feat = timeZonePolygons[poly];
-                    foreach (var p in feat.Properties)
-                    {
-                        if ("tz_name1st".Equals(p.Key))
-                            return p.Value as string;
-                    }
-                    return "?";
+                    return timeZonePolygons[poly];
                 }
             }
 
@@ -85,8 +81,6 @@ namespace iChronoMe.Core.Classes
 
                 timeZonePolygons.Clear();
 
-                float nLat = 43.7F;
-                float nLong = 13.8F;
                 // create NetTopology JSON reader
                 var reader = new NetTopologySuite.IO.GeoJsonReader();
 
@@ -138,7 +132,17 @@ namespace iChronoMe.Core.Classes
                                 coordinates.Add(new Coordinate(coordinates[0].X, coordinates[0].Y));
 
                                 var poly = new Polygon(new LinearRing(coordinates.ToArray()));
-                                timeZonePolygons.Add(poly, jsonFeature);
+
+                                TimeZoneInfoCache tzi = new TimeZoneInfoCache();
+                                foreach (var p in jsonFeature.Properties)
+                                {
+                                    if ("tz_name1st".Equals(p.Key) && p.Value != null)
+                                        tzi.timezoneId = sys.ConvertTimeZoneToSystem(((string)p.Value).Replace(" ", ""));
+                                    else if (p.Value != null)
+                                        tzi.Notes += string.Concat(p.Key, ": ", p.Value, "\n");
+                                };
+
+                                timeZonePolygons.Add(poly, tzi);
 
                             }
                             break;

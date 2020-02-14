@@ -13,7 +13,7 @@ using static iChronoMe.Core.TimeChangedEventArgs;
 
 namespace iChronoMe.Core
 {
-    public class LocationTimeHolder// : SelectPositionReceiver
+    public class LocationTimeHolder : IDisposable
     {
         bool bIsRunning = true;
 
@@ -66,7 +66,6 @@ namespace iChronoMe.Core
         }
 
         public delegate void ChangedEvent();
-        public event EventHandler<TimeChangedEventArgs> TimeChanged;
         public event EventHandler<AreaChangedEventArgs> AreaChanged;
 
         public static LocationTimeHolder NewInstance()
@@ -104,7 +103,7 @@ namespace iChronoMe.Core
         public static LocationTimeHolder NewInstanceOffline(double nLatitude, double nLongitude, string cTimeZoneID, string AreaName, string CountryName, FetchAreaInfoFlag faiType = FetchAreaInfoFlag.FullOffline)
         {
             var lth = new LocationTimeHolder(faiType);
-            lth.ChangePosition(nLatitude, nLongitude, cTimeZoneID, AreaName, CountryName);
+            lth.ChangePositionParameters(nLatitude, nLongitude, false, false, cTimeZoneID, AreaName, CountryName);
             return lth;
         }
 
@@ -112,7 +111,7 @@ namespace iChronoMe.Core
         {
             var lth = new LocationTimeHolder(LocalFetchAreaInfoFlag);
             var cfg = AppConfigHolder.LocationConfig;
-            lth.ChangePosition(cfg.Latitude, cfg.Longitude, cfg.TimeZoneID, cfg.AreaName, cfg.CountryName, cfg.TimeZoneOffsetGmt, cfg.TimeZoneOffsetDst);
+            lth.ChangePositionParameters(cfg.Latitude, cfg.Longitude, false, false, cfg.TimeZoneID, cfg.AreaName, cfg.CountryName, cfg.TimeZoneOffsetGmt, cfg.TimeZoneOffsetDst);
             if (sys.lastUserLocation.Latitude == 0 && sys.lastUserLocation.Longitude == 0)
             {
                 sys.lastUserLocation.Latitude = cfg.Latitude;
@@ -152,84 +151,7 @@ namespace iChronoMe.Core
 
         static object oTZlock = new object();
 
-        private bool ChangePositionParameters(double nLatitude, double nLongitude, bool bClearAreaInfo = false)
-        {
-            if ((Latitude == nLatitude) && (Longitude == nLongitude))
-                return false;
-
-            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
-            if (nDistance > 2.5)
-                bClearAreaInfo = true;
-
-            if ((Latitude == 0 && Longitude == 0))// || nDistance > 100)
-                TimeZoneOffsetGmt = (long)Math.Floor((nLongitude - 7.500000001) / 15) + 1; //mal so ein ungefär..
-
-            DateTime swStart = DateTime.Now;
-            var xxTZ = TimeZoneMap.GetTimeZone((float)nLatitude, (float)nLongitude);
-            var stDiff = DateTime.Now - swStart;
-            int iOff = (int)(swStart.Ticks / 1000);
-            if (xxTZ != null)
-            {
-                //sys.MainUserIO?.ShowToast("Found TZ after " + (int)((DateTime.Now - swStart).TotalMilliseconds) + "ms");
-                try
-                {
-                    var tz = TimeZoneInfo.FindSystemTimeZoneById(xxTZ.Replace(" ", ""));
-                    TimeZoneName = tz.Id;
-                    TimeZoneOffsetGmt = tz.BaseUtcOffset.TotalHours;
-                    TimeZoneOffsetDst = tz.BaseUtcOffset.TotalHours + (tz.SupportsDaylightSavingTime ? 1 : 0);
-                    timeZoneInfo = tz;
-                } 
-                catch (Exception ex)
-                {
-                    xLog.Error(ex);
-                }
-            }
-
-            if (Latitude != 0 || Longitude != 0)
-            {
-                if (bClearAreaInfo)
-                {
-                    AreaName = string.Empty;
-                    if (nDistance > 25)
-                        CountryName += "?";
-                    else
-                        CountryName = string.Empty;
-                }
-            }
-
-            Latitude = nLatitude;
-            Longitude = nLongitude;
-
-            try { AreaChanged?.Invoke(this, new AreaChangedEventArgs(AreaChangedFlag.LocationUpdate)); } catch { }
-            try { TimeChanged?.Invoke(this, new TimeChangedEventArgs(TimeChangedFlag.LocationUpdate)); } catch { }
-
-            return true;
-        }
-
-        public async Task ChangePositionAsync(double nLatitude, double nLongitude, bool bClearAreaInfo = false, bool bForceRefreshAreaInfo = false)
-        {
-            if (!ChangePositionParameters(nLatitude, nLongitude, bClearAreaInfo))
-                return;
-
-            if ((ai == null || !ai.CheckBoxIsUpToDate(nLatitude, nLongitude) || bClearAreaInfo || bForceRefreshAreaInfo))
-            {
-                await Task.Factory.StartNew(() =>
-                {
-                    GetLocationInfo();
-                });
-            }
-        }
-
-        public void ChangePositionDelay(double nLatitude, double nLongitude, bool bClearAreaInfo = false, bool bForceRefreshAreaInfo = false)
-        {
-            if (!ChangePositionParameters(nLatitude, nLongitude, bClearAreaInfo) && !bClearAreaInfo && !bForceRefreshAreaInfo)
-                return;
-
-            if ((ai == null || !ai.CheckBoxIsUpToDate(nLatitude, nLongitude) || bClearAreaInfo || bForceRefreshAreaInfo))
-                StartRefreshLocationInfo();
-        }
-
-        public bool ChangePosition(double nLatitude, double nLongitude, string cTimeZoneID, string cAreaName, string cCountryName, double? nTimeZoneOffsetGmt = null, double? nTimeZoneOffsetDst = null)
+        private bool ChangePositionxx(double nLatitude, double nLongitude, string cTimeZoneID, string cAreaName, string cCountryName, double? nTimeZoneOffsetGmt = null, double? nTimeZoneOffsetDst = null)
         {
             if (string.IsNullOrEmpty(cTimeZoneID))
                 return false;
@@ -248,53 +170,99 @@ namespace iChronoMe.Core
             timeZoneInfo = timezone;
 
             try { AreaChanged?.Invoke(this, new AreaChangedEventArgs(AreaChangedFlag.LocationUpdate)); } catch { }
-            try { TimeChanged?.Invoke(this, new TimeChangedEventArgs(TimeChangedFlag.LocationUpdate)); } catch { }
 
             if (AreaInfoFlag != FetchAreaInfoFlag.FullOffline)
                 StartRefreshLocationInfo();
             return true;
         }
 
-        private bool ChangePositionParameters(double nLatitude, double nLongitude, string cTimeZoneID)
+        private bool ChangePositionParameters(double nLatitude, double nLongitude, bool bClearAreaInfo = false, bool bForceRefreshAreaInfo = false, string cTimeZoneID = null, 
+                                              string cAreaName = null, string cCountryName = null, double? nTimeZoneOffsetGmt = null, double? nTimeZoneOffsetDst = null)
         {
+            if (!string.IsNullOrEmpty(AreaName) && !bClearAreaInfo && !bForceRefreshAreaInfo)
+            {
+                if ((Latitude == nLatitude) && (Longitude == nLongitude))
+                    return false;
+            }
+            
+            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
+            if (string.IsNullOrEmpty(cAreaName) && string.IsNullOrEmpty(cCountryName) && nDistance > 2.5)
+                bClearAreaInfo = true;
+
             if (string.IsNullOrEmpty(cTimeZoneID))
-                return false;
-            var timezone = TimeZoneInfo.FindSystemTimeZoneById(cTimeZoneID);
-            if (timezone == null)
-                return false;
+                cTimeZoneID = FindTimeZoneByLocation(nLatitude, nLongitude);
+
+
+            if (string.IsNullOrEmpty(cTimeZoneID))
+            {
+                timeZoneInfo = null; //to make clear, timezone is unclear
+                if ((Latitude == 0 && Longitude == 0) || nDistance > 100)
+                    TimeZoneOffsetGmt = TimeZoneOffsetDst = (long)Math.Floor((nLongitude - 7.500000001) / 15) + 1; //mal so ein ungefär..
+            }
+            else
+            {
+                try
+                {
+                    var tz = TimeZoneInfo.FindSystemTimeZoneById(cTimeZoneID);
+                    TimeZoneName = tz.Id;
+                    TimeZoneOffsetGmt = nTimeZoneOffsetGmt.HasValue ? nTimeZoneOffsetGmt.Value : tz.BaseUtcOffset.TotalHours;
+                    TimeZoneOffsetDst = nTimeZoneOffsetDst.HasValue ? nTimeZoneOffsetDst.Value : tz.BaseUtcOffset.TotalHours + (tz.SupportsDaylightSavingTime ? 1 : 0);
+                    timeZoneInfo = tz;
+                }
+                catch (Exception ex)
+                {
+                    xLog.Error(ex);
+                    return false;
+                }
+            }
 
             Latitude = nLatitude;
             Longitude = nLongitude;
 
-            AreaName = string.Empty;// "searching for location...";
-            CountryName = string.Empty;
-            TimeZoneName = timezone.Id;
-            TimeZoneOffsetGmt = timezone.BaseUtcOffset.TotalHours;
-            TimeZoneOffsetDst = timezone.BaseUtcOffset.TotalHours + (timezone.SupportsDaylightSavingTime ? 1 : 0);
-            timeZoneInfo = timezone;
+            if (Latitude != 0 || Longitude != 0)
+            {
+                if (bClearAreaInfo)
+                {
+                    AreaName = string.Empty;
+                    if (bForceRefreshAreaInfo)
+                        CountryName = string.Empty;
+                    else if (nDistance > 25)
+                        CountryName += "?";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(cAreaName))
+                AreaName = cAreaName;
+            if (!string.IsNullOrEmpty(cCountryName))
+                CountryName = cCountryName;
 
             try { AreaChanged?.Invoke(this, new AreaChangedEventArgs(AreaChangedFlag.LocationUpdate)); } catch { }
-            try { TimeChanged?.Invoke(this, new TimeChangedEventArgs(TimeChangedFlag.LocationUpdate)); } catch { }
 
             return true;
         }
 
-        public bool ChangePositionDelay(double nLatitude, double nLongitude, string cTimeZoneID, bool bDemeterAreaInfo = false)
+        private string FindTimeZoneByLocation(double nLatitude, double nLongitude)
         {
-            if (!ChangePositionParameters(nLatitude, nLongitude, cTimeZoneID))
-                return false;
-
-            if (bDemeterAreaInfo)
-                StartRefreshLocationInfo();
-            return true;
+            if (TimeZoneMap.MapIsReady)
+            {
+                var xxTZ = TimeZoneMap.GetTimeZone((float)nLatitude, (float)nLongitude);
+                if (xxTZ != null)
+                {
+                    return xxTZ.timezoneId;
+                }
+            }
+            var cache = TimeZoneInfoCache.FromLocation(nLatitude, nLongitude, true);
+            if (cache != null)
+                return cache.timezoneId;
+            return null;
         }
 
         public async Task<bool> ChangePositionAsync(double nLatitude, double nLongitude, string cTimeZoneID, bool bDemeterAreaInfo = false)
         {
-            if (!ChangePositionParameters(nLatitude, nLongitude, cTimeZoneID))
+            if (!ChangePositionParameters(nLatitude, nLongitude, false, false, cTimeZoneID))
                 return false;
 
-            if (bDemeterAreaInfo)
+            if (bDemeterAreaInfo || timeZoneInfo == null)
             {
                 await Task.Factory.StartNew(() =>
                 {
@@ -302,6 +270,40 @@ namespace iChronoMe.Core
                 });
                 return true;
             }
+            return true;
+        }
+
+        public async Task<bool> ChangePositionAsync(double nLatitude, double nLongitude, bool bClearAreaInfo = false, bool bForceRefreshAreaInfo = false)
+        {
+            if (!ChangePositionParameters(nLatitude, nLongitude, bClearAreaInfo))
+                return false;
+
+            if ((ai == null || timeZoneInfo == null || !ai.CheckBoxIsUpToDate(nLatitude, nLongitude) || bClearAreaInfo || bForceRefreshAreaInfo))
+            {
+                return await Task.Factory.StartNew<bool>(() =>
+                {
+                    return GetLocationInfo();
+                });                
+            }
+            return false;
+        }
+
+        public void ChangePositionDelay(double nLatitude, double nLongitude, bool bClearAreaInfo = false, bool bForceRefreshAreaInfo = false)
+        {
+            if (!ChangePositionParameters(nLatitude, nLongitude, bClearAreaInfo, bForceRefreshAreaInfo) && !bClearAreaInfo && !bForceRefreshAreaInfo)
+                return;
+
+            if ((ai == null || timeZoneInfo == null || !ai.CheckBoxIsUpToDate(nLatitude, nLongitude) || bClearAreaInfo || bForceRefreshAreaInfo))
+                StartRefreshLocationInfo();
+        }
+
+        public bool ChangePositionDelay(double nLatitude, double nLongitude, string cTimeZoneID, bool bDemeterAreaInfo = false)
+        {
+            if (!ChangePositionParameters(nLatitude, nLongitude, false, false, cTimeZoneID))
+                return false;
+
+            if (bDemeterAreaInfo || timeZoneInfo == null)
+                StartRefreshLocationInfo();
             return true;
         }
 
@@ -320,7 +322,6 @@ namespace iChronoMe.Core
                 {
                     bStartLocationTaskAgain = false;
                     GetLocationInfo();
-                    Task.Delay(1000).Wait();
                 }
                 catch (ThreadAbortException) { return; }
                 catch { }
@@ -334,12 +335,12 @@ namespace iChronoMe.Core
         }
 
         GeoInfo.AreaInfo ai = null;
-        private void GetLocationInfo(bool bForceDemeterAreaInfo = false)
+        private bool GetLocationInfo(bool bForceDemeterAreaInfo = false)
         {
             if (AreaInfoFlag == FetchAreaInfoFlag.FullOffline && !bForceDemeterAreaInfo)
-                return;
+                return false;
             if (Latitude == 0 && Longitude == 0)
-                return;
+                return false;
             if (this == _localInstance)
             {
                 sys.lastUserLocation.Latitude = Latitude;
@@ -352,7 +353,7 @@ namespace iChronoMe.Core
             {
                 ai = GeoInfo.GetAreaInfo(Latitude, Longitude);
                 if (nLatitude != Latitude || nLongitude != Longitude)
-                    return; //wenn's z'lang dauert..
+                    return false; //wenn's z'lang dauert..
                 if (ai == null)
                 {
                     AreaName = string.Empty;
@@ -362,25 +363,23 @@ namespace iChronoMe.Core
                 {
                     AreaName = ai.toponymName;
                     CountryName = ai.countryName;
-                    //TimeZoneName = ai.timezoneId;
-                    //TimeZoneOffsetGmt = ai.gmtOffset;
-                    //TimeZoneOffsetDst = ai.dstOffset;
-                    //if (ai.timeZoneInfo != null)
-                    {
-                        //  timeZoneInfo = ai.timeZoneInfo;
-                    }
                 }
             }
-            else if (AreaInfoFlag == FetchAreaInfoFlag.EssentialOnly)
+            if (this.timeZoneInfo == null)
             {
-                ai = new GeoInfo.AreaInfo();
-                GeoInfo.FillTimeZoneID(ai, Latitude, Longitude);
+                var tz = TimeZoneInfoCache.FromLocation(Latitude, Longitude);
+                if (tz != null)
+                {
+                    TimeZoneName = tz.timezoneId;
+                    TimeZoneOffsetGmt = tz.gmtOffset;
+                    TimeZoneOffsetDst = tz.dstOffset;
+                    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(tz.timezoneId);
+                }
             }
             else
                 xLog.Wtf("Should not happen: GetLocationInfo: " + AreaInfoFlag.ToString());
 
             try { AreaChanged?.Invoke(this, new AreaChangedEventArgs(AreaChangedFlag.LocationUpdate)); } catch { }
-            try { TimeChanged?.Invoke(this, new TimeChangedEventArgs(TimeChangedFlag.LocationUpdate)); } catch { }
 
             if (this == _localInstance)
             {
@@ -394,6 +393,7 @@ namespace iChronoMe.Core
                 cfg.TimeZoneOffsetDst = TimeZoneOffsetDst;
                 AppConfigHolder.SaveLocationConfig();
             }
+            return true;
         }
 
         private SortedDictionary<string, Thread> timeHandlers = new SortedDictionary<string, Thread>();
@@ -506,103 +506,6 @@ namespace iChronoMe.Core
             return true;
         }
 
-        #region Obsolete
-        /*
-        [Obsolete("This construrctor is obsoleted use static NewInstance or LocalInstance")]
-        public LocationTimeHolder(double nLatitude, double nLongitude, bool bAsync = true)
-        {
-            FetchAreaInfoFlag = FetchAreaInfoFlag.FullAreaInfo;
-            ChangePosition(nLatitude, nLongitude, true, bAsync);
-        }
-
-        [Obsolete("This construrctor is obsoleted use Async or Delay")]
-        public void ChangePosition(double nLatitude, double nLongitude, bool bClearAreaInfo = false, bool bAsync = true)
-        {
-            if ((Latitude == nLatitude) && (Longitude == nLongitude))
-                return;
-
-            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
-            if (nDistance > 2.5)
-                bClearAreaInfo = true;
-
-            if (Latitude == 0 && Longitude == 0)
-                TimeZoneOffsetGmt = (long)Math.Floor((nLongitude - 7.500000001) / 15) + 1; //mal so ein ungefär..
-            else
-            {
-                if (bClearAreaInfo)
-                {
-                    AreaName = "";
-                    if (nDistance > 25)
-                    {
-                        AreaName = "...";
-                        CountryName = "";
-                    }
-                }
-            }
-
-            Latitude = nLatitude;
-            Longitude = nLongitude;
-
-            if ((ai == null || !ai.CheckBoxIsUpToDate(nLatitude, nLongitude)) && bAsync)
-            {
-                Task.Factory.StartNew(() =>
-                {
-                    GetLocationInfo();
-                });
-            }
-            if (!bAsync)
-                GetLocationInfo();
-            try { TimeChanged?.Invoke(this, new TimeChangedEventArgs(TimeChangedFlag.LocationUpdate)); } catch { }
-        }
-
- *         public void ReceiveSelectedPosition(SelectPositionResult pos)
-        {
-            ChangePosition(pos.Latitude, pos.Longitude);
-            AreaName = pos.Title;
-        }
-
-        public void Start(bool observeRealSunTime, bool observeMiddleSunTime, bool observeWorldTime)
-        {
-            if (!bIsRunning || mSecondThread == null)
-            {
-                bIsRunning = true;
-
-                try { AreaChanged?.Invoke(this, new AreaChangedEventArgs(AreaChangedFlag.Initial)); } catch { }
-                try { TimeChanged?.Invoke(this, new TimeChangedEventArgs(TimeChangedFlag.Initial)); } catch { }
-
-                mSecondThread = new Thread(() =>
-                {
-                    while (bIsRunning)
-                    {
-                        int iSleep = 1000;
-                        if (observeRealSunTime)
-                            iSleep = Math.Min(iSleep, 1000 - RealSunTime.Millisecond);
-                        if (observeMiddleSunTime)
-                            iSleep = Math.Min(iSleep, 1000 - MidSunTime.Millisecond);
-                        if (observeWorldTime)
-                            iSleep = Math.Min(iSleep, 1000 - UtcNow.Millisecond);
-
-                        Thread.Sleep(iSleep);
-                        if (bIsRunning)
-                            try { TimeChanged?.Invoke(this, new TimeChangedEventArgs(TimeChangedFlag.SecondChanged)); } catch { }
-
-                    }
-                    mSecondThread = null;
-                });
-                mSecondThread.IsBackground = true;
-                mSecondThread.Start();
-            }
-        }
-
-        public void Stop()
-        {
-            bIsRunning = false;
-            mSecondThread = null;
-        }
-        */
-
-        #endregion
-
         public TimeSpan UTCGeoLngDiff { get => GetUTCGeoLngDiff(Longitude); }
 
         public static TimeSpan GetUTCGeoLngDiff(double lng)
@@ -686,11 +589,6 @@ namespace iChronoMe.Core
 
         public void SetTime(DateTime tSet, TimeType type = TimeType.TimeZoneTime)
         {
-            SetTime(tSet, type, false);
-        }
-
-        private void SetTime(DateTime tSet, TimeType type, bool bInternal)
-        {
             switch (type)
             {
                 case TimeType.UtcTime:
@@ -731,8 +629,6 @@ namespace iChronoMe.Core
                     break;
 #endif
             }
-            if (!bInternal)
-                try { TimeChanged?.Invoke(this, new TimeChangedEventArgs(TimeChangedFlag.TimeSourceUpdate)); } catch { }
         }
 
         public DateTime GetLocationTime(double locLatitude, double locLongitude, TimeType locType, DateTime? baseTime = null, TimeType baseType = TimeType.UtcTime)
@@ -743,7 +639,7 @@ namespace iChronoMe.Core
             Latitude = locLatitude;
             Longitude = locLongitude;
             if (baseTime != null)
-                SetTime((DateTime)baseTime, baseType, true);
+                SetTime((DateTime)baseTime, baseType);
             try
             {
                 //if (locType == TimeType.TimeZoneTime)
@@ -771,6 +667,13 @@ namespace iChronoMe.Core
                 hash = (hash * HashingMultiplier) ^ _id.GetHashCode();
                 return hash;
             }
+        }
+
+        public void Dispose()
+        {
+            bIsRunning = false;
+            //end all TimeChanged-Threads within the next second
+            timeHandlers.Clear();
         }
 
         public enum FetchAreaInfoFlag
