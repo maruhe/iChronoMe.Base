@@ -110,6 +110,12 @@ namespace iChronoMe.Widgets
 
         public void DrawCanvas(SKCanvas canvas, DateTime dateTime, int width = 512, int height = 512, bool bDrawBackImage = false, float? nSecondHandOverrideSecond = null)
         {
+            var t = dateTime.TimeOfDay;
+            DrawCanvas(canvas, t.TotalHours, t.TotalMinutes % 60, t.TotalSeconds % 60, width, height, bDrawBackImage, nSecondHandOverrideSecond);
+        }
+
+        public void DrawCanvas(SKCanvas canvas, double hour, double minute, double second, int width = 512, int height = 512, bool bDrawBackImage = false, float? nSecondHandOverrideSecond = null)
+        {
             DateTime swStart = DateTime.Now;
 
             canvas.Clear();
@@ -160,13 +166,20 @@ namespace iChronoMe.Widgets
                 }
             }
 
+            if (!FlowHourHand)
+                hour = Math.Truncate(hour);
+            if (!FlowHourHand)
+                hour = Math.Truncate(hour);
+            if (!FlowHourHand)
+                hour = Math.Truncate(hour);
+
             // Hour hand
             if (ShowHourHand)
             {
                 fillPaint.Color = ColorHourHandFill.ToSKColor();
                 strokePaint.Color = ColorHourHandStorke.ToSKColor();
                 canvas.Save();
-                canvas.RotateDegrees(30 * dateTime.Hour + (FlowHourHand ? dateTime.Minute / 2f : 0));
+                canvas.RotateDegrees((float)(30 * hour));
                 canvas.DrawPath(hourHandPath, fillPaint);
                 canvas.DrawPath(hourHandPath, strokePaint);
                 canvas.Restore();
@@ -178,7 +191,7 @@ namespace iChronoMe.Widgets
                 fillPaint.Color = ColorMinuteHandFill.ToSKColor();
                 strokePaint.Color = ColorMinuteHandStorke.ToSKColor();
                 canvas.Save();
-                canvas.RotateDegrees(6 * dateTime.Minute + (FlowMinuteHand ? dateTime.Second / 10f : 0));
+                canvas.RotateDegrees((float)(6 * minute));
                 canvas.DrawPath(minuteHandPath, fillPaint);
                 canvas.DrawPath(minuteHandPath, strokePaint);
                 canvas.Restore();
@@ -190,10 +203,7 @@ namespace iChronoMe.Widgets
                 fillPaint.Color = ColorSecondHandFill.ToSKColor();
                 strokePaint.Color = ColorSecondHandStorke.ToSKColor();
                 canvas.Save();
-                float seconds = dateTime.Second + (FlowSecondHand ? dateTime.Millisecond / 1000f : 0);
-                if (nSecondHandOverrideSecond.HasValue)
-                    seconds = nSecondHandOverrideSecond.Value;
-                canvas.RotateDegrees(6 * seconds);
+                canvas.RotateDegrees(6 * (float)second);
                 canvas.DrawLine(0, 10, 0, -80, strokePaint);
                 canvas.Restore();
             }

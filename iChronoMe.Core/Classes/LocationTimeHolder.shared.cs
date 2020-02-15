@@ -189,9 +189,12 @@ namespace iChronoMe.Core
             if (string.IsNullOrEmpty(cAreaName) && string.IsNullOrEmpty(cCountryName) && nDistance > 2.5)
                 bClearAreaInfo = true;
 
-            if (string.IsNullOrEmpty(cTimeZoneID))
-                cTimeZoneID = FindTimeZoneByLocation(nLatitude, nLongitude);
+            TimeZoneInfoJson tzj = null;
+            if (string.IsNullOrEmpty(cTimeZoneID) || nTimeZoneOffsetGmt == null || nTimeZoneOffsetDst == null)
+                tzj = FindTimeZoneByLocation(nLatitude, nLongitude);
 
+            if (string.IsNullOrEmpty(cTimeZoneID) && tzj != null && !string.IsNullOrEmpty(tzj.timezoneId))
+                cTimeZoneID = tzj.timezoneId;
 
             if (string.IsNullOrEmpty(cTimeZoneID))
             {
@@ -205,8 +208,8 @@ namespace iChronoMe.Core
                 {
                     var tz = TimeZoneInfo.FindSystemTimeZoneById(cTimeZoneID);
                     TimeZoneName = tz.Id;
-                    TimeZoneOffsetGmt = nTimeZoneOffsetGmt.HasValue ? nTimeZoneOffsetGmt.Value : tz.BaseUtcOffset.TotalHours;
-                    TimeZoneOffsetDst = nTimeZoneOffsetDst.HasValue ? nTimeZoneOffsetDst.Value : tz.BaseUtcOffset.TotalHours + (tz.SupportsDaylightSavingTime ? 1 : 0);
+                    TimeZoneOffsetGmt = nTimeZoneOffsetGmt.HasValue ? nTimeZoneOffsetGmt.Value : (tzj == null ? tz.BaseUtcOffset.TotalHours : tzj.gmtOffset);
+                    TimeZoneOffsetDst = nTimeZoneOffsetDst.HasValue ? nTimeZoneOffsetDst.Value : (tzj == null ? tz.BaseUtcOffset.TotalHours + (tz.SupportsDaylightSavingTime ? 1 : 0) : tzj.dstOffset);
                     timeZoneInfo = tz;
                 }
                 catch (Exception ex)
@@ -241,19 +244,19 @@ namespace iChronoMe.Core
             return true;
         }
 
-        private string FindTimeZoneByLocation(double nLatitude, double nLongitude)
+        private TimeZoneInfoJson FindTimeZoneByLocation(double nLatitude, double nLongitude)
         {
             if (TimeZoneMap.MapIsReady)
             {
                 var xxTZ = TimeZoneMap.GetTimeZone((float)nLatitude, (float)nLongitude);
                 if (xxTZ != null)
                 {
-                    return xxTZ.timezoneId;
+                    return xxTZ;
                 }
             }
             var cache = TimeZoneInfoCache.FromLocation(nLatitude, nLongitude, true);
             if (cache != null)
-                return cache.timezoneId;
+                return new TimeZoneInfoJson { timezoneId = cache.timezoneId, gmtOffset = cache.gmtOffset, dstOffset = cache.dstOffset };
             return null;
         }
 

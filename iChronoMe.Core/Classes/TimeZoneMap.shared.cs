@@ -16,23 +16,32 @@ namespace iChronoMe.Core.Classes
 {
     public static class TimeZoneMap
     {
-        public static Dictionary<Polygon, TimeZoneInfoCache> timeZonePolygons = new Dictionary<Polygon, TimeZoneInfoCache>();
+        public static Dictionary<Polygon, TimeZoneInfoJson> timeZonePolygons;
 
         private static bool ready = false;
 
         public static bool MapIsReady { get => ready; }
 
-        public static TimeZoneInfoCache GetTimeZone(float lat, float lng)
+        public static TimeZoneInfoJson GetTimeZone(float lat, float lng)
         {
             if (!ready)
                 return null;
 
+            int i = 0;
             foreach (var poly in timeZonePolygons.Keys)
             {
-                if (poly.Contains(new Point(lat, lng)))
+                try
                 {
-                    return timeZonePolygons[poly];
+                    if (poly.Contains(new Point(lat, lng)))
+                    {
+                        return timeZonePolygons[poly];
+                    }
+                } 
+                catch (Exception ex)
+                {
+                    sys.LogException(new Exception("Error checking TZ-Polyhon " + i + " for LatLong: " + lat + ", " + lng, ex));
                 }
+                i++;
             }
 
             return null;
@@ -40,7 +49,7 @@ namespace iChronoMe.Core.Classes
 
         static TimeZoneMap()
         {
-            Thread tr = new Thread(() => { InitMap(); });
+            Thread tr = new Thread(() => { LoadOffsets(); InitMap(); });
             tr.Start();
         }
 
@@ -48,6 +57,7 @@ namespace iChronoMe.Core.Classes
 
         private static void InitMap()
         {
+            ready = false;
             string cJsonFile = Path.Combine(sys.PathData, "ne_10m_time_zones.geojson");
             if (!File.Exists(cJsonFile))
             {
@@ -67,19 +77,32 @@ namespace iChronoMe.Core.Classes
                     sys.MainUserIO?.ShowToast("Error updating Time-Zones-Map:\n"+ex.Message);
                 }
             }
-            ReadPoligones();
+            timeZonePolygons?.Clear();
+            timeZonePolygons = ReadPoligones();
         }
 
-        private static void ReadPoligones()
+        public static TimeSpan? ParserTest()
+        {
+            var swSart = DateTime.Now;
+            var pols = ReadPoligones();
+            if (pols == null || pols.Count == 0)
+                return null;
+            var ts = DateTime.Now - swSart;
+            if (ts.TotalMilliseconds > 250)
+                return ts;
+            return null;
+        }
+
+        private static Dictionary<Polygon, TimeZoneInfoJson> ReadPoligones()
         {
             if (!File.Exists(Path.Combine(sys.PathData, "ne_10m_time_zones.geojson")))
-                return;
+                return null;
             try
             {
                 DateTime swStart = DateTime.Now;
                 string topology_string = File.ReadAllText(Path.Combine(sys.PathData, "ne_10m_time_zones.geojson"));
 
-                timeZonePolygons.Clear();
+                var res = timeZonePolygons = new Dictionary<Polygon, TimeZoneInfoJson>();
 
                 // create NetTopology JSON reader
                 var reader = new NetTopologySuite.IO.GeoJsonReader();
@@ -90,7 +113,7 @@ namespace iChronoMe.Core.Classes
                 // if feature collection is null then return 
                 if (featureCollection == null)
                 {
-                    return;
+                    return null;
                 }
 
                 // loop through all the parsed featurd   
@@ -133,16 +156,43 @@ namespace iChronoMe.Core.Classes
 
                                 var poly = new Polygon(new LinearRing(coordinates.ToArray()));
 
-                                TimeZoneInfoCache tzi = new TimeZoneInfoCache();
+                                TimeZoneInfoJson tzi = new TimeZoneInfoJson();
                                 foreach (var p in jsonFeature.Properties)
                                 {
                                     if ("tz_name1st".Equals(p.Key) && p.Value != null)
                                         tzi.timezoneId = sys.ConvertTimeZoneToSystem(((string)p.Value).Replace(" ", ""));
-                                    else if (p.Value != null)
-                                        tzi.Notes += string.Concat(p.Key, ": ", p.Value, "\n");
+                                    else if ("map_color6".Equals(p.Key) && p.Value != null)
+                                        tzi.Color6 = (long)p.Value;
+                                    else if ("map_color8".Equals(p.Key) && p.Value != null)
+                                        tzi.Color8 = (long)p.Value;
+                                    else if ("note".Equals(p.Key) && p.Value != null)
+                                        tzi.Notes = (string)p.Value;
+                                    else if ("places".Equals(p.Key) && p.Value != null)
+                                        tzi.Places = (string)p.Value;
+                                    else if ("zone".Equals(p.Key) && p.Value != null)
+                                    {
+                                        if (p.Value is double)
+                                            tzi.gmtOffset = (double)p.Value;
+                                        else if (p.Value is long)
+                                            tzi.gmtOffset = (long)p.Value;
+                                        else
+                                            p.ToString();
+                                    }
+
                                 };
 
-                                timeZonePolygons.Add(poly, tzi);
+                                if (!string.IsNullOrEmpty(tzi.timezoneId)) {
+                                    if (tzOffsets.ContainsKey(tzi.timezoneId))
+                                    {
+                                        var x = tzOffsets[tzi.timezoneId];
+                                        tzi.gmtOffset = x.Item1;
+                                        tzi.dstOffset = x.Item2;
+                                    }
+                                    else
+                                        poly.ToString();
+                                }
+
+                                res.Add(poly, tzi);
 
                             }
                             break;
@@ -161,11 +211,459 @@ namespace iChronoMe.Core.Classes
                 ready = true;
                 var tsInit = DateTime.Now - swStart;
                 sys.MainUserIO?.ShowToast("Read Time-Zones-Map: " + (int)tsInit.TotalMilliseconds + "ms");
+                return res;
             }
             catch (Exception ex)
             {
                 ex.ToString();
             }
+            return null;
         }
+
+        private static Dictionary<string, (float, float)> tzOffsets = new Dictionary<string, (float, float)>();
+
+        private static void LoadOffsets()
+        {
+            tzOffsets.Clear();
+            tzOffsets.Add("Africa/Abidjan", (0.0f, 0.0f));
+            tzOffsets.Add("Africa/Accra", (0.0f, 0.0f));
+            tzOffsets.Add("Africa/Addis_Ababa", (3.0f, 3.0f));
+            tzOffsets.Add("Africa/Algiers", (1.0f, 1.0f));
+            tzOffsets.Add("Africa/Asmara", (3.0f, 3.0f));
+            tzOffsets.Add("Africa/Bamako", (0.0f, 0.0f));
+            tzOffsets.Add("Africa/Bangui", (1.0f, 1.0f));
+            tzOffsets.Add("Africa/Banjul", (0.0f, 0.0f));
+            tzOffsets.Add("Africa/Bissau", (0.0f, 0.0f));
+            tzOffsets.Add("Africa/Blantyre", (2.0f, 2.0f));
+            tzOffsets.Add("Africa/Brazzaville", (1.0f, 1.0f));
+            tzOffsets.Add("Africa/Bujumbura", (2.0f, 2.0f));
+            tzOffsets.Add("Africa/Cairo", (2.0f, 2.0f));
+            tzOffsets.Add("Africa/Casablanca", (1.0f, 1.0f));
+            tzOffsets.Add("Africa/Ceuta", (1.0f, 2.0f));
+            tzOffsets.Add("Africa/Conakry", (0.0f, 0.0f));
+            tzOffsets.Add("Africa/Dakar", (0.0f, 0.0f));
+            tzOffsets.Add("Africa/Dar_es_Salaam", (3.0f, 3.0f));
+            tzOffsets.Add("Africa/Djibouti", (3.0f, 3.0f));
+            tzOffsets.Add("Africa/Douala", (1.0f, 1.0f));
+            tzOffsets.Add("Africa/El_Aaiun", (1.0f, 1.0f));
+            tzOffsets.Add("Africa/Freetown", (0.0f, 0.0f));
+            tzOffsets.Add("Africa/Gaborone", (2.0f, 2.0f));
+            tzOffsets.Add("Africa/Harare", (2.0f, 2.0f));
+            tzOffsets.Add("Africa/Johannesburg", (2.0f, 2.0f));
+            tzOffsets.Add("Africa/Juba", (3.0f, 3.0f));
+            tzOffsets.Add("Africa/Kampala", (3.0f, 3.0f));
+            tzOffsets.Add("Africa/Khartoum", (2.0f, 2.0f));
+            tzOffsets.Add("Africa/Kigali", (2.0f, 2.0f));
+            tzOffsets.Add("Africa/Kinshasa", (1.0f, 1.0f));
+            tzOffsets.Add("Africa/Lagos", (1.0f, 1.0f));
+            tzOffsets.Add("Africa/Libreville", (1.0f, 1.0f));
+            tzOffsets.Add("Africa/Lome", (0.0f, 0.0f));
+            tzOffsets.Add("Africa/Luanda", (1.0f, 1.0f));
+            tzOffsets.Add("Africa/Lubumbashi", (2.0f, 2.0f));
+            tzOffsets.Add("Africa/Lusaka", (2.0f, 2.0f));
+            tzOffsets.Add("Africa/Malabo", (1.0f, 1.0f));
+            tzOffsets.Add("Africa/Maputo", (2.0f, 2.0f));
+            tzOffsets.Add("Africa/Maseru", (2.0f, 2.0f));
+            tzOffsets.Add("Africa/Mbabane", (2.0f, 2.0f));
+            tzOffsets.Add("Africa/Mogadishu", (3.0f, 3.0f));
+            tzOffsets.Add("Africa/Monrovia", (0.0f, 0.0f));
+            tzOffsets.Add("Africa/Nairobi", (3.0f, 3.0f));
+            tzOffsets.Add("Africa/Ndjamena", (1.0f, 1.0f));
+            tzOffsets.Add("Africa/Niamey", (1.0f, 1.0f));
+            tzOffsets.Add("Africa/Nouakchott", (0.0f, 0.0f));
+            tzOffsets.Add("Africa/Ouagadougou", (0.0f, 0.0f));
+            tzOffsets.Add("Africa/Porto-Novo", (1.0f, 1.0f));
+            tzOffsets.Add("Africa/Sao_Tome", (0.0f, 0.0f));
+            tzOffsets.Add("Africa/Tripoli", (2.0f, 2.0f));
+            tzOffsets.Add("Africa/Tunis", (1.0f, 1.0f));
+            tzOffsets.Add("Africa/Windhoek", (2.0f, 2.0f));
+            tzOffsets.Add("America/Adak", (-10.0f, -9.0f));
+            tzOffsets.Add("America/Anchorage", (-9.0f, -8.0f));
+            tzOffsets.Add("America/Anguilla", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Antigua", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Araguaina", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Argentina/Buenos_Aires", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Argentina/Catamarca", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Argentina/Cordoba", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Argentina/Jujuy", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Argentina/La_Rioja", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Argentina/Mendoza", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Argentina/Rio_Gallegos", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Argentina/Salta", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Argentina/San_Juan", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Argentina/San_Luis", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Argentina/Tucuman", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Argentina/Ushuaia", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Aruba", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Asuncion", (-3.0f, -4.0f));
+            tzOffsets.Add("America/Atikokan", (-5.0f, -5.0f));
+            tzOffsets.Add("America/Bahia", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Bahia_Banderas", (-6.0f, -5.0f));
+            tzOffsets.Add("America/Barbados", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Belem", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Belize", (-6.0f, -6.0f));
+            tzOffsets.Add("America/Blanc-Sablon", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Boa_Vista", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Bogota", (-5.0f, -5.0f));
+            tzOffsets.Add("America/Boise", (-7.0f, -6.0f));
+            tzOffsets.Add("America/Cambridge_Bay", (-7.0f, -6.0f));
+            tzOffsets.Add("America/Campo_Grande", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Cancun", (-5.0f, -5.0f));
+            tzOffsets.Add("America/Caracas", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Cayenne", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Cayman", (-5.0f, -5.0f));
+            tzOffsets.Add("America/Chicago", (-6.0f, -5.0f));
+            tzOffsets.Add("America/Chihuahua", (-7.0f, -6.0f));
+            tzOffsets.Add("America/Costa_Rica", (-6.0f, -6.0f));
+            tzOffsets.Add("America/Creston", (-7.0f, -7.0f));
+            tzOffsets.Add("America/Cuiaba", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Curacao", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Danmarkshavn", (0.0f, 0.0f));
+            tzOffsets.Add("America/Dawson", (-8.0f, -7.0f));
+            tzOffsets.Add("America/Dawson_Creek", (-7.0f, -7.0f));
+            tzOffsets.Add("America/Denver", (-7.0f, -6.0f));
+            tzOffsets.Add("America/Detroit", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Dominica", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Edmonton", (-7.0f, -6.0f));
+            tzOffsets.Add("America/Eirunepe", (-5.0f, -5.0f));
+            tzOffsets.Add("America/El_Salvador", (-6.0f, -6.0f));
+            tzOffsets.Add("America/Fort_Nelson", (-7.0f, -7.0f));
+            tzOffsets.Add("America/Fortaleza", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Glace_Bay", (-4.0f, -3.0f));
+            tzOffsets.Add("America/Godthab", (-3.0f, -2.0f));
+            tzOffsets.Add("America/Goose_Bay", (-4.0f, -3.0f));
+            tzOffsets.Add("America/Grand_Turk", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Grenada", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Guadeloupe", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Guatemala", (-6.0f, -6.0f));
+            tzOffsets.Add("America/Guayaquil", (-5.0f, -5.0f));
+            tzOffsets.Add("America/Guyana", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Halifax", (-4.0f, -3.0f));
+            tzOffsets.Add("America/Havana", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Hermosillo", (-7.0f, -7.0f));
+            tzOffsets.Add("America/Indiana/Indianapolis", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Indiana/Knox", (-6.0f, -5.0f));
+            tzOffsets.Add("America/Indiana/Marengo", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Indiana/Petersburg", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Indiana/Tell_City", (-6.0f, -5.0f));
+            tzOffsets.Add("America/Indiana/Vevay", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Indiana/Vincennes", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Indiana/Winamac", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Inuvik", (-7.0f, -6.0f));
+            tzOffsets.Add("America/Iqaluit", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Jamaica", (-5.0f, -5.0f));
+            tzOffsets.Add("America/Juneau", (-9.0f, -8.0f));
+            tzOffsets.Add("America/Kentucky/Louisville", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Kentucky/Monticello", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Kralendijk", (-4.0f, -4.0f));
+            tzOffsets.Add("America/La_Paz", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Lima", (-5.0f, -5.0f));
+            tzOffsets.Add("America/Los_Angeles", (-8.0f, -7.0f));
+            tzOffsets.Add("America/Lower_Princes", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Maceio", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Managua", (-6.0f, -6.0f));
+            tzOffsets.Add("America/Manaus", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Marigot", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Martinique", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Matamoros", (-6.0f, -5.0f));
+            tzOffsets.Add("America/Mazatlan", (-7.0f, -6.0f));
+            tzOffsets.Add("America/Menominee", (-6.0f, -5.0f));
+            tzOffsets.Add("America/Merida", (-6.0f, -5.0f));
+            tzOffsets.Add("America/Metlakatla", (-9.0f, -8.0f));
+            tzOffsets.Add("America/Mexico_City", (-6.0f, -5.0f));
+            tzOffsets.Add("America/Miquelon", (-3.0f, -2.0f));
+            tzOffsets.Add("America/Moncton", (-4.0f, -3.0f));
+            tzOffsets.Add("America/Monterrey", (-6.0f, -5.0f));
+            tzOffsets.Add("America/Montevideo", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Montserrat", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Nassau", (-5.0f, -4.0f));
+            tzOffsets.Add("America/New_York", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Nipigon", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Nome", (-9.0f, -8.0f));
+            tzOffsets.Add("America/Noronha", (-2.0f, -2.0f));
+            tzOffsets.Add("America/North_Dakota/Beulah", (-6.0f, -5.0f));
+            tzOffsets.Add("America/North_Dakota/Center", (-6.0f, -5.0f));
+            tzOffsets.Add("America/North_Dakota/New_Salem", (-6.0f, -5.0f));
+            tzOffsets.Add("America/Ojinaga", (-7.0f, -6.0f));
+            tzOffsets.Add("America/Panama", (-5.0f, -5.0f));
+            tzOffsets.Add("America/Pangnirtung", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Paramaribo", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Phoenix", (-7.0f, -7.0f));
+            tzOffsets.Add("America/Port-au-Prince", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Port_of_Spain", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Porto_Velho", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Puerto_Rico", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Punta_Arenas", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Rainy_River", (-6.0f, -5.0f));
+            tzOffsets.Add("America/Rankin_Inlet", (-6.0f, -5.0f));
+            tzOffsets.Add("America/Recife", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Regina", (-6.0f, -6.0f));
+            tzOffsets.Add("America/Resolute", (-6.0f, -5.0f));
+            tzOffsets.Add("America/Rio_Branco", (-5.0f, -5.0f));
+            tzOffsets.Add("America/Santarem", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Santiago", (-3.0f, -4.0f));
+            tzOffsets.Add("America/Santo_Domingo", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Sao_Paulo", (-3.0f, -3.0f));
+            tzOffsets.Add("America/Scoresbysund", (-1.0f, 0.0f));
+            tzOffsets.Add("America/Sitka", (-9.0f, -8.0f));
+            tzOffsets.Add("America/St_Barthelemy", (-4.0f, -4.0f));
+            tzOffsets.Add("America/St_Johns", (-3.5f, -2.5f));
+            tzOffsets.Add("America/St_Kitts", (-4.0f, -4.0f));
+            tzOffsets.Add("America/St_Lucia", (-4.0f, -4.0f));
+            tzOffsets.Add("America/St_Thomas", (-4.0f, -4.0f));
+            tzOffsets.Add("America/St_Vincent", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Swift_Current", (-6.0f, -6.0f));
+            tzOffsets.Add("America/Tegucigalpa", (-6.0f, -6.0f));
+            tzOffsets.Add("America/Thule", (-4.0f, -3.0f));
+            tzOffsets.Add("America/Thunder_Bay", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Tijuana", (-8.0f, -7.0f));
+            tzOffsets.Add("America/Toronto", (-5.0f, -4.0f));
+            tzOffsets.Add("America/Tortola", (-4.0f, -4.0f));
+            tzOffsets.Add("America/Vancouver", (-8.0f, -7.0f));
+            tzOffsets.Add("America/Whitehorse", (-8.0f, -7.0f));
+            tzOffsets.Add("America/Winnipeg", (-6.0f, -5.0f));
+            tzOffsets.Add("America/Yakutat", (-9.0f, -8.0f));
+            tzOffsets.Add("America/Yellowknife", (-7.0f, -6.0f));
+            tzOffsets.Add("Antarctica/Casey", (8.0f, 8.0f));
+            tzOffsets.Add("Antarctica/Davis", (7.0f, 7.0f));
+            tzOffsets.Add("Antarctica/DumontDUrville", (10.0f, 10.0f));
+            tzOffsets.Add("Antarctica/Macquarie", (11.0f, 11.0f));
+            tzOffsets.Add("Antarctica/Mawson", (5.0f, 5.0f));
+            tzOffsets.Add("Antarctica/McMurdo", (13.0f, 12.0f));
+            tzOffsets.Add("Antarctica/Palmer", (-3.0f, -3.0f));
+            tzOffsets.Add("Antarctica/Rothera", (-3.0f, -3.0f));
+            tzOffsets.Add("Antarctica/Syowa", (3.0f, 3.0f));
+            tzOffsets.Add("Antarctica/Troll", (0.0f, 2.0f));
+            tzOffsets.Add("Antarctica/Vostok", (6.0f, 6.0f));
+            tzOffsets.Add("Arctic/Longyearbyen", (1.0f, 2.0f));
+            tzOffsets.Add("Asia/Aden", (3.0f, 3.0f));
+            tzOffsets.Add("Asia/Almaty", (6.0f, 6.0f));
+            tzOffsets.Add("Asia/Amman", (2.0f, 3.0f));
+            tzOffsets.Add("Asia/Anadyr", (12.0f, 12.0f));
+            tzOffsets.Add("Asia/Aqtau", (5.0f, 5.0f));
+            tzOffsets.Add("Asia/Aqtobe", (5.0f, 5.0f));
+            tzOffsets.Add("Asia/Ashgabat", (5.0f, 5.0f));
+            tzOffsets.Add("Asia/Atyrau", (5.0f, 5.0f));
+            tzOffsets.Add("Asia/Baghdad", (3.0f, 3.0f));
+            tzOffsets.Add("Asia/Bahrain", (3.0f, 3.0f));
+            tzOffsets.Add("Asia/Baku", (4.0f, 4.0f));
+            tzOffsets.Add("Asia/Bangkok", (7.0f, 7.0f));
+            tzOffsets.Add("Asia/Barnaul", (7.0f, 7.0f));
+            tzOffsets.Add("Asia/Beirut", (2.0f, 3.0f));
+            tzOffsets.Add("Asia/Bishkek", (6.0f, 6.0f));
+            tzOffsets.Add("Asia/Brunei", (8.0f, 8.0f));
+            tzOffsets.Add("Asia/Chita", (9.0f, 9.0f));
+            tzOffsets.Add("Asia/Choibalsan", (8.0f, 8.0f));
+            tzOffsets.Add("Asia/Colombo", (5.5f, 5.5f));
+            tzOffsets.Add("Asia/Damascus", (2.0f, 3.0f));
+            tzOffsets.Add("Asia/Dhaka", (6.0f, 6.0f));
+            tzOffsets.Add("Asia/Dili", (9.0f, 9.0f));
+            tzOffsets.Add("Asia/Dubai", (4.0f, 4.0f));
+            tzOffsets.Add("Asia/Dushanbe", (5.0f, 5.0f));
+            tzOffsets.Add("Asia/Famagusta", (2.0f, 3.0f));
+            tzOffsets.Add("Asia/Gaza", (2.0f, 3.0f));
+            tzOffsets.Add("Asia/Hebron", (2.0f, 3.0f));
+            tzOffsets.Add("Asia/Ho_Chi_Minh", (7.0f, 7.0f));
+            tzOffsets.Add("Asia/Hong_Kong", (8.0f, 8.0f));
+            tzOffsets.Add("Asia/Hovd", (7.0f, 7.0f));
+            tzOffsets.Add("Asia/Irkutsk", (8.0f, 8.0f));
+            tzOffsets.Add("Asia/Jakarta", (7.0f, 7.0f));
+            tzOffsets.Add("Asia/Jayapura", (9.0f, 9.0f));
+            tzOffsets.Add("Asia/Jerusalem", (2.0f, 3.0f));
+            tzOffsets.Add("Asia/Kabul", (4.5f, 4.5f));
+            tzOffsets.Add("Asia/Kamchatka", (12.0f, 12.0f));
+            tzOffsets.Add("Asia/Karachi", (5.0f, 5.0f));
+            tzOffsets.Add("Asia/Kathmandu", (5.75f, 5.75f));
+            tzOffsets.Add("Asia/Khandyga", (9.0f, 9.0f));
+            tzOffsets.Add("Asia/Kolkata", (5.5f, 5.5f));
+            tzOffsets.Add("Asia/Krasnoyarsk", (7.0f, 7.0f));
+            tzOffsets.Add("Asia/Kuala_Lumpur", (8.0f, 8.0f));
+            tzOffsets.Add("Asia/Kuching", (8.0f, 8.0f));
+            tzOffsets.Add("Asia/Kuwait", (3.0f, 3.0f));
+            tzOffsets.Add("Asia/Macau", (8.0f, 8.0f));
+            tzOffsets.Add("Asia/Magadan", (11.0f, 11.0f));
+            tzOffsets.Add("Asia/Makassar", (8.0f, 8.0f));
+            tzOffsets.Add("Asia/Manila", (8.0f, 8.0f));
+            tzOffsets.Add("Asia/Muscat", (4.0f, 4.0f));
+            tzOffsets.Add("Asia/Nicosia", (2.0f, 3.0f));
+            tzOffsets.Add("Asia/Novokuznetsk", (7.0f, 7.0f));
+            tzOffsets.Add("Asia/Novosibirsk", (7.0f, 7.0f));
+            tzOffsets.Add("Asia/Omsk", (6.0f, 6.0f));
+            tzOffsets.Add("Asia/Oral", (5.0f, 5.0f));
+            tzOffsets.Add("Asia/Phnom_Penh", (7.0f, 7.0f));
+            tzOffsets.Add("Asia/Pontianak", (7.0f, 7.0f));
+            tzOffsets.Add("Asia/Pyongyang", (9.0f, 9.0f));
+            tzOffsets.Add("Asia/Qatar", (3.0f, 3.0f));
+            tzOffsets.Add("Asia/Qostanay", (6.0f, 6.0f));
+            tzOffsets.Add("Asia/Qyzylorda", (5.0f, 5.0f));
+            tzOffsets.Add("Asia/Rangoon", (6.5f, 6.5f));
+            tzOffsets.Add("Asia/Riyadh", (3.0f, 3.0f));
+            tzOffsets.Add("Asia/Sakhalin", (11.0f, 11.0f));
+            tzOffsets.Add("Asia/Samarkand", (5.0f, 5.0f));
+            tzOffsets.Add("Asia/Seoul", (9.0f, 9.0f));
+            tzOffsets.Add("Asia/Shanghai", (8.0f, 8.0f));
+            tzOffsets.Add("Asia/Singapore", (8.0f, 8.0f));
+            tzOffsets.Add("Asia/Srednekolymsk", (11.0f, 11.0f));
+            tzOffsets.Add("Asia/Taipei", (8.0f, 8.0f));
+            tzOffsets.Add("Asia/Tashkent", (5.0f, 5.0f));
+            tzOffsets.Add("Asia/Tbilisi", (4.0f, 4.0f));
+            tzOffsets.Add("Asia/Tehran", (3.5f, 4.5f));
+            tzOffsets.Add("Asia/Thimphu", (6.0f, 6.0f));
+            tzOffsets.Add("Asia/Tokyo", (9.0f, 9.0f));
+            tzOffsets.Add("Asia/Tomsk", (7.0f, 7.0f));
+            tzOffsets.Add("Asia/Ulaanbaatar", (8.0f, 8.0f));
+            tzOffsets.Add("Asia/Urumqi", (6.0f, 6.0f));
+            tzOffsets.Add("Asia/Ust-Nera", (10.0f, 10.0f));
+            tzOffsets.Add("Asia/Vientiane", (7.0f, 7.0f));
+            tzOffsets.Add("Asia/Vladivostok", (10.0f, 10.0f));
+            tzOffsets.Add("Asia/Yakutsk", (9.0f, 9.0f));
+            tzOffsets.Add("Asia/Yangon", (6.5f, 6.5f));
+            tzOffsets.Add("Asia/Yekaterinburg", (5.0f, 5.0f));
+            tzOffsets.Add("Asia/Yerevan", (4.0f, 4.0f));
+            tzOffsets.Add("Atlantic/Azores", (-1.0f, 0.0f));
+            tzOffsets.Add("Atlantic/Bermuda", (-4.0f, -3.0f));
+            tzOffsets.Add("Atlantic/Canary", (0.0f, 1.0f));
+            tzOffsets.Add("Atlantic/Cape_Verde", (-1.0f, -1.0f));
+            tzOffsets.Add("Atlantic/Faroe", (0.0f, 1.0f));
+            tzOffsets.Add("Atlantic/Madeira", (0.0f, 1.0f));
+            tzOffsets.Add("Atlantic/Reykjavik", (0.0f, 0.0f));
+            tzOffsets.Add("Atlantic/South_Georgia", (-2.0f, -2.0f));
+            tzOffsets.Add("Atlantic/St_Helena", (0.0f, 0.0f));
+            tzOffsets.Add("Atlantic/Stanley", (-3.0f, -3.0f));
+            tzOffsets.Add("Australia/Adelaide", (10.5f, 9.5f));
+            tzOffsets.Add("Australia/Brisbane", (10.0f, 10.0f));
+            tzOffsets.Add("Australia/Broken_Hill", (10.5f, 9.5f));
+            tzOffsets.Add("Australia/Currie", (11.0f, 10.0f));
+            tzOffsets.Add("Australia/Darwin", (9.5f, 9.5f));
+            tzOffsets.Add("Australia/Eucla", (8.75f, 8.75f));
+            tzOffsets.Add("Australia/Hobart", (11.0f, 10.0f));
+            tzOffsets.Add("Australia/Lindeman", (10.0f, 10.0f));
+            tzOffsets.Add("Australia/Lord_Howe", (11.0f, 10.5f));
+            tzOffsets.Add("Australia/Melbourne", (11.0f, 10.0f));
+            tzOffsets.Add("Australia/Perth", (8.0f, 8.0f));
+            tzOffsets.Add("Australia/Sydney", (11.0f, 10.0f));
+            tzOffsets.Add("Europe/Amsterdam", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Andorra", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Astrakhan", (4.0f, 4.0f));
+            tzOffsets.Add("Europe/Athens", (2.0f, 3.0f));
+            tzOffsets.Add("Europe/Belgrade", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Berlin", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Bratislava", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Brussels", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Bucharest", (2.0f, 3.0f));
+            tzOffsets.Add("Europe/Budapest", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Busingen", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Chisinau", (2.0f, 3.0f));
+            tzOffsets.Add("Europe/Copenhagen", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Dublin", (0.0f, 1.0f));
+            tzOffsets.Add("Europe/Gibraltar", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Guernsey", (0.0f, 1.0f));
+            tzOffsets.Add("Europe/Helsinki", (2.0f, 3.0f));
+            tzOffsets.Add("Europe/Isle_of_Man", (0.0f, 1.0f));
+            tzOffsets.Add("Europe/Istanbul", (3.0f, 3.0f));
+            tzOffsets.Add("Europe/Jersey", (0.0f, 1.0f));
+            tzOffsets.Add("Europe/Kaliningrad", (2.0f, 2.0f));
+            tzOffsets.Add("Europe/Kiev", (2.0f, 3.0f));
+            tzOffsets.Add("Europe/Kirov", (3.0f, 3.0f));
+            tzOffsets.Add("Europe/Lisbon", (0.0f, 1.0f));
+            tzOffsets.Add("Europe/Ljubljana", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/London", (0.0f, 1.0f));
+            tzOffsets.Add("Europe/Luxembourg", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Madrid", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Malta", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Mariehamn", (2.0f, 3.0f));
+            tzOffsets.Add("Europe/Minsk", (3.0f, 3.0f));
+            tzOffsets.Add("Europe/Monaco", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Moscow", (3.0f, 3.0f));
+            tzOffsets.Add("Europe/Oslo", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Paris", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Podgorica", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Prague", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Riga", (2.0f, 3.0f));
+            tzOffsets.Add("Europe/Rome", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Samara", (4.0f, 4.0f));
+            tzOffsets.Add("Europe/San_Marino", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Sarajevo", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Saratov", (4.0f, 4.0f));
+            tzOffsets.Add("Europe/Simferopol", (3.0f, 3.0f));
+            tzOffsets.Add("Europe/Skopje", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Sofia", (2.0f, 3.0f));
+            tzOffsets.Add("Europe/Stockholm", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Tallinn", (2.0f, 3.0f));
+            tzOffsets.Add("Europe/Tirane", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Ulyanovsk", (4.0f, 4.0f));
+            tzOffsets.Add("Europe/Uzhgorod", (2.0f, 3.0f));
+            tzOffsets.Add("Europe/Vaduz", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Vatican", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Vienna", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Vilnius", (2.0f, 3.0f));
+            tzOffsets.Add("Europe/Volgograd", (4.0f, 4.0f));
+            tzOffsets.Add("Europe/Warsaw", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Zagreb", (1.0f, 2.0f));
+            tzOffsets.Add("Europe/Zaporozhye", (2.0f, 3.0f));
+            tzOffsets.Add("Europe/Zurich", (1.0f, 2.0f));
+            tzOffsets.Add("Indian/Antananarivo", (3.0f, 3.0f));
+            tzOffsets.Add("Indian/Chagos", (6.0f, 6.0f));
+            tzOffsets.Add("Indian/Christmas", (7.0f, 7.0f));
+            tzOffsets.Add("Indian/Cocos", (6.5f, 6.5f));
+            tzOffsets.Add("Indian/Comoro", (3.0f, 3.0f));
+            tzOffsets.Add("Indian/Kerguelen", (5.0f, 5.0f));
+            tzOffsets.Add("Indian/Mahe", (4.0f, 4.0f));
+            tzOffsets.Add("Indian/Maldives", (5.0f, 5.0f));
+            tzOffsets.Add("Indian/Mauritius", (4.0f, 4.0f));
+            tzOffsets.Add("Indian/Mayotte", (3.0f, 3.0f));
+            tzOffsets.Add("Indian/Reunion", (4.0f, 4.0f));
+            tzOffsets.Add("Pacific/Apia", (14.0f, 13.0f));
+            tzOffsets.Add("Pacific/Auckland", (13.0f, 12.0f));
+            tzOffsets.Add("Pacific/Bougainville", (11.0f, 11.0f));
+            tzOffsets.Add("Pacific/Chatham", (13.75f, 12.75f));
+            tzOffsets.Add("Pacific/Chuuk", (10.0f, 10.0f));
+            tzOffsets.Add("Pacific/Easter", (-5.0f, -6.0f));
+            tzOffsets.Add("Pacific/Efate", (11.0f, 11.0f));
+            tzOffsets.Add("Pacific/Enderbury", (13.0f, 13.0f));
+            tzOffsets.Add("Pacific/Fakaofo", (13.0f, 13.0f));
+            tzOffsets.Add("Pacific/Fiji", (13.0f, 12.0f));
+            tzOffsets.Add("Pacific/Funafuti", (12.0f, 12.0f));
+            tzOffsets.Add("Pacific/Galapagos", (-6.0f, -6.0f));
+            tzOffsets.Add("Pacific/Gambier", (-9.0f, -9.0f));
+            tzOffsets.Add("Pacific/Guadalcanal", (11.0f, 11.0f));
+            tzOffsets.Add("Pacific/Guam", (10.0f, 10.0f));
+            tzOffsets.Add("Pacific/Honolulu", (-10.0f, -10.0f));
+            tzOffsets.Add("Pacific/Kiritimati", (14.0f, 14.0f));
+            tzOffsets.Add("Pacific/Kosrae", (11.0f, 11.0f));
+            tzOffsets.Add("Pacific/Kwajalein", (12.0f, 12.0f));
+            tzOffsets.Add("Pacific/Majuro", (12.0f, 12.0f));
+            tzOffsets.Add("Pacific/Marquesas", (-9.5f, -9.5f));
+            tzOffsets.Add("Pacific/Midway", (-11.0f, -11.0f));
+            tzOffsets.Add("Pacific/Nauru", (12.0f, 12.0f));
+            tzOffsets.Add("Pacific/Niue", (-11.0f, -11.0f));
+            tzOffsets.Add("Pacific/Norfolk", (12.0f, 11.0f));
+            tzOffsets.Add("Pacific/Noumea", (11.0f, 11.0f));
+            tzOffsets.Add("Pacific/Pago_Pago", (-11.0f, -11.0f));
+            tzOffsets.Add("Pacific/Palau", (9.0f, 9.0f));
+            tzOffsets.Add("Pacific/Pitcairn", (-8.0f, -8.0f));
+            tzOffsets.Add("Pacific/Pohnpei", (11.0f, 11.0f));
+            tzOffsets.Add("Pacific/Port_Moresby", (10.0f, 10.0f));
+            tzOffsets.Add("Pacific/Rarotonga", (-10.0f, -10.0f));
+            tzOffsets.Add("Pacific/Saipan", (10.0f, 10.0f));
+            tzOffsets.Add("Pacific/Tahiti", (-10.0f, -10.0f));
+            tzOffsets.Add("Pacific/Tarawa", (12.0f, 12.0f));
+            tzOffsets.Add("Pacific/Tongatapu", (13.0f, 13.0f));
+            tzOffsets.Add("Pacific/Wake", (12.0f, 12.0f));
+            tzOffsets.Add("Pacific/Wallis", (12.0f, 12.0f));
+        }
+    }
+
+    public class TimeZoneInfoJson
+    {
+        public string timezoneId { get; set; }
+        public double gmtOffset { get; set; }
+        public double dstOffset { get; set; }
+
+        public long Color6 { get; set; }
+        public long Color8 { get; set; }
+        public string Notes { get; set; }
+        public string Places { get; set; }
+
     }
 }
