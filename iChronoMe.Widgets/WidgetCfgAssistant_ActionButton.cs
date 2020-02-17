@@ -115,7 +115,7 @@ namespace iChronoMe.Widgets
             {
                 foreach (var prop in sys.AllDrawables)
                 {
-                    if (prop.ToLower().StartsWith(cIconPrefix) && prop.Length - 3 < cIconPrefix.Length)
+                    if (prop.ToLower().StartsWith(cIconPrefix) && prop.Replace("_clrd", "").Length - 3 < cIconPrefix.Length)
                     {
                         cfg = baseSample.GetConfigClone();
                         cfg.Style = ActionButton_Style.Icon;
@@ -136,7 +136,7 @@ namespace iChronoMe.Widgets
 
             if (sample.WidgetConfig.Style == ActionButton_Style.Icon)
             {
-                if (false) //svg.IsIconColored(sample.WidgetConfig.IconName))
+                if (!sample.WidgetConfig.IconName.Contains("_clrd"))
                     NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_IconColor);
             }
         }
@@ -243,13 +243,6 @@ namespace iChronoMe.Widgets
             Title = localize.IconColor;
             BaseSample = baseSample;
             AllowCustom = true;
-
-            foreach (var o in Enum.GetValues(typeof(WidgetTheme)))
-            {
-                var cfg = baseSample.GetConfigClone();
-                cfg.SetTheme((WidgetTheme)o);
-                Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(o.ToString(), cfg));
-            }
 
             NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_OptionBase);
         }

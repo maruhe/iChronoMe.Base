@@ -74,6 +74,7 @@ namespace iChronoMe.Core.Classes
         public string ThemeName { get; set; }
         public bool AlwaysShowForegroundNotification { get; set; } = false;
         public bool SendErrorLogs { get; set; } = false;
+        public bool DenyErrorScreens { get; set; } = false;
         public DateTime LastCheckClockFaces { get; set; } = DateTime.MinValue;
         public WidgetCfg_ClockAnalog MainClock { get; set; } = new WidgetCfg_ClockAnalog() { ShowSeconds = true, FlowMinuteHand = true };
 

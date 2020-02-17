@@ -223,7 +223,7 @@
     <value>current</value>
   </data>
   <data name="CurrentLocation" xml:space="preserve">
-    <value>Festen Standort wählen</value>
+    <value>Aktueller Standort</value>
   </data>
   <data name="DarkToLight" xml:space="preserve">
     <value>Hell nach Dunkel</value>
@@ -377,7 +377,7 @@
     <value>single color</value>
   </data>
   <data name="StaticLocation" xml:space="preserve">
-    <value>Aktueller Standort</value>
+    <value>Festen Standort wählen</value>
   </data>
   <data name="Symbols" xml:space="preserve">
     <value>Symbole</value>

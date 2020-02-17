@@ -451,7 +451,7 @@ namespace iChronoMe.Core.Classes
             string errorFilePath = null;
             try
             {
-                string errorFileName = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss_fff") + ".log";
+                string errorFileName = DateTime.Now.ToString("yyyy_MM_dd___hh_mm__ss_fff") + ".log";
                 var libraryPath = ErrorLogPath; // iOS: Environment.SpecialFolder.Resources
                 if (!Directory.Exists(libraryPath))
                     Directory.CreateDirectory(libraryPath);

@@ -430,7 +430,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Festen Standort wählen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Aktueller Standort ähnelt.
         /// </summary>
         public static string CurrentLocation {
             get {
@@ -963,7 +963,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Aktueller Standort ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Festen Standort wählen ähnelt.
         /// </summary>
         public static string StaticLocation {
             get {

@@ -43,6 +43,28 @@ namespace iChronoMe.Core.ViewModels
         private void saveMain() { AppConfigHolder.SaveMainConfig(); }
         private void saveCal() { AppConfigHolder.SaveCalendarViewConfig(); }
 
+        public bool SendErrorLogs
+        {
+            get => main.SendErrorLogs;
+            set
+            {
+                main.SendErrorLogs = value;
+                saveMain();
+                OnPropertyChanged();
+            }
+        }
+
+        public bool DenyErrorScreens
+        {
+            get => main.DenyErrorScreens;
+            set
+            {
+                main.DenyErrorScreens = value;
+                saveMain();
+                OnPropertyChanged();
+            }
+        }
+
         public bool AlwaysShowForegroundNotification
         {
             get => main.AlwaysShowForegroundNotification;
@@ -50,7 +72,7 @@ namespace iChronoMe.Core.ViewModels
             {
                 main.AlwaysShowForegroundNotification = value;
                 saveMain();
-                OnPropertyChanged();
+                OnPropertyChanged();                
             }
         }
 
