@@ -131,7 +131,7 @@ namespace iChronoMe.Core.DynamicCalendar
             {
                 base.Clear();
                 ex.ToString();
-                Console.WriteLine("Error reading Calendar Events: " + ex.GetType().Name + ": " + ex.Message);
+                xLog.Debug("Error reading Calendar Events: " + ex.GetType().Name + ": " + ex.Message);
             }
         }
 
@@ -149,13 +149,15 @@ namespace iChronoMe.Core.DynamicCalendar
         static bool bIsLoadingCalendarEventsListed = false;
         public async Task DoLoadCalendarEventsListed(DateTime dStart, DateTime dEnd, int iMax = 0, int iError = 0)
         {
-            Console.WriteLine("DoLoadCalendarEventsListed: Start: " + bIsLoadingCalendarEventsListed.ToString());
+            xLog.Debug("DoLoadCalendarEventsListed: Start: " + bIsLoadingCalendarEventsListed.ToString());
             if (bIsLoadingCalendarEventsListed)
+                xLog.Debug("xxxxxxxxxxxxxxxDoLoadCalendarEventsListed: Start: " + bIsLoadingCalendarEventsListed.ToString());
+            if (false)
             {
                 while (bIsLoadingCalendarEventsListed)
                     Task.Delay(25).Wait();
                 bIsLoadingCalendarEventsListed = true;
-                Console.WriteLine("DoLoadCalendarEventsListed: Start Now");
+                xLog.Debug("DoLoadCalendarEventsListed: Start Now");
             }
             bIsLoadingCalendarEventsListed = true;
             try
@@ -204,18 +206,20 @@ namespace iChronoMe.Core.DynamicCalendar
                         }
                     }
                 }
-                Console.WriteLine("LoadAndCheckEvents took " + (DateTime.Now - swStart).TotalMilliseconds.ToString() + "ms for " + iMs.ToString() + " Events");
-                ListedDates.Clear();
-                ListedDates.AddRange(newEvents.Values);
+                xLog.Debug("LoadAndCheckEvents took " + (DateTime.Now - swStart).TotalMilliseconds.ToString() + "ms for " + iMs.ToString() + " Events");
+                lock (ListedDates)
+                {
+                    ListedDates.Clear();
+                    ListedDates.AddRange(newEvents.Values);
+                }
             }
             catch (Exception ex)
             {
                 base.Clear();
-                ex.ToString();
-                Console.WriteLine("Error reading Calendar Events: " + ex.GetType().Name + ": " + ex.Message);
+                xLog.Debug("Error reading Calendar Events: " + ex.GetType().Name + ": " + ex.Message);
             }
             finally { bIsLoadingCalendarEventsListed = false; }
-            Console.WriteLine("DoLoadCalendarEventsListed: Stop");
+            xLog.Debug("DoLoadCalendarEventsListed: Stop");
         }
 
         /// <summary>
@@ -381,7 +385,7 @@ namespace iChronoMe.Core.DynamicCalendar
             {
                 eventsChecker = Task.Factory.StartNew(() =>
                 {
-                    Console.WriteLine("EventCollection: EventsChecker: Start");
+                    xLog.Debug("EventCollection: EventsChecker: Start");
                     int iChecked = 0;
                     try
                     {
@@ -411,7 +415,7 @@ namespace iChronoMe.Core.DynamicCalendar
                                             extEventLoc.GotCorrectPosition = true;
 
                                             iChecked++;
-                                            Console.WriteLine("EventCollection: EventsChecker: Updateposition: " + checkEvent.ExternalID + ": " + checkEvent.Location);
+                                            xLog.Debug("EventCollection: EventsChecker: Updateposition: " + checkEvent.ExternalID + ": " + checkEvent.Location);
                                         }
                                         catch { }
                                     }
@@ -436,7 +440,7 @@ namespace iChronoMe.Core.DynamicCalendar
                                             extEventLoc.GotCorrectPosition = true;
 
                                             iChecked++;
-                                            Console.WriteLine("EventCollection: EventsChecker: Updateposition: " + checkEvent.ExternalID + ": " + checkEvent.Location);
+                                            xLog.Debug("EventCollection: EventsChecker: Updateposition: " + checkEvent.ExternalID + ": " + checkEvent.Location);
                                         }
                                     }
                                     if (extEventLoc.RecNo < 0)
@@ -464,7 +468,7 @@ namespace iChronoMe.Core.DynamicCalendar
                     }
                     finally
                     {
-                        Console.WriteLine("EventCollection: EventsChecker: Done: " + iChecked.ToString());
+                        xLog.Debug("EventCollection: EventsChecker: Done: " + iChecked.ToString());
                         eventsChecker = null;
                         if (iChecked > 0)
                         {

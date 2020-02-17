@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Net.Http;
@@ -432,11 +433,19 @@ namespace iChronoMe.Core.Classes
             return cRes;
         }
 
-        private static string cAppVersionInfo = "?";
-        private static string cDeviceInfo = "?";
+        public static string cAppVersionInfo { get; private set; } = "?";
+        public static string cDeviceInfo { get; private set; } = "?";
 
         public static string ErrorLogPath { get => Path.Combine(Path.GetTempPath(), "ErrorLog"); }
+        public static List<string> AllDrawables { get; } = new List<string>();
 
+        public static void DebugLogException(Exception exception, string cMessage = null, bool bTryShowUser = true)
+        {
+#if DEBUG
+            LogException(exception, cMessage, bTryShowUser);
+#endif
+        }
+        
         public static void LogException(Exception exception, string cMessage = null, bool bTryShowUser = true)
         {
             string errorFilePath = null;

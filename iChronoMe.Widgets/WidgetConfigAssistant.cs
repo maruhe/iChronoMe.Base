@@ -23,7 +23,7 @@ namespace iChronoMe.Widgets
                     return new WidgetCfgSample<T>("default", default(T));
                 return _baseSample;
             }
-            set => _baseSample = value;
+            protected set => _baseSample = value;
         }
 
         public IList<WidgetCfgSample<T>> Samples { get; } = new List<WidgetCfgSample<T>>();
@@ -42,18 +42,19 @@ namespace iChronoMe.Widgets
 
         public Type NextStepAssistantType { get; set; }
 
-        public bool AllowCustom { get; private set; } = false;
+        public bool AllowCustom { get; protected set; } = false;
 
-        public string CurstumButtonText { get; private set; } = "custom";
+        public string CurstumButtonText { get; protected set; } = "custom";
 
-        public virtual void ExecCustom() { }
+        public virtual void ExecCustom(IUserIO handler) { }
 
-        public virtual void AfterCustom(WidgetCfgSample<T> sample) { }
+        //public virtual void AfterCustom(WidgetCfgSample<T> sample) { }
     }
 
     public interface IWidgetConfigAssistant<T>
     where T : WidgetCfg
     {
+        WidgetCfgSample<T> BaseSample { get; }
         IList<WidgetCfgSample<T>> Samples { get; }
         string Title { get; }
         bool ShowPreviewImage { get; set; }
@@ -64,7 +65,7 @@ namespace iChronoMe.Widgets
         Type NextStepAssistantType { get; set; }
         bool AllowCustom { get; }
         string CurstumButtonText { get; }
-        void ExecCustom();
-        void AfterCustom(WidgetCfgSample<T> sample);
+        void ExecCustom(IUserIO handler);
+        //void AfterCustom(WidgetCfgSample<T> sample);
     }
 }

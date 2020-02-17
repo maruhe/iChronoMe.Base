@@ -37,9 +37,10 @@ namespace iChronoMe.Core.Classes
                         return timeZonePolygons[poly];
                     }
                 } 
+                catch (ThreadAbortException) { }
                 catch (Exception ex)
                 {
-                    sys.LogException(new Exception("Error checking TZ-Polyhon " + i + " for LatLong: " + lat + ", " + lng, ex));
+                    sys.LogException(ex, "Error checking TZ-Polyhon " + i + " for LatLong: " + lat + ", " + lng);
                 }
                 i++;
             }

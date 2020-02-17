@@ -13,6 +13,7 @@ namespace iChronoMe.Widgets
         ClockAnalog_AnimationStyle aStyle;
         TimeSpan aDuriation;
         double startH, startM, startS, endH, endM, endS;
+        WidgetAnimator_ClockAnalog subAnimator = null;
 
         public WidgetAnimator_ClockAnalog(WidgetView_ClockAnalog clock, TimeSpan duriation, ClockAnalog_AnimationStyle style)
         {
@@ -225,7 +226,7 @@ namespace iChronoMe.Widgets
                     else if (aStyle == ClockAnalog_AnimationStyle.Over0)
                     {
                         bRunning = false;
-                        new WidgetAnimator_ClockAnalog(vClock, TimeSpan.FromTicks(aDuriation.Ticks / 2), ClockAnalog_AnimationStyle.HandsNatural)
+                        subAnimator = new WidgetAnimator_ClockAnalog(vClock, TimeSpan.FromTicks(aDuriation.Ticks / 2), ClockAnalog_AnimationStyle.HandsNatural)
                         .SetStart(startH, startM, startS)
                         .SetEnd(0, 0, 0)
                         .SetPushFrame((h, m, s) =>
@@ -234,7 +235,7 @@ namespace iChronoMe.Widgets
                         })
                         .SetFinally(() =>
                         {
-                            new WidgetAnimator_ClockAnalog(vClock, TimeSpan.FromTicks(aDuriation.Ticks / 2), ClockAnalog_AnimationStyle.HandsNatural)
+                            subAnimator = new WidgetAnimator_ClockAnalog(vClock, TimeSpan.FromTicks(aDuriation.Ticks / 2), ClockAnalog_AnimationStyle.HandsNatural)
                             .SetStart(0, 0, 0)
                             .SetEnd(endH, endM, endS)
                             .SetPushFrame((h, m, s) =>
@@ -255,7 +256,7 @@ namespace iChronoMe.Widgets
                     else if (aStyle == ClockAnalog_AnimationStyle.Over12)
                     {
                         bRunning = false;
-                        new WidgetAnimator_ClockAnalog(vClock, TimeSpan.FromTicks(aDuriation.Ticks / 2), ClockAnalog_AnimationStyle.HandsDirect)
+                        subAnimator = new WidgetAnimator_ClockAnalog(vClock, TimeSpan.FromTicks(aDuriation.Ticks / 2), ClockAnalog_AnimationStyle.HandsDirect)
                         .SetStart(startH, startM, startS)
                         .SetEnd(0, 0, 0)
                         .SetPushFrame((h, m, s) =>
@@ -264,7 +265,7 @@ namespace iChronoMe.Widgets
                         })
                         .SetFinally(() =>
                         {
-                            new WidgetAnimator_ClockAnalog(vClock, TimeSpan.FromTicks(aDuriation.Ticks / 2), ClockAnalog_AnimationStyle.HandsDirect)
+                            subAnimator = new WidgetAnimator_ClockAnalog(vClock, TimeSpan.FromTicks(aDuriation.Ticks / 2), ClockAnalog_AnimationStyle.HandsDirect)
                             .SetStart(0, 0, 0)
                             .SetEnd(endH, endM, endS)
                             .SetPushFrame((h, m, s) =>
@@ -301,6 +302,7 @@ namespace iChronoMe.Widgets
 
         public void AbortAnimation()
         {
+            subAnimator?.AbortAnimation();
             bRunning = false;
         }
 

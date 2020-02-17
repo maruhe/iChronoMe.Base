@@ -490,7 +490,7 @@ namespace iChronoMe.DeviceCalendar
 
             if (_eventStore.SaveCalendar(calendar, true, out NSError error))
             {
-                Console.WriteLine($"Successfully saved calendar with source {source.Title}");
+                xLog.Debug($"Successfully saved calendar with source {source.Title}");
 
                 // TODO: Should we try calling GetCalendars to make sure that
                 //       the calendar isn't hidden??
@@ -499,7 +499,7 @@ namespace iChronoMe.DeviceCalendar
             }
             else
             {
-                Console.WriteLine($"Tried and failed to save calendar with source {source.Title}");
+                xLog.Debug($"Tried and failed to save calendar with source {source.Title}");
             }
 
             _eventStore.Reset();
@@ -566,11 +566,11 @@ namespace iChronoMe.DeviceCalendar
         {
             // Log the available sources
             //
-            Console.WriteLine("Sources:");
+            xLog.Debug("Sources:");
 
             foreach (var source in _eventStore.Sources)
             {
-                Console.WriteLine($"{source.Title}, {source.SourceType}");
+                xLog.Debug($"{source.Title}, {source.SourceType}");
             }
 
             // first attempt to find any and all iCloud sources

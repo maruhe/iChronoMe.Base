@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Android.Database;
+using iChronoMe.Core.Classes;
 
 namespace iChronoMe.DeviceCalendar
 {
@@ -67,9 +68,20 @@ namespace iChronoMe.DeviceCalendar
         /// <returns>The boolean.</returns>
         /// <param name="cursor">Cursor.</param>
         /// <param name="column">Column name.</param>
-        public static bool GetBoolean(this ICursor cursor, string column)
+        public static bool GetBoolean(this ICursor cursor, string column, bool bDefault = false)
         {
-            return cursor.GetInt(cursor.GetColumnIndex(column)) != 0;
+            try
+            {
+                return cursor.GetInt(column) != 0; // cursor.GetColumnIndex(
+            } 
+            catch(Exception ex)
+            {
+                string cAll = "";
+                foreach (var c in cursor.GetColumnNames())
+                    cAll += c + ", ";
+                sys.LogException(ex, "columnname: " + column + ", all: " + cAll);
+                return bDefault;
+            }
         }
     }
 }

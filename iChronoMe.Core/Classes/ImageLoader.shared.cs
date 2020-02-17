@@ -130,17 +130,16 @@ namespace iChronoMe.Core.Classes
             string cBasePath = GetImagePathThumb(imageGroup, size);
             try
             {
-
-                handler.StartProgress(ml.strings.ImageLoader_progress_title);
+                handler.StartProgress(localize.ImageLoader_progress_title);
                 string cImgList = sys.GetUrlContent(cUrlDir + "_imglist.php?filter=" + imageGroup + "&size=" + size).Result;
 
                 if (string.IsNullOrEmpty(cImgList))
-                    throw new Exception(ml.strings.ImageLoader_error_list_unloadable);
+                    throw new Exception(localize.ImageLoader_error_list_unloadable);
 
                 cImgList = cImgList.Trim().Replace("<br>", "").Replace("<BR>", "");
 
                 if (!cImgList.StartsWith("path:"))
-                    throw new Exception(ml.strings.ImageLoader_error_list_broken);
+                    throw new Exception(localize.ImageLoader_error_list_broken);
 
                 List<string> cLoadImgS = new List<string>();
                 var list = cImgList.Split(new char[] { '\n' });
@@ -186,7 +185,7 @@ namespace iChronoMe.Core.Classes
                 int iSuccess = 0;
                 if (cLoadImgS.Count > 0)
                 {
-                    handler.SetProgress(0, 0, sys.EzMzText(cLoadImgS.Count, ml.strings.ImageLoader_progress_one_image, ml.strings.ImageLoader_progress_n_images));
+                    handler.SetProgress(0, 0, sys.EzMzText(cLoadImgS.Count, localize.ImageLoader_progress_one_image, localize.ImageLoader_progress_n_images));
 
                     WebClient webClient = new WebClient();
                     int iImg = 0;
@@ -215,7 +214,7 @@ namespace iChronoMe.Core.Classes
 
                             iSuccess++;
                             handler.SetProgress(iSuccess, cLoadImgS.Count,
-                                sys.EzMzText(cLoadImgS.Count, ml.strings.ImageLoader_success_one_image, string.Format(ml.strings.ImageLoader_success_n_images, iSuccess, cLoadImgS.Count)));
+                                sys.EzMzText(cLoadImgS.Count, localize.ImageLoader_success_one_image, string.Format(localize.ImageLoader_success_n_images, iSuccess, cLoadImgS.Count)));
 
 #if DEBUG
                             if (iSuccess >= 200)

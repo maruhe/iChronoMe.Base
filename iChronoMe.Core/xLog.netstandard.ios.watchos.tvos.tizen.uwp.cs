@@ -7,15 +7,15 @@ namespace iChronoMe
     {
         private static void print(string type, string tag, string msg)
         {
-            Console.WriteLine(string.Concat(type, ": ", tag, ": ", msg));
+            xLog.Debug(string.Concat(type, ": ", tag, ": ", msg));
         }
         private static void print(string type, string tag, Exception ex, string msg)
         {
-            Console.WriteLine(string.Concat(type, ": ", tag, ": ", msg));
+            xLog.Debug(string.Concat(type, ": ", tag, ": ", msg));
             if (ex != null)
             {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
+                xLog.Debug(ex.Message);
+                xLog.Debug(ex.StackTrace);
             }
         }
 

@@ -64,9 +64,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="ml\strings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>strings.Designer.cs</LastGenOutput>
+    <EmbeddedResource Update="localize\localize.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>localize.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>iChronoMe</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
@@ -110,6 +111,10 @@
     <Compile Include="**\*.tizen.*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ml\strings.Designer.cs" />
+    <Compile Include="localize\localize.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>localize.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -50,6 +50,8 @@ namespace iChronoMe.Widgets
             "M 0 -60 C 0 -30 20 -30 5 -20 L 5 0 C 5 7.5 -5 7.5 -5 0 L -5 -20 C -20 -30 0 -30 0 -60");
         SKPath minuteHandPath = SKPath.ParseSvgPathData(
             "M 0 -80 C 0 -75 0 -70 2.5 -60 L 2.5 0 C 2.5 5 -2.5 5 -2.5 0 L -2.5 -60 C 0 -70 0 -75 0 -80");
+        SKPath secondHandPath = SKPath.ParseSvgPathData(
+            "M 0 10 0 -80");
 
         TimeSpan tsMin = TimeSpan.FromHours(1);
         TimeSpan tsMax = TimeSpan.FromTicks(0);
@@ -57,14 +59,20 @@ namespace iChronoMe.Widgets
         int iAllCount = 0;
         SKBitmap bitmap;
 
-        public Stream GetBitmap(DateTime dateTime, int width = 512, int height = 512, bool bDrawBackImage = false, float? nSecondHandOverrideSecond = null)
+        public Stream GetBitmap(DateTime dateTime, int width = 512, int height = 512, bool bDrawBackImage = false)
+        {
+            
+            return GetBitmap(dateTime.TimeOfDay.TotalHours % 12, dateTime.TimeOfDay.TotalMinutes % 60, dateTime.TimeOfDay.TotalSeconds % 60, width, height, bDrawBackImage);
+        }
+
+        public Stream GetBitmap(double nHour, double nMinute, double nSecond, int width = 512, int height = 512, bool bDrawBackImage = false)
         {
             if (bitmap == null || bitmap.Width != width || bitmap.Height != height)
                 bitmap = new SKBitmap(width, height);
 
             SKCanvas canvas = new SKCanvas(bitmap);
 
-            DrawCanvas(canvas, dateTime, width, height, bDrawBackImage, nSecondHandOverrideSecond);
+            DrawCanvas(canvas, nHour, nMinute, nSecond, width, height, bDrawBackImage);
 
             // create an image COPY
             //SKImage image = SKImage.FromBitmap(bitmap);
@@ -204,7 +212,8 @@ namespace iChronoMe.Widgets
                 strokePaint.Color = ColorSecondHandStorke.ToSKColor();
                 canvas.Save();
                 canvas.RotateDegrees(6 * (float)second);
-                canvas.DrawLine(0, 10, 0, -80, strokePaint);
+                canvas.DrawPath(secondHandPath, fillPaint);
+                canvas.DrawPath(secondHandPath, strokePaint);
                 canvas.Restore();
             }
 

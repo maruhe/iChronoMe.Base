@@ -312,21 +312,25 @@ namespace iChronoMe.Core
 
         Task locationTask = null;
         bool bStartLocationTaskAgain = false;
+        DateTime tLastLocationTaskStart = DateTime.MinValue;
         private void StartRefreshLocationInfo()
         {
             xLog.Debug("StartRefreshLocationInfo: " + (locationTask != null).ToString());
             bStartLocationTaskAgain = true;
-            if (locationTask != null)
+            if (locationTask != null && tLastLocationTaskStart.AddSeconds(30) < DateTime.Now)
                 return;
 
+            tLastLocationTaskStart = DateTime.Now;
             locationTask = Task.Factory.StartNew(() =>
             {
                 try
                 {
+                    tLastLocationTaskStart = DateTime.Now;
                     bStartLocationTaskAgain = false;
                     GetLocationInfo();
                 }
-                catch (ThreadAbortException) { return; }
+                catch (ThreadAbortException) 
+                { locationTask = null; return; }
                 catch { }
                 finally
                 {
@@ -368,7 +372,7 @@ namespace iChronoMe.Core
                     CountryName = ai.countryName;
                 }
             }
-            if (this.timeZoneInfo == null)
+            //if (this.timeZoneInfo == null)
             {
                 var tz = TimeZoneInfoCache.FromLocation(Latitude, Longitude);
                 if (tz != null)
@@ -379,8 +383,6 @@ namespace iChronoMe.Core
                     timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(tz.timezoneId);
                 }
             }
-            else
-                xLog.Wtf("Should not happen: GetLocationInfo: " + AreaInfoFlag.ToString());
 
             try { AreaChanged?.Invoke(this, new AreaChangedEventArgs(AreaChangedFlag.LocationUpdate)); } catch { }
 

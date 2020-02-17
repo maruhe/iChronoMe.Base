@@ -804,7 +804,7 @@ namespace iChronoMe.DeviceCalendar
                 AccountName = cursor.GetString(CalendarContract.Calendars.InterfaceConsts.AccountName),
                 AccountType = accountType,
                 OwnerAccount = cursor.GetString(CalendarContract.Calendars.InterfaceConsts.OwnerAccount),
-                IsPrimary = cursor.GetBoolean(CalendarContract.Calendars.InterfaceConsts.IsPrimary)
+                IsPrimary = cursor.GetBoolean(CalendarContract.Calendars.InterfaceConsts.IsPrimary, true)
             };
         }
 

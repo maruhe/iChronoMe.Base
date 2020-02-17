@@ -14,7 +14,7 @@ namespace iChronoMe.DeviceCalendar
         /// <returns>Corresponding Calendars.Plugin.Abstractions.Calendar</returns>
         public static Calendar ToCalendar(this EKCalendar ekCalendar)
         {
-            System.Console.WriteLine($"Calendar: {ekCalendar.Title}, Source: {ekCalendar.Source.Title}, {ekCalendar.Source.SourceType}");
+            xLog.Debug($"Calendar: {ekCalendar.Title}, Source: {ekCalendar.Source.Title}, {ekCalendar.Source.SourceType}");
 
             return new Calendar
             {
