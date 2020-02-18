@@ -9,13 +9,23 @@ using System.Xml.Serialization;
 
 using iChronoMe.Core.Types;
 
+using Newtonsoft.Json;
+
 namespace iChronoMe.Core.Classes
 {
     public class SmoothXmlSerializer
     {
+        TimeSpan tsMapping = TimeSpan.FromTicks(0);
 
         public void Serialize(TextWriter textWriter, object o)
         {
+            tsMapping = TimeSpan.FromTicks(0);
+            var swStart = DateTime.Now;
+            string json = JsonConvert.SerializeObject(o);
+            json.ToString();
+            var tsJson = DateTime.Now - swStart;
+            swStart = DateTime.Now;
+
             var doc = new XmlDocument();
 
             if (o.GetType().Namespace.StartsWith("System.Collections") || o.GetType().IsArray)
@@ -40,30 +50,74 @@ namespace iChronoMe.Core.Classes
             }
 
             doc.Save(textWriter);
+            var tsXml = DateTime.Now - swStart;
+            xLog.Debug(o.GetType().Name + ": " + tsXml.TotalMilliseconds + "    mapping: " + tsMapping.TotalMilliseconds);
+#if DEBxxUG
+            var tsXml = DateTime.Now - swStart;
+            int iJson = json.Length;
+            int iXml = doc.OuterXml.Length;
+            float nPercent = tsXml.Ticks * 100 / tsJson.Ticks;
+
+            this.ToString();
+
+            if (textWriter is StreamWriter)
+            {
+                if ((textWriter as StreamWriter).BaseStream is FileStream)
+                {
+                    string cXmlFile = ((textWriter as StreamWriter).BaseStream as FileStream).Name;
+                    File.WriteAllText(cXmlFile + ".json", json);
+                }
+            }
+#endif
         }
 
         public T Deserialize<T>(TextReader textReader)
         {
-            //return default(T);
+            tsMapping = TimeSpan.FromTicks(0);
             var swStart = DateTime.Now;
             XmlDocument doc = new XmlDocument();
             doc.Load(textReader);
             var root = doc.DocumentElement;
-            var tsXml = DateTime.Now - swStart;
-
-            if (typeof(T).Namespace.StartsWith("System.Collections") || typeof(T).IsArray)
+            try
             {
-                Type baseType = null;
-                foreach (var gt in typeof(T).GenericTypeArguments)
+                if (typeof(T).Namespace.StartsWith("System.Collections") || typeof(T).IsArray)
                 {
-                    baseType = gt;
-                }
+                    Type baseType = null;
+                    foreach (var gt in typeof(T).GenericTypeArguments)
+                    {
+                        baseType = gt;
+                    }
 
-                return (T)DeserializeCollection(root, baseType, typeof(T));
+                    return (T)DeserializeCollection(root, baseType, typeof(T));
+                }
+                else
+                {
+                    return (T)DeserializeObject(root, typeof(T));
+                }
             }
-            else
+            finally
             {
-                return (T)DeserializeObject(root, typeof(T));
+                var tsXml = DateTime.Now - swStart;
+                xLog.Debug(typeof(T).Name + ": " + tsXml.TotalMilliseconds + "    mapping: " + tsMapping.TotalMilliseconds);
+
+#if DEBxxUG
+                var tsXml = DateTime.Now - swStart;
+                if (textReader is StreamReader)
+                {
+                    if ((textReader as StreamReader).BaseStream is FileStream)
+                    {
+                        string cXmlFile = ((textReader as StreamReader).BaseStream as FileStream).Name;
+                        if (File.Exists(cXmlFile+".new.json"))
+                        {
+                            swStart = DateTime.Now;
+                            var o = JsonConvert.DeserializeObject<T>(File.ReadAllText(cXmlFile + ".new.json"));
+                            var tsJson = DateTime.Now - swStart;
+                            float nPercent = tsXml.Ticks * 100 / tsJson.Ticks;
+                            this.ToString();
+                        }
+                    }
+                }
+#endif
             }
         }
 
@@ -195,6 +249,7 @@ namespace iChronoMe.Core.Classes
 
             if (!mappingPropertyNames.ContainsKey(cFullCassName))
             {
+                var swStart = DateTime.Now;
                 var mapping = new Dictionary<string, string>();
                 var includeClasses = new List<string>() { cFullCassName };
                 var createSubElements = new List<string>();
@@ -331,6 +386,7 @@ namespace iChronoMe.Core.Classes
                 {
                     ex.ToString();
                 }
+                tsMapping += DateTime.Now - swStart;
             }
         }
 

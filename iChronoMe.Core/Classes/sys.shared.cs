@@ -10,6 +10,7 @@ using System.Xml.Serialization;
 
 using iChronoMe.Core.Abstractions;
 using iChronoMe.Core.Interfaces;
+
 using Xamarin.Essentials;
 
 namespace iChronoMe.Core.Classes
@@ -445,7 +446,7 @@ namespace iChronoMe.Core.Classes
             LogException(exception, cMessage, bTryShowUser);
 #endif
         }
-        
+
         public static void LogException(Exception exception, string cMessage = null, bool bTryShowUser = true)
         {
             string errorFilePath = null;

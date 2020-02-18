@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Globalization;
 using System.Threading.Tasks;
-using System.Xml;
 
 using Newtonsoft.Json.Linq;
 
@@ -38,7 +37,7 @@ namespace iChronoMe.Core.Classes
                     PointF center = new PointF((float)Latitude, (float)Longitude);
                     double mult = 1.1; // mult = 1.1; is more reliable
 
-                        PointF pn, pe, ps, pw;
+                    PointF pn, pe, ps, pw;
                     pn = pe = ps = pw = new PointF();
                     while (radius > 100)
                     {

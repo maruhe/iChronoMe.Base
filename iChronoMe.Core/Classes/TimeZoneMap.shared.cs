@@ -1,16 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Net;
-using System.Reflection;
-using System.Text;
 using System.Threading;
+
 using GeoJSON.Net;
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (MonoAndroid90)"
+Vor:
 using GeoJSON.Net.Feature;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.Operation.Polygonize;
 using Newtonsoft.Json;
+Nach:
+using GeoJSON.Net.Feature;
+
+using NetTopologySuite.Geometries;
+using NetTopologySuite.Operation.Polygonize;
+
+using Newtonsoft.Json;
+*/
+
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (uap10.0.16299)"
+Vor:
+using GeoJSON.Net.Feature;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.Operation.Polygonize;
+using Newtonsoft.Json;
+Nach:
+using GeoJSON.Net.Feature;
+
+using NetTopologySuite.Geometries;
+using NetTopologySuite.Operation.Polygonize;
+
+using Newtonsoft.Json;
+*/
+
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (Xamarin.iOS10)"
+Vor:
+using GeoJSON.Net.Feature;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.Operation.Polygonize;
+using Newtonsoft.Json;
+Nach:
+using GeoJSON.Net.Feature;
+
+using NetTopologySuite.Geometries;
+using NetTopologySuite.Operation.Polygonize;
+
+using Newtonsoft.Json;
+*/
+
+
+using NetTopologySuite.Geometries;
 
 namespace iChronoMe.Core.Classes
 {
@@ -36,7 +77,7 @@ namespace iChronoMe.Core.Classes
                     {
                         return timeZonePolygons[poly];
                     }
-                } 
+                }
                 catch (ThreadAbortException) { }
                 catch (Exception ex)
                 {
@@ -75,7 +116,7 @@ namespace iChronoMe.Core.Classes
                 catch (Exception ex)
                 {
                     xLog.Error(ex);
-                    sys.MainUserIO?.ShowToast("Error updating Time-Zones-Map:\n"+ex.Message);
+                    sys.MainUserIO?.ShowToast("Error updating Time-Zones-Map:\n" + ex.Message);
                 }
             }
             timeZonePolygons?.Clear();
@@ -182,7 +223,8 @@ namespace iChronoMe.Core.Classes
 
                                 };
 
-                                if (!string.IsNullOrEmpty(tzi.timezoneId)) {
+                                if (!string.IsNullOrEmpty(tzi.timezoneId))
+                                {
                                     if (tzOffsets.ContainsKey(tzi.timezoneId))
                                     {
                                         var x = tzOffsets[tzi.timezoneId];

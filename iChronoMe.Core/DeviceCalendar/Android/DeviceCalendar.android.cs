@@ -191,15 +191,15 @@ namespace iChronoMe.DeviceCalendar
                                     Start = cursor.GetDateTime(CalendarContract.Instances.Begin, allDay),
                                     End = cursor.GetDateTime(CalendarContract.Instances.End, allDay),
                                     Location = cursor.GetString(CalendarContract.Events.InterfaceConsts.EventLocation),
-                                //AccessLevel = cursor.GetInt(CalendarContract.Events.InterfaceConsts.AccessLevel),
-                                //tmp = cursor.GetString(CalendarContract.Events.InterfaceConsts.HasExtendedProperties), int mit Count?
-                                //tmp = "1" + cursor.GetString(CalendarContract.Events.InterfaceConsts.IsPrimary),
+                                    //AccessLevel = cursor.GetInt(CalendarContract.Events.InterfaceConsts.AccessLevel),
+                                    //tmp = cursor.GetString(CalendarContract.Events.InterfaceConsts.HasExtendedProperties), int mit Count?
+                                    //tmp = "1" + cursor.GetString(CalendarContract.Events.InterfaceConsts.IsPrimary),
 
-                                AllDay = allDay
+                                    AllDay = allDay
                                 };
-                            //calendarEvent.Reminders = GetEventReminders(calendarEvent.ExternalID); => Dauert zu lange!
+                                //calendarEvent.Reminders = GetEventReminders(calendarEvent.ExternalID); => Dauert zu lange!
 
-                            return calendarEvent;
+                                return calendarEvent;
                             }
                             catch (Exception ex)
                             {
@@ -215,14 +215,14 @@ namespace iChronoMe.DeviceCalendar
                         });
 
                         return events;
-                    } 
+                    }
                     catch (Exception ex)
                     {
                         sys.LogException(ex);
                         return null;
                     }
                 }).ConfigureAwait(false);
-            } 
+            }
             catch (Exception ex)
             {
                 sys.LogException(ex);

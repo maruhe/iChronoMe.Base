@@ -8,7 +8,6 @@ using iChronoMe.Core.Classes;
 using Xamarin.Essentials;
 
 using static iChronoMe.Core.AreaChangedEventArgs;
-using static iChronoMe.Core.Classes.GeoInfo;
 using static iChronoMe.Core.TimeChangedEventArgs;
 
 namespace iChronoMe.Core
@@ -176,15 +175,48 @@ namespace iChronoMe.Core
             return true;
         }
 
-        private bool ChangePositionParameters(double nLatitude, double nLongitude, bool bClearAreaInfo = false, bool bForceRefreshAreaInfo = false, string cTimeZoneID = null, 
+        private bool ChangePositionParameters(double nLatitude, double nLongitude, bool bClearAreaInfo = false, bool bForceRefreshAreaInfo = false, string cTimeZoneID = null,
                                               string cAreaName = null, string cCountryName = null, double? nTimeZoneOffsetGmt = null, double? nTimeZoneOffsetDst = null)
         {
             if (!string.IsNullOrEmpty(AreaName) && !bClearAreaInfo && !bForceRefreshAreaInfo)
             {
                 if ((Latitude == nLatitude) && (Longitude == nLongitude))
                     return false;
+
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (MonoAndroid90)"
+Vor:
             }
             
+            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
+Nach:
+            }
+
+            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (uap10.0.16299)"
+Vor:
+            }
+            
+            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
+Nach:
+            }
+
+            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (Xamarin.iOS10)"
+Vor:
+            }
+            
+            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
+Nach:
+            }
+
+            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
+*/
+            }
+
             double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
             if (string.IsNullOrEmpty(cAreaName) && string.IsNullOrEmpty(cCountryName) && nDistance > 2.5)
                 bClearAreaInfo = true;
@@ -286,7 +318,7 @@ namespace iChronoMe.Core
                 return await Task.Factory.StartNew<bool>(() =>
                 {
                     return GetLocationInfo();
-                });                
+                });
             }
             return false;
         }
@@ -329,7 +361,7 @@ namespace iChronoMe.Core
                     bStartLocationTaskAgain = false;
                     GetLocationInfo();
                 }
-                catch (ThreadAbortException) 
+                catch (ThreadAbortException)
                 { locationTask = null; return; }
                 catch { }
                 finally

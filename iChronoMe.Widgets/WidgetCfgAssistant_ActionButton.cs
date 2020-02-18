@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.DynamicCalendar;
 using iChronoMe.Core.Interfaces;
@@ -50,7 +50,7 @@ namespace iChronoMe.Widgets
     public class WidgetCfgAssistant_ActionButton_ClickAction : WidgetConfigAssistant<WidgetCfg_ActionButton>
     {
         public WidgetCfgAssistant_ActionButton_ClickAction(WidgetCfgSample<WidgetCfg_ActionButton> baseSample)
-        {            
+        {
             Title = localize.ClickAction;
             BaseSample = baseSample;
             ShowPreviewImage = false;
@@ -76,7 +76,7 @@ namespace iChronoMe.Widgets
     }
 
     public class WidgetCfgAssistant_ActionButton_Style : WidgetConfigAssistant<WidgetCfg_ActionButton>
-    { 
+    {
         public WidgetCfgAssistant_ActionButton_Style(WidgetCfgSample<WidgetCfg_ActionButton> baseSample)
         {
             Title = localize.ActionButtonStyle;
@@ -311,5 +311,5 @@ namespace iChronoMe.Widgets
 
             handler.TriggerPositiveButtonClicked();
         }
-    }    
+    }
 }

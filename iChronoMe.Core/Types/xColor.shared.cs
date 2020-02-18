@@ -499,26 +499,26 @@ namespace iChronoMe.Core.Types
 
         //maretial colors
         //https://cdn.dribbble.com/users/634131/screenshots/2012608/material-design-colors.png
-        public static readonly xColor MaterialLightGreen =  FromHex("#FF8bc34a");
-        public static readonly xColor MaterialGreen =       FromHex("#ff259b24");
-        public static readonly xColor MaterialIndigo =      FromHex("#ffddeb3b");
-        public static readonly xColor MaterialDeepPurple =  FromHex("#ff673ab7");
-        public static readonly xColor MaterialYellow =      FromHex("#ffffeb3b");
-        public static readonly xColor MaterialLime =        FromHex("#ffcddc39");
-        public static readonly xColor MaterialLightBlue =   FromHex("#ff03a9f4");
-        public static readonly xColor MaterialBlue =        FromHex("#ff5677fc");
-        public static readonly xColor MaterialAmber =       FromHex("#ffffc107"); 
-        public static readonly xColor MaterialOrange =      FromHex("#ffff9800");
-        public static readonly xColor MaterialCyan =        FromHex("#ff00bcd4");
-        public static readonly xColor MaterialTeal =        FromHex("#ff009688");
-        public static readonly xColor MaterialDeepOrange =  FromHex("#FFff5722"); 
-        public static readonly xColor MaterialRed =         FromHex("#ffe51c23");
-        public static readonly xColor MaterialGrey =        FromHex("#ff9e9e9e");
-        public static readonly xColor MaterialBrown =       FromHex("#ff795548");
-        public static readonly xColor MaterialPink =        FromHex("#ffe91e63");
-        public static readonly xColor MaterialPurple =      FromHex("#ff9c27b0");
-        public static readonly xColor MaterialBlueGray =    FromHex("#ff607d8b");
-        public static readonly xColor MaterialTextBlack =   FromHex("#ff212121");
+        public static readonly xColor MaterialLightGreen = FromHex("#FF8bc34a");
+        public static readonly xColor MaterialGreen = FromHex("#ff259b24");
+        public static readonly xColor MaterialIndigo = FromHex("#ffddeb3b");
+        public static readonly xColor MaterialDeepPurple = FromHex("#ff673ab7");
+        public static readonly xColor MaterialYellow = FromHex("#ffffeb3b");
+        public static readonly xColor MaterialLime = FromHex("#ffcddc39");
+        public static readonly xColor MaterialLightBlue = FromHex("#ff03a9f4");
+        public static readonly xColor MaterialBlue = FromHex("#ff5677fc");
+        public static readonly xColor MaterialAmber = FromHex("#ffffc107");
+        public static readonly xColor MaterialOrange = FromHex("#ffff9800");
+        public static readonly xColor MaterialCyan = FromHex("#ff00bcd4");
+        public static readonly xColor MaterialTeal = FromHex("#ff009688");
+        public static readonly xColor MaterialDeepOrange = FromHex("#FFff5722");
+        public static readonly xColor MaterialRed = FromHex("#ffe51c23");
+        public static readonly xColor MaterialGrey = FromHex("#ff9e9e9e");
+        public static readonly xColor MaterialBrown = FromHex("#ff795548");
+        public static readonly xColor MaterialPink = FromHex("#ffe91e63");
+        public static readonly xColor MaterialPurple = FromHex("#ff9c27b0");
+        public static readonly xColor MaterialBlueGray = FromHex("#ff607d8b");
+        public static readonly xColor MaterialTextBlack = FromHex("#ff212121");
 
         // matches xColors in WPF's System.Windows.Media.xColors
         public static readonly xColor AliceBlue = FromRgb(240, 248, 255);

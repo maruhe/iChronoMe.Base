@@ -15,7 +15,7 @@ namespace iChronoMe.Widgets
         public WidgetCfgAssistant_ClockAnalog_Start(WidgetCfgSample<WidgetCfg_ClockAnalog> baseSample)
         {
             Title = localize.LocationType;
-            
+
             ShowPreviewImage = false;
             var cfg = baseSample == null ? new WidgetCfg_ClockAnalog() : baseSample.GetConfigClone();
             cfg.PositionType = WidgetCfgPositionType.LivePosition;

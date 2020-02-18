@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace iChronoMe.Core.Classes
 {
@@ -19,7 +17,7 @@ namespace iChronoMe.Core.Classes
                     _allCredits.Add(new ContributorInfo { License = "MIT", Name = "Yort.Ntp", Description = "our interface to GMT 0", WebLink = "https://github.com/Yortw/Yort.Ntp" });
                     _allCredits.Add(new ContributorInfo { License = "MIT", Name = "Newtonsoft.Json", Description = "JSON input/output in high-performance", WebLink = "https://github.com/JamesNK/Newtonsoft.Json" });
                     //_allCredits.Add(new CreditInfo { License = "MIT", Name = "TimeZoneConverter", Description = "for Windows-Users", WebLink = "https://github.com/mj1856/TimeZoneConverter" });
-                    
+
                     _allCredits.Add(new ContributorInfo { Name = "icons8.com", Description = "more icons than I ever can ~~", WebLink = "https://icons8.com" });
                 }
 

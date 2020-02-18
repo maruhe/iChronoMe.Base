@@ -72,7 +72,7 @@ namespace iChronoMe.Core.ViewModels
             {
                 main.AlwaysShowForegroundNotification = value;
                 saveMain();
-                OnPropertyChanged();                
+                OnPropertyChanged();
             }
         }
 

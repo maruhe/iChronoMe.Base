@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Drawing;
 using System.Globalization;
-using System.Threading.Tasks;
 using System.Xml;
-
-using Newtonsoft.Json.Linq;
 
 using SQLite;
 

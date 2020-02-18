@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Android.Database;
+
 using iChronoMe.Core.Classes;
 
 namespace iChronoMe.DeviceCalendar
@@ -73,8 +74,8 @@ namespace iChronoMe.DeviceCalendar
             try
             {
                 return cursor.GetInt(column) != 0; // cursor.GetColumnIndex(
-            } 
-            catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 string cAll = "";
                 foreach (var c in cursor.GetColumnNames())

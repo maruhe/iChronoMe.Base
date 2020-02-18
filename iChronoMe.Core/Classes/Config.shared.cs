@@ -70,7 +70,14 @@ namespace iChronoMe.Core.Classes
             set { sys.DefaultTimeType = value; }
         }
 
-        public float WelcomeScreenDone { get; set; } = sys.Debugmode ? 100 : 0;
+        private const int xxDebugDone = 0;
+
+        public float WelcomeScreenDone { get; set; } = sys.Debugmode ? xxDebugDone : 0;
+        public float InitScreenTheme { get; set; } = sys.Debugmode ? xxDebugDone : 0;
+        public float InitScreenTimeType { get; set; } = sys.Debugmode ? xxDebugDone : 0;
+        public float InitScreenPermission { get; set; } = sys.Debugmode ? xxDebugDone : 0;
+        public float InitScreenPrivacy { get; set; } = sys.Debugmode ? xxDebugDone : 0;
+
         public string ThemeName { get; set; }
         public bool AlwaysShowForegroundNotification { get; set; } = false;
         public bool SendErrorLogs { get; set; } = false;

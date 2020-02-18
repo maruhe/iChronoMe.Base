@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace iChronoMe.Widgets
@@ -283,7 +281,7 @@ namespace iChronoMe.Widgets
 
                         }).StartAnimation();
                     }
-                    
+
                     if (bRunning)
                         aLastRun?.Invoke(endH, endM, endS);
                 }
