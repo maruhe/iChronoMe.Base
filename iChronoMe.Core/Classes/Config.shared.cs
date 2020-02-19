@@ -72,13 +72,12 @@ namespace iChronoMe.Core.Classes
 
         private const int xxDebugDone = 0;
 
-        public float WelcomeScreenDone { get; set; } = sys.Debugmode ? xxDebugDone : 0;
-        public float InitScreenTheme { get; set; } = sys.Debugmode ? xxDebugDone : 0;
-        public float InitScreenTimeType { get; set; } = sys.Debugmode ? xxDebugDone : 0;
-        public float InitScreenPermission { get; set; } = sys.Debugmode ? xxDebugDone : 0;
-        public float InitScreenPrivacy { get; set; } = sys.Debugmode ? xxDebugDone : 0;
+        public int InitScreenTheme { get; set; } = sys.Debugmode ? xxDebugDone : 0;
+        public int InitScreenTimeType { get; set; } = sys.Debugmode ? xxDebugDone : 0;
+        public int InitScreenPermission { get; set; } = sys.Debugmode ? xxDebugDone : 0;
+        public int InitScreenPrivacy { get; set; } = sys.Debugmode ? xxDebugDone : 0;
 
-        public string ThemeName { get; set; }
+        public string AppThemeName { get; set; }
         public bool AlwaysShowForegroundNotification { get; set; } = false;
         public bool SendErrorLogs { get; set; } = false;
         public bool DenyErrorScreens { get; set; } = false;

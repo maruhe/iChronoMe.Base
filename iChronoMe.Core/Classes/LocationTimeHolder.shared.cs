@@ -183,38 +183,38 @@ namespace iChronoMe.Core
                 if ((Latitude == nLatitude) && (Longitude == nLongitude))
                     return false;
 
-/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (MonoAndroid90)"
-Vor:
-            }
-            
-            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
-Nach:
-            }
+                /* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (MonoAndroid90)"
+                Vor:
+                            }
 
-            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
-*/
+                            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
+                Nach:
+                            }
 
-/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (uap10.0.16299)"
-Vor:
-            }
-            
-            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
-Nach:
-            }
+                            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
+                */
 
-            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
-*/
+                /* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (uap10.0.16299)"
+                Vor:
+                            }
 
-/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (Xamarin.iOS10)"
-Vor:
-            }
-            
-            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
-Nach:
-            }
+                            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
+                Nach:
+                            }
 
-            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
-*/
+                            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
+                */
+
+                /* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (Xamarin.iOS10)"
+                Vor:
+                            }
+
+                            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
+                Nach:
+                            }
+
+                            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
+                */
             }
 
             double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
