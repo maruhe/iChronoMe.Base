@@ -132,22 +132,47 @@ namespace iChronoMe.Widgets
             if (bDrawBackImage && !string.IsNullOrEmpty(BackgroundImage))
             {
                 try
-                {
+                {                   
                     if (backCache != null && cfgInstance == cBackCacheInstance)
                         canvas.DrawBitmap(backCache, (width - backCache.Width) / 2, (height - backCache.Height) / 2);
                     else
                     {
-                        using (var bitmap = SKBitmap.Decode(BackgroundImage))
+                        if (BackgroundImage.EndsWith(".svg"))
                         {
                             int x = Math.Min(width, height);
+                            // create the bitmap
+                            backCache = new SKBitmap(x, x);
+                            var mCvs = new SKCanvas(backCache);
 
-                            var resizedBitmap = bitmap.Resize(new SKImageInfo(x, x), SKFilterQuality.High);
+                            // load the SVG
+                            var svg = new SKSvg(new SKSize(x, x));
+                            svg.Load(BackgroundImage);
 
-                            canvas.DrawBitmap(resizedBitmap, (width - resizedBitmap.Width) / 2, (height - resizedBitmap.Height) / 2);
-
-                            backCache?.Dispose();
-                            backCache = resizedBitmap;
+                            // draw the SVG to the backCache
+                            mCvs.DrawPicture(svg.Picture);
                             cBackCacheInstance = cfgInstance;
+                            canvas.DrawBitmap(backCache, (width - backCache.Width) / 2, (height - backCache.Height) / 2);
+
+                            /*using (Stream s = new FileStream(BackgroundImage + ".png", FileMode.CreateNew))
+                            {
+                                SKData d = SKImage.FromBitmap(backCache).Encode(SKEncodedImageFormat.Png, 100);
+                                d.SaveTo(s);
+                            }*/
+                        }
+                        else
+                        {
+                            using (var bitmap = SKBitmap.Decode(BackgroundImage))
+                            {
+                                int x = Math.Min(width, height);
+
+                                var resizedBitmap = bitmap.Resize(new SKImageInfo(x, x), SKFilterQuality.High);
+
+                                canvas.DrawBitmap(resizedBitmap, (width - resizedBitmap.Width) / 2, (height - resizedBitmap.Height) / 2);
+
+                                backCache?.Dispose();
+                                backCache = resizedBitmap;
+                                cBackCacheInstance = cfgInstance;
+                            }
                         }
                     }
                 }

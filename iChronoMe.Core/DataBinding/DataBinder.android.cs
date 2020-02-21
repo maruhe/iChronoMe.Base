@@ -62,7 +62,7 @@ namespace iChronoMe.Core.DataBinding
                         }
                         else if (newVal is TimeSpan)
                         {
-                            newVal = ((TimeSpan)newVal).ToString();
+                            newVal = ((TimeSpan)newVal).ToString(@"hh\:mm");
                         }
 
                         if (!Equals(prop.GetValue(view), newVal))
@@ -168,20 +168,27 @@ namespace iChronoMe.Core.DataBinding
 
         private void ProcessViewPropertyChanged(View view, object value)
         {
-            var link = ViewToModelLinks[view];
-            if (link == null)
-                return;
-
-            if (link.Property.CanWrite)
+            try
             {
-                var old = link.Property.GetValue(link.Object);
-                if (!Equals(old, value))
+                var link = ViewToModelLinks[view];
+                if (link == null)
+                    return;
+
+                if (link.Property.CanWrite)
                 {
+                    var old = link.Property.GetValue(link.Object);
+                    if (!Equals(old, value))
                     {
-                        link.Property.SetValue(link.Object, value);
-                        UserChangedProperty?.Invoke(view, new UserChangedPropertyEventArgs(link.Object, link.Property.Name, old, value));
+                        {
+                            link.Property.SetValue(link.Object, value);
+                            UserChangedProperty?.Invoke(view, new UserChangedPropertyEventArgs(link.Object, link.Property.Name, old, value));
+                        }
                     }
                 }
+            } 
+            catch (Exception ex)
+            {
+                xLog.Error(ex);
             }
         }
 

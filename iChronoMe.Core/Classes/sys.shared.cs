@@ -37,7 +37,7 @@ namespace iChronoMe.Core.Classes
 #endif
 
         private static IDeviceDisplay _deviceDispay = null;
-        public static IDeviceDisplay DeviceDisplay
+        public static IDeviceDisplay xDeviceDisplay
         {
             get
             {
@@ -53,10 +53,10 @@ namespace iChronoMe.Core.Classes
         }
 
         // Orientation (Landscape, Portrait, Square, Unknown)
-        public static DisplayOrientation DisplayOrientation { get => DeviceDisplay.GetMainDisplayInfo().Orientation; }
+        public static DisplayOrientation DisplayOrientation { get => DeviceDisplay.MainDisplayInfo.Orientation; }
 
         // Rotation (0, 90, 180, 270)
-        public static DisplayRotation DisplayRotation { get => DeviceDisplay.GetMainDisplayInfo().Rotation; }
+        public static DisplayRotation DisplayRotation { get => DeviceDisplay.MainDisplayInfo.Rotation; }
 
         static OsType _osType = OsType.Undefined;
         public static bool isAndroid { get => OsType.Android.Equals(_osType); }
@@ -80,7 +80,7 @@ namespace iChronoMe.Core.Classes
             try
             {
                 // Get Metrics
-                var mDisplayInfo = DeviceDisplay.GetMainDisplayInfo();
+                var mDisplayInfo = DeviceDisplay.MainDisplayInfo;
 
                 // Width (in pixels)
                 DisplayWidth = (int)mDisplayInfo.Width;
@@ -104,6 +104,12 @@ namespace iChronoMe.Core.Classes
             }
             catch { }
         }
+
+        public static int DpPx(double dp)
+          => (int)(dp * sys.DisplayDensity);
+
+        public static float PxDp(int px)
+          => (float)px / sys.DisplayDensity;
 
         private static string _DataPath;
         public static string PathData

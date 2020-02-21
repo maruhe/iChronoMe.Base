@@ -18,10 +18,10 @@ namespace iChronoMe.Core.ViewModels
         CalendarEvent calEvent;
         CalendarEventExtention extEvent;
         private static string cLoading = "loading...";
-        IUserIO mUserIO;
+        IProgressChangedHandler mUserIO;
         LocationTimeHolder locationTimeHolder = LocationTimeHolder.LocalInstanceClone;
 
-        public CalendarEventPopupViewModel(string eventID, IUserIO userIO)
+        public CalendarEventPopupViewModel(string eventID, IProgressChangedHandler userIO)
         {
             cEventID = eventID;
             Task.Factory.StartNew(async () =>
@@ -105,8 +105,22 @@ namespace iChronoMe.Core.ViewModels
             }
         }
 
-        public DateTime DisplayStart { get => calEvent.DisplayStart; set { calEvent.DisplayStart = value; } }
-        public DateTime DisplayEnd { get => calEvent.DisplayEnd; set { calEvent.DisplayEnd = value; } }
+        public DateTime DisplayStart
+        {
+            get => calEvent.DisplayStart == DateTime.MinValue ? calEvent.Start : calEvent.DisplayStart;
+            set
+            {
+                calEvent.DisplayStart = value;
+            }
+        }
+        public DateTime DisplayEnd
+        {
+            get => calEvent.DisplayEnd == DateTime.MinValue ? calEvent.End : calEvent.DisplayEnd;
+            set
+            {
+                calEvent.DisplayEnd = value;
+            }
+        }
 
         public DateTime StartDate { get => Start.Date; set { Start = value.Date + Start.TimeOfDay; } }
         public DateTime EndDate { get => End.Date; set { End = value.Date + End.TimeOfDay; } }
