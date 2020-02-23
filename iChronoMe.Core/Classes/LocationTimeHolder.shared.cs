@@ -624,6 +624,20 @@ namespace iChronoMe.Core
             }
         }
 
+        public DateTime GetTime(TimeType locType, DateTime baseTime, TimeType baseType)
+        {
+            DateTime oldNow = _UtcNow;
+            SetTime((DateTime)baseTime, baseType);
+            try
+            {
+                return GetTime(locType);
+            }
+            finally
+            {
+                UtcNow = oldNow;
+            }
+        }
+
         public void SetTime(DateTime tSet, TimeType type = TimeType.TimeZoneTime)
         {
             switch (type)

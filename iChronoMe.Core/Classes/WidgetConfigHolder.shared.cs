@@ -222,9 +222,13 @@ namespace iChronoMe.Core.Classes
 
             switch (theme)
             {
-                case WidgetTheme.Transparent:
+                case WidgetTheme.TransparentLight:
                     ColorBackground = tcTransparent;
-                    ColorTitleText = tcWhite;
+                    ColorTitleText = xColor.White;
+                    break;
+                case WidgetTheme.TransparentDark:
+                    ColorBackground = tcTransparent;
+                    ColorTitleText = tcDark;
                     break;
                 case WidgetTheme.Light:
                     ColorBackground = tcLight;
@@ -453,7 +457,8 @@ namespace iChronoMe.Core.Classes
             ColorGridLines = ColorTitleText;
             switch (theme)
             {
-                case WidgetTheme.Transparent:
+                case WidgetTheme.TransparentLight:
+                case WidgetTheme.TransparentDark:
                     ColorGridLines = tcTransparent;
                     break;
                 case WidgetTheme.LightGlass1:
@@ -618,13 +623,14 @@ namespace iChronoMe.Core.Classes
         public bool FlowSecondHand = false;
 
         public string BackgroundImage;
+        public TickMarkStyle TickMarkStyle = TickMarkStyle.Dotts;
 
         public xColor ColorTickMarks = xColor.White;
-        public xColor ColorHourHandStorke = xColor.White;
+        public xColor ColorHourHandStroke = xColor.White;
         public xColor ColorHourHandFill = xColor.FromHex("#FF620000");
-        public xColor ColorMinuteHandStorke = xColor.White;
+        public xColor ColorMinuteHandStroke = xColor.White;
         public xColor ColorMinuteHandFill = xColor.FromHex("#FF930000");
-        public xColor ColorSecondHandStorke = xColor.White;
+        public xColor ColorSecondHandStroke = xColor.White;
         public xColor ColorSecondHandFill = xColor.FromHex("#FFBC0000");
     }
 
@@ -648,9 +654,19 @@ namespace iChronoMe.Core.Classes
         OpenApp
     }
 
+    public enum TickMarkStyle
+    {
+        None = 0,
+        Dotts = 1,
+        LinesRound = 10,
+        LinesSquare = 11,
+        LinesButt = 12
+    }
+
     public enum WidgetTheme
     {
-        Transparent,
+        TransparentLight,
+        TransparentDark,
         Light,
         Dark,
         White,

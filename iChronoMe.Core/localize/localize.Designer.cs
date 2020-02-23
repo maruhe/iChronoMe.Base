@@ -603,6 +603,24 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die hour hand fill color ähnelt.
+        /// </summary>
+        public static string HourHandFill {
+            get {
+                return ResourceManager.GetString("HourHandFill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die hour hand stroke color ähnelt.
+        /// </summary>
+        public static string HourHandStroke {
+            get {
+                return ResourceManager.GetString("HourHandStroke", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Stunden ähnelt.
         /// </summary>
         public static string Hours {
@@ -743,6 +761,24 @@ namespace iChronoMe {
         public static string MaxCount {
             get {
                 return ResourceManager.GetString("MaxCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die minute hand fill color ähnelt.
+        /// </summary>
+        public static string MinuteHandFill {
+            get {
+                return ResourceManager.GetString("MinuteHandFill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die minute hand stroke color ähnelt.
+        /// </summary>
+        public static string MinuteHandStroke {
+            get {
+                return ResourceManager.GetString("MinuteHandStroke", resourceCulture);
             }
         }
         
@@ -905,6 +941,15 @@ namespace iChronoMe {
         public static string SaveWidget {
             get {
                 return ResourceManager.GetString("SaveWidget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die second hand stroke color ähnelt.
+        /// </summary>
+        public static string SecondHandStroke {
+            get {
+                return ResourceManager.GetString("SecondHandStroke", resourceCulture);
             }
         }
         

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.DataBinding;
+using iChronoMe.Core.DynamicCalendar;
 using iChronoMe.Core.Interfaces;
 using iChronoMe.Core.Types;
 using iChronoMe.DeviceCalendar;
@@ -20,6 +21,7 @@ namespace iChronoMe.Core.ViewModels
         private static string cLoading = "loading...";
         IProgressChangedHandler mUserIO;
         LocationTimeHolder locationTimeHolder = LocationTimeHolder.LocalInstanceClone;
+        public LocationTimeHolder LocationTimeHolder { get => locationTimeHolder; }
 
         public CalendarEventPopupViewModel(string eventID, IProgressChangedHandler userIO)
         {
@@ -31,7 +33,8 @@ namespace iChronoMe.Core.ViewModels
                     calEvent = await DeviceCalendar.DeviceCalendar.GetEventByIdAsync(cEventID);
                     cal = await DeviceCalendar.DeviceCalendar.GetCalendarByIdAsync(cEventID);
                     extEvent = calEvent.Extention;
-                    locationTimeHolder.ChangePositionDelay(extEvent.Latitude, extEvent.Longitude);
+                    if (extEvent.GotCorrectPosition)
+                        locationTimeHolder.ChangePositionDelay(extEvent.Latitude, extEvent.Longitude);
                     bIsReady = true;
                 }
                 catch (Exception ex)
@@ -67,6 +70,41 @@ namespace iChronoMe.Core.ViewModels
         public string EventColorString { get => calEvent.EventColorString; }
 
         public DateTime SortTime { get => calEvent.SortTime; }
+        
+        private void UpdateTimes()
+        {
+
+            if (calEvent.AllDay && (calEvent.Start.TimeOfDay.TotalHours != 0 || calEvent.End.TimeOfDay.TotalHours != 0))
+            {
+                calEvent.Start = calEvent.Start.Date;
+                calEvent.End = calEvent.End.Date.AddDays(1);
+            }
+
+            calEvent.DisplayStart = locationTimeHolder.GetTime(TimeType, calEvent.Start, TimeType.TimeZoneTime);
+            calEvent.DisplayEnd = locationTimeHolder.GetTime(TimeType, calEvent.End, TimeType.TimeZoneTime);
+
+            extEvent.TimeTypeStart = calEvent.DisplayStart;
+            extEvent.TimeTypeEnd = calEvent.DisplayEnd;
+            extEvent.UseTypedTime = TimeType == TimeType.MiddleSunTime || TimeType == TimeType.RealSunTime;
+            
+            extEvent.CalendarTimeStart = calEvent.Start;
+            extEvent.CalendarTimeEnd = calEvent.End;
+
+            OnPropertyChanged(nameof(Start));
+            OnPropertyChanged(nameof(End));
+            OnPropertyChanged(nameof(DisplayStart));
+            OnPropertyChanged(nameof(DisplayEnd));
+            OnPropertyChanged(nameof(DisplayStartDate));
+            OnPropertyChanged(nameof(DisplayStartTime));
+            OnPropertyChanged(nameof(DisplayEndDate));
+            OnPropertyChanged(nameof(DisplayEndTime));
+
+            OnPropertyChanged(nameof(StartTimeHelper));
+            OnPropertyChanged(nameof(EndTimeHelper));
+
+            OnPropertyChanged(nameof(ShowTimeHelpers));
+
+        }
 
         public DateTime Start
         {
@@ -75,14 +113,7 @@ namespace iChronoMe.Core.ViewModels
             {
                 calEvent.End = value + (calEvent.End - calEvent.Start);
                 calEvent.Start = value;
-                OnPropertyChanged(nameof(Start));
-                OnPropertyChanged(nameof(End));
-                OnPropertyChanged(nameof(StartDate));
-                OnPropertyChanged(nameof(StartTime));
-                OnPropertyChanged(nameof(EndTime));
-
-                OnPropertyChanged(nameof(StartTimeHelper));
-                OnPropertyChanged(nameof(EndTimeHelper));
+                UpdateTimes();
             }
         }
         public DateTime End
@@ -93,15 +124,7 @@ namespace iChronoMe.Core.ViewModels
                 if (value <= Start)
                     calEvent.Start = value - (calEvent.End - calEvent.Start);
                 calEvent.End = value;
-                OnPropertyChanged(nameof(Start));
-                OnPropertyChanged(nameof(End));
-                OnPropertyChanged(nameof(StartDate));
-                OnPropertyChanged(nameof(StartTime));
-                OnPropertyChanged(nameof(EndDate));
-                OnPropertyChanged(nameof(EndTime));
-
-                OnPropertyChanged(nameof(StartTimeHelper));
-                OnPropertyChanged(nameof(EndTimeHelper));
+                UpdateTimes();
             }
         }
 
@@ -111,6 +134,7 @@ namespace iChronoMe.Core.ViewModels
             set
             {
                 calEvent.DisplayStart = value;
+                Start = sys.GetTimeWithoutSeconds(locationTimeHolder.GetTime(TimeType.TimeZoneTime, value, TimeType));
             }
         }
         public DateTime DisplayEnd
@@ -119,16 +143,18 @@ namespace iChronoMe.Core.ViewModels
             set
             {
                 calEvent.DisplayEnd = value;
+                End = sys.GetTimeWithoutSeconds(locationTimeHolder.GetTime(TimeType.TimeZoneTime, value, TimeType));
             }
         }
 
-        public DateTime StartDate { get => Start.Date; set { Start = value.Date + Start.TimeOfDay; } }
-        public DateTime EndDate { get => End.Date; set { End = value.Date + End.TimeOfDay; } }
-        public TimeSpan StartTime { get => Start.TimeOfDay; set { Start = Start.Date + value; } }
-        public TimeSpan EndTime { get => End.TimeOfDay; set { End = End.Date + value; } }
+        public DateTime DisplayStartDate { get => DisplayStart.Date; set { DisplayStart = value.Date + DisplayStart.TimeOfDay; } }
+        public DateTime DisplayEndDate { get => DisplayEnd.Date; set { DisplayEnd = value.Date + DisplayEnd.TimeOfDay; } }
+        public TimeSpan DisplayStartTime { get => DisplayStart.TimeOfDay; set { DisplayStart = DisplayStart.Date + value; } }
+        public TimeSpan DisplayEndTime { get => DisplayEnd.TimeOfDay; set { DisplayEnd = DisplayEnd.Date + value; } }
 
-        public string Location { get => calEvent.Location; set { calEvent.Location = value; OnPropertyChanged(); } }
-        public bool AllDay { get => calEvent.AllDay; set { calEvent.AllDay = value; OnPropertyChanged(); } }
+        public string Location { get => calEvent.Location; set { UpdateLocation(value); } }        
+
+        public bool AllDay { get => calEvent.AllDay; set { calEvent.AllDay = value; OnPropertyChanged(); OnPropertyChanged(nameof(NotAllDay)); OnPropertyChanged(nameof(ShowTimeHelpers)); } }
 
         public string Description { get => calEvent.Description; set { calEvent.Description = value; OnPropertyChanged(); } }
         public IList<CalendarEventReminder> Reminders { get => calEvent.Reminders; }
@@ -139,7 +165,7 @@ namespace iChronoMe.Core.ViewModels
 
         #region Extention-Properties
 
-        public TimeType TimeType { get => TimeType.MiddleSunTime; }
+        public TimeType TimeType { get => extEvent.TimeType; set { extEvent.TimeType = value; OnPropertyChanged(); OnPropertyChanged(nameof(TimeTypeSpinnerPos)); UpdateTimes(); } }
 
         #endregion
 
@@ -209,6 +235,180 @@ namespace iChronoMe.Core.ViewModels
                 return string.Empty;
             }
         }
+
+        bool _isSearchingForLocation = false;
+        public bool IsSearchingForLocation { get => _isSearchingForLocation; set { _isSearchingForLocation = value;  OnPropertyChanged(); OnPropertyChanged(nameof(LocationHelper)); OnPropertyChanged(nameof(LocationTimeInfo)); } }
+
+        public void UpdateLocation(string cLocationTilte, double nLat = 0, double nLng = 0)
+        {
+            calEvent.Location = cLocationTilte;
+            
+            if (string.IsNullOrEmpty(cLocationTilte) || (nLat != 0 && nLng != 0))
+            {
+                extEvent.LocationString = cLocationTilte;
+                extEvent.Latitude = nLat;
+                extEvent.Longitude = nLng;
+                extEvent.GotCorrectPosition = true;
+                locationTimeHolder = LocationTimeHolder.LocalInstanceClone;
+                if (nLat != 0 && nLng != 0)
+                    locationTimeHolder.ChangePositionDelay(nLat, nLng);
+            }
+            else
+            {
+                SearchPositionByLocation();
+            }
+            
+            OnPropertyChanged(nameof(Location));
+            OnPropertyChanged(nameof(LocationHelper));
+            OnPropertyChanged(nameof(LocationTimeInfo));
+            UpdateTimes();
+        }
+
+        Task tskPositionSearcher = null;
+        DateTime tLastLocationChange = DateTime.MinValue;
+        DateTime tLastPositionSearch = DateTime.MinValue;
+        private void SearchPositionByLocation()
+        {
+            tLastLocationChange = DateTime.Now;
+            if (tskPositionSearcher != null)
+                return;
+            
+            IsSearchingForLocation = true;
+            extEvent.LocationString = "-";
+            extEvent.Latitude = 0;
+            extEvent.Longitude = 0;
+            extEvent.GotCorrectPosition = false;
+            tskPositionSearcher = Task.Factory.StartNew(() =>
+            {
+                DateTime tSearchStart = DateTime.Now;
+                DateTime tMaxWait = tSearchStart.AddSeconds(5);
+                try
+                {
+                    int iSame = 0;
+                    string cLoc = calEvent.Location;
+                    int iWordCount = cLoc.Split(' ').Length;
+                    while (tMaxWait > DateTime.Now)
+                    {
+                        Task.Delay(250).Wait();
+                        if (string.IsNullOrEmpty(calEvent.Location))
+                            break;
+                        if (cLoc.Equals(calEvent.Location))
+                        {
+                            iSame++;
+                            if (iSame >= 4)
+                            {
+                                mUserIO?.ShowToast("a second without change => go");
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if (iWordCount != calEvent.Location.Split(' ').Length)
+                            {
+                                mUserIO?.ShowToast("found new word => go");
+                                break;
+                            }
+                        }
+                        cLoc = calEvent.Location;
+                    }
+                    tSearchStart = DateTime.Now;
+                    if (!string.IsNullOrEmpty(calEvent.Location))
+                        EventCollection.UpdateEventLocationPosition(calEvent, extEvent);
+                    if (tLastLocationChange > tSearchStart)
+                        return;
+                    OnPropertyChanged(nameof(Location));
+                    OnPropertyChanged(nameof(ShowTimeHelpers));
+                } 
+                catch (Exception ex)
+                {
+                    xLog.Error(ex);
+                }
+                finally
+                {
+                    IsSearchingForLocation = false;
+                    UpdateTimes();
+
+                    tskPositionSearcher = null;
+                    if (tLastLocationChange > tSearchStart)
+                    {
+                        SearchPositionByLocation();
+                    }
+                }
+            });
+        }
+
+        public string LocationHelper
+        {
+            get
+            {
+                if (_isSearchingForLocation)
+                    return "_isSearchingForLocation...";
+                if (string.IsNullOrEmpty(Location))
+                    return "";
+                if (extEvent.GotCorrectPosition)
+                    return sys.DezimalGradToGrad(extEvent.Latitude, extEvent.Longitude) + ", " + extEvent.ConfirmedAddress;
+                return "unknown location!";
+            }
+        }
+
+        public string LocationTimeInfo
+        {
+            get
+            {
+                string cPosInfo = (extEvent.LocationString.Equals(calEvent.Location) ? "Position und Ortszeit unklar: " : "Position wird ermittelt: ");
+                if (extEvent.GotCorrectPosition)
+                {
+                    TimeSpan tsDiff = LocationTimeHolder.GetUTCGeoLngDiff(extEvent.Longitude - sys.lastUserLocation.Longitude);
+                    string cDiffDirection = tsDiff.TotalMilliseconds > 0 ? "+" : "-";
+                    if (tsDiff.TotalMilliseconds < 0)
+                        tsDiff = TimeSpan.FromMilliseconds(tsDiff.TotalMilliseconds * -1);
+
+                    cPosInfo = cDiffDirection;
+                    if (tsDiff.TotalMilliseconds < 0)
+                        tsDiff = TimeSpan.FromMilliseconds(tsDiff.TotalMilliseconds * -1);
+
+                    if (tsDiff.TotalHours > 1)
+                        cPosInfo += ((int)tsDiff.TotalHours).ToString() + ":" + tsDiff.Minutes.ToString("00") + "h";
+                    else if (tsDiff.TotalMinutes > 1)
+                        cPosInfo += ((int)tsDiff.TotalHours).ToString() + ":" + tsDiff.Minutes.ToString("00") + "h";
+                    else if (tsDiff.TotalSeconds > 3)
+                        cPosInfo += tsDiff.Seconds.ToString("00") + "sec";
+                    else
+                        cPosInfo += ":-)";
+                    cPosInfo = cPosInfo.Trim();
+                }
+                return cPosInfo;
+            }
+        }
+
+        public bool ShowTimeHelpers { get => !AllDay && TimeType != TimeType.TimeZoneTime; }
+
+        public bool ShowLocationHelper { get => !string.IsNullOrEmpty(Location); }
+
+        public int TimeTypeSpinnerPos
+        {
+            get
+            {
+                switch (TimeType) { case TimeType.TimeZoneTime: return 2; case TimeType.MiddleSunTime: return 1; default: return 0; }
+            }
+            set
+            {
+                switch (value)
+                {
+                    case 2:
+                        TimeType = TimeType.TimeZoneTime;
+                        break;
+                    case 1:
+                        TimeType = TimeType.MiddleSunTime;
+                        break;
+                    default:
+                        TimeType = TimeType.RealSunTime;
+                        break;
+                }                
+            }
+        }
+
+        public bool NotAllDay { get => !calEvent.AllDay; }
 
         public bool IsReady => bIsReady;
 

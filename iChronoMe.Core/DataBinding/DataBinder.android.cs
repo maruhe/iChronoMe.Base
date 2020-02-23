@@ -18,7 +18,7 @@ namespace iChronoMe.Core.DataBinding
             RootView = rootView;
         }
 
-        public bool BindViewProperty(int viewID, string viewProperty, BaseObservable bindable, string bindableProperty, BindMode bindMode)
+        public bool BindViewProperty(int viewID, string viewProperty, BaseObservable bindable, string bindableProperty, BindMode bindMode = BindMode.OneWay)
         {
             return BindViewProperty(RootView.FindViewById(viewID), viewProperty, bindable, bindableProperty, bindMode);
         }
@@ -37,70 +37,82 @@ namespace iChronoMe.Core.DataBinding
             xLog.Debug("start writer-thread " + que.Count);
             Activity.RunOnUiThread(() =>
             {
-                xLog.Debug("start write " + que.Count + " values to view");
-                int iDone = 0;
-                IsWritingToView = true;
-                foreach (var kv in que)
+                DoWriteQueToView_func(que);
+            });
+        }
+
+        private void DoWriteQueToView_func(List<KeyValuePair<ViewLink, object>> que)
+        { 
+            xLog.Debug("start write " + que.Count + " values to view");
+            int iDone = 0;
+            IsWritingToView = true;
+            foreach (var kv in que)
+            {
+                try
                 {
-                    try
+                    var view = kv.Key.View;
+                    var prop = kv.Key.Property;
+                    object newVal = kv.Value;
+
+                    if (prop.Name == nameof(View.Visibility))
                     {
-                        var view = kv.Key.View;
-                        var prop = kv.Key.Property;
-                        object newVal = kv.Value;
-
-                        if (prop.Name == nameof(View.Visibility))
-                        {
-                            if (newVal is bool)
-                                newVal = (bool)newVal == true ? ViewStates.Visible : ViewStates.Gone;
-                            else if (newVal is int)
-                                newVal = (int)newVal > 0 ? ViewStates.Visible : ViewStates.Gone;
-                        }
-
-                        if (newVal is DateTime)
-                        {
-                            newVal = ((DateTime)newVal).ToShortDateString();
-                        }
-                        else if (newVal is TimeSpan)
-                        {
-                            newVal = ((TimeSpan)newVal).ToString(@"hh\:mm");
-                        }
-
-                        if (!Equals(prop.GetValue(view), newVal))
-                        {
-                            if (prop.CanWrite)
-                            {
-                                int iPos = -1;
-                                if (view is EditText)
-                                    iPos = (view as EditText).SelectionStart;
-                                prop.SetValue(view, newVal);
-                                iDone++;
-                                if (view is EditText && iPos > 0 && (view as EditText).Selected)
-                                    (view as EditText).SetSelection(Math.Min(iPos, newVal.ToString().Length));
-                            }
-                            else if (view is Spinner)
-                            {
-                                switch (prop.Name)
-                                {
-                                    case nameof(Spinner.SelectedItemPosition):
-                                        (view as Spinner).SetSelection((int)newVal);
-                                        iDone++;
-                                        break;
-
-                                    default:
-                                        throw new NotImplementedException("only SelectedItemPosition can be bound with a Spinner");
-                                }
-
-                            }
-                        }
+                        if (newVal is bool)
+                            newVal = (bool)newVal == true ? ViewStates.Visible : ViewStates.Gone;
+                        else if (newVal is int)
+                            newVal = (int)newVal > 0 ? ViewStates.Visible : ViewStates.Gone;
                     }
-                    catch (Exception ex)
+
+                    if (newVal is DateTime)
                     {
-                        Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+                        newVal = ((DateTime)newVal).ToShortDateString();
+                    }
+                    else if (newVal is TimeSpan)
+                    {
+                        newVal = ((TimeSpan)newVal).ToString(@"hh\:mm");
+                    }
+
+                    if (!Equals(prop.GetValue(view), newVal))
+                    {
+                        if (prop.CanWrite)
+                        {
+                            int iPos = -1;
+                            if (view is EditText)
+                                iPos = (view as EditText).SelectionStart;
+                            prop.SetValue(view, newVal);
+                            iDone++;
+                            if (view is EditText)
+                            {
+                                if (iPos > 0)// && (view as EditText).Selected)
+                                    (view as EditText).SetSelection(Math.Min(iPos, newVal.ToString().Length));
+                                /*else if (!(view as EditText).Selected)
+                                    Toast.MakeText(Activity, "not selected", ToastLength.Short).Show();
+                                else
+                                    Toast.MakeText(Activity, "other reason", ToastLength.Short).Show();*/
+                            }
+                        }
+                        else if (view is Spinner)
+                        {
+                            switch (prop.Name)
+                            {
+                                case nameof(Spinner.SelectedItemPosition):
+                                    (view as Spinner).SetSelection((int)newVal);
+                                    iDone++;
+                                    break;
+
+                                default:
+                                    throw new NotImplementedException("only SelectedItemPosition can be bound with a Spinner");
+                            }
+
+                        }
                     }
                 }
-                IsWritingToView = false;
-                xLog.Debug("writing finished, {iDone} values changed");
-            });
+                catch (Exception ex)
+                {
+                    Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+                }
+            }
+            IsWritingToView = false;
+            xLog.Debug("writing finished, {iDone} values changed");
         }
 
         #region from View to Models
@@ -123,6 +135,12 @@ namespace iChronoMe.Core.DataBinding
                         continue;
                     (link.View as CheckBox).CheckedChange += CheckBox_CheckedChange;
                 }
+                if (link.View is Switch)
+                {
+                    if (link.Property.Name != nameof(Switch.Checked))
+                        continue;
+                    (link.View as Switch).CheckedChange += Switch_CheckedChange;
+                }
                 if (link.View is EditText)
                 {
                     if (link.Property.Name != nameof(EditText.Text))
@@ -140,6 +158,14 @@ namespace iChronoMe.Core.DataBinding
 
                 done.Add(link.View);
             }
+        }
+
+        private void Switch_CheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
+        {
+            if (!BinderIsRunning || IsWritingToView)
+                return;
+            if (sender is Switch)
+                ProcessViewPropertyChanged(sender as Switch, (sender as Switch).Checked);
         }
 
         private void CheckBox_CheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)

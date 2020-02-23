@@ -15,6 +15,7 @@ namespace iChronoMe.Widgets
             Title = localize.title_EditWidget;
             BaseSample = baseSample;
             ShowPreviewImage = false;
+            ShowFirstPreviewImage = true;
 
             Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(localize.action_SaveAndQuit, BaseSample.GetConfigClone()));
 

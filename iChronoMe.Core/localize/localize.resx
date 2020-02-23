@@ -501,4 +501,19 @@ wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder a
   <data name="nSeconds" xml:space="preserve">
     <value>{0} second(s)</value>
   </data>
+  <data name="HourHandFill" xml:space="preserve">
+    <value>hour hand fill color</value>
+  </data>
+  <data name="HourHandStroke" xml:space="preserve">
+    <value>hour hand stroke color</value>
+  </data>
+  <data name="MinuteHandFill" xml:space="preserve">
+    <value>minute hand fill color</value>
+  </data>
+  <data name="MinuteHandStroke" xml:space="preserve">
+    <value>minute hand stroke color</value>
+  </data>
+  <data name="SecondHandStroke" xml:space="preserve">
+    <value>second hand stroke color</value>
+  </data>
 </root>

@@ -282,6 +282,7 @@ namespace iChronoMe.Widgets
         {
             Title = localize.DayColors;
             AllowCustom = true;
+            ShowColors = true;
             BaseSample = baseSample;
 
             var cfgTemplate = baseSample.GetConfigClone();

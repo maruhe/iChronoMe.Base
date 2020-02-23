@@ -11,7 +11,7 @@ namespace iChronoMe.Core.DataBinding
     public partial class DataBinder : IDisposable
     {
 
-        public int PushToViewDelayInterval { get; set; } = 15;
+        public int PushToViewDelayInterval { get; set; } = 15; 
         public int PushToViewMaxDelay { get; set; } = 100;
 
         public event EventHandler<UserChangedPropertyEventArgs> UserChangedProperty;

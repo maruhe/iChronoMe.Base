@@ -38,6 +38,7 @@ namespace iChronoMe.DeviceCalendar
 
         public double Longitude { get; set; }
 
+        public string ConfirmedAddress { get; set; }
         public bool GotCorrectPosition { get; set; } = false;
 
         public DateTime CalendarTimeStart { get; set; }

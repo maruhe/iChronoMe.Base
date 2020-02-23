@@ -32,6 +32,8 @@ namespace iChronoMe.Widgets
 
         public bool ShowPreviewImage { get; set; } = true;
 
+        public bool ShowFirstPreviewImage { get; set; } = false;
+
         public virtual bool NeedsPreperation() { return false; }
 
         public virtual void PerformPreperation(IUserIO handler) { }
@@ -46,6 +48,8 @@ namespace iChronoMe.Widgets
 
         public string CurstumButtonText { get; protected set; } = "custom";
 
+        public bool ShowColors { get; set; } = false;
+
         public virtual void ExecCustom(IUserIO handler) { }
 
         //public virtual void AfterCustom(WidgetCfgSample<T> sample) { }
@@ -58,6 +62,7 @@ namespace iChronoMe.Widgets
         IList<WidgetCfgSample<T>> Samples { get; }
         string Title { get; }
         bool ShowPreviewImage { get; set; }
+        bool ShowFirstPreviewImage { get; set; }
         bool NeedsPreperation();
         void PerformPreperation(IUserIO handler);
         void AfterSelect(IUserIO handler, WidgetCfgSample<T> sample);
@@ -65,6 +70,8 @@ namespace iChronoMe.Widgets
         Type NextStepAssistantType { get; set; }
         bool AllowCustom { get; }
         string CurstumButtonText { get; }
+        bool ShowColors { get; }
+
         void ExecCustom(IUserIO handler);
         //void AfterCustom(WidgetCfgSample<T> sample);
     }

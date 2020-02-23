@@ -4,7 +4,8 @@ using iChronoMe.Core.Types;
 
 namespace iChronoMe.Widgets
 {
-    public class WidgetCfgSample<T> where T : WidgetCfg
+    public class WidgetCfgSample<T> 
+        where T : WidgetCfg
     {
         public WidgetCfgSample(string title, T cfg, object tag = null)
         {
@@ -23,6 +24,8 @@ namespace iChronoMe.Widgets
             Colors = colors;
             PreviewImage = previewImage;
         }
+
+        public int Icon { get; set; }
 
         public string Title { get; set; }
 

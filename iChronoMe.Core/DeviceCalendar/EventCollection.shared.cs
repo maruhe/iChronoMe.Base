@@ -6,7 +6,7 @@ using System.Net;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
+using System.Xml;
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.Types;
 using iChronoMe.DeviceCalendar;
@@ -397,52 +397,13 @@ namespace iChronoMe.Core.DynamicCalendar
                             try
                             {
                                 CalendarEvent checkEvent = eventsToCheck[0];
-                                CalendarEventExtention extEventLoc = CalendarEventExtention.GetExtention(checkEvent.ExternalID);
+                                CalendarEventExtention extEventLoc = checkEvent.Extention;//CalendarEventExtention.GetExtention(checkEvent.ExternalID);
                                 if (!string.IsNullOrEmpty(checkEvent.Location) && !extEventLoc.LocationString.Equals(checkEvent.Location))
                                 {
-                                    extEventLoc.LocationString = checkEvent.Location;
-                                    extEventLoc.GotCorrectPosition = false;
 
-                                    Regex word = new Regex(@"^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$");
-                                    Match m = word.Match(checkEvent.Location);
-                                    if (!string.IsNullOrEmpty(m.Value))
-                                    {
-                                        try
-                                        {
-                                            var pos = m.Value.Split(new char[] { ',' });
-                                            extEventLoc.Latitude = double.Parse(pos[0].Trim(), NumberStyles.Any, CultureInfo.InvariantCulture);
-                                            extEventLoc.Longitude = double.Parse(pos[1].Trim(), NumberStyles.Any, CultureInfo.InvariantCulture);
-                                            extEventLoc.GotCorrectPosition = true;
+                                    if (UpdateEventLocationPosition(checkEvent, extEvent))
+                                        iChecked++;
 
-                                            iChecked++;
-                                            xLog.Debug("EventCollection: EventsChecker: Updateposition: " + checkEvent.ExternalID + ": " + checkEvent.Location);
-                                        }
-                                        catch { }
-                                    }
-                                    else
-                                    {
-                                        String urlString = "https://maps.googleapis.com/maps/api/geocode/xml?key=" + Secrets.GApiKey + "&address=" + WebUtility.UrlEncode(checkEvent.Location);
-                                        String cXml = sys.GetUrlContent(urlString).Result;
-                                        if (string.IsNullOrEmpty(cXml))
-                                            return;
-                                        if (cXml.IndexOf("<status>OK</status>") > 0)
-                                        {
-                                            cXml = cXml.Substring(cXml.IndexOf("<location>"));
-                                            cXml = cXml.Substring(cXml.IndexOf("<lat>") + 5);
-                                            string cLat = cXml.Substring(0, cXml.IndexOf("<"));
-                                            cXml = cXml.Substring(cXml.IndexOf("<lng>") + 5);
-                                            string cLng = cXml.Substring(0, cXml.IndexOf("<"));
-
-                                            extEventLoc = CalendarEventExtention.GetExtention(checkEvent.ExternalID);
-                                            extEventLoc.LocationString = checkEvent.Location;
-                                            extEventLoc.Latitude = double.Parse(cLat, NumberStyles.Any, CultureInfo.InvariantCulture);
-                                            extEventLoc.Longitude = double.Parse(cLng, NumberStyles.Any, CultureInfo.InvariantCulture);
-                                            extEventLoc.GotCorrectPosition = true;
-
-                                            iChecked++;
-                                            xLog.Debug("EventCollection: EventsChecker: Updateposition: " + checkEvent.ExternalID + ": " + checkEvent.Location);
-                                        }
-                                    }
                                     if (extEventLoc.RecNo < 0)
                                         db.dbCalendarExtention.Insert(extEventLoc);
                                     else
@@ -477,6 +438,110 @@ namespace iChronoMe.Core.DynamicCalendar
                     }
                 });
             }
+        }
+
+        public static bool UpdateEventLocationPosition(CalendarEvent calEvent, CalendarEventExtention extEvent)
+        {
+            extEvent.LocationString = calEvent.Location;
+            extEvent.GotCorrectPosition = false;
+
+            //check if Location-string ist Latitude, Longitude
+            Regex word = new Regex(@"^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$");
+            Match m = word.Match(calEvent.Location);
+            if (!string.IsNullOrEmpty(m.Value))
+            {
+                try
+                {
+                    var pos = m.Value.Split(new char[] { ',' });
+                    extEvent.Latitude = double.Parse(pos[0].Trim(), NumberStyles.Any, CultureInfo.InvariantCulture);
+                    extEvent.Longitude = double.Parse(pos[1].Trim(), NumberStyles.Any, CultureInfo.InvariantCulture);
+                    extEvent.GotCorrectPosition = true;
+
+                    xLog.Debug("EventCollection: EventsChecker: Updateposition: " + calEvent.ExternalID + ": " + calEvent.Location);
+                    return true;
+                }
+                catch { }
+            }
+            else
+            {
+                //otherwhise search for position
+                String urlString = "https://maps.googleapis.com/maps/api/geocode/xml?key=" + Secrets.GApiKey + "&address=" + WebUtility.UrlEncode(calEvent.Location);
+                String cXml = sys.GetUrlContent(urlString).Result;
+                if (string.IsNullOrEmpty(cXml))
+                    return false;
+                if (cXml.IndexOf("<status>OK</status>") > 0)
+                {
+                    XmlDocument doc = new XmlDocument();
+                    doc.LoadXml(cXml);
+
+                    string cLatitude = string.Empty;
+                    string cLongitude = string.Empty;
+                    string cFormattedAdress = string.Empty;
+                    string cAdressComponents = string.Empty;
+
+                    foreach (XmlElement el in doc.DocumentElement.ChildNodes)
+                    {
+                        if ("result".Equals(el.Name.ToLower()))
+                        {
+
+                            foreach (XmlElement elRes in el.ChildNodes)
+                            {
+                                if ("formatted_address".Equals(elRes.Name.ToLower()))
+                                    cFormattedAdress = elRes.InnerText;
+
+                                if ("address_component".Equals(elRes.Name.ToLower()))
+                                {
+                                    foreach (XmlElement elAdr in elRes.ChildNodes)
+                                    {
+                                        if ("long_name".Equals(elAdr.Name.ToLower()))
+                                        {
+                                            if (!string.IsNullOrEmpty(cAdressComponents))
+                                                cAdressComponents += ", ";
+                                            cAdressComponents += elAdr.InnerText;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if ("geometry".Equals(elRes.Name.ToLower()))
+                                {
+                                    foreach (XmlElement elGeo in elRes.ChildNodes)
+                                    {
+                                        if ("location".Equals(elGeo.Name.ToLower()))
+                                        {
+
+                                            foreach (XmlElement elLoc in elGeo.ChildNodes)
+                                            {
+                                                if ("lat".Equals(elLoc.Name.ToLower()))
+                                                    cLatitude = elLoc.InnerText;
+                                                else if ("lng".Equals(elLoc.Name.ToLower()))
+                                                    cLongitude = elLoc.InnerText;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    /*
+                    cXml = cXml.Substring(cXml.IndexOf("<location>"));
+                    cXml = cXml.Substring(cXml.IndexOf("<lat>") + 5);
+                    string cLat = cXml.Substring(0, cXml.IndexOf("<"));
+                    cXml = cXml.Substring(cXml.IndexOf("<lng>") + 5);
+                    string cLng = cXml.Substring(0, cXml.IndexOf("<"));
+                    */
+                    extEvent.ConfirmedAddress = string.IsNullOrEmpty(cFormattedAdress) ? cAdressComponents : cFormattedAdress;
+                    extEvent.Latitude = double.Parse(cLatitude, NumberStyles.Any, CultureInfo.InvariantCulture);
+                    extEvent.Longitude = double.Parse(cLongitude, NumberStyles.Any, CultureInfo.InvariantCulture);
+                    extEvent.GotCorrectPosition = true;
+
+                    xLog.Debug("EventCollection: EventsChecker: Updateposition: " + calEvent.ExternalID + ": " + calEvent.Location);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

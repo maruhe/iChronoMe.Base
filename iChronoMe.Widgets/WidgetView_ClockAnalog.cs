@@ -15,11 +15,12 @@ namespace iChronoMe.Widgets
 
         public xColor ColorBackground { get; set; } = xColor.Transparent;
         public xColor ColorTickMarks { get; set; } = xColor.Black;
-        public xColor ColorHourHandStorke { get; set; } = xColor.Black;
+        public TickMarkStyle TickMarkStyle { get; set; } = TickMarkStyle.Dotts;
+        public xColor ColorHourHandStroke { get; set; } = xColor.Black;
         public xColor ColorHourHandFill { get; set; } = xColor.Blue;
-        public xColor ColorMinuteHandStorke { get; set; } = xColor.Black;
+        public xColor ColorMinuteHandStroke { get; set; } = xColor.Black;
         public xColor ColorMinuteHandFill { get; set; } = xColor.Blue;
-        public xColor ColorSecondHandStorke { get; set; } = xColor.Black;
+        public xColor ColorSecondHandStroke { get; set; } = xColor.Black;
         public xColor ColorSecondHandFill { get; set; } = xColor.Blue;
 
         public bool ShowHourHand { get; set; } = true;
@@ -94,14 +95,15 @@ namespace iChronoMe.Widgets
             cfgInstance = Guid.NewGuid().ToString();
 
             BackgroundImage = cfg.BackgroundImage;
+            TickMarkStyle = cfg.TickMarkStyle;
 
             ColorBackground = cfg.ColorBackground;
             ColorTickMarks = cfg.ColorTickMarks;
-            ColorHourHandStorke = cfg.ColorHourHandStorke;
+            ColorHourHandStroke = cfg.ColorHourHandStroke;
             ColorHourHandFill = cfg.ColorHourHandFill;
-            ColorMinuteHandStorke = cfg.ColorMinuteHandStorke;
+            ColorMinuteHandStroke = cfg.ColorMinuteHandStroke;
             ColorMinuteHandFill = cfg.ColorMinuteHandFill;
-            ColorSecondHandStorke = cfg.ColorSecondHandStorke;
+            ColorSecondHandStroke = cfg.ColorSecondHandStroke;
             ColorSecondHandFill = cfg.ColorSecondHandFill;
 
             ShowHourHand = cfg.ShowHours;
@@ -145,7 +147,7 @@ namespace iChronoMe.Widgets
                             var mCvs = new SKCanvas(backCache);
 
                             // load the SVG
-                            var svg = new SKSvg(new SKSize(x, x));
+                            var svg = new SkiaSharp.Extended.Svg.SKSvg(new SKSize(x, x));
                             svg.Load(BackgroundImage);
 
                             // draw the SVG to the backCache
@@ -189,13 +191,48 @@ namespace iChronoMe.Widgets
                 canvas.DrawCircle(0, 0, 100, fillPaint);
 
             // Hour and minute marks
-            if (ColorTickMarks.A > 0)
+            if (TickMarkStyle != TickMarkStyle.None && ColorTickMarks.A > 0)
             {
-                fillPaint.Color = ColorTickMarks.ToSKColor();
-                for (int angle = 0; angle < 360; angle += 6)
+                var tickPaint = new SKPaint{ 
+                    Color = ColorTickMarks.ToSKColor(),
+                    StrokeCap = SKStrokeCap.Round,
+                    IsAntialias = true
+                };
+
+                switch (TickMarkStyle)
                 {
-                    canvas.DrawCircle(0, -90, angle % 30 == 0 ? 4 : 2, fillPaint);
-                    canvas.RotateDegrees(6);
+                    case TickMarkStyle.Dotts:
+                        tickPaint.Style = SKPaintStyle.Fill;
+                        for (int angle = 0; angle < 360; angle += 6)
+                        {
+                            canvas.DrawCircle(0, -92, angle % 30 == 0 ? 4 : 2, tickPaint);
+                            canvas.RotateDegrees(6);
+                        }
+                        break;
+
+                    case TickMarkStyle.LinesSquare:
+                        tickPaint.StrokeCap = SKStrokeCap.Square;
+                        goto case TickMarkStyle.LinesRound;
+                    case TickMarkStyle.LinesButt:
+                        tickPaint.StrokeCap = SKStrokeCap.Butt;
+                        goto case TickMarkStyle.LinesRound;
+                    case TickMarkStyle.LinesRound:
+                        tickPaint.Style = SKPaintStyle.Stroke;
+                        for (int angle = 0; angle < 360; angle += 6)
+                        {
+                            if (angle % 30 == 0)
+                            {
+                                tickPaint.StrokeWidth = 4;
+                                canvas.DrawLine(0, -90, 0, -94, tickPaint);
+                            }
+                            else
+                            {
+                                tickPaint.StrokeWidth = 2;
+                                canvas.DrawLine(0, -91, 0, -93, tickPaint);
+                            }
+                            canvas.RotateDegrees(6);
+                        }
+                        break;
                 }
             }
 
@@ -210,7 +247,7 @@ namespace iChronoMe.Widgets
             if (ShowHourHand)
             {
                 fillPaint.Color = ColorHourHandFill.ToSKColor();
-                strokePaint.Color = ColorHourHandStorke.ToSKColor();
+                strokePaint.Color = ColorHourHandStroke.ToSKColor();
                 canvas.Save();
                 canvas.RotateDegrees((float)(30 * hour));
                 canvas.DrawPath(hourHandPath, fillPaint);
@@ -222,7 +259,7 @@ namespace iChronoMe.Widgets
             if (ShowMinuteHand)
             {
                 fillPaint.Color = ColorMinuteHandFill.ToSKColor();
-                strokePaint.Color = ColorMinuteHandStorke.ToSKColor();
+                strokePaint.Color = ColorMinuteHandStroke.ToSKColor();
                 canvas.Save();
                 canvas.RotateDegrees((float)(6 * minute));
                 canvas.DrawPath(minuteHandPath, fillPaint);
@@ -234,7 +271,7 @@ namespace iChronoMe.Widgets
             if (ShowSecondHand)
             {
                 fillPaint.Color = ColorSecondHandFill.ToSKColor();
-                strokePaint.Color = ColorSecondHandStorke.ToSKColor();
+                strokePaint.Color = ColorSecondHandStroke.ToSKColor();
                 canvas.Save();
                 canvas.RotateDegrees(6 * (float)second);
                 canvas.DrawPath(secondHandPath, fillPaint);
