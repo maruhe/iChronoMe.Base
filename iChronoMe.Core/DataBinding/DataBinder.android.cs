@@ -38,6 +38,7 @@ namespace iChronoMe.Core.DataBinding
             Activity.RunOnUiThread(() =>
             {
                 DoWriteQueToView_func(que);
+                PushedValuesToView?.Invoke(this, new PushedValuesToViewEventArgs());
             });
         }
 
@@ -78,7 +79,12 @@ namespace iChronoMe.Core.DataBinding
                             int iPos = -1;
                             if (view is EditText)
                                 iPos = (view as EditText).SelectionStart;
-                            prop.SetValue(view, newVal);
+
+                            if (view is AutoCompleteTextView && nameof(AutoCompleteTextView.Text).Equals(prop.Name))
+                                (view as AutoCompleteTextView).SetText((string)newVal, false);
+                            else
+                                prop.SetValue(view, newVal);
+
                             iDone++;
                             if (view is EditText)
                             {

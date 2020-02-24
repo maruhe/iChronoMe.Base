@@ -12,7 +12,7 @@ namespace iChronoMe.DeviceCalendar
         public static CalendarEventExtention GetExtention(string lEventID, bool bCreateIfNotExists = true)
         {
             if (string.IsNullOrEmpty(lEventID))
-                return null;
+                return new CalendarEventExtention() { TimeType = TimeType.TimeZoneTime };
 
             var cache = db.dbCalendarExtention.Query<CalendarEventExtention>("select * from CalendarEventExtention where EventID = ?", lEventID);
             if (cache.Count > 0)

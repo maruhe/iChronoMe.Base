@@ -44,7 +44,7 @@ namespace iChronoMe.DeviceCalendar
         /// </summary>
         public DateTime End { get; set; }
 
-        public DateTime DisplayStart { get; set; }
+        public DateTime DisplayStart { get; set; } = DateTime.MinValue;
 
         public DateTime DisplayEnd { get; set; }
 

@@ -30,9 +30,33 @@ namespace iChronoMe.Core.ViewModels
             {
                 try
                 {
-                    calEvent = await DeviceCalendar.DeviceCalendar.GetEventByIdAsync(cEventID);
-                    cal = await DeviceCalendar.DeviceCalendar.GetCalendarByIdAsync(cEventID);
+                    if (! string.IsNullOrEmpty(cEventID))
+                    {
+                        try
+                        {
+                            calEvent = await DeviceCalendar.DeviceCalendar.GetEventByIdAsync(cEventID);
+                            if (calEvent == null)
+                                userIO?.ShowToast("event not found: " + cEventID);
+                        } 
+                        catch (Exception ex)
+                        {
+                            userIO?.ShowToast("error loading event: "+ex.Message);
+                        }
+                    }
+                    if (calEvent == null)
+                    {
+                        calEvent = new CalendarEvent();
+                        calEvent.Start = DateTime.Today.AddHours(DateTime.Now.Hour + 1);
+                        if (calEvent.Start.Hour > 18)
+                            calEvent.Start = DateTime.Today.AddDays(1).AddHours(10);
+                        calEvent.End = calEvent.Start.AddHours(2);
+                        cal = await DeviceCalendar.DeviceCalendar.GetDefaultCalendar();
+                    }
+                    else
+                        cal = await DeviceCalendar.DeviceCalendar.GetCalendarByIdAsync(cEventID);
                     extEvent = calEvent.Extention;
+                    if (calEvent.DisplayStart == DateTime.MinValue)
+                        UpdateTimes();
                     if (extEvent.GotCorrectPosition)
                         locationTimeHolder.ChangePositionDelay(extEvent.Latitude, extEvent.Longitude);
                     bIsReady = true;
@@ -355,7 +379,7 @@ namespace iChronoMe.Core.ViewModels
         {
             get
             {
-                string cPosInfo = (extEvent.LocationString.Equals(calEvent.Location) ? "Position und Ortszeit unklar: " : "Position wird ermittelt: ");
+                string cPosInfo = "";// (extEvent.LocationString.Equals(calEvent.Location) ? "Position und Ortszeit unklar: " : "Position wird ermittelt: ");
                 if (extEvent.GotCorrectPosition)
                 {
                     TimeSpan tsDiff = LocationTimeHolder.GetUTCGeoLngDiff(extEvent.Longitude - sys.lastUserLocation.Longitude);

@@ -15,6 +15,7 @@ namespace iChronoMe.Core.DataBinding
         public int PushToViewMaxDelay { get; set; } = 100;
 
         public event EventHandler<UserChangedPropertyEventArgs> UserChangedProperty;
+        public event EventHandler<PushedValuesToViewEventArgs> PushedValuesToView;
 
         public bool BindViewProperty(object view, string viewProperty, BaseObservable bindable, string bindableProperty, BindMode bindMode)
         {
@@ -253,5 +254,10 @@ namespace iChronoMe.Core.DataBinding
             OldValue = oldVal;
             NewValue = newVal;
         }
+    }
+
+    public class PushedValuesToViewEventArgs : EventArgs
+    {
+
     }
 }
