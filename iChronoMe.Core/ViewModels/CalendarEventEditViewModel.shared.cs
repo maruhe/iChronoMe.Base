@@ -11,7 +11,7 @@ using iChronoMe.DeviceCalendar;
 
 namespace iChronoMe.Core.ViewModels
 {
-    public partial class CalendarEventPopupViewModel : BaseObservable, ICanBeReady
+    public partial class CalendarEventEditViewModel : BaseObservable, ICanBeReady
     {
         private string cEventID;
         private bool bIsReady = false;
@@ -20,12 +20,13 @@ namespace iChronoMe.Core.ViewModels
         CalendarEventExtention extEvent;
         private static string cLoading = "loading...";
         IProgressChangedHandler mUserIO;
-        LocationTimeHolder locationTimeHolder = LocationTimeHolder.LocalInstanceClone;
+        LocationTimeHolder locationTimeHolder;
         public LocationTimeHolder LocationTimeHolder { get => locationTimeHolder; }
 
-        public CalendarEventPopupViewModel(string eventID, IProgressChangedHandler userIO)
+        public CalendarEventEditViewModel(string eventID, IProgressChangedHandler userIO)
         {
             cEventID = eventID;
+            ResetLocationTimeHolder();
             Task.Factory.StartNew(async () =>
             {
                 try
@@ -46,19 +47,21 @@ namespace iChronoMe.Core.ViewModels
                     if (calEvent == null)
                     {
                         calEvent = new CalendarEvent();
-                        calEvent.Start = DateTime.Today.AddHours(DateTime.Now.Hour + 1);
-                        if (calEvent.Start.Hour > 18)
-                            calEvent.Start = DateTime.Today.AddDays(1).AddHours(10);
-                        calEvent.End = calEvent.Start.AddHours(2);
+                        calEvent.DisplayStart = DateTime.Today.AddHours(DateTime.Now.Hour + 1);
+                        if (calEvent.DisplayStart.Hour > 18)
+                            calEvent.DisplayStart = DateTime.Today.AddDays(1).AddHours(10);
+                        calEvent.DisplayEnd = calEvent.DisplayStart.AddHours(2);
                         cal = await DeviceCalendar.DeviceCalendar.GetDefaultCalendar();
                     }
                     else
-                        cal = await DeviceCalendar.DeviceCalendar.GetCalendarByIdAsync(cEventID);
+                        cal = await DeviceCalendar.DeviceCalendar.GetCalendarByIdAsync(calEvent.CalendarId);
                     extEvent = calEvent.Extention;
-                    if (calEvent.DisplayStart == DateTime.MinValue)
-                        UpdateTimes();
                     if (extEvent.GotCorrectPosition)
                         locationTimeHolder.ChangePositionDelay(extEvent.Latitude, extEvent.Longitude);
+                    if (calEvent.Start == DateTime.MinValue)
+                        UpdateTimes();
+                    if (!string.IsNullOrEmpty(calEvent.ExternalID))
+                        EventCollection.UpdateEventDisplayTime(calEvent, calEvent.Extention, locationTimeHolder, extEvent.TimeType, cal);
                     bIsReady = true;
                 }
                 catch (Exception ex)
@@ -98,14 +101,8 @@ namespace iChronoMe.Core.ViewModels
         private void UpdateTimes()
         {
 
-            if (calEvent.AllDay && (calEvent.Start.TimeOfDay.TotalHours != 0 || calEvent.End.TimeOfDay.TotalHours != 0))
-            {
-                calEvent.Start = calEvent.Start.Date;
-                calEvent.End = calEvent.End.Date.AddDays(1);
-            }
-
-            calEvent.DisplayStart = locationTimeHolder.GetTime(TimeType, calEvent.Start, TimeType.TimeZoneTime);
-            calEvent.DisplayEnd = locationTimeHolder.GetTime(TimeType, calEvent.End, TimeType.TimeZoneTime);
+            calEvent.Start = locationTimeHolder.GetTime(TimeType.TimeZoneTime, calEvent.DisplayStart, TimeType);
+            calEvent.End = locationTimeHolder.GetTime(TimeType.TimeZoneTime, calEvent.DisplayEnd, TimeType);
 
             extEvent.TimeTypeStart = calEvent.DisplayStart;
             extEvent.TimeTypeEnd = calEvent.DisplayEnd;
@@ -127,7 +124,6 @@ namespace iChronoMe.Core.ViewModels
             OnPropertyChanged(nameof(EndTimeHelper));
 
             OnPropertyChanged(nameof(ShowTimeHelpers));
-
         }
 
         public DateTime Start
@@ -135,9 +131,8 @@ namespace iChronoMe.Core.ViewModels
             get => calEvent.Start;
             set
             {
-                calEvent.End = value + (calEvent.End - calEvent.Start);
                 calEvent.Start = value;
-                UpdateTimes();
+                OnPropertyChanged();
             }
         }
         public DateTime End
@@ -145,10 +140,8 @@ namespace iChronoMe.Core.ViewModels
             get => calEvent.End;
             set
             {
-                if (value <= Start)
-                    calEvent.Start = value - (calEvent.End - calEvent.Start);
                 calEvent.End = value;
-                UpdateTimes();
+                OnPropertyChanged();
             }
         }
 
@@ -157,8 +150,9 @@ namespace iChronoMe.Core.ViewModels
             get => calEvent.DisplayStart == DateTime.MinValue ? calEvent.Start : calEvent.DisplayStart;
             set
             {
+                calEvent.DisplayEnd = value + (calEvent.DisplayEnd - calEvent.DisplayStart);
                 calEvent.DisplayStart = value;
-                Start = sys.GetTimeWithoutSeconds(locationTimeHolder.GetTime(TimeType.TimeZoneTime, value, TimeType));
+                UpdateTimes();
             }
         }
         public DateTime DisplayEnd
@@ -166,8 +160,10 @@ namespace iChronoMe.Core.ViewModels
             get => calEvent.DisplayEnd == DateTime.MinValue ? calEvent.End : calEvent.DisplayEnd;
             set
             {
+                if (value <= DisplayStart)
+                    calEvent.DisplayStart = value - (calEvent.DisplayEnd - calEvent.DisplayStart);
                 calEvent.DisplayEnd = value;
-                End = sys.GetTimeWithoutSeconds(locationTimeHolder.GetTime(TimeType.TimeZoneTime, value, TimeType));
+                UpdateTimes();
             }
         }
 
@@ -181,6 +177,60 @@ namespace iChronoMe.Core.ViewModels
         public bool AllDay { get => calEvent.AllDay; set { calEvent.AllDay = value; OnPropertyChanged(); OnPropertyChanged(nameof(NotAllDay)); OnPropertyChanged(nameof(ShowTimeHelpers)); } }
 
         public string Description { get => calEvent.Description; set { calEvent.Description = value; OnPropertyChanged(); } }
+
+        public async Task<bool> SaveEvent()
+        {
+            try
+            {
+                if (cal == null)
+                    throw new Exception("no selected calendar!");
+
+                
+                if (!cal.CanEditEvents)
+                    throw new Exception("selected calendar is read only!");
+
+                if (calEvent.AllDay && (calEvent.Start.TimeOfDay.TotalHours != 0 || calEvent.End.TimeOfDay.TotalHours != 0))
+                {
+                    calEvent.Start = calEvent.Start.Date;
+                    calEvent.End = calEvent.End.Date.AddDays(1);
+                }
+
+                extEvent.TimeType = TimeType;
+                extEvent.TimeTypeStart = calEvent.DisplayStart;
+                extEvent.TimeTypeEnd = calEvent.DisplayEnd;
+                extEvent.UseTypedTime = TimeType == TimeType.MiddleSunTime || TimeType == TimeType.RealSunTime;
+
+                calEvent.Start = sys.GetTimeWithoutSeconds(calEvent.Start);
+                calEvent.End = sys.GetTimeWithoutSeconds(calEvent.End);
+                extEvent.CalendarTimeStart = calEvent.Start;
+                extEvent.CalendarTimeEnd = calEvent.End;
+
+                await DeviceCalendar.DeviceCalendar.AddOrUpdateEventAsync(cal, calEvent);
+
+                if (string.IsNullOrEmpty(calEvent.ExternalID))
+                    throw new Exception("unknown exeption on saving apppontment!");
+
+                if (extEvent != null)
+                {
+                    extEvent.EventID = calEvent.ExternalID;
+                    if (extEvent.RecNo < 0)
+                        db.dbCalendarExtention.Insert(extEvent);
+                    else
+                        db.dbCalendarExtention.Update(extEvent);
+                }
+
+                HasErrors = false;
+                ErrorText = string.Empty;
+                return true;
+            }
+            catch(Exception ex)
+            {
+                HasErrors = true;
+                ErrorText = ex.Message;
+            }
+            return false;
+        }
+
         public IList<CalendarEventReminder> Reminders { get => calEvent.Reminders; }
 
         public string ExternalID { get => calEvent.ExternalID; }
@@ -240,11 +290,11 @@ namespace iChronoMe.Core.ViewModels
             get
             {
                 if (TimeType != TimeType.TimeZoneTime)
-                {
-                    locationTimeHolder.SetTime(calEvent.Start, TimeType);
-                    return locationTimeHolder.GetTime(TimeType.TimeZoneTime).ToShortTimeString();
-                }
-                return "                            ";
+                    return Start.ToShortTimeString(); ;
+                return string.Empty;
+                if (TimeType != AppConfigHolder.CalendarViewConfig.TimeType)
+                    return locationTimeHolder.GetTime(AppConfigHolder.CalendarViewConfig.TimeType, calEvent.DisplayStart, TimeType).ToShortTimeString();
+                return string.Empty;
             }
         }
         public string EndTimeHelper
@@ -252,10 +302,10 @@ namespace iChronoMe.Core.ViewModels
             get
             {
                 if (TimeType != TimeType.TimeZoneTime)
-                {
-                    locationTimeHolder.SetTime(calEvent.End, TimeType);
-                    return locationTimeHolder.GetTime(TimeType.TimeZoneTime).ToShortTimeString();
-                }
+                    return End.ToShortTimeString(); ;
+                return string.Empty;
+                if (TimeType != AppConfigHolder.CalendarViewConfig.TimeType)
+                    return locationTimeHolder.GetTime(AppConfigHolder.CalendarViewConfig.TimeType, calEvent.DisplayEnd, TimeType).ToShortTimeString();
                 return string.Empty;
             }
         }
@@ -266,14 +316,16 @@ namespace iChronoMe.Core.ViewModels
         public void UpdateLocation(string cLocationTilte, double nLat = 0, double nLng = 0)
         {
             calEvent.Location = cLocationTilte;
-            
+            OnPropertyChanged(nameof(Location));
+
             if (string.IsNullOrEmpty(cLocationTilte) || (nLat != 0 && nLng != 0))
             {
                 extEvent.LocationString = cLocationTilte;
                 extEvent.Latitude = nLat;
                 extEvent.Longitude = nLng;
                 extEvent.GotCorrectPosition = true;
-                locationTimeHolder = LocationTimeHolder.LocalInstanceClone;
+                if (string.IsNullOrEmpty(cLocationTilte))
+                    ResetLocationTimeHolder();
                 if (nLat != 0 && nLng != 0)
                     locationTimeHolder.ChangePositionDelay(nLat, nLng);
             }
@@ -282,6 +334,23 @@ namespace iChronoMe.Core.ViewModels
                 SearchPositionByLocation();
             }
             
+            OnPropertyChanged(nameof(LocationHelper));
+            OnPropertyChanged(nameof(LocationTimeInfo));
+            UpdateTimes();
+        }
+
+        private void ResetLocationTimeHolder()
+        {
+            if (locationTimeHolder != null) {
+                locationTimeHolder.AreaChanged -= LocationTimeHolder_AreaChanged;
+                locationTimeHolder.Dispose();
+            }
+            locationTimeHolder = LocationTimeHolder.LocalInstanceClone;
+            locationTimeHolder.AreaChanged += LocationTimeHolder_AreaChanged;
+        }
+
+        private void LocationTimeHolder_AreaChanged(object sender, AreaChangedEventArgs e)
+        {
             OnPropertyChanged(nameof(Location));
             OnPropertyChanged(nameof(LocationHelper));
             OnPropertyChanged(nameof(LocationTimeInfo));
@@ -350,6 +419,8 @@ namespace iChronoMe.Core.ViewModels
                 finally
                 {
                     IsSearchingForLocation = false;
+                    if (!string.IsNullOrEmpty(calEvent.Location) && extEvent.GotCorrectPosition)
+                        locationTimeHolder.ChangePositionDelay(extEvent.Latitude, extEvent.Longitude);
                     UpdateTimes();
 
                     tskPositionSearcher = null;
@@ -395,12 +466,18 @@ namespace iChronoMe.Core.ViewModels
                         cPosInfo += ((int)tsDiff.TotalHours).ToString() + ":" + tsDiff.Minutes.ToString("00") + "h";
                     else if (tsDiff.TotalMinutes > 1)
                         cPosInfo += ((int)tsDiff.TotalHours).ToString() + ":" + tsDiff.Minutes.ToString("00") + "h";
-                    else if (tsDiff.TotalSeconds > 3)
+                    else if (tsDiff.TotalSeconds >= 3)
                         cPosInfo += tsDiff.Seconds.ToString("00") + "sec";
+
+                    if (tsDiff.TotalSeconds < 3)
+                        cPosInfo = "current location";
                     else
-                        cPosInfo += ":-)";
-                    cPosInfo = cPosInfo.Trim();
+                    {
+                        cPosInfo = cPosInfo.Trim() + " real time offset";
+                    }
                 }
+                if (sys.Debugmode && false)
+                    cPosInfo = sys.DezimalGradToGrad(locationTimeHolder.Latitude, locationTimeHolder.Longitude) + ", " + locationTimeHolder.AreaName + ", " + locationTimeHolder.CountryName + "  :  " + cPosInfo;
                 return cPosInfo;
             }
         }
@@ -436,7 +513,9 @@ namespace iChronoMe.Core.ViewModels
 
         public bool IsReady => bIsReady;
 
-        public bool HasErrors => false;
+        public bool HasErrors { get; private set; } = false;
+
+        public string ErrorText { get; private set; } = string.Empty;
 
         #endregion
     }

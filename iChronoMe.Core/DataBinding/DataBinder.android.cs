@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 
 using Android.App;
+using Android.Runtime;
 using Android.Views;
+using Android.Views.InputMethods;
 using Android.Widget;
+using iChronoMe.Core.Classes;
+using static Android.Widget.TextView;
 
 namespace iChronoMe.Core.DataBinding
 {
-    public partial class DataBinder : Java.Lang.Object
+    public partial class DataBinder : Java.Lang.Object, IOnEditorActionListener
     {
         public Activity Activity { get; private set; }
         public ViewGroup RootView { get; private set; }
@@ -76,6 +80,17 @@ namespace iChronoMe.Core.DataBinding
                     {
                         if (prop.CanWrite)
                         {
+                            if (view is EditText && ViewToModelLinks.ContainsKey(view))
+                            {
+                                var cLinkId = ViewToModelLinks[view].ID;
+                                if (LastViewValues.ContainsKey(cLinkId) && !Equals(prop.GetValue(view), LastViewValues[cLinkId]))
+                                {
+                                    if (sys.Debugmode && Activity != null)
+                                        Toast.MakeText(Activity, DateTime.Now.ToString("HH:mm:ss.fff") + " ignore value: " + newVal.ToString(), ToastLength.Short).Show();
+                                    continue;
+                                }
+                            }
+
                             int iPos = -1;
                             if (view is EditText)
                                 iPos = (view as EditText).SelectionStart;
@@ -152,6 +167,8 @@ namespace iChronoMe.Core.DataBinding
                     if (link.Property.Name != nameof(EditText.Text))
                         continue;
                     (link.View as EditText).AfterTextChanged += EditText_AfterTextChanged;
+                    (link.View as EditText).SetOnEditorActionListener(this);
+                    (link.View as EditText).FocusChange += EditText_FocusChange;
                 }
                 if (link.View is Spinner)
                 {
@@ -182,12 +199,67 @@ namespace iChronoMe.Core.DataBinding
                 ProcessViewPropertyChanged(sender as CheckBox, (sender as CheckBox).Checked);
         }
 
+        Dictionary<EditText, Delayer> EditTextDelayer = new Dictionary<EditText, Delayer>();
         private void EditText_AfterTextChanged(object sender, Android.Text.AfterTextChangedEventArgs e)
         {
             if (!BinderIsRunning || IsWritingToView)
                 return;
             if (sender is EditText)
+            {
+                //ProcessViewPropertyChanged(sender as EditText, (sender as EditText).Text);
+                //return;
+
+                var edit = (sender as EditText);
+                string cVal = edit.Text;
+                if (string.IsNullOrEmpty(cVal.Trim()))
+                    ProcessViewPropertyChanged(edit, cVal);
+                else
+                {
+                    lock(EditTextDelayer)
+                    {
+                        Delayer mDelayer = null;
+                        if (EditTextDelayer.ContainsKey(edit))
+                            EditTextDelayer[edit].SetDelay(1000, () => ProcessViewPropertyChanged(edit, cVal));
+                        else
+                        {
+                            mDelayer = new Delayer(() => ProcessViewPropertyChanged(edit, cVal), 1000);
+                            EditTextDelayer.Add(edit, mDelayer);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void EditText_FocusChange(object sender, View.FocusChangeEventArgs e)
+        {
+            if (!BinderIsRunning || IsWritingToView)
+                return;
+            if (e.HasFocus)
+                return;
+            if (sender is EditText)
+            {
                 ProcessViewPropertyChanged(sender as EditText, (sender as EditText).Text);
+            }
+        }
+
+        public bool OnEditorAction(TextView sender, [GeneratedEnum] ImeAction actionId, KeyEvent e)
+        {
+            if (!BinderIsRunning || IsWritingToView)
+                return false;
+            if (sender is EditText)
+            {
+                if (actionId == ImeAction.Search ||
+                    actionId == ImeAction.Done ||
+                    (e != null &&
+                     (e.Action == KeyEventActions.Down ||
+                      e.KeyCode == Keycode.Enter ||
+                      e.KeyCode == Keycode.Space
+                      )))
+                {
+                    ProcessViewPropertyChanged(sender as EditText, (sender as EditText).Text);
+                }
+            }
+            return false;
         }
 
         private void Spinner_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
@@ -211,10 +283,15 @@ namespace iChronoMe.Core.DataBinding
                     var old = link.Property.GetValue(link.Object);
                     if (!Equals(old, value))
                     {
+                        lock(LastViewValues)
                         {
-                            link.Property.SetValue(link.Object, value);
-                            UserChangedProperty?.Invoke(view, new UserChangedPropertyEventArgs(link.Object, link.Property.Name, old, value));
+                            if (LastViewValues.ContainsKey(link.ID))
+                                LastViewValues[link.ID] = value;
+                            else
+                                LastViewValues.Add(link.ID, value);
                         }
+                        link.Property.SetValue(link.Object, value);
+                        UserChangedProperty?.Invoke(view, new UserChangedPropertyEventArgs(link.Object, link.Property.Name, old, value));
                     }
                 }
             } 
@@ -225,6 +302,11 @@ namespace iChronoMe.Core.DataBinding
         }
 
         #endregion
+
+        void PlatformDispose()
+        {
+            EditTextDelayer.Clear();
+        }
     }
 }
 /*

@@ -48,11 +48,15 @@ namespace iChronoMe.Core.DynamicCalendar
             RefreshCalendarFilter(AppConfigHolder.CalendarViewConfig.HideCalendars);
         }
 
-        public DateTime GetTimeFromLocal(DateTime tTimeZoneTimeNow, TimeType? tType = null)
+
+        public static DateTime GetTimeFromLocal(DateTime tTimeZoneTimeNow, TimeType tType)
         {
-            if (tType == null)
-                tType = timeType;
             return LocationTimeHolder.LocalInstance.GetTime((TimeType)tType, tTimeZoneTimeNow.ToUniversalTime());
+        }
+
+        public DateTime GetTimeFromLocal(DateTime tTimeZoneTimeNow)
+        {
+            return GetTimeFromLocal(tTimeZoneTimeNow, timeType);
         }
 
         public TimeType timeType { get; set; } = AppConfigHolder.CalendarViewConfig.TimeType;
@@ -284,12 +288,9 @@ namespace iChronoMe.Core.DynamicCalendar
         static Task eventsChecker = null;
         static Dictionary<string, string> eventsCheckerStates = new Dictionary<string, string>();
 
-        void CheckEventLocationTime(LocationTimeHolder lthCheck, DeviceCalendar.Calendar calendar, CalendarEvent calEvent)
+        public static void UpdateEventDisplayTime(CalendarEvent calEvent, CalendarEventExtention extEvent, LocationTimeHolder lthCheck, TimeType timeType, DeviceCalendar.Calendar calendar)
         {
-            DateTime swStart = DateTime.Now;
-
-            //Zeit anpassen wenn Sonn = Cheff
-            CalendarEventExtention extEvent = CalendarEventExtention.GetExtention(calEvent.ExternalID, false);
+            //Zeit anpassen wenn Sonn = Cheff            
 
             DateTime tStart = calEvent.Start;
             DateTime tEnd = calEvent.End;
@@ -329,7 +330,7 @@ namespace iChronoMe.Core.DynamicCalendar
                             calEvent.DisplayStart = extEvent.CalendarTimeStart = calEvent.Start;
                             calEvent.DisplayEnd = extEvent.CalendarTimeEnd = calEvent.End;
 
-                            if (calEvent.Start < calEvent.End)
+                            if (calEvent.Start < calEvent.End && calendar != null)
                             {
                                 DeviceCalendar.DeviceCalendar.AddOrUpdateEventAsync(calendar, calEvent).Wait();
                                 db.dbCalendarExtention.Update(extEvent);
@@ -363,6 +364,15 @@ namespace iChronoMe.Core.DynamicCalendar
                 calEvent.DisplayStart = tStart;
                 calEvent.DisplayEnd = tEnd;
             }
+        }
+
+        void CheckEventLocationTime(LocationTimeHolder lthCheck, DeviceCalendar.Calendar calendar, CalendarEvent calEvent)
+        {
+            DateTime swStart = DateTime.Now;
+
+            CalendarEventExtention extEvent = CalendarEventExtention.GetExtention(calEvent.ExternalID, false);
+
+            UpdateEventDisplayTime(calEvent, extEvent, lthCheck, timeType, calendar);
 
 #if DEBUG
             //calEvent.Description = (DateTime.Now - swStart).TotalMilliseconds.ToString() + " ms checking";

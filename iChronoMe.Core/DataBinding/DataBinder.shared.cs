@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-
+using System.Threading.Tasks;
 using iChronoMe.Core.Interfaces;
+using Xamarin.Essentials;
 
 namespace iChronoMe.Core.DataBinding
 {
@@ -70,7 +71,12 @@ namespace iChronoMe.Core.DataBinding
                 ProcessBindable_PropertyChanged(olnk.Value.Object, olnk.Value.Property.Name, true);
             }
 
-            StartViewChangeListener();
+            Task.Factory.StartNew(() =>
+            {
+                Task.Delay(250).Wait();
+
+                MainThread.BeginInvokeOnMainThread(() => StartViewChangeListener());
+            });            
         }
 
         public void PushDataToViewOnce()
@@ -129,6 +135,7 @@ namespace iChronoMe.Core.DataBinding
             ObservedObjects = null;
             ValuesToViewsQue.Clear();
             ValuesToViewsQue = null;
+            PlatformDispose();
         }
 
         private Dictionary<string, ObjectLink> ObjectLinks = new Dictionary<string, ObjectLink>();
@@ -136,6 +143,7 @@ namespace iChronoMe.Core.DataBinding
         private Dictionary<object, ObjectLink> ViewToModelLinks = new Dictionary<object, ObjectLink>();
         private List<KeyValuePair<string, ViewLink>> ViewLinks = new List<KeyValuePair<string, ViewLink>>();
         private List<BaseObservable> ObservedObjects = new List<BaseObservable>();
+        private Dictionary<string, object> LastViewValues = new Dictionary<string, object>();
 
         private List<KeyValuePair<ViewLink, object>> ValuesToViewsQue = new List<KeyValuePair<ViewLink, object>>();
 

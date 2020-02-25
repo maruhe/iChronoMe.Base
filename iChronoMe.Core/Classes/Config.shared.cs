@@ -84,6 +84,8 @@ namespace iChronoMe.Core.Classes
         public DateTime LastCheckClockFaces { get; set; } = DateTime.MinValue;
         public WidgetCfg_ClockAnalog MainClock { get; set; } = new WidgetCfg_ClockAnalog() { ShowSeconds = true, FlowMinuteHand = true };
 
+        public bool ContinuousLocationUpdates { get; set; } = false;
+
         [XmlIgnore]
         public int DefaultTimeType_SpinnerPosition
         {

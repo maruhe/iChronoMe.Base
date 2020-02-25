@@ -725,6 +725,7 @@ namespace iChronoMe.Core
             bIsRunning = false;
             //end all TimeChanged-Threads within the next second
             timeHandlers.Clear();
+            this.timeZoneInfo = null;
         }
 
         public enum FetchAreaInfoFlag

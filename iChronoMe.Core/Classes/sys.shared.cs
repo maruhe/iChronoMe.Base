@@ -478,6 +478,28 @@ namespace iChronoMe.Core.Classes
         }
 
         public static Location lastUserLocation = new Location(0, 0);
+
+        public static int Sum(int[] v)
+        {
+            int sum = 0;
+            foreach (var n in v)
+                sum += n;
+            return sum;
+        }
+        public static float Sum(float[] v)
+        {
+            float sum = 0;
+            foreach (var n in v)
+                sum += n;
+            return sum;
+        }
+        public static double Sum(double[] v)
+        {
+            double sum = 0;
+            foreach (var n in v)
+                sum += n;
+            return sum;
+        }
     }
 
     public enum OsType
