@@ -804,7 +804,7 @@ namespace iChronoMe.DeviceCalendar
                 AccountName = cursor.GetString(CalendarContract.Calendars.InterfaceConsts.AccountName),
                 AccountType = accountType,
                 OwnerAccount = cursor.GetString(CalendarContract.Calendars.InterfaceConsts.OwnerAccount),
-                IsPrimary = cursor.GetBoolean(CalendarContract.Calendars.InterfaceConsts.IsPrimary, true)
+                IsPrimary = cursor.GetBoolean(cursor.ColumnCount-1, true) //ToDo: Hardcoded Col-Index could be quite bad on changes!!!
             };
         }
 

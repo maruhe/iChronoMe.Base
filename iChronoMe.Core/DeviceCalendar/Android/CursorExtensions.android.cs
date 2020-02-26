@@ -63,6 +63,24 @@ namespace iChronoMe.DeviceCalendar
             return allDay ? DateTime.SpecifyKind(dt.ToUniversalTime(), DateTimeKind.Local) : dt.ToLocalTime();
         }
 
+        //a Hack because some devices return a COALESCE  instead of isPrimary
+        public static bool GetBoolean(this ICursor cursor, int column, bool bDefault = false)
+        {
+            try
+            {
+                return cursor.GetInt(column) != 0;
+            }
+            catch (Exception ex)
+            {
+                string cAll = "";
+                foreach (var c in cursor.GetColumnNames())
+                    cAll += c + ", ";
+                sys.LogException(ex, "columnname: " + column + ", all: " + cAll);
+                return bDefault;
+            }
+        }
+
+
         /// <summary>
         /// Returns the value of the requested column as a boolean.
         /// </summary>

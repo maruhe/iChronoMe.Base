@@ -1013,7 +1013,7 @@ namespace iChronoMe.Core.DynamicCalendar
         public WeekDay GetWeekDay(int iWeekDay)
         {
             if (iWeekDay < 0)
-                return null;
+                throw new ArgumentException("week-day must be >= 0");
             if (WeekDays.Count == 0)
             {
                 DateTime tDay = DateTime.Today;

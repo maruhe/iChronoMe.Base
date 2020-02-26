@@ -380,14 +380,20 @@ namespace iChronoMe.Core.DynamicCalendar
             if (string.IsNullOrEmpty(calEvent.Location))
                 return;
             string cLast;
-            if (eventsCheckerStates.TryGetValue(calEvent.ExternalID, out cLast))
+            lock (eventsCheckerStates)
             {
-                if (cLast.Equals(calEvent.Location))
-                    return;
+                if (eventsCheckerStates.TryGetValue(calEvent.ExternalID, out cLast))
+                {
+                    if (cLast.Equals(calEvent.Location))
+                        return;
+                }
             }
 
-            if (!eventsToCheck.Contains(calEvent))
-                eventsToCheck.Add(calEvent);
+            lock (eventsToCheck)
+            {
+                if (!eventsToCheck.Contains(calEvent))
+                    eventsToCheck.Add(calEvent);
+            }
 
             if (eventsChecker == null)
             {
@@ -400,7 +406,8 @@ namespace iChronoMe.Core.DynamicCalendar
                         Task.Delay(2500).Wait();
                         DateTime tCheckStart = DateTime.Now;
                         bool bDidANotify = false;
-                        while (eventsToCheck.Count > 0)
+                        int iCount = eventsToCheck.Count;
+                        while (iCount > 0)
                         {
                             try
                             {
@@ -419,11 +426,20 @@ namespace iChronoMe.Core.DynamicCalendar
                                             db.dbCalendarExtention.Update(extEventLoc);
                                     }
                                 }
-                                eventsCheckerStates[checkEvent.ExternalID] = checkEvent.Location;
+                                lock (eventsCheckerStates)
+                                {
+                                    eventsCheckerStates[checkEvent.ExternalID] = checkEvent.Location;
+                                }
                             }
-                            finally
+                            catch(Exception ex)
                             {
-                                eventsToCheck.RemoveAt(0);
+                                sys.LogException(ex);                                
+                            }
+                            lock (eventsToCheck)
+                            {
+                                if (eventsToCheck.Count > 0)
+                                    eventsToCheck.RemoveAt(0);
+                                iCount = eventsToCheck.Count;
                             }
                             if (eventsToCheck.Count == 0)
                             {

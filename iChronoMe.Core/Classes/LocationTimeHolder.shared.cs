@@ -418,6 +418,12 @@ namespace iChronoMe.Core
 
             try { AreaChanged?.Invoke(this, new AreaChangedEventArgs(AreaChangedFlag.LocationUpdate)); } catch { }
 
+            SaveLocal();
+            return true;
+        }
+
+        public void SaveLocal()
+        {
             if (this == _localInstance)
             {
                 var cfg = AppConfigHolder.LocationConfig;
@@ -430,7 +436,6 @@ namespace iChronoMe.Core
                 cfg.TimeZoneOffsetDst = TimeZoneOffsetDst;
                 AppConfigHolder.SaveLocationConfig();
             }
-            return true;
         }
 
         private SortedDictionary<string, Thread> timeHandlers = new SortedDictionary<string, Thread>();
