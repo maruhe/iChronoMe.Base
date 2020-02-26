@@ -13,6 +13,9 @@ namespace iChronoMe.Core.ViewModels
 {
     public partial class CalendarEventEditViewModel : BaseObservable, ICanBeReady
     {
+        private Task<bool> tskReady { get { return tcsReady == null ? Task.FromResult(false) : tcsReady.Task; } }
+        private TaskCompletionSource<bool> tcsReady = null;
+
         private string cEventID;
         private bool bIsReady = false;
         Calendar cal;
@@ -27,6 +30,8 @@ namespace iChronoMe.Core.ViewModels
         {
             cEventID = eventID;
             ResetLocationTimeHolder();
+            tcsReady = new TaskCompletionSource<bool>();
+
             Task.Factory.StartNew(async () =>
             {
                 try
@@ -63,10 +68,12 @@ namespace iChronoMe.Core.ViewModels
                     if (!string.IsNullOrEmpty(calEvent.ExternalID))
                         EventCollection.UpdateEventDisplayTime(calEvent, calEvent.Extention, locationTimeHolder, extEvent.TimeType, cal);
                     bIsReady = true;
+                    tcsReady.TrySetResult(true);
                 }
                 catch (Exception ex)
                 {
                     bIsReady = false;
+                    tcsReady.TrySetResult(false);
                     //bHasErrors = true;
                     sys.LogException(ex);
                 }
@@ -74,6 +81,10 @@ namespace iChronoMe.Core.ViewModels
             });
         }
 
+        public async Task<bool> WaitForReady()
+        {
+            return await tskReady;
+        }
 
         #region Device-Event-Properties
         public string Title
@@ -90,8 +101,8 @@ namespace iChronoMe.Core.ViewModels
         public string CalendarId { get => calEvent.CalendarId; }
 
         public xColor CalendarColor { get => calEvent.CalendarColor; }
-        public xColor DisplayColor { get => calEvent.DisplayColor; set { calEvent.EventColor = value; OnPropertyChanged(); } }
-        public xColor EventColor { get => calEvent.EventColor; set { calEvent.EventColor = value; OnPropertyChanged(); } }
+        public xColor DisplayColor { get => calEvent.DisplayColor; set { calEvent.EventColor = value; OnPropertyChanged(nameof(DisplayColor)); OnPropertyChanged(nameof(EventColor)); } }
+        public xColor EventColor { get => calEvent.EventColor; set { calEvent.EventColor = value; OnPropertyChanged(nameof(DisplayColor)); OnPropertyChanged(nameof(EventColor)); } }
         public string CalendarColorString { get => calEvent.CalendarColorString; }
         public string DisplayColorString { get => calEvent.DisplayColorString; }
         public string EventColorString { get => calEvent.EventColorString; }

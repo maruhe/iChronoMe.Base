@@ -6,6 +6,7 @@ namespace iChronoMe.DeviceCalendar
 {
     public partial class CalendarEvent
     {
+        /*
         public Java.Util.Calendar javaStart
         {
             get => sys.DateTimeToJava(Start);
@@ -17,7 +18,7 @@ namespace iChronoMe.DeviceCalendar
             get => sys.DateTimeToJava(End);
             set => End = sys.DateTimeFromJava(value);
         }
-
+        */
         public Java.Util.Calendar javaDisplayStart
         {
             get => sys.DateTimeToJava(DisplayStart);

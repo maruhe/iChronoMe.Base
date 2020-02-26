@@ -25,7 +25,7 @@ namespace iChronoMe.DeviceCalendar
 
         public xColor CalendarColor { get => xColor.FromHex(DisplayColorString); }
         public xColor DisplayColor { get => xColor.FromHex(DisplayColorString); }
-        public xColor EventColor { get => xColor.FromHex(EventColorString); set => EventColorString = value.ToHex(); }
+        public xColor EventColor { get => xColor.FromHex(EventColorString); set => DisplayColorString = EventColorString = value.ToHex(); }
         public string CalendarColorString { get; set; } = "#FF00FF00";
         public string DisplayColorString { get; set; } = "#FF00FF00";
         public string EventColorString { get; set; } = "#FF00FF00";
