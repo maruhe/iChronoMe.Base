@@ -666,11 +666,29 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die loading {0} packages... ähnelt.
+        /// </summary>
+        public static string ImageLoader_progress_n_packages {
+            get {
+                return ResourceManager.GetString("ImageLoader_progress_n_packages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die loading one image... ähnelt.
         /// </summary>
         public static string ImageLoader_progress_one_image {
             get {
                 return ResourceManager.GetString("ImageLoader_progress_one_image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die loading one package... ähnelt.
+        /// </summary>
+        public static string ImageLoader_progress_one_package {
+            get {
+                return ResourceManager.GetString("ImageLoader_progress_one_package", resourceCulture);
             }
         }
         
@@ -693,11 +711,29 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0} of {1} packages loadet... ähnelt.
+        /// </summary>
+        public static string ImageLoader_success_n_packages {
+            get {
+                return ResourceManager.GetString("ImageLoader_success_n_packages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die one image loadet... ähnelt.
         /// </summary>
         public static string ImageLoader_success_one_image {
             get {
                 return ResourceManager.GetString("ImageLoader_success_one_image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die one package loadet... ähnelt.
+        /// </summary>
+        public static string ImageLoader_success_one_package {
+            get {
+                return ResourceManager.GetString("ImageLoader_success_one_package", resourceCulture);
             }
         }
         

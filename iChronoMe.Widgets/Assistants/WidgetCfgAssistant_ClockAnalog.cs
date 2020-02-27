@@ -93,7 +93,7 @@ namespace iChronoMe.Widgets
             Title = localize.Background;
             BaseSample = baseSample;
 
-            cImageDir = ImageLoader.GetImagePathThumb("clockface");
+            cImageDir = ImageLoader.GetImagePathThumb(ImageLoader.filter_clockfaces);
 
             //create samples on PerformPreperation()
 
@@ -124,7 +124,7 @@ namespace iChronoMe.Widgets
         public override void PerformPreperation(IUserIO handler)
         {
             if (NeedsPreperation())
-                ImageLoader.CheckImageThumbCache(handler, "clockface");
+                ImageLoader.CheckImageThumbCache(handler, ImageLoader.filter_clockfaces);
 
             Samples.Clear();
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.SingleColor, EmptyBackSample));
@@ -139,11 +139,14 @@ namespace iChronoMe.Widgets
                 string[] cFiles = Directory.GetFiles(cImageDir, "*.png");
                 foreach (string cFile in cFiles)
                 {
-                    WidgetCfg_ClockAnalog cfg = BaseSample.GetConfigClone();
-                    cfg.BackgroundImage = cFile;
-                    cfg.ColorBackground = xColor.Transparent;
-                    cfg.ColorTickMarks = xColor.Transparent;
-                    Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(Path.GetFileNameWithoutExtension(cFile).Replace("_", " "), cfg));
+                    if (!Path.GetFileNameWithoutExtension(cFile).EndsWith("_"))
+                    {
+                        WidgetCfg_ClockAnalog cfg = BaseSample.GetConfigClone();
+                        cfg.BackgroundImage = cFile;
+                        cfg.ColorBackground = xColor.Transparent;
+                        cfg.ColorTickMarks = xColor.Transparent;
+                        Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(Path.GetFileNameWithoutExtension(cFile).Replace("_", " "), cfg));
+                    }
                 }
             }
             catch { }

@@ -5,51 +5,6 @@ using System.Net;
 using System.Threading;
 
 using GeoJSON.Net;
-/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (MonoAndroid90)"
-Vor:
-using GeoJSON.Net.Feature;
-using NetTopologySuite.Geometries;
-using NetTopologySuite.Operation.Polygonize;
-using Newtonsoft.Json;
-Nach:
-using GeoJSON.Net.Feature;
-
-using NetTopologySuite.Geometries;
-using NetTopologySuite.Operation.Polygonize;
-
-using Newtonsoft.Json;
-*/
-
-/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (uap10.0.16299)"
-Vor:
-using GeoJSON.Net.Feature;
-using NetTopologySuite.Geometries;
-using NetTopologySuite.Operation.Polygonize;
-using Newtonsoft.Json;
-Nach:
-using GeoJSON.Net.Feature;
-
-using NetTopologySuite.Geometries;
-using NetTopologySuite.Operation.Polygonize;
-
-using Newtonsoft.Json;
-*/
-
-/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (Xamarin.iOS10)"
-Vor:
-using GeoJSON.Net.Feature;
-using NetTopologySuite.Geometries;
-using NetTopologySuite.Operation.Polygonize;
-using Newtonsoft.Json;
-Nach:
-using GeoJSON.Net.Feature;
-
-using NetTopologySuite.Geometries;
-using NetTopologySuite.Operation.Polygonize;
-
-using Newtonsoft.Json;
-*/
-
 
 using NetTopologySuite.Geometries;
 
@@ -59,6 +14,8 @@ namespace iChronoMe.Core.Classes
     {
         public static Dictionary<Polygon, TimeZoneInfoJson> timeZonePolygons;
 
+        private static DateTime loadstart = DateTime.MinValue;
+        private static bool loading = false;
         private static bool ready = false;
 
         public static bool MapIsReady { get => ready; }
@@ -91,7 +48,7 @@ namespace iChronoMe.Core.Classes
 
         static TimeZoneMap()
         {
-            Thread tr = new Thread(() => { LoadOffsets(); InitMap(); });
+            Thread tr = new Thread(() => { Thread.Sleep(250); LoadOffsets(); InitMap(); });
             tr.Start();
         }
 
@@ -99,6 +56,10 @@ namespace iChronoMe.Core.Classes
 
         private static void InitMap()
         {
+            if (loading == false)
+                return;
+            loading = true;
+            loadstart = DateTime.Now;
             ready = false;
             string cJsonFile = Path.Combine(sys.PathData, "ne_10m_time_zones.geojson");
             if (!File.Exists(cJsonFile))
@@ -115,6 +76,7 @@ namespace iChronoMe.Core.Classes
                 }
                 catch (Exception ex)
                 {
+                    loading = false;
                     xLog.Error(ex);
                     sys.MainUserIO?.ShowToast("Error updating Time-Zones-Map:\n" + ex.Message);
                 }
@@ -141,6 +103,7 @@ namespace iChronoMe.Core.Classes
                 return null;
             try
             {
+                loadstart = DateTime.Now;
                 DateTime swStart = DateTime.Now;
                 string topology_string = File.ReadAllText(Path.Combine(sys.PathData, "ne_10m_time_zones.geojson"));
 
@@ -251,6 +214,7 @@ namespace iChronoMe.Core.Classes
                             throw new ArgumentOutOfRangeException();
                     }
                 }
+                loading = false;
                 ready = true;
                 var tsInit = DateTime.Now - swStart;
                 sys.MainUserIO?.ShowToast("Read Time-Zones-Map: " + (int)tsInit.TotalMilliseconds + "ms");
@@ -260,6 +224,7 @@ namespace iChronoMe.Core.Classes
             {
                 ex.ToString();
             }
+            loading = false;
             return null;
         }
 

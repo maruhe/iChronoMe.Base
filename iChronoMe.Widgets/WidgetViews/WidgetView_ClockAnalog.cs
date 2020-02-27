@@ -5,6 +5,7 @@ using iChronoMe.Core.Classes;
 using iChronoMe.Core.Types;
 
 using SkiaSharp;
+//using SKSvg = SkiaSharp.Extended.Svg.SKSvg;
 
 namespace iChronoMe.Widgets
 {
@@ -31,6 +32,10 @@ namespace iChronoMe.Widgets
         public bool FlowMinuteHand { set; get; } = true;
         public bool FlowSecondHand { set; get; } = false;
 
+        //public SKSvg svgHourHand { get; set; } = null;
+        //public SKSvg svgMinuteHand { get; set; } = null;
+        //public SKSvg svgSecondHand { get; set; } = null;
+        //public SKSvg svgCenterDot { get; set; } = null;
 
         SKPaint fillPaint = new SKPaint
         {
@@ -113,10 +118,32 @@ namespace iChronoMe.Widgets
             FlowHourHand = cfg.FlowHourHand;
             FlowMinuteHand = cfg.FlowMinuteHand;
             FlowSecondHand = cfg.FlowSecondHand;
-        }
 
-        string cBackCacheInstance = "_";
-        SKBitmap backCache = null;
+            //svgHourHand = null;
+            //svgMinuteHand = null;
+            //svgSecondHand = null;
+            //svgCenterDot = null;
+            if (BackgroundImage.EndsWith(".svg"))
+            {
+                string cMask = BackgroundImage.Substring(0, BackgroundImage.Length - 4);
+                if (File.Exists(cMask + "_hh_.svg")) {
+                    //svgHourHand = new SKSvg();
+                    //svgHourHand.Load(cMask + "_hh_.svg");
+                }
+                if (File.Exists(cMask + "_mh_.svg")) {
+                    //svgMinuteHand= new SKSvg();
+                    //svgMinuteHand.Load(cMask + "_mh_.svg");
+                }
+                if (File.Exists(cMask + "_sh_.svg")) {
+                    //svgSecondHand = new SKSvg();
+                    //svgSecondHand.Load(cMask + "_sh_.svg");
+                }
+                if (File.Exists(cMask + "_cd_.svg")) {
+                    //svgCenterDot = new SKSvg();
+                    //svgCenterDot.Load(cMask + "_cd_.svg");
+                }
+            }
+        }
 
         public void DrawCanvas(SKCanvas canvas, DateTime dateTime, int width = 512, int height = 512, bool bDrawBackImage = false, float? nSecondHandOverrideSecond = null)
         {
@@ -129,52 +156,39 @@ namespace iChronoMe.Widgets
             DateTime swStart = DateTime.Now;
 
             canvas.Clear();
+            int x = Math.Min(width, height);
 
             //Background image
             if (bDrawBackImage && !string.IsNullOrEmpty(BackgroundImage))
             {
+                //this is only for widget-preview!!!
                 try
                 {                   
-                    if (backCache != null && cfgInstance == cBackCacheInstance)
-                        canvas.DrawBitmap(backCache, (width - backCache.Width) / 2, (height - backCache.Height) / 2);
+                    if (BackgroundImage.EndsWith(".svg"))
+                    {
+
+                        // load the SVG
+                        var svg = new SKSvg();
+                        svg.Load(BackgroundImage);
+
+                        float scale = (float)x / Math.Max(svg.Picture.CullRect.Width, svg.Picture.CullRect.Height);
+                        var matrix = new SKMatrix
+                        {
+                            ScaleX = scale,
+                            ScaleY = scale,
+                            TransX = (width - x) / 2,
+                            TransY = (height - x) / 2,
+                            Persp2 = 1,
+                        };
+
+                        canvas.DrawPicture(svg.Picture, ref matrix);
+                    }
                     else
                     {
-                        if (BackgroundImage.EndsWith(".svg"))
+                        using (var bitmap = SKBitmap.Decode(BackgroundImage))
                         {
-                            int x = Math.Min(width, height);
-                            // create the bitmap
-                            backCache = new SKBitmap(x, x);
-                            var mCvs = new SKCanvas(backCache);
-
-                            // load the SVG
-                            var svg = new SkiaSharp.Extended.Svg.SKSvg(new SKSize(x, x));
-                            svg.Load(BackgroundImage);
-
-                            // draw the SVG to the backCache
-                            mCvs.DrawPicture(svg.Picture);
-                            cBackCacheInstance = cfgInstance;
-                            canvas.DrawBitmap(backCache, (width - backCache.Width) / 2, (height - backCache.Height) / 2);
-
-                            /*using (Stream s = new FileStream(BackgroundImage + ".png", FileMode.CreateNew))
-                            {
-                                SKData d = SKImage.FromBitmap(backCache).Encode(SKEncodedImageFormat.Png, 100);
-                                d.SaveTo(s);
-                            }*/
-                        }
-                        else
-                        {
-                            using (var bitmap = SKBitmap.Decode(BackgroundImage))
-                            {
-                                int x = Math.Min(width, height);
-
-                                var resizedBitmap = bitmap.Resize(new SKImageInfo(x, x), SKFilterQuality.High);
-
-                                canvas.DrawBitmap(resizedBitmap, (width - resizedBitmap.Width) / 2, (height - resizedBitmap.Height) / 2);
-
-                                backCache?.Dispose();
-                                backCache = resizedBitmap;
-                                cBackCacheInstance = cfgInstance;
-                            }
+                            var resizedBitmap = bitmap.Resize(new SKImageInfo(x, x), SKFilterQuality.High);
+                            canvas.DrawBitmap(resizedBitmap, (width - resizedBitmap.Width) / 2, (height - resizedBitmap.Height) / 2);
                         }
                     }
                 }
@@ -246,38 +260,104 @@ namespace iChronoMe.Widgets
             // Hour hand
             if (ShowHourHand)
             {
-                fillPaint.Color = ColorHourHandFill.ToSKColor();
-                strokePaint.Color = ColorHourHandStroke.ToSKColor();
                 canvas.Save();
                 canvas.RotateDegrees((float)(30 * hour));
-                canvas.DrawPath(hourHandPath, fillPaint);
-                canvas.DrawPath(hourHandPath, strokePaint);
+                //if (svgHourHand == null)
+                {
+                    fillPaint.Color = ColorHourHandFill.ToSKColor();
+                    strokePaint.Color = ColorHourHandStroke.ToSKColor();
+                    canvas.DrawPath(hourHandPath, fillPaint);
+                    canvas.DrawPath(hourHandPath, strokePaint);
+                } 
+                /*else
+                {
+                    float scale = (float)200F / Math.Max(svgHourHand.Picture.CullRect.Width, svgHourHand.Picture.CullRect.Height);
+                    var matrix = new SKMatrix
+                    {
+                        ScaleX = scale,
+                        ScaleY = scale,
+                        TransX = -100,
+                        TransY = -100,
+                        Persp2 = 1,
+                    };
+
+                    canvas.DrawPicture(svgHourHand.Picture, ref matrix);
+                }*/
                 canvas.Restore();
             }
 
             // Minute hand
             if (ShowMinuteHand)
             {
-                fillPaint.Color = ColorMinuteHandFill.ToSKColor();
-                strokePaint.Color = ColorMinuteHandStroke.ToSKColor();
                 canvas.Save();
                 canvas.RotateDegrees((float)(6 * minute));
-                canvas.DrawPath(minuteHandPath, fillPaint);
-                canvas.DrawPath(minuteHandPath, strokePaint);
+                //if (svgMinuteHand == null)
+                {
+                    fillPaint.Color = ColorMinuteHandFill.ToSKColor();
+                    strokePaint.Color = ColorMinuteHandStroke.ToSKColor();
+                    canvas.DrawPath(minuteHandPath, fillPaint);
+                    canvas.DrawPath(minuteHandPath, strokePaint);
+                }
+                /*else
+                {
+                    float scale = (float)200F / Math.Max(svgMinuteHand.Picture.CullRect.Width, svgMinuteHand.Picture.CullRect.Height);
+                    var matrix = new SKMatrix
+                    {
+                        ScaleX = scale,
+                        ScaleY = scale,
+                        TransX = -100,
+                        TransY = -100,
+                        Persp2 = 1,
+                    };
+
+                    canvas.DrawPicture(svgMinuteHand.Picture, ref matrix);
+                }*/
                 canvas.Restore();
             }
 
             // Second hand
             if (ShowSecondHand)
             {
-                fillPaint.Color = ColorSecondHandFill.ToSKColor();
-                strokePaint.Color = ColorSecondHandStroke.ToSKColor();
                 canvas.Save();
                 canvas.RotateDegrees(6 * (float)second);
-                canvas.DrawPath(secondHandPath, fillPaint);
-                canvas.DrawPath(secondHandPath, strokePaint);
+                //if (svgSecondHand == null)
+                {
+                    fillPaint.Color = ColorSecondHandFill.ToSKColor();
+                    strokePaint.Color = ColorSecondHandStroke.ToSKColor();
+                    canvas.DrawPath(secondHandPath, fillPaint);
+                    canvas.DrawPath(secondHandPath, strokePaint);
+                }
+                /*else
+                {
+                    float scale = (float)200F / Math.Max(svgSecondHand.Picture.CullRect.Width, svgSecondHand.Picture.CullRect.Height);
+                    var matrix = new SKMatrix
+                    {
+                        ScaleX = scale,
+                        ScaleY = scale,
+                        TransX = -100,
+                        TransY = -100,
+                        Persp2 = 1,
+                    };
+
+                    canvas.DrawPicture(svgSecondHand.Picture, ref matrix);
+                }*/
                 canvas.Restore();
             }
+
+            /*if (svgCenterDot != null)
+            {
+                float scale = (float)200F / Math.Max(svgCenterDot.Picture.CullRect.Width, svgCenterDot.Picture.CullRect.Height);
+                var matrix = new SKMatrix
+                {
+                    ScaleX = scale,
+                    ScaleY = scale,
+                    TransX = -100,
+                    TransY = -100,
+                    Persp2 = 1,
+                };
+
+                canvas.DrawPicture(svgCenterDot.Picture, ref matrix);
+            }*/
 
             TimeSpan tsDraw = DateTime.Now - swStart;
             iAllCount++;
@@ -300,6 +380,47 @@ namespace iChronoMe.Widgets
                 }
                 return "init..";
             }
+        }
+
+        public static string GetClockFacePng(string backgroundImage, int size)
+        {
+            return backgroundImage;
+            /*
+            if (backgroundImage.EndsWith(".svg"))
+            {
+                string cPrevPng = Path.Combine(Path.Combine(Path.GetDirectoryName(backgroundImage), "thumb_" + size), Path.GetFileNameWithoutExtension(backgroundImage) + ".png");
+
+                if (File.Exists(cPrevPng))
+                    return cPrevPng;
+                try
+                {
+                    // create the bitmap
+                    var bmpCack = new SKBitmap(size, size);
+                    var mCvs = new SKCanvas(bmpCack);
+
+                    // load the SVG
+                    var svg = new SKSvg();
+                    svg.Load(backgroundImage);
+
+                    float scale = (float)size / Math.Max(svg.Picture.CullRect.Width, svg.Picture.CullRect.Height);
+                    var matrix = SKMatrix.MakeScale(scale, scale);
+                    mCvs.DrawPicture(svg.Picture, ref matrix);
+
+                    Directory.CreateDirectory(Path.GetDirectoryName(cPrevPng));
+                    using (Stream s = new FileStream(cPrevPng, FileMode.CreateNew))
+                    {
+                        SKData d = SKImage.FromBitmap(bmpCack).Encode(SKEncodedImageFormat.Png, 100);
+                        d.SaveTo(s);
+                    }
+                    return cPrevPng;
+                } 
+                catch (Exception ex)
+                {
+                    sys.LogException(ex);
+                }
+            }
+            return backgroundImage;
+            */
         }
     }
 }

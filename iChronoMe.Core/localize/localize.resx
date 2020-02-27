@@ -516,4 +516,16 @@ wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder a
   <data name="SecondHandStroke" xml:space="preserve">
     <value>second hand stroke color</value>
   </data>
+  <data name="ImageLoader_progress_n_packages" xml:space="preserve">
+    <value>loading {0} packages...</value>
+  </data>
+  <data name="ImageLoader_progress_one_package" xml:space="preserve">
+    <value>loading one package...</value>
+  </data>
+  <data name="ImageLoader_success_n_packages" xml:space="preserve">
+    <value>{0} of {1} packages loadet...</value>
+  </data>
+  <data name="ImageLoader_success_one_package" xml:space="preserve">
+    <value>one package loadet...</value>
+  </data>
 </root>
