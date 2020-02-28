@@ -97,7 +97,7 @@ namespace iChronoMe.Widgets
 
             //create samples on PerformPreperation()
 
-            NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase);
+            NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_BackgroundImageGroup);
         }
 
         private WidgetCfg_ClockAnalog EmptyBackSample
@@ -118,7 +118,7 @@ namespace iChronoMe.Widgets
 
         public override bool NeedsPreperation()
         {
-            return AppConfigHolder.MainConfig.LastCheckClockFaces.AddDays(1) < DateTime.Now;
+            return sys.Debugmode || AppConfigHolder.MainConfig.LastCheckClockFaces.AddDays(1) < DateTime.Now;
         }
 
         public override void PerformPreperation(IUserIO handler)
@@ -136,16 +136,18 @@ namespace iChronoMe.Widgets
         {
             try
             {
-                string[] cFiles = Directory.GetFiles(cImageDir, "*.png");
-                foreach (string cFile in cFiles)
+                var rnd = new Random(DateTime.Now.Millisecond);
+                string[] cGroups = Directory.GetDirectories(cImageDir);
+                foreach (string cGroup in cGroups)
                 {
-                    if (!Path.GetFileNameWithoutExtension(cFile).EndsWith("_"))
+                    string[] cFiles = Directory.GetFiles(cGroup, "*.png");
+                    if (cFiles.Length > 0)
                     {
                         WidgetCfg_ClockAnalog cfg = BaseSample.GetConfigClone();
-                        cfg.BackgroundImage = cFile;
+                        cfg.BackgroundImage = cFiles[rnd.Next(cFiles.Length - 1)];
                         cfg.ColorBackground = xColor.Transparent;
                         cfg.ColorTickMarks = xColor.Transparent;
-                        Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(Path.GetFileNameWithoutExtension(cFile).Replace("_", " "), cfg));
+                        Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(Path.GetFileNameWithoutExtension(cGroup).Replace("_", " "), cfg));
                     }
                 }
             }
@@ -156,10 +158,49 @@ namespace iChronoMe.Widgets
         {
             base.AfterSelect(handler, sample);
 
-            var cfg = sample.WidgetConfig;
-
-            if (string.IsNullOrEmpty(cfg.BackgroundImage))
+            if (string.IsNullOrEmpty(sample.WidgetConfig.BackgroundImage))
                 NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_BackgroundColor);
+        }
+    }
+    public class WidgetCfgAssistant_ClockAnalog_BackgroundImageGroup : WidgetConfigAssistant<WidgetCfg_ClockAnalog>
+    {
+        string cImageDir = "";
+
+        public WidgetCfgAssistant_ClockAnalog_BackgroundImageGroup(WidgetCfgSample<WidgetCfg_ClockAnalog> baseSample)
+        {
+            Title = localize.Background;
+            BaseSample = baseSample;
+
+            cImageDir = Path.GetDirectoryName(BaseSample.WidgetConfig.BackgroundImage);
+
+            NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase);
+
+            LoadSamples();
+        }
+
+        void LoadSamples()
+        {
+            try
+            {
+                string[] cFiles = Directory.GetFiles(cImageDir, "*.png");
+                foreach(string cFile in cFiles)
+                {
+                    WidgetCfg_ClockAnalog cfg = BaseSample.GetConfigClone();
+                    cfg.BackgroundImage = cFile;
+                    cfg.ColorBackground = xColor.Transparent;
+                    cfg.ColorTickMarks = xColor.Transparent;
+                    Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(" ", cfg));
+                }
+            }
+            catch { }
+        }
+
+        public override void AfterSelect(IUserIO handler, WidgetCfgSample<WidgetCfg_ClockAnalog> sample)
+        {
+            base.AfterSelect(handler, sample);
+
+            return;
+            var cfg = sample.WidgetConfig;
 
             if (!string.IsNullOrEmpty(cfg.BackgroundImage) && cfg.BackgroundImage.Contains("/thumb_"))
             {
@@ -173,7 +214,7 @@ namespace iChronoMe.Widgets
                         handler.StartProgress("download full size image..");
 
                         WebClient webClient = new WebClient();
-                        webClient.DownloadFile(ImageLoader.cUrlDir + Path.GetFileName(cfg.BackgroundImage), cFullSizeImg + "_");
+                        webClient.DownloadFile("xxx" + Path.GetFileName(cfg.BackgroundImage), cFullSizeImg + "_");
 
                         if (File.Exists(cFullSizeImg))
                             File.Delete(cFullSizeImg);

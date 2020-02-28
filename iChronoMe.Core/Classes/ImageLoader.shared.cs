@@ -10,17 +10,11 @@ namespace iChronoMe.Core.Classes
 {
     public static class ImageLoader
     {
-        public const string filter_clockfaces = "clockface";
+        public const string filter_clockfaces = "clockfaces";
 
-        static bool bDone;
-        public const string cUrlDir = "https://apps.ichrono.me/_appdata/";
-
-        public static string GetImagePathThumb(string imageGroup, int size = 150)
+        public static string GetImagePathThumb(string imageGroup)
         {
             string cPath = Path.Combine(sys.PathShare, "imgCache_" + imageGroup);
-            if (!Directory.Exists(cPath))
-                Directory.CreateDirectory(cPath);
-            cPath = Path.Combine(cPath, "thumb_" + size);
             if (!Directory.Exists(cPath))
                 Directory.CreateDirectory(cPath);
 
@@ -30,11 +24,11 @@ namespace iChronoMe.Core.Classes
         private static Thread loaderThread = null;
         private static List<string> imagesToLoad = new List<string>();
         private static List<Action> actionsAfterLoad = new List<Action>();
-        public static void AddIamgeToLoadQue(string cImageFilter, string cImageName, Action afterComplete = null)
+        public static void AddImageToLoadQue(string cImageFilter, string cGroup, string cImageName, Action afterComplete = null)
         {
             try
             {
-                string cID = cImageFilter + "/" + cImageName;
+                string cID = cImageFilter + "/" + cGroup + "/" + cImageName;
                 lock (imagesToLoad)
                 {
                     if (imagesToLoad.Contains(cID))
@@ -79,14 +73,15 @@ namespace iChronoMe.Core.Classes
                                 return;
 
                             var x = cImgId.Split('/');
-                            string cImageGroup = x[0];
-                            string cImageName = x[1];
+                            string cImageFilter = x[0];
+                            string cImageGroup = x[1];
+                            string cImageName = x[2];
 
-                            string cFolder = ImageLoader.GetImagePathThumb(cImageGroup);
+                            string cFolder = Path.Combine(ImageLoader.GetImagePathThumb(cImageFilter), cImageGroup);
                             string cImagePath = Path.Combine(cFolder, cImageName);
 
                             WebClient webClient = new WebClient();
-                            webClient.DownloadFile(ImageLoader.cUrlDir + cImageGroup + "/" + cImageName, cImagePath + "_");
+                            webClient.DownloadFile(Secrets.zAppImageUrl + "imageprev.php?id=" + cImageFilter + "/" + cImageGroup + "/" + cImageName, cImagePath + "_");
 
                             if (File.Exists(cImagePath))
                                 File.Delete(cImagePath);
@@ -125,30 +120,35 @@ namespace iChronoMe.Core.Classes
                 }
             });
 
-        public static bool CheckImageThumbCache(IProgressChangedHandler handler, string imageGroup, int size = 150)
+        public static bool CheckImageThumbCache(IProgressChangedHandler handler, string imageFilter, int size = 150)
         {
-            string cBasePath = GetImagePathThumb(imageGroup, size);
+            string cBasePath = GetImagePathThumb(imageFilter);
             try
             {
                 handler.StartProgress(localize.ImageLoader_progress_title);
-                string cImgList = sys.GetUrlContent(cUrlDir + "_imglist.php?filter=" + imageGroup + "&size=" + size).Result;
+                string cImgList = sys.GetUrlContent(Secrets.zAppImageUrl + "filelist.php?filter=" + imageFilter + "&size=" + size).Result;
 
                 if (string.IsNullOrEmpty(cImgList))
                     throw new Exception(localize.ImageLoader_error_list_unloadable);
 
                 cImgList = cImgList.Trim().Replace("<br>", "").Replace("<BR>", "");
 
-                if (!cImgList.StartsWith("path:"))
+                if (!cImgList.StartsWith("group:"))
                     throw new Exception(localize.ImageLoader_error_list_broken);
 
                 List<string> cLoadImgS = new List<string>();
                 var list = cImgList.Split(new char[] { '\n' });
 
+                string cGroup = "";
                 string cFile = "";
                 string cMd5 = "";
                 foreach (string cLine in list)
                 {
-                    if (cLine.StartsWith("path:"))
+                    if (cLine.StartsWith("group:"))
+                    {
+                        cGroup = cLine.Substring(cLine.IndexOf(" ") + 1);
+                    }
+                    else if (cLine.StartsWith("path:"))
                     {
                         cFile = cLine.Substring(cLine.IndexOf(" ") + 1);
                     }
@@ -162,15 +162,16 @@ namespace iChronoMe.Core.Classes
                                 if (cFile.EndsWith(".png"))
                                 {
                                     bool bLoadFile = true;
-                                    if (File.Exists(Path.Combine(cBasePath, cFile)))
+                                    string cLocal = Path.Combine(Path.Combine(cBasePath, cGroup), cFile);
+                                    if (File.Exists(cLocal))
                                     {
-                                        string cLocalMd5 = sys.CalculateFileMD5(Path.Combine(cBasePath, cFile));
+                                        string cLocalMd5 = sys.CalculateFileMD5(cLocal);
                                         if (cMd5.Equals(cLocalMd5))
                                             bLoadFile = false;
                                     }
 
                                     if (bLoadFile)
-                                        cLoadImgS.Add(cFile);
+                                        cLoadImgS.Add(cGroup + "/" + cFile);
                                 }
                             }
                         }
@@ -189,28 +190,20 @@ namespace iChronoMe.Core.Classes
 
                     WebClient webClient = new WebClient();
                     int iImg = 0;
-                    string cParentPath = Path.GetDirectoryName(cBasePath);
                     foreach (string cLoadImage in cLoadImgS)
                     {
-                        if (bDone)
-                            break;
                         try
                         {
                             iImg++;
 
                             string cDestPath = Path.Combine(cBasePath, cLoadImage);
-                            webClient.DownloadFile(cUrlDir + "_imageprev.php?image=" + cLoadImage + "&max=" + size, cDestPath + "_");
+                            Directory.CreateDirectory(Path.GetDirectoryName(cDestPath));
+                            var x = cLoadImage.Split('/');
+                            webClient.DownloadFile(Secrets.zAppImageUrl + "imageprev.php?filter=" + imageFilter + "&group=" + x[0] + "&image=" + x[1] + "&max=" + size, cDestPath + "_");
 
                             if (File.Exists(cDestPath))
                                 File.Delete(cDestPath);
-                            File.Move(cDestPath + "_", cDestPath);
-
-                            try
-                            {
-                                if (File.Exists(Path.Combine(cParentPath, cLoadImage)))
-                                    File.Delete(Path.Combine(cParentPath, cLoadImage));
-                            }
-                            catch { }
+                            File.Move(cDestPath + "_", cDestPath);                        
 
                             iSuccess++;
                             handler.SetProgress(iSuccess, cLoadImgS.Count,
@@ -227,7 +220,7 @@ namespace iChronoMe.Core.Classes
                         }
                     }
                 }
-                if (iSuccess == cLoadImgS.Count && "clockface".Equals(imageGroup))
+                if (iSuccess == cLoadImgS.Count && filter_clockfaces.Equals(imageFilter))
                 {
                     AppConfigHolder.MainConfig.LastCheckClockFaces = DateTime.Now;
                     AppConfigHolder.SaveMainConfig();
@@ -238,6 +231,7 @@ namespace iChronoMe.Core.Classes
             {
                 xLog.Error(e);
                 handler.ShowToast(e.Message);
+                handler.SetProgressDone();
                 return false;
             }
 

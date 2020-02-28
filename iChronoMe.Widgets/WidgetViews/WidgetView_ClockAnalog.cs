@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-
+using System.Net;
+using System.Threading;
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.Types;
 
@@ -123,7 +125,7 @@ namespace iChronoMe.Widgets
             //svgMinuteHand = null;
             //svgSecondHand = null;
             //svgCenterDot = null;
-            if (BackgroundImage.EndsWith(".svg"))
+            if (!string.IsNullOrEmpty(BackgroundImage) && BackgroundImage.EndsWith(".svg"))
             {
                 string cMask = BackgroundImage.Substring(0, BackgroundImage.Length - 4);
                 if (File.Exists(cMask + "_hh_.svg")) {
@@ -164,7 +166,7 @@ namespace iChronoMe.Widgets
                 //this is only for widget-preview!!!
                 try
                 {                   
-                    if (BackgroundImage.EndsWith(".svg"))
+                    /*if (BackgroundImage.EndsWith(".svg"))
                     {
 
                         // load the SVG
@@ -183,7 +185,7 @@ namespace iChronoMe.Widgets
 
                         canvas.DrawPicture(svg.Picture, ref matrix);
                     }
-                    else
+                    else*/
                     {
                         using (var bitmap = SKBitmap.Decode(BackgroundImage))
                         {
@@ -382,8 +384,41 @@ namespace iChronoMe.Widgets
             }
         }
 
-        public static string GetClockFacePng(string backgroundImage, int size)
+        public event EventHandler ClockFaceLoaded;
+
+        static List<(string filter, string group, string file, int size, string destFile, string maxFile)> imgsToLoad = new List<(string, string, string, int, string, string)>();
+        static Thread imgLoader = null;
+
+        public string GetClockFacePng(string backgroundImage, int size)
         {
+            if (backgroundImage.EndsWith(".png"))
+            {
+                string cFilter = ImageLoader.filter_clockfaces;
+                string cGroup = Path.GetFileName(Path.GetDirectoryName(backgroundImage));
+                string cFile = Path.GetFileName(backgroundImage);
+
+                string cThumbPath = Path.Combine(Path.Combine(Path.Combine(Path.Combine(sys.PathShare, "imgCache_" + cFilter), cGroup), "thumb_" + size, cFile));
+
+                if (File.Exists(cThumbPath) && (!File.Exists(backgroundImage) || File.GetLastWriteTime(cThumbPath).AddMinutes(1) >= File.GetLastWriteTime(backgroundImage)))
+                    return cThumbPath;
+
+                string maxFile = Path.Combine(Path.Combine(Path.Combine(Path.Combine(sys.PathShare, "imgCache_" + cFilter), cGroup), "thumb_max", cFile));
+
+                lock (imgsToLoad)
+                    imgsToLoad.Add((cFilter, cGroup, cFile, size, cThumbPath, maxFile));
+
+                if (imgLoader == null)
+                    StartImageLoader();
+
+                if (File.Exists(backgroundImage) && File.Exists(maxFile))
+                {
+                    if (File.GetLastWriteTime(backgroundImage).AddMinutes(1) > File.GetLastWriteTime(maxFile))
+                        try { File.Delete(maxFile); } catch { }
+                }
+                
+                if (File.Exists(maxFile))
+                    return maxFile;
+            }
             return backgroundImage;
             /*
             if (backgroundImage.EndsWith(".svg"))
@@ -421,6 +456,61 @@ namespace iChronoMe.Widgets
             }
             return backgroundImage;
             */
+        }
+
+        private void StartImageLoader()
+        {
+            imgLoader = new Thread(() =>
+            {
+                try
+                {
+                    WebClient webClient = new WebClient();
+
+                    List<string> doneS = new List<string>();
+
+                    int iCount = imgsToLoad.Count;
+                    while (iCount > 0)
+                    {
+                        try
+                        {
+                            var item = imgsToLoad[iCount - 1];
+                            if (!doneS.Contains(item.destFile))
+                            {
+                                doneS.Add(item.destFile);
+                                Directory.CreateDirectory(Path.GetDirectoryName(item.destFile));
+                                webClient.DownloadFile(Secrets.zAppImageUrl + "imageprev.php?filter=" + item.filter + "&group=" + item.group + "&image=" + item.file + "&max=" + item.size, item.destFile + "_");
+
+                                if (!File.Exists(item.maxFile) || new FileInfo(item.maxFile).Length < new FileInfo(item.destFile + "_").Length)
+                                {
+                                    Directory.CreateDirectory(Path.GetDirectoryName(item.maxFile));
+                                    File.Copy(item.destFile + "_", item.maxFile, true);
+                                    Thread.Sleep(500);
+                                }
+                                if (File.Exists(item.destFile))
+                                    File.Delete(item.destFile);
+                                File.Move(item.destFile + "_", item.destFile);
+                                Thread.Sleep(500);
+
+                                ClockFaceLoaded?.Invoke(null, null);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            xLog.Error(ex);
+                        }
+                        lock (imgsToLoad)
+                        {
+                            imgsToLoad.RemoveAt(iCount - 1);
+                             iCount = imgsToLoad.Count;
+                        }
+                    }
+                } 
+                finally
+                {
+                    imgLoader = null;
+                }
+            });
+            imgLoader.Start();
         }
     }
 }

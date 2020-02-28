@@ -68,7 +68,7 @@ namespace iChronoMe.Core.Classes
                 try
                 {
                     WebClient webClient = new WebClient();
-                    webClient.DownloadFile(ImageLoader.cUrlDir + "ne_10m_time_zones.geojson", cJsonFile + "_");
+                    webClient.DownloadFile(Secrets.zAppDataUrl + "ne_10m_time_zones.geojson", cJsonFile + "_");
 
                     if (File.Exists(cJsonFile))
                         File.Delete(cJsonFile);
