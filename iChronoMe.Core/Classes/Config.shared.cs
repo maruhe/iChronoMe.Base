@@ -76,7 +76,7 @@ namespace iChronoMe.Core.Classes
         public int InitScreenTimeType { get; set; } = sys.Debugmode ? xxDebugDone : 0;
         public int InitScreenPermission { get; set; } = sys.Debugmode ? xxDebugDone : 0;
         public int InitScreenPrivacy { get; set; } = sys.Debugmode ? xxDebugDone : 0;
-        public int InitScreenUserLocation { get; set; } = sys.Debugmode ? xxDebugDone : 0;        
+        public int InitScreenUserLocation { get; set; } = sys.Debugmode ? xxDebugDone : 0;
 
         public string AppThemeName { get; set; }
         public bool AlwaysShowForegroundNotification { get; set; } = false;

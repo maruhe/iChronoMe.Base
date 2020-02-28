@@ -203,7 +203,7 @@ namespace iChronoMe.Core.Classes
 
                             if (File.Exists(cDestPath))
                                 File.Delete(cDestPath);
-                            File.Move(cDestPath + "_", cDestPath);                        
+                            File.Move(cDestPath + "_", cDestPath);
 
                             iSuccess++;
                             handler.SetProgress(iSuccess, cLoadImgS.Count,

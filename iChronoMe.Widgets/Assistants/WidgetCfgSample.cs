@@ -4,7 +4,7 @@ using iChronoMe.Core.Types;
 
 namespace iChronoMe.Widgets
 {
-    public class WidgetCfgSample<T> 
+    public class WidgetCfgSample<T>
         where T : WidgetCfg
     {
         public WidgetCfgSample(string title, T cfg, object tag = null)

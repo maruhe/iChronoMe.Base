@@ -183,7 +183,7 @@ namespace iChronoMe.Widgets
             try
             {
                 string[] cFiles = Directory.GetFiles(cImageDir, "*.png");
-                foreach(string cFile in cFiles)
+                foreach (string cFile in cFiles)
                 {
                     WidgetCfg_ClockAnalog cfg = BaseSample.GetConfigClone();
                     cfg.BackgroundImage = cFile;

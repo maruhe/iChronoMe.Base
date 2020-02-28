@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading;
+
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.Types;
 
@@ -128,19 +129,23 @@ namespace iChronoMe.Widgets
             if (!string.IsNullOrEmpty(BackgroundImage) && BackgroundImage.EndsWith(".svg"))
             {
                 string cMask = BackgroundImage.Substring(0, BackgroundImage.Length - 4);
-                if (File.Exists(cMask + "_hh_.svg")) {
+                if (File.Exists(cMask + "_hh_.svg"))
+                {
                     //svgHourHand = new SKSvg();
                     //svgHourHand.Load(cMask + "_hh_.svg");
                 }
-                if (File.Exists(cMask + "_mh_.svg")) {
+                if (File.Exists(cMask + "_mh_.svg"))
+                {
                     //svgMinuteHand= new SKSvg();
                     //svgMinuteHand.Load(cMask + "_mh_.svg");
                 }
-                if (File.Exists(cMask + "_sh_.svg")) {
+                if (File.Exists(cMask + "_sh_.svg"))
+                {
                     //svgSecondHand = new SKSvg();
                     //svgSecondHand.Load(cMask + "_sh_.svg");
                 }
-                if (File.Exists(cMask + "_cd_.svg")) {
+                if (File.Exists(cMask + "_cd_.svg"))
+                {
                     //svgCenterDot = new SKSvg();
                     //svgCenterDot.Load(cMask + "_cd_.svg");
                 }
@@ -165,7 +170,7 @@ namespace iChronoMe.Widgets
             {
                 //this is only for widget-preview!!!
                 try
-                {                   
+                {
                     /*if (BackgroundImage.EndsWith(".svg"))
                     {
 
@@ -209,7 +214,8 @@ namespace iChronoMe.Widgets
             // Hour and minute marks
             if (TickMarkStyle != TickMarkStyle.None && ColorTickMarks.A > 0)
             {
-                var tickPaint = new SKPaint{ 
+                var tickPaint = new SKPaint
+                {
                     Color = ColorTickMarks.ToSKColor(),
                     StrokeCap = SKStrokeCap.Round,
                     IsAntialias = true
@@ -270,7 +276,7 @@ namespace iChronoMe.Widgets
                     strokePaint.Color = ColorHourHandStroke.ToSKColor();
                     canvas.DrawPath(hourHandPath, fillPaint);
                     canvas.DrawPath(hourHandPath, strokePaint);
-                } 
+                }
                 /*else
                 {
                     float scale = (float)200F / Math.Max(svgHourHand.Picture.CullRect.Width, svgHourHand.Picture.CullRect.Height);
@@ -415,7 +421,7 @@ namespace iChronoMe.Widgets
                     if (File.GetLastWriteTime(backgroundImage).AddMinutes(1) > File.GetLastWriteTime(maxFile))
                         try { File.Delete(maxFile); } catch { }
                 }
-                
+
                 if (File.Exists(maxFile))
                     return maxFile;
             }
@@ -501,10 +507,10 @@ namespace iChronoMe.Widgets
                         lock (imgsToLoad)
                         {
                             imgsToLoad.RemoveAt(iCount - 1);
-                             iCount = imgsToLoad.Count;
+                            iCount = imgsToLoad.Count;
                         }
                     }
-                } 
+                }
                 finally
                 {
                     imgLoader = null;

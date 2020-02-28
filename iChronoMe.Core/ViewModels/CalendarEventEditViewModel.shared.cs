@@ -36,17 +36,17 @@ namespace iChronoMe.Core.ViewModels
             {
                 try
                 {
-                    if (! string.IsNullOrEmpty(cEventID))
+                    if (!string.IsNullOrEmpty(cEventID))
                     {
                         try
                         {
                             calEvent = await DeviceCalendar.DeviceCalendar.GetEventByIdAsync(cEventID);
                             if (calEvent == null)
                                 userIO?.ShowToast("event not found: " + cEventID);
-                        } 
+                        }
                         catch (Exception ex)
                         {
-                            userIO?.ShowToast("error loading event: "+ex.Message);
+                            userIO?.ShowToast("error loading event: " + ex.Message);
                         }
                     }
                     if (calEvent == null)
@@ -108,7 +108,7 @@ namespace iChronoMe.Core.ViewModels
         public string EventColorString { get => calEvent.EventColorString; }
 
         public DateTime SortTime { get => calEvent.SortTime; }
-        
+
         private void UpdateTimes()
         {
 
@@ -118,7 +118,7 @@ namespace iChronoMe.Core.ViewModels
             extEvent.TimeTypeStart = calEvent.DisplayStart;
             extEvent.TimeTypeEnd = calEvent.DisplayEnd;
             extEvent.UseTypedTime = TimeType == TimeType.MiddleSunTime || TimeType == TimeType.RealSunTime;
-            
+
             extEvent.CalendarTimeStart = calEvent.Start;
             extEvent.CalendarTimeEnd = calEvent.End;
 
@@ -183,7 +183,7 @@ namespace iChronoMe.Core.ViewModels
         public TimeSpan DisplayStartTime { get => DisplayStart.TimeOfDay; set { DisplayStart = DisplayStart.Date + value; } }
         public TimeSpan DisplayEndTime { get => DisplayEnd.TimeOfDay; set { DisplayEnd = DisplayEnd.Date + value; } }
 
-        public string Location { get => calEvent.Location; set { UpdateLocation(value); } }        
+        public string Location { get => calEvent.Location; set { UpdateLocation(value); } }
 
         public bool AllDay { get => calEvent.AllDay; set { calEvent.AllDay = value; OnPropertyChanged(); OnPropertyChanged(nameof(NotAllDay)); OnPropertyChanged(nameof(ShowTimeHelpers)); } }
 
@@ -196,7 +196,7 @@ namespace iChronoMe.Core.ViewModels
                 if (cal == null)
                     throw new Exception("no selected calendar!");
 
-                
+
                 if (!cal.CanEditEvents)
                     throw new Exception("selected calendar is read only!");
 
@@ -234,7 +234,7 @@ namespace iChronoMe.Core.ViewModels
                 ErrorText = string.Empty;
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 HasErrors = true;
                 ErrorText = ex.Message;
@@ -322,7 +322,7 @@ namespace iChronoMe.Core.ViewModels
         }
 
         bool _isSearchingForLocation = false;
-        public bool IsSearchingForLocation { get => _isSearchingForLocation; set { _isSearchingForLocation = value;  OnPropertyChanged(); OnPropertyChanged(nameof(LocationHelper)); OnPropertyChanged(nameof(LocationTimeInfo)); } }
+        public bool IsSearchingForLocation { get => _isSearchingForLocation; set { _isSearchingForLocation = value; OnPropertyChanged(); OnPropertyChanged(nameof(LocationHelper)); OnPropertyChanged(nameof(LocationTimeInfo)); } }
 
         public void UpdateLocation(string cLocationTilte, double nLat = 0, double nLng = 0)
         {
@@ -344,7 +344,7 @@ namespace iChronoMe.Core.ViewModels
             {
                 SearchPositionByLocation();
             }
-            
+
             OnPropertyChanged(nameof(LocationHelper));
             OnPropertyChanged(nameof(LocationTimeInfo));
             UpdateTimes();
@@ -352,7 +352,8 @@ namespace iChronoMe.Core.ViewModels
 
         private void ResetLocationTimeHolder()
         {
-            if (locationTimeHolder != null) {
+            if (locationTimeHolder != null)
+            {
                 locationTimeHolder.AreaChanged -= LocationTimeHolder_AreaChanged;
                 locationTimeHolder.Dispose();
             }
@@ -376,7 +377,7 @@ namespace iChronoMe.Core.ViewModels
             tLastLocationChange = DateTime.Now;
             if (tskPositionSearcher != null)
                 return;
-            
+
             IsSearchingForLocation = true;
             extEvent.LocationString = "-";
             extEvent.Latitude = 0;
@@ -422,7 +423,7 @@ namespace iChronoMe.Core.ViewModels
                         return;
                     OnPropertyChanged(nameof(Location));
                     OnPropertyChanged(nameof(ShowTimeHelpers));
-                } 
+                }
                 catch (Exception ex)
                 {
                     xLog.Error(ex);
@@ -516,7 +517,7 @@ namespace iChronoMe.Core.ViewModels
                     default:
                         TimeType = TimeType.RealSunTime;
                         break;
-                }                
+                }
             }
         }
 

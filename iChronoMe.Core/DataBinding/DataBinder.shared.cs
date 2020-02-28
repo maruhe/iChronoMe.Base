@@ -4,7 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+
 using iChronoMe.Core.Interfaces;
+
 using Xamarin.Essentials;
 
 namespace iChronoMe.Core.DataBinding
@@ -12,7 +14,7 @@ namespace iChronoMe.Core.DataBinding
     public partial class DataBinder : IDisposable
     {
 
-        public int PushToViewDelayInterval { get; set; } = 15; 
+        public int PushToViewDelayInterval { get; set; } = 15;
         public int PushToViewMaxDelay { get; set; } = 100;
 
         public event EventHandler<UserChangedPropertyEventArgs> UserChangedProperty;
@@ -76,7 +78,7 @@ namespace iChronoMe.Core.DataBinding
                 Task.Delay(250).Wait();
 
                 MainThread.BeginInvokeOnMainThread(() => StartViewChangeListener());
-            });            
+            });
         }
 
         public void PushDataToViewOnce()

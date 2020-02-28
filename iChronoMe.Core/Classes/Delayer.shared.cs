@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace iChronoMe.Core.Classes
 {
-    public class Delayer: IDisposable
+    public class Delayer : IDisposable
     {
         Action Action;
         DateTime tAllStart;
@@ -15,8 +13,8 @@ namespace iChronoMe.Core.Classes
         bool Aborted = false;
         int MaxDelayMs = -1;
 
-        public Delayer(Action action, int initDelayMs, int maxDelayMs = 0) 
-            : this(action, initDelayMs, maxDelayMs == 0 ? DateTime.MinValue : DateTime.Now.AddMilliseconds(maxDelayMs)) 
+        public Delayer(Action action, int initDelayMs, int maxDelayMs = 0)
+            : this(action, initDelayMs, maxDelayMs == 0 ? DateTime.MinValue : DateTime.Now.AddMilliseconds(maxDelayMs))
         {
             MaxDelayMs = maxDelayMs;
         }
@@ -67,7 +65,7 @@ namespace iChronoMe.Core.Classes
                         tLastCheck = DateTime.Now;
                         Action?.Invoke();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         sys.LogException(ex);
                     }

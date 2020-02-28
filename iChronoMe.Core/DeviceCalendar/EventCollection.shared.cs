@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
+
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.Types;
 using iChronoMe.DeviceCalendar;
@@ -431,9 +432,9 @@ namespace iChronoMe.Core.DynamicCalendar
                                     eventsCheckerStates[checkEvent.ExternalID] = checkEvent.Location;
                                 }
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
-                                sys.LogException(ex);                                
+                                sys.LogException(ex);
                             }
                             lock (eventsToCheck)
                             {
@@ -569,7 +570,7 @@ namespace iChronoMe.Core.DynamicCalendar
                         return true;
                     }
                 }
-            } 
+            }
             catch (Exception ex)
             {
                 sys.LogException(ex);
