@@ -1014,24 +1014,27 @@ namespace iChronoMe.Core.DynamicCalendar
         {
             if (iWeekDay < 0)
                 throw new ArgumentException("week-day must be >= 0");
-            if (WeekDays.Count == 0)
+            lock (WeekDays)
             {
-                DateTime tDay = DateTime.Today;
-                tDay = tDay.AddDays((int)tDay.DayOfWeek * -1);
-                for (int i = 0; i < 7; i++)
+                if (WeekDays.Count == 0)
                 {
-                    var wd = new WeekDay { FullName = tDay.ToString("dddd"), ShortName = tDay.ToString("ddd"), OneCharName = tDay.ToString("dddd").Substring(0, 1) };
-                    if (i == 0)
+                    DateTime tDay = DateTime.Today;
+                    tDay = tDay.AddDays((int)tDay.DayOfWeek * -1);
+                    for (int i = 0; i < 7; i++)
                     {
-                        wd.HasSpecialTextColor = true;
-                        wd.SpecialTextColor = xColor.FromHex("#ffba4862");
+                        var wd = new WeekDay { FullName = tDay.ToString("dddd"), ShortName = tDay.ToString("ddd"), OneCharName = tDay.ToString("dddd").Substring(0, 1) };
+                        if (i == 0)
+                        {
+                            wd.HasSpecialTextColor = true;
+                            wd.SpecialTextColor = xColor.FromHex("#ffba4862");
+                        }
+                        WeekDays.Add(wd);
+                        tDay = tDay.AddDays(1);
                     }
-                    WeekDays.Add(wd);
-                    tDay = tDay.AddDays(1);
                 }
+                while (WeekDays.Count < WeekLength)
+                    WeekDays.Add(new WeekDay { FullName = WeekDays.Count.ToString() + " ????", ShortName = WeekDays.Count.ToString() + "?", OneCharName = WeekDays.Count.ToString() });
             }
-            while (WeekDays.Count < WeekLength)
-                WeekDays.Add(new WeekDay { FullName = WeekDays.Count.ToString() + " ????", ShortName = WeekDays.Count.ToString() + "?", OneCharName = WeekDays.Count.ToString() });
 
             while (iWeekDay >= WeekLength)
                 iWeekDay -= WeekLength;
