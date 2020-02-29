@@ -13,6 +13,12 @@ namespace iChronoMe.Core.Classes
         bool Aborted = false;
         int MaxDelayMs = -1;
 
+        public Delayer(int maxDelayMs)
+            : this(null, 0, maxDelayMs == 0 ? DateTime.MinValue : DateTime.Now.AddMilliseconds(maxDelayMs))
+        {
+            MaxDelayMs = maxDelayMs;
+        }
+
         public Delayer(Action action, int initDelayMs, int maxDelayMs = 0)
             : this(action, initDelayMs, maxDelayMs == 0 ? DateTime.MinValue : DateTime.Now.AddMilliseconds(maxDelayMs))
         {
@@ -39,6 +45,8 @@ namespace iChronoMe.Core.Classes
         {
             if (action != null)
                 Action = action;
+            if (action == null)
+                return;
             SetDelay(DateTime.Now.AddMilliseconds(delayMS));
         }
 
@@ -47,7 +55,7 @@ namespace iChronoMe.Core.Classes
             if (tMaxDelay < DateTime.Now && tCurrentDelay < tMaxDelay)
                 tMaxDelay = DateTime.Now.AddMilliseconds(MaxDelayMs);
             tCurrentDelay = delayUntil;
-            if (DelayTask == null)
+            if (DelayTask == null || tMaxDelay.AddMilliseconds(MaxDelayMs) < DateTime.Now)
             {
                 DelayTask = Task.Factory.StartNew(() =>
                 {
@@ -78,5 +86,7 @@ namespace iChronoMe.Core.Classes
                 });
             }
         }
+
+        public bool IsAborted { get => Aborted; }
     }
 }

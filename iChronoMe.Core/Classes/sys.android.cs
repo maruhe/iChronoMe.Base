@@ -90,14 +90,14 @@ namespace iChronoMe.Core.Classes
         {
             return new DateTime(
                 d.Get(Java.Util.CalendarField.Year),
-                d.Get(Java.Util.CalendarField.Month)+1,
+                d.Get(Java.Util.CalendarField.Month) + 1,
                 d.Get(Java.Util.CalendarField.DayOfMonth),
                 d.Get(Java.Util.CalendarField.HourOfDay),
                 d.Get(Java.Util.CalendarField.Minute),
                 d.Get(Java.Util.CalendarField.Second),
-                d.Get(Java.Util.CalendarField.Millisecond), 
+                d.Get(Java.Util.CalendarField.Millisecond),
                 DateTimeKind.Utc);
-            
+
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return epoch.AddMilliseconds(d.Time.Time);
         }

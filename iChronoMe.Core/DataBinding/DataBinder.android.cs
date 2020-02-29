@@ -6,7 +6,9 @@ using Android.Runtime;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
+
 using iChronoMe.Core.Classes;
+
 using static Android.Widget.TextView;
 
 namespace iChronoMe.Core.DataBinding
@@ -47,7 +49,7 @@ namespace iChronoMe.Core.DataBinding
         }
 
         private void DoWriteQueToView_func(List<KeyValuePair<ViewLink, object>> que)
-        { 
+        {
             xLog.Debug("start write " + que.Count + " values to view");
             int iDone = 0;
             IsWritingToView = true;
@@ -205,6 +207,9 @@ namespace iChronoMe.Core.DataBinding
             if (!BinderIsRunning || IsWritingToView)
                 return;
             if (sender is EditText)
+                ProcessViewPropertyChanged(sender as EditText, (sender as EditText).Text);
+
+            return;
             {
                 //ProcessViewPropertyChanged(sender as EditText, (sender as EditText).Text);
                 //return;
@@ -215,7 +220,7 @@ namespace iChronoMe.Core.DataBinding
                     ProcessViewPropertyChanged(edit, cVal);
                 else
                 {
-                    lock(EditTextDelayer)
+                    lock (EditTextDelayer)
                     {
                         Delayer mDelayer = null;
                         if (EditTextDelayer.ContainsKey(edit))
@@ -232,6 +237,7 @@ namespace iChronoMe.Core.DataBinding
 
         private void EditText_FocusChange(object sender, View.FocusChangeEventArgs e)
         {
+            return;
             if (!BinderIsRunning || IsWritingToView)
                 return;
             if (e.HasFocus)
@@ -244,6 +250,7 @@ namespace iChronoMe.Core.DataBinding
 
         public bool OnEditorAction(TextView sender, [GeneratedEnum] ImeAction actionId, KeyEvent e)
         {
+            return false;
             if (!BinderIsRunning || IsWritingToView)
                 return false;
             if (sender is EditText)
@@ -283,7 +290,7 @@ namespace iChronoMe.Core.DataBinding
                     var old = link.Property.GetValue(link.Object);
                     if (!Equals(old, value))
                     {
-                        lock(LastViewValues)
+                        lock (LastViewValues)
                         {
                             if (LastViewValues.ContainsKey(link.ID))
                                 LastViewValues[link.ID] = value;
@@ -294,7 +301,7 @@ namespace iChronoMe.Core.DataBinding
                         UserChangedProperty?.Invoke(view, new UserChangedPropertyEventArgs(link.Object, link.Property.Name, old, value));
                     }
                 }
-            } 
+            }
             catch (Exception ex)
             {
                 xLog.Error(ex);

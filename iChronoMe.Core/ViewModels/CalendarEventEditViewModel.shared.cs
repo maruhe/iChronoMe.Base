@@ -322,13 +322,27 @@ namespace iChronoMe.Core.ViewModels
         }
 
         bool _isSearchingForLocation = false;
-        public bool IsSearchingForLocation { get => _isSearchingForLocation; set { _isSearchingForLocation = value; OnPropertyChanged(); OnPropertyChanged(nameof(LocationHelper)); OnPropertyChanged(nameof(LocationTimeInfo)); } }
+        public bool IsSearchingForLocation { get => _isSearchingForLocation; set { _isSearchingForLocation = value; OnPropertyChanged(); OnPropertyChanged(nameof(ShowLocationHelper)); OnPropertyChanged(nameof(LocationHelper)); OnPropertyChanged(nameof(LocationTimeInfo)); } }
 
+        Delayer locationDelayer = null;
         public void UpdateLocation(string cLocationTilte, double nLat = 0, double nLng = 0)
         {
             calEvent.Location = cLocationTilte;
+            extEvent.GotCorrectPosition = false;
             OnPropertyChanged(nameof(Location));
 
+            if (string.IsNullOrEmpty(cLocationTilte) || (nLat != 0 && nLng != 0))
+                ProcessLocationChange(cLocationTilte, nLat, nLng);
+            else
+            {
+                if (locationDelayer == null || locationDelayer.IsAborted)
+                    locationDelayer = new Delayer(0);
+                locationDelayer.SetDelay(750, () => ProcessLocationChange(cLocationTilte, nLat, nLng));
+            }
+        }
+
+        private void ProcessLocationChange(string cLocationTilte, double nLat, double nLng)
+        {
             if (string.IsNullOrEmpty(cLocationTilte) || (nLat != 0 && nLng != 0))
             {
                 extEvent.LocationString = cLocationTilte;
@@ -339,6 +353,7 @@ namespace iChronoMe.Core.ViewModels
                     ResetLocationTimeHolder();
                 if (nLat != 0 && nLng != 0)
                     locationTimeHolder.ChangePositionDelay(nLat, nLng);
+                IsSearchingForLocation = false;
             }
             else
             {
@@ -474,19 +489,17 @@ namespace iChronoMe.Core.ViewModels
                     if (tsDiff.TotalMilliseconds < 0)
                         tsDiff = TimeSpan.FromMilliseconds(tsDiff.TotalMilliseconds * -1);
 
-                    if (tsDiff.TotalHours > 1)
-                        cPosInfo += ((int)tsDiff.TotalHours).ToString() + ":" + tsDiff.Minutes.ToString("00") + "h";
-                    else if (tsDiff.TotalMinutes > 1)
-                        cPosInfo += ((int)tsDiff.TotalHours).ToString() + ":" + tsDiff.Minutes.ToString("00") + "h";
-                    else if (tsDiff.TotalSeconds >= 3)
-                        cPosInfo += tsDiff.Seconds.ToString("00") + "sec";
+                    if (tsDiff.TotalHours >= 1)
+                        cPosInfo += (int)tsDiff.TotalHours + "h ";
+                    if (tsDiff.TotalMinutes > 1)
+                        cPosInfo += tsDiff.Minutes + "min ";
+                    if (tsDiff.TotalMinutes < 15)
+                        cPosInfo += tsDiff.Seconds + "sec";
 
                     if (tsDiff.TotalSeconds < 3)
                         cPosInfo = "current location";
                     else
-                    {
                         cPosInfo = cPosInfo.Trim() + " real time offset";
-                    }
                 }
                 if (sys.Debugmode && false)
                     cPosInfo = sys.DezimalGradToGrad(locationTimeHolder.Latitude, locationTimeHolder.Longitude) + ", " + locationTimeHolder.AreaName + ", " + locationTimeHolder.CountryName + "  :  " + cPosInfo;
