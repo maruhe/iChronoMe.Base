@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -35,11 +36,6 @@ namespace iChronoMe.Widgets
         public bool FlowMinuteHand { set; get; } = true;
         public bool FlowSecondHand { set; get; } = false;
 
-        //public SKSvg svgHourHand { get; set; } = null;
-        //public SKSvg svgMinuteHand { get; set; } = null;
-        //public SKSvg svgSecondHand { get; set; } = null;
-        //public SKSvg svgCenterDot { get; set; } = null;
-
         SKPaint fillPaint = new SKPaint
         {
             Style = SKPaintStyle.Fill,
@@ -55,12 +51,15 @@ namespace iChronoMe.Widgets
             IsAntialias = true
         };
 
+        Point hourHandStart = new Point(500, 500);
         SKPath hourHandPath = SKPath.ParseSvgPathData(
             "M 0 -300 C 0 -150 100 -150 25 -100 L 25 0 C 25 37.5 -25 37.5 -25 0 L -25 -100 C -100 -150 0 -150 0 -300");
+        Point minuteHandStart = new Point(500, 500);
         SKPath minuteHandPath = SKPath.ParseSvgPathData(
             "M 0 -400 C 0 -375 0 -350 12.5 -300 L 12.5 0 C 12.5 25 -12.5 25 -12.5 0 L -12.5 -300 C 0 -350 0 -375 0 -400");
+        Point secondHandStart = new Point(500, 500);
         SKPath secondHandPath = SKPath.ParseSvgPathData(
-            "M 0 50 0 -400");
+           "M 0 50 0 -400");
 
         TimeSpan tsMin = TimeSpan.FromHours(1);
         TimeSpan tsMax = TimeSpan.FromTicks(0);
@@ -121,35 +120,6 @@ namespace iChronoMe.Widgets
             FlowHourHand = cfg.FlowHourHand;
             FlowMinuteHand = cfg.FlowMinuteHand;
             FlowSecondHand = cfg.FlowSecondHand;
-
-            //svgHourHand = null;
-            //svgMinuteHand = null;
-            //svgSecondHand = null;
-            //svgCenterDot = null;
-            if (!string.IsNullOrEmpty(BackgroundImage) && BackgroundImage.EndsWith(".svg"))
-            {
-                string cMask = BackgroundImage.Substring(0, BackgroundImage.Length - 4);
-                if (File.Exists(cMask + "_hh_.svg"))
-                {
-                    //svgHourHand = new SKSvg();
-                    //svgHourHand.Load(cMask + "_hh_.svg");
-                }
-                if (File.Exists(cMask + "_mh_.svg"))
-                {
-                    //svgMinuteHand= new SKSvg();
-                    //svgMinuteHand.Load(cMask + "_mh_.svg");
-                }
-                if (File.Exists(cMask + "_sh_.svg"))
-                {
-                    //svgSecondHand = new SKSvg();
-                    //svgSecondHand.Load(cMask + "_sh_.svg");
-                }
-                if (File.Exists(cMask + "_cd_.svg"))
-                {
-                    //svgCenterDot = new SKSvg();
-                    //svgCenterDot.Load(cMask + "_cd_.svg");
-                }
-            }
         }
 
         public void DrawCanvas(SKCanvas canvas, DateTime dateTime, int width = 512, int height = 512, bool bDrawBackImage = false, float? nSecondHandOverrideSecond = null)
@@ -202,14 +172,14 @@ namespace iChronoMe.Widgets
                 catch { }
             }
 
-            // Set transforms
-            canvas.Translate(width / 2, height / 2);
+            // Set scale to draw on a 1000*1000 points base
+            canvas.Translate(width > height ? (width - height) / 2 : 0, height > width ? (height - width) / 2 : 0);
             canvas.Scale(Math.Min(width / 1000f, height / 1000f));
 
             // Clock background
             fillPaint.Color = ColorBackground.ToSKColor();
             if (ColorBackground.A > 0)
-                canvas.DrawCircle(0, 0, 500, fillPaint);
+                canvas.DrawCircle(500, 500, 500, fillPaint);
 
             // Hour and minute marks
             if (TickMarkStyle != TickMarkStyle.None && ColorTickMarks.A > 0)
@@ -225,11 +195,13 @@ namespace iChronoMe.Widgets
                 {
                     case TickMarkStyle.Dotts:
                         tickPaint.Style = SKPaintStyle.Fill;
+                        canvas.Translate(500, 500);
                         for (int angle = 0; angle < 360; angle += 6)
                         {
-                            canvas.DrawCircle(0, -460, angle % 30 == 0 ? 4 : 2, tickPaint);
+                            canvas.DrawCircle(0, -460, angle % 30 == 0 ? 20 : 10, tickPaint);
                             canvas.RotateDegrees(6);
                         }
+                        canvas.Translate(-500, -500);
                         break;
 
                     case TickMarkStyle.LinesSquare:
@@ -240,6 +212,7 @@ namespace iChronoMe.Widgets
                         goto case TickMarkStyle.LinesRound;
                     case TickMarkStyle.LinesRound:
                         tickPaint.Style = SKPaintStyle.Stroke;
+                        canvas.Translate(500, 500);
                         for (int angle = 0; angle < 360; angle += 6)
                         {
                             if (angle % 30 == 0)
@@ -254,6 +227,7 @@ namespace iChronoMe.Widgets
                             }
                             canvas.RotateDegrees(6);
                         }
+                        canvas.Translate(-500, -500);
                         break;
                 }
             }
@@ -265,107 +239,47 @@ namespace iChronoMe.Widgets
             if (!FlowSecondHand)
                 second = Math.Truncate(second);
 
+            strokePaint.StrokeWidth = 1;
+
             // Hour hand
             if (ShowHourHand)
             {
-                canvas.Save();
-                canvas.RotateDegrees((float)(30 * hour));
-                //if (svgHourHand == null)
-                {
-                    fillPaint.Color = ColorHourHandFill.ToSKColor();
-                    strokePaint.Color = ColorHourHandStroke.ToSKColor();
-                    canvas.DrawPath(hourHandPath, fillPaint);
-                    canvas.DrawPath(hourHandPath, strokePaint);
-                }
-                /*else
-                {
-                    float scale = (float)200F / Math.Max(svgHourHand.Picture.CullRect.Width, svgHourHand.Picture.CullRect.Height);
-                    var matrix = new SKMatrix
-                    {
-                        ScaleX = scale,
-                        ScaleY = scale,
-                        TransX = -100,
-                        TransY = -100,
-                        Persp2 = 1,
-                    };
-
-                    canvas.DrawPicture(svgHourHand.Picture, ref matrix);
-                }*/
-                canvas.Restore();
+                canvas.RotateDegrees((float)(30 * hour), 500, 500);
+                fillPaint.Color = ColorHourHandFill.ToSKColor();
+                strokePaint.Color = ColorHourHandStroke.ToSKColor();
+                canvas.Translate(hourHandStart.X, hourHandStart.Y);
+                canvas.DrawPath(hourHandPath, fillPaint);
+                canvas.DrawPath(hourHandPath, strokePaint);
+                canvas.Translate(-(hourHandStart.X), -(hourHandStart.Y));
+                canvas.RotateDegrees((float)(-30 * hour), 500, 500);
             }
 
             // Minute hand
             if (ShowMinuteHand)
             {
-                canvas.Save();
-                canvas.RotateDegrees((float)(6 * minute));
-                //if (svgMinuteHand == null)
-                {
-                    fillPaint.Color = ColorMinuteHandFill.ToSKColor();
-                    strokePaint.Color = ColorMinuteHandStroke.ToSKColor();
-                    canvas.DrawPath(minuteHandPath, fillPaint);
-                    canvas.DrawPath(minuteHandPath, strokePaint);
-                }
-                /*else
-                {
-                    float scale = (float)200F / Math.Max(svgMinuteHand.Picture.CullRect.Width, svgMinuteHand.Picture.CullRect.Height);
-                    var matrix = new SKMatrix
-                    {
-                        ScaleX = scale,
-                        ScaleY = scale,
-                        TransX = -100,
-                        TransY = -100,
-                        Persp2 = 1,
-                    };
-
-                    canvas.DrawPicture(svgMinuteHand.Picture, ref matrix);
-                }*/
-                canvas.Restore();
+                canvas.RotateDegrees((float)(6 * minute), 500, 500);
+                fillPaint.Color = ColorMinuteHandFill.ToSKColor();
+                strokePaint.Color = ColorMinuteHandStroke.ToSKColor();
+                canvas.Translate(minuteHandStart.X, minuteHandStart.Y);
+                canvas.DrawPath(minuteHandPath, fillPaint);
+                canvas.DrawPath(minuteHandPath, strokePaint);
+                canvas.Translate(-(minuteHandStart.X), -(minuteHandStart.Y));
+                canvas.RotateDegrees((float)(-6 * minute), 500, 500);
             }
 
+            //canvas.Translate(-500, -500);
             // Second hand
             if (ShowSecondHand)
             {
-                canvas.Save();
-                canvas.RotateDegrees((float)(6 * second));
-                //if (svgSecondHand == null)
-                {
-                    fillPaint.Color = ColorSecondHandFill.ToSKColor();
-                    strokePaint.Color = ColorSecondHandStroke.ToSKColor();
-                    canvas.DrawPath(secondHandPath, fillPaint);
-                    canvas.DrawPath(secondHandPath, strokePaint);
-                }
-                /*else
-                {
-                    float scale = (float)200F / Math.Max(svgSecondHand.Picture.CullRect.Width, svgSecondHand.Picture.CullRect.Height);
-                    var matrix = new SKMatrix
-                    {
-                        ScaleX = scale,
-                        ScaleY = scale,
-                        TransX = -100,
-                        TransY = -100,
-                        Persp2 = 1,
-                    };
-
-                    canvas.DrawPicture(svgSecondHand.Picture, ref matrix);
-                }*/
-                canvas.Restore();
+                canvas.RotateDegrees((float)(6 * second), 500, 500);
+                fillPaint.Color = ColorSecondHandFill.ToSKColor();
+                strokePaint.Color = ColorSecondHandStroke.ToSKColor();
+                canvas.Translate(secondHandStart.X, secondHandStart.Y);
+                canvas.DrawPath(secondHandPath, fillPaint);
+                canvas.DrawPath(secondHandPath, strokePaint);
+                canvas.Translate(-(secondHandStart.X), -(secondHandStart.Y));
+                canvas.RotateDegrees((float)(-6 * second), 500, 500);
             }
-
-            /*if (svgCenterDot != null)
-            {
-                float scale = (float)200F / Math.Max(svgCenterDot.Picture.CullRect.Width, svgCenterDot.Picture.CullRect.Height);
-                var matrix = new SKMatrix
-                {
-                    ScaleX = scale,
-                    ScaleY = scale,
-                    TransX = -100,
-                    TransY = -100,
-                    Persp2 = 1,
-                };
-
-                canvas.DrawPicture(svgCenterDot.Picture, ref matrix);
-            }*/
 
             TimeSpan tsDraw = DateTime.Now - swStart;
             iAllCount++;
