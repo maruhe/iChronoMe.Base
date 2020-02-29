@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using iChronoMe.Core.DataBinding;
 using iChronoMe.Core.Types;
 
 namespace iChronoMe.DeviceCalendar
@@ -8,7 +8,7 @@ namespace iChronoMe.DeviceCalendar
     /// <summary>
     /// Device calendar event/appointment abstraction
     /// </summary>
-    public partial class CalendarEvent
+    public partial class CalendarEvent : BaseObservable
     {
         /// <summary>
         /// Calendar event name/title/subject

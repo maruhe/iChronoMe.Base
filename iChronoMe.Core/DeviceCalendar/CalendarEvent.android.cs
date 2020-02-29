@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Threading.Tasks;
 using iChronoMe.Core.Classes;
 
 namespace iChronoMe.DeviceCalendar
@@ -19,17 +19,42 @@ namespace iChronoMe.DeviceCalendar
             set => End = sys.DateTimeFromJava(value);
         }
         */
-        public Java.Util.Calendar javaDisplayStart
+        public Java.Util.Calendar guiDisplayStart
         {
             get => sys.DateTimeToJava(DisplayStart);
-            set => DisplayStart = sys.DateTimeFromJava(value);
+            set
+            {
+                DisplayStart = sys.DateTimeFromJava(value);
+                OnPropertyChanged();
+
+                Task.Factory.StartNew(() =>
+                {
+                    Task.Delay(100).Wait();
+                    guiPropertiesChanged?.Invoke();
+                });
+            }
         }
 
-        public Java.Util.Calendar javaDisplayEnd
+        public Java.Util.Calendar guiDisplayEnd
         {
             get => sys.DateTimeToJava(DisplayEnd);
-            set => DisplayEnd = sys.DateTimeFromJava(value);
+            set {
+                DisplayEnd = sys.DateTimeFromJava(value);
+                OnPropertyChanged();
+            }
         }
+
+        public bool guiAllDay
+        {
+            get => AllDay;
+            set
+            {
+                AllDay = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Action guiPropertiesChanged { get; set; } = null;
 
         public Int32 javaColor
         {

@@ -47,11 +47,11 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" PrivateAssets="All" />    
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="GeoJSON.Net" Version="1.2.14" />
+    <PackageReference Include="GeoJSON.Net" Version="1.2.15" />
     <PackageReference Include="NetTopologySuite.IO.GeoJSON" Version="2.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="sqlite-net-pcl" Version="1.6.292" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.4.0" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.5.0" />
     <PackageReference Include="Yort.Ntp.Portable" Version="2.0.0" />
     <Compile Include="**\*.shared.cs" />
     <Compile Include="**\*.shared.*.cs" />

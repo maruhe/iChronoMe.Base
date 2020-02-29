@@ -137,6 +137,14 @@ namespace iChronoMe.Core.ViewModels
             OnPropertyChanged(nameof(ShowTimeHelpers));
         }
 
+        public void ChangeDisplayTime(DateTime displayStart, DateTime displayEnd, bool allDay)
+        {
+            calEvent.AllDay = allDay;
+            calEvent.DisplayStart = displayStart;
+            calEvent.DisplayEnd = displayEnd;
+            UpdateTimes();
+        }
+
         public DateTime Start
         {
             get => calEvent.Start;
