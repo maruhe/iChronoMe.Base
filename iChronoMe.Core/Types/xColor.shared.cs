@@ -422,43 +422,49 @@ namespace iChronoMe.Core.Types
             return (j << 4) | j;
         }
 
-        public static xColor FromHex(string hex)
+        public static xColor FromHex(string hex, xColor? defaultColor = null)
         {
             // Undefined
-            if (hex.Length < 3)
-                return Default;
+            if (string.IsNullOrEmpty(hex) || hex.Length < 3)
+                return defaultColor ?? Default;
+
             int idx = (hex[0] == '#') ? 1 : 0;
+            try {
+                switch (hex.Length - idx)
+                {
+                    case 3: //#rgb => ffrrggbb
+                        var t1 = ToHexD(hex[idx++]);
+                        var t2 = ToHexD(hex[idx++]);
+                        var t3 = ToHexD(hex[idx]);
 
-            switch (hex.Length - idx)
+                        return FromRgb((int)t1, (int)t2, (int)t3);
+
+                    case 4: //#argb => aarrggbb
+                        var f1 = ToHexD(hex[idx++]);
+                        var f2 = ToHexD(hex[idx++]);
+                        var f3 = ToHexD(hex[idx++]);
+                        var f4 = ToHexD(hex[idx]);
+                        return FromRgba((int)f2, (int)f3, (int)f4, (int)f1);
+
+                    case 6: //#rrggbb => ffrrggbb
+                        return FromRgb((int)(ToHex(hex[idx++]) << 4 | ToHex(hex[idx++])),
+                                (int)(ToHex(hex[idx++]) << 4 | ToHex(hex[idx++])),
+                                (int)(ToHex(hex[idx++]) << 4 | ToHex(hex[idx])));
+
+                    case 8: //#aarrggbb
+                        var a1 = ToHex(hex[idx++]) << 4 | ToHex(hex[idx++]);
+                        return FromRgba((int)(ToHex(hex[idx++]) << 4 | ToHex(hex[idx++])),
+                                (int)(ToHex(hex[idx++]) << 4 | ToHex(hex[idx++])),
+                                (int)(ToHex(hex[idx++]) << 4 | ToHex(hex[idx])),
+                                (int)a1);
+
+                    default: //everything else will result in unexpected results
+                        return defaultColor ?? Default;
+                }
+            }
+            catch
             {
-                case 3: //#rgb => ffrrggbb
-                    var t1 = ToHexD(hex[idx++]);
-                    var t2 = ToHexD(hex[idx++]);
-                    var t3 = ToHexD(hex[idx]);
-
-                    return FromRgb((int)t1, (int)t2, (int)t3);
-
-                case 4: //#argb => aarrggbb
-                    var f1 = ToHexD(hex[idx++]);
-                    var f2 = ToHexD(hex[idx++]);
-                    var f3 = ToHexD(hex[idx++]);
-                    var f4 = ToHexD(hex[idx]);
-                    return FromRgba((int)f2, (int)f3, (int)f4, (int)f1);
-
-                case 6: //#rrggbb => ffrrggbb
-                    return FromRgb((int)(ToHex(hex[idx++]) << 4 | ToHex(hex[idx++])),
-                            (int)(ToHex(hex[idx++]) << 4 | ToHex(hex[idx++])),
-                            (int)(ToHex(hex[idx++]) << 4 | ToHex(hex[idx])));
-
-                case 8: //#aarrggbb
-                    var a1 = ToHex(hex[idx++]) << 4 | ToHex(hex[idx++]);
-                    return FromRgba((int)(ToHex(hex[idx++]) << 4 | ToHex(hex[idx++])),
-                            (int)(ToHex(hex[idx++]) << 4 | ToHex(hex[idx++])),
-                            (int)(ToHex(hex[idx++]) << 4 | ToHex(hex[idx])),
-                            (int)a1);
-
-                default: //everything else will result in unexpected results
-                    return Default;
+                return defaultColor ?? Default;
             }
         }
 

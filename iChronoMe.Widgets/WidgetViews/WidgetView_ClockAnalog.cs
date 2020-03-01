@@ -52,14 +52,19 @@ namespace iChronoMe.Widgets
         };
 
         Point hourHandStart = new Point(500, 500);
+        float hourHandStrokeWidth = 10;
         SKPath hourHandPath = SKPath.ParseSvgPathData(
             "M 0 -300 C 0 -150 100 -150 25 -100 L 25 0 C 25 37.5 -25 37.5 -25 0 L -25 -100 C -100 -150 0 -150 0 -300");
         Point minuteHandStart = new Point(500, 500);
+        float minuteHandStrokeWidth = 10;
         SKPath minuteHandPath = SKPath.ParseSvgPathData(
             "M 0 -400 C 0 -375 0 -350 12.5 -300 L 12.5 0 C 12.5 25 -12.5 25 -12.5 0 L -12.5 -300 C 0 -350 0 -375 0 -400");
         Point secondHandStart = new Point(500, 500);
+        float secondHandStrokeWidth = 10;
         SKPath secondHandPath = SKPath.ParseSvgPathData(
            "M 0 50 0 -400");
+
+        public ClockHandConfig ClockHandConfig { get; set; }
 
         TimeSpan tsMin = TimeSpan.FromHours(1);
         TimeSpan tsMax = TimeSpan.FromTicks(0);
@@ -120,6 +125,43 @@ namespace iChronoMe.Widgets
             FlowHourHand = cfg.FlowHourHand;
             FlowMinuteHand = cfg.FlowMinuteHand;
             FlowSecondHand = cfg.FlowSecondHand;
+
+            ClockHandConfig = null;
+            if (!string.IsNullOrEmpty(cfg.ClockHandConfig))
+                ClockHandConfig = ClockHandConfig.Get(cfg.ClockHandConfig);
+
+            if (ClockHandConfig == null)
+                ClockHandConfig = ClockHandConfig.Get("_");
+
+            ReadHandConfig(ClockHandConfig);
+        }
+
+        public void ReadHandConfig(ClockHandConfig hands, bool overrideColors = false)
+        {
+            hourHandPath = SKPath.ParseSvgPathData(hands.HourPath);
+            hourHandStart = new Point(hands.HourOffsetX, hands.HourOffsetY);
+            hourHandStrokeWidth = hands.HourStorkeWidth;
+            if (overrideColors)
+            {
+                ColorHourHandStroke = xColor.FromHex(hands.HourStrokeColor, ColorHourHandStroke);
+                ColorHourHandFill = xColor.FromHex(hands.HourFillColor, ColorHourHandFill);
+            }
+            minuteHandPath = SKPath.ParseSvgPathData(hands.MinutePath);
+            minuteHandStart = new Point(hands.MinuteOffsetX, hands.MinuteOffsetY);
+            minuteHandStrokeWidth = hands.MinuteStorkeWidth;
+            if (overrideColors)
+            {
+                ColorMinuteHandStroke = xColor.FromHex(hands.MinuteStrokeColor, ColorMinuteHandStroke);
+                ColorMinuteHandFill = xColor.FromHex(hands.MinuteFillColor, ColorMinuteHandFill);
+            }
+            secondHandPath = SKPath.ParseSvgPathData(hands.SecondPath);
+            secondHandStart = new Point(hands.SecondOffsetX, hands.SecondOffsetY);
+            secondHandStrokeWidth = hands.SecondStorkeWidth;
+            if (overrideColors)
+            {
+                ColorSecondHandStroke = xColor.FromHex(hands.SecondStrokeColor, ColorSecondHandStroke);
+                ColorSecondHandFill = xColor.FromHex(hands.SecondFillColor, ColorSecondHandFill);
+            }
         }
 
         public void DrawCanvas(SKCanvas canvas, DateTime dateTime, int width = 512, int height = 512, bool bDrawBackImage = false, float? nSecondHandOverrideSecond = null)
@@ -204,6 +246,13 @@ namespace iChronoMe.Widgets
                         canvas.Translate(-500, -500);
                         break;
 
+                    case TickMarkStyle.Circle:
+                        tickPaint.Style = SKPaintStyle.Stroke;
+                        tickPaint.StrokeWidth = 20;
+                        canvas.DrawCircle(500, 500, 460, tickPaint);
+
+                        break;
+
                     case TickMarkStyle.LinesSquare:
                         tickPaint.StrokeCap = SKStrokeCap.Square;
                         goto case TickMarkStyle.LinesRound;
@@ -239,14 +288,13 @@ namespace iChronoMe.Widgets
             if (!FlowSecondHand)
                 second = Math.Truncate(second);
 
-            strokePaint.StrokeWidth = 1;
-
             // Hour hand
             if (ShowHourHand)
             {
                 canvas.RotateDegrees((float)(30 * hour), 500, 500);
                 fillPaint.Color = ColorHourHandFill.ToSKColor();
                 strokePaint.Color = ColorHourHandStroke.ToSKColor();
+                strokePaint.StrokeWidth = hourHandStrokeWidth;
                 canvas.Translate(hourHandStart.X, hourHandStart.Y);
                 canvas.DrawPath(hourHandPath, fillPaint);
                 canvas.DrawPath(hourHandPath, strokePaint);
@@ -260,6 +308,7 @@ namespace iChronoMe.Widgets
                 canvas.RotateDegrees((float)(6 * minute), 500, 500);
                 fillPaint.Color = ColorMinuteHandFill.ToSKColor();
                 strokePaint.Color = ColorMinuteHandStroke.ToSKColor();
+                strokePaint.StrokeWidth = minuteHandStrokeWidth;
                 canvas.Translate(minuteHandStart.X, minuteHandStart.Y);
                 canvas.DrawPath(minuteHandPath, fillPaint);
                 canvas.DrawPath(minuteHandPath, strokePaint);
@@ -274,6 +323,7 @@ namespace iChronoMe.Widgets
                 canvas.RotateDegrees((float)(6 * second), 500, 500);
                 fillPaint.Color = ColorSecondHandFill.ToSKColor();
                 strokePaint.Color = ColorSecondHandStroke.ToSKColor();
+                strokePaint.StrokeWidth = secondHandStrokeWidth;
                 canvas.Translate(secondHandStart.X, secondHandStart.Y);
                 canvas.DrawPath(secondHandPath, fillPaint);
                 canvas.DrawPath(secondHandPath, strokePaint);

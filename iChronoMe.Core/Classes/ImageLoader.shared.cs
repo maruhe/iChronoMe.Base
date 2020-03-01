@@ -133,7 +133,7 @@ namespace iChronoMe.Core.Classes
 
                 cImgList = cImgList.Trim().Replace("<br>", "").Replace("<BR>", "");
 
-                if (!cImgList.StartsWith("group:"))
+                if (!cImgList.StartsWith("group:") && !cImgList.StartsWith("path:"))
                     throw new Exception(localize.ImageLoader_error_list_broken);
 
                 List<string> cLoadImgS = new List<string>();
@@ -162,7 +162,7 @@ namespace iChronoMe.Core.Classes
                                 if (cFile.EndsWith(".png"))
                                 {
                                     bool bLoadFile = true;
-                                    string cLocal = Path.Combine(Path.Combine(cBasePath, cGroup), cFile);
+                                    string cLocal = Path.Combine(string.IsNullOrEmpty(cGroup) ? cBasePath : Path.Combine(cBasePath, cGroup), cFile);
                                     if (File.Exists(cLocal))
                                     {
                                         string cLocalMd5 = sys.CalculateFileMD5(cLocal);
@@ -171,7 +171,7 @@ namespace iChronoMe.Core.Classes
                                     }
 
                                     if (bLoadFile)
-                                        cLoadImgS.Add(cGroup + "/" + cFile);
+                                        cLoadImgS.Add(string.IsNullOrEmpty(cGroup) ? cFile : cGroup + "/" + cFile);
                                 }
                             }
                         }

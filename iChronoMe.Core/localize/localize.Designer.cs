@@ -448,6 +448,24 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die unable to interprete data-list ähnelt.
+        /// </summary>
+        public static string DataLoader_error_list_broken {
+            get {
+                return ResourceManager.GetString("DataLoader_error_list_broken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die unable to load data-list ähnelt.
+        /// </summary>
+        public static string DataLoader_error_list_unloadable {
+            get {
+                return ResourceManager.GetString("DataLoader_error_list_unloadable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die day colors ähnelt.
         /// </summary>
         public static string DayColors {
@@ -590,6 +608,15 @@ namespace iChronoMe {
         public static string HandColorTypes {
             get {
                 return ResourceManager.GetString("HandColorTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die hand types ähnelt.
+        /// </summary>
+        public static string HandTypes {
+            get {
+                return ResourceManager.GetString("HandTypes", resourceCulture);
             }
         }
         
@@ -837,6 +864,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die more options and colors ähnelt.
+        /// </summary>
+        public static string MoreOptionsAndColors {
+            get {
+                return ResourceManager.GetString("MoreOptionsAndColors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Name ähnelt.
         /// </summary>
         public static string Name {
@@ -963,6 +999,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die update base-data ähnelt.
+        /// </summary>
+        public static string ProgressUpdateBaseData {
+            get {
+                return ResourceManager.GetString("ProgressUpdateBaseData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die sample ähnelt.
         /// </summary>
         public static string Sample {
@@ -1049,6 +1094,15 @@ namespace iChronoMe {
         public static string StaticLocation {
             get {
                 return ResourceManager.GetString("StaticLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die style ähnelt.
+        /// </summary>
+        public static string Style {
+            get {
+                return ResourceManager.GetString("Style", resourceCulture);
             }
         }
         

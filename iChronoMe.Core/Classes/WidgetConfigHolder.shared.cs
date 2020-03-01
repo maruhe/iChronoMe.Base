@@ -622,6 +622,8 @@ namespace iChronoMe.Core.Classes
         public bool FlowMinuteHand = false;
         public bool FlowSecondHand = false;
 
+        public string ClockHandConfig = string.Empty;
+
         public string BackgroundImage;
         public TickMarkStyle TickMarkStyle = TickMarkStyle.Dotts;
 
@@ -658,6 +660,7 @@ namespace iChronoMe.Core.Classes
     {
         None = 0,
         Dotts = 1,
+        Circle = 5,
         LinesRound = 10,
         LinesSquare = 11,
         LinesButt = 12

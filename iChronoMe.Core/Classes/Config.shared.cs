@@ -77,12 +77,14 @@ namespace iChronoMe.Core.Classes
         public int InitScreenPermission { get; set; } = sys.Debugmode ? xxDebugDone : 0;
         public int InitScreenPrivacy { get; set; } = sys.Debugmode ? xxDebugDone : 0;
         public int InitScreenUserLocation { get; set; } = sys.Debugmode ? xxDebugDone : 0;
+        public int InitBaseDataDownload { get; set; } = 0;
 
         public string AppThemeName { get; set; }
         public bool AlwaysShowForegroundNotification { get; set; } = false;
         public bool SendErrorLogs { get; set; } = false;
         public bool DenyErrorScreens { get; set; } = false;
         public DateTime LastCheckClockFaces { get; set; } = DateTime.MinValue;
+        public DateTime LastCheckClockHands { get; set; } = DateTime.MinValue;
         public WidgetCfg_ClockAnalog MainClock { get; set; } = new WidgetCfg_ClockAnalog() { ShowSeconds = true, FlowHourHand = true, FlowMinuteHand = false, FlowSecondHand = false };
 
         public bool ContinuousLocationUpdates { get; set; } = false;

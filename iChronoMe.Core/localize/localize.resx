@@ -528,4 +528,22 @@ wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder a
   <data name="ImageLoader_success_one_package" xml:space="preserve">
     <value>one package loadet...</value>
   </data>
+  <data name="HandTypes" xml:space="preserve">
+    <value>hand types</value>
+  </data>
+  <data name="MoreOptionsAndColors" xml:space="preserve">
+    <value>more options and colors</value>
+  </data>
+  <data name="Style" xml:space="preserve">
+    <value>style</value>
+  </data>
+  <data name="DataLoader_error_list_broken" xml:space="preserve">
+    <value>unable to interprete data-list</value>
+  </data>
+  <data name="DataLoader_error_list_unloadable" xml:space="preserve">
+    <value>unable to load data-list</value>
+  </data>
+  <data name="ProgressUpdateBaseData" xml:space="preserve">
+    <value>update base-data</value>
+  </data>
 </root>
