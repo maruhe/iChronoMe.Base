@@ -513,6 +513,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die default ähnelt.
+        /// </summary>
+        public static string Default {
+            get {
+                return ResourceManager.GetString("Default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die deleted widges ähnelt.
         /// </summary>
         public static string DeletedWidgets {
@@ -1022,6 +1031,15 @@ namespace iChronoMe {
         public static string SaveWidget {
             get {
                 return ResourceManager.GetString("SaveWidget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die second hand fill color ähnelt.
+        /// </summary>
+        public static string SecondHandFill {
+            get {
+                return ResourceManager.GetString("SecondHandFill", resourceCulture);
             }
         }
         

@@ -12,28 +12,24 @@ namespace iChronoMe.Core.Classes
     {
         public const string filter_clockhands = "clockhands";
 
-        private static Thread loaderThread = null;
-        private static List<string> imagesToLoad = new List<string>();
-        private static List<Action> actionsAfterLoad = new List<Action>();
-
         public static bool CheckDataPackage(IProgressChangedHandler handler, string dataFilter, string localPath, string title)
         {
             string cBasePath = localPath;
             try
             {
                 handler.StartProgress(title);
-                string cImgList = sys.GetUrlContent(Secrets.zAppDataUrl + "filelist.php?filter=" + dataFilter).Result;
+                string cDataList = sys.GetUrlContent(Secrets.zAppDataUrl + "filelist.php?filter=" + dataFilter).Result;
 
-                if (string.IsNullOrEmpty(cImgList))
+                if (string.IsNullOrEmpty(cDataList))
                     throw new Exception(localize.DataLoader_error_list_unloadable);
 
-                cImgList = cImgList.Trim().Replace("<br>", "").Replace("<BR>", "");
+                cDataList = cDataList.Trim().Replace("<br>", "").Replace("<BR>", "");
 
-                if (!cImgList.StartsWith("group:") && !cImgList.StartsWith("path:"))
+                if (!cDataList.StartsWith("group:") && !cDataList.StartsWith("path:"))
                     throw new Exception(localize.DataLoader_error_list_broken);
 
-                List<string> cLoadImgS = new List<string>();
-                var list = cImgList.Split(new char[] { '\n' });
+                List<string> cLoadDataS = new List<string>();
+                var list = cDataList.Split(new char[] { '\n' });
 
                 string cGroup = "";
                 string cFile = "";
@@ -67,7 +63,7 @@ namespace iChronoMe.Core.Classes
                                     }
 
                                     if (bLoadFile)
-                                        cLoadImgS.Add(string.IsNullOrEmpty(cGroup) ? cFile : cGroup + "/" + cFile);
+                                        cLoadDataS.Add(string.IsNullOrEmpty(cGroup) ? cFile : cGroup + "/" + cFile);
                                 }
                             }
                         }
@@ -80,21 +76,21 @@ namespace iChronoMe.Core.Classes
                 }
 
                 int iSuccess = 0;
-                if (cLoadImgS.Count > 0)
+                if (cLoadDataS.Count > 0)
                 {
                     WebClient webClient = new WebClient();
 
-                    int iImg = 0;
-                    foreach (string cLoadImage in cLoadImgS)
+                    int iData = 0;
+                    foreach (string cLoadData in cLoadDataS)
                     {
                         try
                         {
-                            iImg++;
+                            iData++;
 
-                            string cDestPath = Path.Combine(cBasePath, cLoadImage);
+                            string cDestPath = Path.Combine(cBasePath, cLoadData);
                             Directory.CreateDirectory(Path.GetDirectoryName(cDestPath));
-                            var x = cLoadImage.Split('/');
-                            webClient.DownloadFile(Secrets.zAppDataUrl + dataFilter + "/" + cLoadImage, cDestPath + "_");
+                            var x = cLoadData.Split('/');
+                            webClient.DownloadFile(Secrets.zAppDataUrl + dataFilter + "/" + cLoadData, cDestPath + "_");
 
                             if (File.Exists(cDestPath))
                                 File.Delete(cDestPath);
@@ -109,7 +105,7 @@ namespace iChronoMe.Core.Classes
                     }
                 }
                 handler.SetProgressDone();
-                return iSuccess == cLoadImgS.Count;
+                return iSuccess == cLoadDataS.Count;
             }
             catch (Exception e)
             {

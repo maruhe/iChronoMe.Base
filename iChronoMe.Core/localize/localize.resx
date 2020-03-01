@@ -546,4 +546,10 @@ wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder a
   <data name="ProgressUpdateBaseData" xml:space="preserve">
     <value>update base-data</value>
   </data>
+  <data name="SecondHandFill" xml:space="preserve">
+    <value>second hand fill color</value>
+  </data>
+  <data name="Default" xml:space="preserve">
+    <value>default</value>
+  </data>
 </root>

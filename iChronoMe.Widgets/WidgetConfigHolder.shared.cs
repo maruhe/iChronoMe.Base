@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
-
+using iChronoMe.Core;
+using iChronoMe.Core.Classes;
 using iChronoMe.Core.DynamicCalendar;
 using iChronoMe.Core.Types;
 
-namespace iChronoMe.Core.Classes
+namespace iChronoMe.Widgets
 {
     public class WidgetConfigHolder
     {
-        public string CfgFile { get; } = System.IO.Path.Combine(sys.PathConfig, "widgetcfg.xml");
+        public string CfgFile { get; } = System.IO.Path.Combine(sys.PathConfig, "widgetcfg.cfg");
 
         static bool bTest = false;
         static int iTest = 0;
@@ -18,7 +19,17 @@ namespace iChronoMe.Core.Classes
         public WidgetConfigHolder(bool bIsArchieMode = false)
         {
             if (bIsArchieMode)
-                CfgFile = Path.Combine(sys.PathConfig, "widgetcfg_archiv.xml");
+                CfgFile = Path.Combine(sys.PathConfig, "widgetcfg_archiv.cfg");
+            LoadFromFile();
+        }
+        public WidgetConfigHolder(string cfgFilePath)
+        {
+            if (string.IsNullOrEmpty(cfgFilePath))
+                cfgFilePath = "_tmp_widgets.cfg";
+            if (!cfgFilePath.Contains("/"))
+                cfgFilePath = Path.Combine(sys.PathConfig, cfgFilePath);
+
+            CfgFile = cfgFilePath;
             LoadFromFile();
         }
 
@@ -96,6 +107,14 @@ namespace iChronoMe.Core.Classes
             WidgetConfigList.Values.CopyTo(cfgS, 0);
             return cfgS;
         }
+
+
+        public void SetWidgetCfg(WidgetCfg cfg, int id, bool bSaveToFile = true)
+        {
+            cfg.WidgetId = id;
+            SetWidgetCfg(cfg, bSaveToFile);
+        }
+
         public void SetWidgetCfg(WidgetCfg cfg, bool bSaveToFile = true)
         {
             if (WidgetConfigList.ContainsKey(cfg.WidgetId))
@@ -622,7 +641,20 @@ namespace iChronoMe.Core.Classes
         public bool FlowMinuteHand = false;
         public bool FlowSecondHand = false;
 
-        public string ClockHandConfig = string.Empty;
+        string _clockHandConfigID = string.Empty;
+        public string ClockHandConfigID {get => _clockHandConfigID; set { _clockHandConfigID = value; _clockHandConfig = null; } }
+
+        ClockHandConfig _clockHandConfig = null;
+        [XmlIgnore]
+        public ClockHandConfig ClockHandConfig
+        {
+            get
+            {
+                if (_clockHandConfig == null)
+                    _clockHandConfig = ClockHandConfig.Get(ClockHandConfigID);
+                return _clockHandConfig;
+            }
+        }
 
         public string BackgroundImage;
         public TickMarkStyle TickMarkStyle = TickMarkStyle.Dotts;
@@ -634,6 +666,16 @@ namespace iChronoMe.Core.Classes
         public xColor ColorMinuteHandFill = xColor.FromHex("#FF930000");
         public xColor ColorSecondHandStroke = xColor.White;
         public xColor ColorSecondHandFill = xColor.FromHex("#FFBC0000");
+
+        public void LoadHandCfgColors()
+        {
+            ColorHourHandStroke = xColor.FromHex(ClockHandConfig.HourStrokeColor, ColorHourHandStroke);
+            ColorHourHandFill = xColor.FromHex(ClockHandConfig.HourFillColor, ColorHourHandFill);
+            ColorMinuteHandStroke = xColor.FromHex(ClockHandConfig.MinuteStrokeColor, ColorMinuteHandStroke);
+            ColorMinuteHandFill = xColor.FromHex(ClockHandConfig.MinuteFillColor, ColorMinuteHandFill);
+            ColorSecondHandStroke = xColor.FromHex(ClockHandConfig.SecondStrokeColor, ColorSecondHandStroke);
+            ColorSecondHandFill = xColor.FromHex(ClockHandConfig.SecondFillColor, ColorSecondHandFill);
+        }
     }
 
     public enum WidgetCfgPositionType

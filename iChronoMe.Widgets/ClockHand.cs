@@ -9,6 +9,7 @@ namespace iChronoMe.Widgets
 {
     public class ClockHandConfig
     {
+        static string dbFile = Path.Combine(sys.PathDBdata, "clockhands.db");
         public static int Count { get => HandCollection.Count; }
 
         public static ClockHandConfig Get(string id)
@@ -18,14 +19,27 @@ namespace iChronoMe.Widgets
                 lock (HandCollection)
                 {
                     if (HandCollection.ContainsKey(id))
-                        return HandCollection[id];
-                    return HandCollection["_"];
+                        return HandCollection[id].Clone();
+                    return HandCollection["_"].Clone();
                 }
-            } 
+            }
             catch
             {
-                return defaultHands;
+                return defaultHands.Clone();
             }
+        }
+        public static string GetDefaultID(string filter)
+        {
+            try
+            {
+                lock (HandCollection)
+                {
+                    if (DefaultLinks.ContainsKey(filter))
+                        return DefaultLinks[filter].ID;
+                }
+            }
+            catch { }
+            return null;
         }
 
         public static List<string> GetAllIds()
@@ -34,27 +48,28 @@ namespace iChronoMe.Widgets
         }
 
         static Dictionary<string, ClockHandConfig> HandCollection = new Dictionary<string, ClockHandConfig>();
+        static Dictionary<string, ClockHandConfig> DefaultLinks = new Dictionary<string, ClockHandConfig>();
 
         static ClockHandConfig()
         {
-            ReleadHands();
+            ReloadHands();
         }
 
         public static void CheckUpdateLocalData(IProgressChangedHandler handler)
         {
-            if (AppConfigHolder.MainConfig.LastCheckClockHands.AddDays(7) < DateTime.Now)
+            if (AppConfigHolder.MainConfig.LastCheckClockHands.AddDays(7) < DateTime.Now || !File.Exists(dbFile))
             {
                 if (DataLoader.CheckDataPackage(handler, DataLoader.filter_clockhands, sys.PathDBdata, localize.ProgressUpdateBaseData))
                 {
+                    ReloadHands();
                     AppConfigHolder.MainConfig.LastCheckClockHands = DateTime.Now;
                     AppConfigHolder.SaveMainConfig();
                 }
             }
         }
 
-        public static bool ReleadHands()
+        public static bool ReloadHands()
         {
-            string dbFile = Path.Combine(sys.PathDBdata, "clockhands.db");
             if (!File.Exists(dbFile))
                 return false;
             try
@@ -66,9 +81,17 @@ namespace iChronoMe.Widgets
                 lock (HandCollection)
                 {
                     HandCollection.Clear();
+                    DefaultLinks.Clear();
                     foreach (var cfg in hands)
                     {
                         HandCollection.Add(cfg.ID, cfg);
+                        if (!string.IsNullOrEmpty(cfg.Defaults))
+                        {
+                            foreach (string c in cfg.Defaults.Split(' '))
+                            {
+                                DefaultLinks[c] = cfg;
+                            }
+                        }
                     }
                 }
                 db.Close();
@@ -77,6 +100,7 @@ namespace iChronoMe.Widgets
             catch (Exception ex)
             {
                 xLog.Error(ex);
+                try { File.Delete(dbFile); } catch { }
             }
             finally
             {
@@ -87,6 +111,8 @@ namespace iChronoMe.Widgets
         }
 
         public string ID { get; set; }
+        public string Description { get; set; }
+        public string Defaults { get; set; }
         public string HourPath { get; set; }
         public float HourStorkeWidth { get; set; }
         public string HourStrokeColor { get; set; }

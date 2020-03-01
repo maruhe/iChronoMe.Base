@@ -128,6 +128,7 @@ namespace iChronoMe.Core.Classes
         static Dictionary<string, string> enumMappings = new Dictionary<string, string>();
         static Dictionary<string, object> enumMappingsReverse = new Dictionary<string, object>();
         static Dictionary<string, string> classMappings = new Dictionary<string, string>();
+        static Dictionary<string, Assembly> typeAssemblies = new Dictionary<string, Assembly>();
 
         private void SerializeObject(XmlElement el, object o)
         {
@@ -251,7 +252,7 @@ namespace iChronoMe.Core.Classes
             {
                 var swStart = DateTime.Now;
                 var mapping = new Dictionary<string, string>();
-                var includeClasses = new List<string>() { cFullCassName };
+                var includeClasses = new List<Type>() { t };
                 var createSubElements = new List<string>();
 
                 try
@@ -266,16 +267,16 @@ namespace iChronoMe.Core.Classes
                                 foreach (var arg in att.ConstructorArguments)
                                 {
                                     if (arg.Value.ToString().Contains(t.FullName))
-                                        includeClasses.Add(bt.FullName);
+                                        includeClasses.Add(bt);
                                 }
                             }
                         }
                         bt.ToString();
                         bt = bt.BaseType;
                     }
-                    foreach (var inf in t.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+                    if (includeClasses.Contains(t))
                     {
-                        if (includeClasses.Contains(cFullCassName))
+                        foreach (var inf in t.GetProperties(BindingFlags.Public | BindingFlags.Instance))
                         {
                             if (inf.CanRead && inf.CanWrite)
                             {
@@ -314,10 +315,7 @@ namespace iChronoMe.Core.Classes
                                 }
                             }
                         }
-                    }
-                    foreach (var inf in t.GetFields(BindingFlags.Public | BindingFlags.Instance))
-                    {
-                        if (includeClasses.Contains(cFullCassName))
+                        foreach (var inf in t.GetFields(BindingFlags.Public | BindingFlags.Instance))
                         {
                             if (inf.IsPublic && !inf.IsStatic)
                             {
@@ -364,8 +362,15 @@ namespace iChronoMe.Core.Classes
                 }
                 try
                 {
+                    List<string> includeClassesNames = new List<string>();
+                    foreach (var x in includeClasses)
+                    {
+                        includeClassesNames.Add(x.FullName);
+                        typeAssemblies[x.FullName] = x.Assembly;
+                    }
+
                     mappingPropertyNames.Add(cFullCassName, mapping);
-                    mappingIncludeClasses.Add(cFullCassName, includeClasses);
+                    mappingIncludeClasses.Add(cFullCassName, includeClassesNames);
                     mappingCreateSubElements.Add(cFullCassName, createSubElements);
                     classMappings.Add(t.Name, cFullCassName);
                     var mappingReverse = new Dictionary<string, string>();
@@ -469,7 +474,7 @@ namespace iChronoMe.Core.Classes
             }
             catch (Exception ex)
             {
-                ex.ToString();
+                sys.LogException(ex);
             }
 
             if (baseType.IsArray)
@@ -496,8 +501,8 @@ namespace iChronoMe.Core.Classes
             if (string.IsNullOrEmpty(cNodeType))
                 cNodeType = node.GetAttribute("xsi:type");
             if (!string.IsNullOrEmpty(cNodeType))
-            {
-                baseType = Type.GetType(classMappings[cNodeType]);
+            {                
+                baseType = typeAssemblies[classMappings[cNodeType]].GetType(classMappings[cNodeType]);
                 cFullCassName = baseType.FullName;
             }
             if (baseType == null)

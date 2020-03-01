@@ -34,8 +34,6 @@ namespace iChronoMe.Widgets
 
         public bool ShowFirstPreviewImage { get; set; } = false;
 
-        public virtual bool NeedsPreperation() { return false; }
-
         public virtual void PerformPreperation(IUserIO handler) { }
 
         public virtual void AfterSelect(IUserIO handler, WidgetCfgSample<T> sample) { }
@@ -63,7 +61,6 @@ namespace iChronoMe.Widgets
         string Title { get; }
         bool ShowPreviewImage { get; set; }
         bool ShowFirstPreviewImage { get; set; }
-        bool NeedsPreperation();
         void PerformPreperation(IUserIO handler);
         void AfterSelect(IUserIO handler, WidgetCfgSample<T> sample);
         object PrevStepAssistant { get; set; }

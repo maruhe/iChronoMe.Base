@@ -81,7 +81,7 @@ namespace iChronoMe.Core.Classes
                             string cImagePath = Path.Combine(cFolder, cImageName);
 
                             WebClient webClient = new WebClient();
-                            webClient.DownloadFile(Secrets.zAppImageUrl + "imageprev.php?id=" + cImageFilter + "/" + cImageGroup + "/" + cImageName, cImagePath + "_");
+                            webClient.DownloadFile(Secrets.zAppDataUrl + "imageprev.php?id=" + cImageFilter + "/" + cImageGroup + "/" + cImageName, cImagePath + "_");
 
                             if (File.Exists(cImagePath))
                                 File.Delete(cImagePath);
@@ -126,7 +126,7 @@ namespace iChronoMe.Core.Classes
             try
             {
                 handler.StartProgress(localize.ImageLoader_progress_title);
-                string cImgList = sys.GetUrlContent(Secrets.zAppImageUrl + "filelist.php?filter=" + imageFilter + "&size=" + size).Result;
+                string cImgList = sys.GetUrlContent(Secrets.zAppDataUrl + "filelist.php?filter=" + imageFilter + "&size=" + size).Result;
 
                 if (string.IsNullOrEmpty(cImgList))
                     throw new Exception(localize.ImageLoader_error_list_unloadable);
@@ -199,7 +199,7 @@ namespace iChronoMe.Core.Classes
                             string cDestPath = Path.Combine(cBasePath, cLoadImage);
                             Directory.CreateDirectory(Path.GetDirectoryName(cDestPath));
                             var x = cLoadImage.Split('/');
-                            webClient.DownloadFile(Secrets.zAppImageUrl + "imageprev.php?filter=" + imageFilter + "&group=" + x[0] + "&image=" + x[1] + "&max=" + size, cDestPath + "_");
+                            webClient.DownloadFile(Secrets.zAppDataUrl + "imageprev.php?filter=" + imageFilter + "&group=" + x[0] + "&image=" + x[1] + "&max=" + size, cDestPath + "_");
 
                             if (File.Exists(cDestPath))
                                 File.Delete(cDestPath);

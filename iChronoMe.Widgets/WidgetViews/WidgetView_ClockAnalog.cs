@@ -36,13 +36,13 @@ namespace iChronoMe.Widgets
         public bool FlowMinuteHand { set; get; } = true;
         public bool FlowSecondHand { set; get; } = false;
 
-        SKPaint fillPaint = new SKPaint
+        public SKPaint fillPaint = new SKPaint
         {
             Style = SKPaintStyle.Fill,
             Color = SKColors.White
         };
 
-        SKPaint strokePaint = new SKPaint
+        public SKPaint strokePaint = new SKPaint
         {
             Style = SKPaintStyle.Stroke,
             Color = SKColors.Black,
@@ -51,18 +51,21 @@ namespace iChronoMe.Widgets
             IsAntialias = true
         };
 
-        Point hourHandStart = new Point(500, 500);
-        float hourHandStrokeWidth = 10;
-        SKPath hourHandPath = SKPath.ParseSvgPathData(
+        public Point hourHandStart = new Point(500, 500);
+        public float hourHandStrokeWidth = 10;
+        public SKPath hourHandPath = SKPath.ParseSvgPathData(
             "M 0 -300 C 0 -150 100 -150 25 -100 L 25 0 C 25 37.5 -25 37.5 -25 0 L -25 -100 C -100 -150 0 -150 0 -300");
-        Point minuteHandStart = new Point(500, 500);
-        float minuteHandStrokeWidth = 10;
-        SKPath minuteHandPath = SKPath.ParseSvgPathData(
+        public Point minuteHandStart = new Point(500, 500);
+        public float minuteHandStrokeWidth = 10;
+        public SKPath minuteHandPath = SKPath.ParseSvgPathData(
             "M 0 -400 C 0 -375 0 -350 12.5 -300 L 12.5 0 C 12.5 25 -12.5 25 -12.5 0 L -12.5 -300 C 0 -350 0 -375 0 -400");
-        Point secondHandStart = new Point(500, 500);
-        float secondHandStrokeWidth = 10;
-        SKPath secondHandPath = SKPath.ParseSvgPathData(
+        public Point secondHandStart = new Point(500, 500);
+        public float secondHandStrokeWidth = 10;
+        public SKPath secondHandPath = SKPath.ParseSvgPathData(
            "M 0 50 0 -400");
+
+        public Point centerCapStart = new Point(500, 500);
+        public SKPath centerCapPath = null;
 
         public ClockHandConfig ClockHandConfig { get; set; }
 
@@ -126,12 +129,7 @@ namespace iChronoMe.Widgets
             FlowMinuteHand = cfg.FlowMinuteHand;
             FlowSecondHand = cfg.FlowSecondHand;
 
-            ClockHandConfig = null;
-            if (!string.IsNullOrEmpty(cfg.ClockHandConfig))
-                ClockHandConfig = ClockHandConfig.Get(cfg.ClockHandConfig);
-
-            if (ClockHandConfig == null)
-                ClockHandConfig = ClockHandConfig.Get("_");
+            ClockHandConfig = cfg.ClockHandConfig;
 
             ReadHandConfig(ClockHandConfig);
         }
@@ -141,26 +139,16 @@ namespace iChronoMe.Widgets
             hourHandPath = SKPath.ParseSvgPathData(hands.HourPath);
             hourHandStart = new Point(hands.HourOffsetX, hands.HourOffsetY);
             hourHandStrokeWidth = hands.HourStorkeWidth;
-            if (overrideColors)
-            {
-                ColorHourHandStroke = xColor.FromHex(hands.HourStrokeColor, ColorHourHandStroke);
-                ColorHourHandFill = xColor.FromHex(hands.HourFillColor, ColorHourHandFill);
-            }
             minuteHandPath = SKPath.ParseSvgPathData(hands.MinutePath);
             minuteHandStart = new Point(hands.MinuteOffsetX, hands.MinuteOffsetY);
             minuteHandStrokeWidth = hands.MinuteStorkeWidth;
-            if (overrideColors)
-            {
-                ColorMinuteHandStroke = xColor.FromHex(hands.MinuteStrokeColor, ColorMinuteHandStroke);
-                ColorMinuteHandFill = xColor.FromHex(hands.MinuteFillColor, ColorMinuteHandFill);
-            }
             secondHandPath = SKPath.ParseSvgPathData(hands.SecondPath);
             secondHandStart = new Point(hands.SecondOffsetX, hands.SecondOffsetY);
             secondHandStrokeWidth = hands.SecondStorkeWidth;
-            if (overrideColors)
+            centerCapPath = SKPath.ParseSvgPathData(hands.CapPath);
+            if (centerCapPath != null)
             {
-                ColorSecondHandStroke = xColor.FromHex(hands.SecondStrokeColor, ColorSecondHandStroke);
-                ColorSecondHandFill = xColor.FromHex(hands.SecondFillColor, ColorSecondHandFill);
+                centerCapStart = new Point(hands.CapOffsetX, hands.CapOffsetY);
             }
         }
 
@@ -331,6 +319,17 @@ namespace iChronoMe.Widgets
                 canvas.RotateDegrees((float)(-6 * second), 500, 500);
             }
 
+            if (centerCapPath != null)
+            {
+                fillPaint.Color = ColorHourHandFill.ToSKColor();
+                strokePaint.Color = ColorHourHandStroke.ToSKColor();
+                strokePaint.StrokeWidth = 1;
+                canvas.Translate(centerCapStart.X, centerCapStart.Y);
+                canvas.DrawPath(centerCapPath, fillPaint);
+                canvas.DrawPath(centerCapPath, strokePaint);
+                canvas.Translate(-(centerCapStart.X), -(centerCapStart.Y));
+            }
+
             TimeSpan tsDraw = DateTime.Now - swStart;
             iAllCount++;
             tsAllSum += tsDraw;
@@ -448,7 +447,7 @@ namespace iChronoMe.Widgets
                             {
                                 doneS.Add(item.destFile);
                                 Directory.CreateDirectory(Path.GetDirectoryName(item.destFile));
-                                webClient.DownloadFile(Secrets.zAppImageUrl + "imageprev.php?filter=" + item.filter + "&group=" + item.group + "&image=" + item.file + "&max=" + item.size, item.destFile + "_");
+                                webClient.DownloadFile(Secrets.zAppDataUrl + "imageprev.php?filter=" + item.filter + "&group=" + item.group + "&image=" + item.file + "&max=" + item.size, item.destFile + "_");
 
                                 if (!File.Exists(item.maxFile) || new FileInfo(item.maxFile).Length < new FileInfo(item.destFile + "_").Length)
                                 {
