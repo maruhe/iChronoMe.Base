@@ -98,6 +98,7 @@ namespace iChronoMe.Widgets
         public void ReadConfig(WidgetCfg_ClockAnalog cfg)
         {
             cfgInstance = Guid.NewGuid().ToString();
+            bmpBackCache = null;
 
             BackgroundImage = cfg.BackgroundImage;
             TickMarkStyle = cfg.TickMarkStyle;
@@ -132,6 +133,8 @@ namespace iChronoMe.Widgets
             var t = dateTime.TimeOfDay;
             DrawCanvas(canvas, t.TotalHours, t.TotalMinutes % 60, t.TotalSeconds % 60, width, height, bDrawBackImage, nSecondHandOverrideSecond);
         }
+
+        SKBitmap bmpBackCache = null;
 
         public void DrawCanvas(SKCanvas canvas, double hour, double minute, double second, int width = 512, int height = 512, bool bDrawBackImage = false, float? nSecondHandOverrideSecond = null)
         {
@@ -172,11 +175,16 @@ namespace iChronoMe.Widgets
                     }
                     else*/
                     {
-                        using (var bitmap = SKBitmap.Decode(BackgroundImage))
+                        if (bmpBackCache == null)
                         {
-                            var resizedBitmap = bitmap.Resize(new SKImageInfo(x, x), SKFilterQuality.High);
-                            canvas.DrawBitmap(resizedBitmap, (width - resizedBitmap.Width) / 2, (height - resizedBitmap.Height) / 2);
+                            using (var bitmap = SKBitmap.Decode(BackgroundImage))
+                            {
+                                bmpBackCache = bitmap.Resize(new SKImageInfo(x, x), SKFilterQuality.High);
+                            }
                         }
+
+                        if (bmpBackCache != null)
+                            canvas.DrawBitmap(bmpBackCache, (width - bmpBackCache.Width) / 2, (height - bmpBackCache.Height) / 2);
                     }
                 }
                 catch { }
@@ -283,7 +291,7 @@ namespace iChronoMe.Widgets
 
             if (CapPathList != null)
             {
-                drawClockPaths(canvas, CapPathList, ColorHourHandStroke, ColorHourHandFill);
+                drawClockPaths(canvas, CapPathList, xColor.MakeEmptyColor(xColor.Black), xColor.MakeEmptyColor(xColor.Black));
             }
 
             TimeSpan tsDraw = DateTime.Now - swStart;

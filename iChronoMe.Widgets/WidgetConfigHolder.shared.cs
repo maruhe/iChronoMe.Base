@@ -643,8 +643,8 @@ namespace iChronoMe.Widgets
 
         [XmlIgnore] public string AllHandConfigID { set
             {
-                HourHandConfigID = MinuteHandConfigID = SecondHandConfigID = value;
-            } 
+                HourHandConfigID = MinuteHandConfigID = SecondHandConfigID = CapConfigID = value;
+            }
         }
 
         string _hourHandConfigID = string.Empty;
@@ -676,7 +676,7 @@ namespace iChronoMe.Widgets
                 return _MinuteHandConfig;
             }
         }
-        
+
         string _secondHandConfigID = string.Empty;
         public string SecondHandConfigID { get => _secondHandConfigID; set { _secondHandConfigID = value; _secondHandConfig = null; } }
 
@@ -706,7 +706,7 @@ namespace iChronoMe.Widgets
                 return _capConfig;
             }
         }
-        
+
 
         public string BackgroundImage;
         public TickMarkStyle TickMarkStyle = TickMarkStyle.Dotts;
@@ -737,9 +737,11 @@ namespace iChronoMe.Widgets
 
         public void CheckSampleSmooth(bool hasChangedBackground)
         {
-            if (hasChangedBackground && !string.IsNullOrEmpty(BackgroundImage) && BackgroundImage.Contains("01_simple_face"))
+            if (hasChangedBackground && BackImageAllowsBackColor)
                 ColorBackground = xColor.White;
         }
+
+        public bool BackImageAllowsBackColor { get => !string.IsNullOrEmpty(BackgroundImage) && BackgroundImage.Contains("01_simple_face"); } 
     }
 
     public enum WidgetCfgPositionType

@@ -107,33 +107,31 @@ namespace iChronoMe.Widgets
                             }
                         }
                         if (!string.IsNullOrEmpty(cfg.MinutePaths) && PathList.ContainsKey(cfg.MinutePaths))
-                        { cfg.MinutePathList = new List<ClockPath>(PathList[cfg.MinutePaths]);
-                            foreach (var p in cfg.HourPathList)
+                        { 
+                            cfg.MinutePathList = new List<ClockPath>(PathList[cfg.MinutePaths]);
+                            foreach (var p in cfg.MinutePathList)
                             {
                                 cfg.AllowHourStroke = cfg.AllowHourStroke && !"-".Equals(p.StrokeColor);
                                 cfg.AllowHourFill = cfg.AllowHourFill && !"-".Equals(p.FillColor);
                             }
                         }
                         if (!string.IsNullOrEmpty(cfg.SecondPaths) && PathList.ContainsKey(cfg.SecondPaths))
-                        { cfg.SecondPathList = new List<ClockPath>(PathList[cfg.SecondPaths]);
-                            foreach (var p in cfg.HourPathList)
+                        { 
+                            cfg.SecondPathList = new List<ClockPath>(PathList[cfg.SecondPaths]);
+                            foreach (var p in cfg.SecondPathList)
                             {
                                 cfg.AllowMinuteStroke = cfg.AllowMinuteStroke && !"-".Equals(p.StrokeColor);
                                 cfg.AllowMinuteFill = cfg.AllowMinuteFill && !"-".Equals(p.FillColor);
                             }
                         }
                         if (!string.IsNullOrEmpty(cfg.CapPaths) && PathList.ContainsKey(cfg.CapPaths))
-                        { cfg.CapPathList = new List<ClockPath>(PathList[cfg.CapPaths]);
-                            foreach (var p in cfg.HourPathList)
-                            {
-                                cfg.AllowSecondStroke = cfg.AllowSecondStroke && !"-".Equals(p.StrokeColor);
-                                cfg.AllowSecondFill = cfg.AllowSecondFill && !"-".Equals(p.FillColor);
-                            }
+                        { 
+                            cfg.CapPathList = new List<ClockPath>(PathList[cfg.CapPaths]);
                         }
 
                         if (!string.IsNullOrEmpty(cfg.Defaults))
                         {
-                            foreach (string c in cfg.Defaults.Split('|'))
+                            foreach (string c in cfg.Defaults.Split(' '))
                             {
                                 DefaultLinks[c] = cfg;
                             }
