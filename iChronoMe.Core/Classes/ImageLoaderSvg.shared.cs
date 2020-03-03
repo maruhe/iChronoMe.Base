@@ -13,7 +13,7 @@ namespace iChronoMe.Core.Classes
         public const string filter_clockfaces = "clockfaces";
 
         static bool bDone;
-        public const string cUrlDir = Secrets.zAppImageUrl + (sys.Debugmode ? "debug" : "release") + "/";
+        public const string cUrlDir = Secrets.zAppDataUrl + (sys.Debugmode ? "debug" : "release") + "/";
 
         public static string GetImagePathThumb(string imageGroup, int size = 150)
         {

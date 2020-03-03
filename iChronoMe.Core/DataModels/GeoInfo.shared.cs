@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Globalization;
 using System.Xml;
-
+using GeoJSON.Net.Geometry;
+using iChronoMe.Core.Tools;
+using Newtonsoft.Json;
 using SQLite;
 
 using Xamarin.Essentials;
@@ -43,98 +46,10 @@ namespace iChronoMe.Core.Classes
 
             tStart = DateTime.Now;
 
-            string cUri = "https://maps.googleapis.com/maps/api/geocode/xml?key=" + Secrets.GApiKey + "&latlng=" + Latitude.ToString("0.######", CultureInfo.InvariantCulture) + "," + Longitude.ToString("0.######", CultureInfo.InvariantCulture) + "&sensor=true";
-            string cGeoInfo = sys.GetUrlContent(cUri).Result;
-
             try
             {
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(cGeoInfo);
-                XmlElement eStatus = (XmlElement)doc.DocumentElement.FirstChild;
-                if (eStatus.InnerText != "OK")
-                    return null;
-                XmlElement eArea = (XmlElement)eStatus.NextSibling;
 
-                eArea.ToString();
-
-                AreaInfo ai = new AreaInfo();
-                if ("result".Equals(eArea.Name))
-                {
-                    string cType = eArea.SelectSingleNode("type").InnerText;
-                    ai.toponymName = eArea.SelectSingleNode("formatted_address").InnerText;
-
-                    xLog.Debug("Found Address:" + ai.toponymName);
-                    string cAreaTitle = "";
-
-                    foreach (XmlElement elResultPart in eArea.ChildNodes)
-                    {
-                        if ("address_component".Equals(elResultPart.Name))
-                        {
-                            xLog.Debug(elResultPart.SelectSingleNode("type").InnerText + " => " + elResultPart.SelectSingleNode("long_name").InnerText + " => " + elResultPart.SelectSingleNode("short_name").InnerText);
-
-                            string cPartType = elResultPart.SelectSingleNode("type").InnerText;
-                            if (!("street_number".Equals(cPartType)))
-                            {
-                                string cPartNameLong = elResultPart.SelectSingleNode("long_name").InnerText;
-                                string cPartNameShort = elResultPart.SelectSingleNode("short_name").InnerText;
-                                if (string.IsNullOrEmpty(cAreaTitle))
-                                    cAreaTitle = elResultPart.SelectSingleNode("long_name").InnerText;
-
-                                switch (cPartType)
-                                {
-                                    case "route":
-                                        ai.route = cPartNameLong;
-                                        break;
-                                    case "locality":
-                                        ai.locality = cPartNameLong;
-                                        cAreaTitle = cPartNameLong;
-                                        break;
-                                    case "administrative_area_level_2":
-                                        ai.adminArea2 = cPartNameLong;
-                                        break;
-                                    case "administrative_area_level_1":
-                                        ai.adminArea1 = cPartNameLong;
-                                        break;
-                                    case "country":
-                                        ai.countryName = cPartNameLong;
-                                        ai.countryCode = cPartNameShort;
-                                        break;
-                                    case "postal_code":
-                                        ai.postalCode = cPartNameLong;
-                                        break;
-                                }
-                            }
-                        }
-                        if ("geometry".Equals(elResultPart.Name))
-                        {
-                            XmlNode elVp = elResultPart.SelectSingleNode("bounds");
-                            if (elVp == null)
-                                elVp = elResultPart.SelectSingleNode("viewport");
-                            if (elVp != null)
-                            {
-                                XmlNode elVpSW = elVp.SelectSingleNode("southwest");
-                                XmlNode elVpNE = elVp.SelectSingleNode("northeast");
-                                ai.boxSouth = sys.parseDouble(elVpSW.SelectSingleNode("lat").InnerText);
-                                ai.boxWest = sys.parseDouble(elVpSW.SelectSingleNode("lng").InnerText);
-                                ai.boxNorth = sys.parseDouble(elVpNE.SelectSingleNode("lat").InnerText);
-                                ai.boxEast = sys.parseDouble(elVpNE.SelectSingleNode("lng").InnerText);
-                            }
-                        }
-                    }
-                    if (!string.IsNullOrEmpty(cAreaTitle))
-                    {
-                        if ("Unnamed Road".Equals(cAreaTitle))
-                        {
-                            if (!string.IsNullOrEmpty(ai.adminArea2))
-                                cAreaTitle = ai.adminArea2;
-                            if (!string.IsNullOrEmpty(ai.adminArea1))
-                                cAreaTitle += ", " + ai.adminArea1;
-                        }
-
-                        ai.toponymName = cAreaTitle;
-                        xLog.Debug("Final title: " + cAreaTitle);
-                    }
-                }
+                var ai = GeoCoder.GetAreaInfo(Latitude, Longitude);
 
                 try
                 {
@@ -169,7 +84,7 @@ namespace iChronoMe.Core.Classes
 
                 return ai;
             }
-        }
+        }   
 
         public class AreaInfo : dbObject
         {
@@ -181,8 +96,10 @@ namespace iChronoMe.Core.Classes
             public string locality { get; set; }
             public string route { get; set; }
             public string postalCode { get; set; }
+            public string toponymName { get; set; }           
 
-            public string toponymName { get; set; }
+            public double pointLat { get; set; }
+            public double pointLng { get; set; }
 
             [Indexed]
             public double boxWest { get; set; }
@@ -196,10 +113,12 @@ namespace iChronoMe.Core.Classes
             public double centerLat { get => (boxNorth + boxSouth) / 2; set { } }
             public double centerLong { get => (boxEast + boxWest) / 2; set { } }
 
-            public int BoxWidth { get => (int)(Location.CalculateDistance(boxNorth, boxWest, boxNorth, boxEast, DistanceUnits.Kilometers) * 1000); set { } }
-            public int BoxHeitgh { get => (int)(Location.CalculateDistance(boxNorth, boxWest, boxSouth, boxWest, DistanceUnits.Kilometers) * 1000); set { } }
-
             public DateTime BoxTimeStamp = DateTime.MinValue;
+
+            [Ignore]
+            public int BoxWidth { get => (int)(Location.CalculateDistance(boxNorth, boxWest, boxNorth, boxEast, DistanceUnits.Kilometers) * 1000); set { } }
+            [Ignore] 
+            public int BoxHeitgh { get => (int)(Location.CalculateDistance(boxNorth, boxWest, boxSouth, boxWest, DistanceUnits.Kilometers) * 1000); set { } }
 
             public bool CheckBoxIsUpToDate(double nLatitude, double nLongitude)
             {

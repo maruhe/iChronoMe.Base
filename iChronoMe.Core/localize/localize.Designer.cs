@@ -1357,5 +1357,14 @@ namespace iChronoMe {
                 return ResourceManager.GetString("WidgetTitleMonthView", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die without second-hand ähnelt.
+        /// </summary>
+        public static string withoutSecondHand {
+            get {
+                return ResourceManager.GetString("withoutSecondHand", resourceCulture);
+            }
+        }
     }
 }

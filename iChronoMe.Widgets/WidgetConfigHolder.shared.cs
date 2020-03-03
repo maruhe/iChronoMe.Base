@@ -641,20 +641,72 @@ namespace iChronoMe.Widgets
         public bool FlowMinuteHand = false;
         public bool FlowSecondHand = false;
 
-        string _clockHandConfigID = string.Empty;
-        public string ClockHandConfigID {get => _clockHandConfigID; set { _clockHandConfigID = value; _clockHandConfig = null; } }
+        [XmlIgnore] public string AllHandConfigID { set
+            {
+                HourHandConfigID = MinuteHandConfigID = SecondHandConfigID = value;
+            } 
+        }
 
-        ClockHandConfig _clockHandConfig = null;
+        string _hourHandConfigID = string.Empty;
+        public string HourHandConfigID { get => _hourHandConfigID; set { _hourHandConfigID = value; _hourHandConfig = null; } }
+
+        ClockHandConfig _hourHandConfig = null;
         [XmlIgnore]
-        public ClockHandConfig ClockHandConfig
+        public ClockHandConfig HourHandConfig
         {
             get
             {
-                if (_clockHandConfig == null)
-                    _clockHandConfig = ClockHandConfig.Get(ClockHandConfigID);
-                return _clockHandConfig;
+                if (_hourHandConfig == null)
+                    _hourHandConfig = ClockHandConfig.Get(_hourHandConfigID);
+                return _hourHandConfig;
             }
         }
+
+        string _minuteHandConfigID = string.Empty;
+        public string MinuteHandConfigID { get => _minuteHandConfigID; set { _minuteHandConfigID = value; _MinuteHandConfig = null; } }
+
+        ClockHandConfig _MinuteHandConfig = null;
+        [XmlIgnore]
+        public ClockHandConfig MinuteHandConfig
+        {
+            get
+            {
+                if (_MinuteHandConfig == null)
+                    _MinuteHandConfig = ClockHandConfig.Get(_minuteHandConfigID);
+                return _MinuteHandConfig;
+            }
+        }
+        
+        string _secondHandConfigID = string.Empty;
+        public string SecondHandConfigID { get => _secondHandConfigID; set { _secondHandConfigID = value; _secondHandConfig = null; } }
+
+        ClockHandConfig _secondHandConfig = null;
+        [XmlIgnore]
+        public ClockHandConfig SecondHandConfig
+        {
+            get
+            {
+                if (_secondHandConfig == null)
+                    _secondHandConfig = ClockHandConfig.Get(_secondHandConfigID);
+                return _secondHandConfig;
+            }
+        }
+
+        string _capConfigID = string.Empty;
+        public string CapConfigID { get => _capConfigID; set { _capConfigID = value; _capConfig = null; } }
+
+        ClockHandConfig _capConfig = null;
+        [XmlIgnore]
+        public ClockHandConfig CapConfig
+        {
+            get
+            {
+                if (_capConfig == null)
+                    _capConfig = ClockHandConfig.Get(_capConfigID);
+                return _capConfig;
+            }
+        }
+        
 
         public string BackgroundImage;
         public TickMarkStyle TickMarkStyle = TickMarkStyle.Dotts;
@@ -666,15 +718,27 @@ namespace iChronoMe.Widgets
         public xColor ColorMinuteHandFill = xColor.FromHex("#FF930000");
         public xColor ColorSecondHandStroke = xColor.White;
         public xColor ColorSecondHandFill = xColor.FromHex("#FFBC0000");
+        public xColor ColorCenterCapStroke = xColor.White;
+        public xColor ColorCenterCapFill = xColor.FromHex("#FFBC0000");
 
-        public void LoadHandCfgColors()
+        public void SetDefaultColors()
         {
-            ColorHourHandStroke = xColor.FromHex(ClockHandConfig.HourStrokeColor, ColorHourHandStroke);
-            ColorHourHandFill = xColor.FromHex(ClockHandConfig.HourFillColor, ColorHourHandFill);
-            ColorMinuteHandStroke = xColor.FromHex(ClockHandConfig.MinuteStrokeColor, ColorMinuteHandStroke);
-            ColorMinuteHandFill = xColor.FromHex(ClockHandConfig.MinuteFillColor, ColorMinuteHandFill);
-            ColorSecondHandStroke = xColor.FromHex(ClockHandConfig.SecondStrokeColor, ColorSecondHandStroke);
-            ColorSecondHandFill = xColor.FromHex(ClockHandConfig.SecondFillColor, ColorSecondHandFill);
+            ColorHourHandStroke = xColor.MakeEmptyColor(ColorHourHandStroke);
+            ColorHourHandFill = xColor.MakeEmptyColor(ColorHourHandStroke);
+            ColorMinuteHandStroke = xColor.MakeEmptyColor(ColorHourHandStroke);
+            ColorMinuteHandFill = xColor.MakeEmptyColor(ColorHourHandStroke);
+            ColorSecondHandStroke = xColor.MakeEmptyColor(ColorHourHandStroke);
+            ColorSecondHandFill = xColor.MakeEmptyColor(ColorHourHandStroke);
+            ColorCenterCapStroke = xColor.MakeEmptyColor(ColorCenterCapStroke);
+            ColorCenterCapFill = xColor.MakeEmptyColor(ColorCenterCapFill);
+
+            CheckSampleSmooth(true);
+        }
+
+        public void CheckSampleSmooth(bool hasChangedBackground)
+        {
+            if (hasChangedBackground && !string.IsNullOrEmpty(BackgroundImage) && BackgroundImage.Contains("01_simple_face"))
+                ColorBackground = xColor.White;
         }
     }
 

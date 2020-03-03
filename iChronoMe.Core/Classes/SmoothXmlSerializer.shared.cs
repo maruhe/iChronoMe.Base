@@ -21,10 +21,10 @@ namespace iChronoMe.Core.Classes
         {
             tsMapping = TimeSpan.FromTicks(0);
             var swStart = DateTime.Now;
-            string json = JsonConvert.SerializeObject(o);
+            /*string json = JsonConvert.SerializeObject(o);
             json.ToString();
             var tsJson = DateTime.Now - swStart;
-            swStart = DateTime.Now;
+            swStart = DateTime.Now;*/
 
             var doc = new XmlDocument();
 
@@ -205,7 +205,7 @@ namespace iChronoMe.Core.Classes
             else if (val is Enum)
                 cVal = GetEnumValue((Enum)val);
             else if (val is xColor)
-                cVal = ((xColor)val).ToHex();
+                cVal = ((xColor)val).ToHex(true);
             else
                 cVal = string.Format("{0}", val);
             return cVal;

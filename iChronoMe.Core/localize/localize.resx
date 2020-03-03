@@ -552,4 +552,7 @@ wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder a
   <data name="Default" xml:space="preserve">
     <value>default</value>
   </data>
+  <data name="withoutSecondHand" xml:space="preserve">
+    <value>without second-hand</value>
+  </data>
 </root>

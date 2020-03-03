@@ -117,6 +117,10 @@ namespace iChronoMe.Core.Types
         public static void SetAccent(xColor value) => Accent = value;
         public static xColor Accent { get; internal set; }
 
+        readonly bool _empty;
+
+        public bool IsEmpty { get => _empty; }
+
         readonly float _a;
 
         public double A
@@ -172,6 +176,7 @@ namespace iChronoMe.Core.Types
 
         xColor(double w, double x, double y, double z, Mode mode)
         {
+            _empty = false;
             _mode = mode;
             switch (mode)
             {
@@ -390,9 +395,16 @@ namespace iChronoMe.Core.Types
 
         public override string ToString()
         {
-            return ToHex() + " => " + string.Format(CultureInfo.InvariantCulture, "[Color: A={0}, R={1}, G={2}, B={3}, Hue={4}, Saturation={5}, Luminosity={6}]", A * 255, R * 255, G * 255, B * 255, Hue, Saturation, Luminosity);
+            return ToHex(true) + " => " + string.Format(CultureInfo.InvariantCulture, "[Color: A={0}, R={1}, G={2}, B={3}, Hue={4}, Saturation={5}, Luminosity={6}]", A * 255, R * 255, G * 255, B * 255, Hue, Saturation, Luminosity);
         }
 
+        public string ToHex(bool bIncludeEmptyToken)
+        {
+            if (bIncludeEmptyToken)
+                return ToHex().Replace('#', '$');
+            return ToHex();
+        }
+            
         public string ToHex()
         {
             var red = (uint)(R * 255);
@@ -428,6 +440,8 @@ namespace iChronoMe.Core.Types
             if (string.IsNullOrEmpty(hex) || hex.Length < 3)
                 return defaultColor ?? Default;
 
+            if (hex[0] == '$')
+                return MakeEmptyColor(FromHex(hex.Replace('$', '#')));
             int idx = (hex[0] == '#') ? 1 : 0;
             try {
                 switch (hex.Length - idx)
@@ -501,6 +515,23 @@ namespace iChronoMe.Core.Types
         {
             return new xColor(h, s, l, a, Mode.Hsl);
         }
+
+        public static xColor MakeEmptyColor(xColor color)
+        {
+            return new xColor((object)null, color);
+        }
+
+        private xColor(object oIsEmpty, xColor color)
+        {
+            _mode = Mode.Rgb;
+            _empty = true;
+            _r = (float)color.R;
+            _g = (float)color.G;
+            _b = (float)color.B;
+            _a = (float)color.A;
+            ConvertToHsl(_r, _g, _b, _mode, out _hue, out _saturation, out _luminosity);
+        }
+
         #region Color Definitions
 
         //maretial colors

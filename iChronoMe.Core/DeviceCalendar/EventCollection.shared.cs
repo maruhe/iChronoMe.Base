@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Xml;
 
 using iChronoMe.Core.Classes;
+using iChronoMe.Core.Tools;
 using iChronoMe.Core.Types;
 using iChronoMe.DeviceCalendar;
 
@@ -494,81 +495,19 @@ namespace iChronoMe.Core.DynamicCalendar
                 else
                 {
                     //otherwhise search for position
-                    String urlString = "https://maps.googleapis.com/maps/api/geocode/xml?key=" + Secrets.GApiKey + "&address=" + WebUtility.UrlEncode(calEvent.Location);
-                    String cXml = sys.GetUrlContent(urlString).Result;
-                    if (string.IsNullOrEmpty(cXml))
+                    var ai = GeoCoder.GetPositionByName(calEvent.Location);
+
+                    if (ai == null)
                         return false;
-                    if (cXml.IndexOf("<status>OK</status>") > 0)
-                    {
-                        XmlDocument doc = new XmlDocument();
-                        doc.LoadXml(cXml);
 
-                        string cLatitude = string.Empty;
-                        string cLongitude = string.Empty;
-                        string cFormattedAdress = string.Empty;
-                        string cAdressComponents = string.Empty;
 
-                        foreach (XmlElement el in doc.DocumentElement.ChildNodes)
-                        {
-                            if ("result".Equals(el.Name.ToLower()))
-                            {
+                    extEvent.ConfirmedAddress = ai.toponymName;
+                    extEvent.Latitude = ai.pointLat;
+                    extEvent.Longitude = ai.pointLng;
+                    extEvent.GotCorrectPosition = true;
 
-                                foreach (XmlElement elRes in el.ChildNodes)
-                                {
-                                    if ("formatted_address".Equals(elRes.Name.ToLower()))
-                                        cFormattedAdress = elRes.InnerText;
-
-                                    if ("address_component".Equals(elRes.Name.ToLower()))
-                                    {
-                                        foreach (XmlElement elAdr in elRes.ChildNodes)
-                                        {
-                                            if ("long_name".Equals(elAdr.Name.ToLower()))
-                                            {
-                                                if (!string.IsNullOrEmpty(cAdressComponents))
-                                                    cAdressComponents += ", ";
-                                                cAdressComponents += elAdr.InnerText;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    if ("geometry".Equals(elRes.Name.ToLower()))
-                                    {
-                                        foreach (XmlElement elGeo in elRes.ChildNodes)
-                                        {
-                                            if ("location".Equals(elGeo.Name.ToLower()))
-                                            {
-
-                                                foreach (XmlElement elLoc in elGeo.ChildNodes)
-                                                {
-                                                    if ("lat".Equals(elLoc.Name.ToLower()))
-                                                        cLatitude = elLoc.InnerText;
-                                                    else if ("lng".Equals(elLoc.Name.ToLower()))
-                                                        cLongitude = elLoc.InnerText;
-                                                }
-                                                break;
-                                            }
-                                        }
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-
-                        /*
-                        cXml = cXml.Substring(cXml.IndexOf("<location>"));
-                        cXml = cXml.Substring(cXml.IndexOf("<lat>") + 5);
-                        string cLat = cXml.Substring(0, cXml.IndexOf("<"));
-                        cXml = cXml.Substring(cXml.IndexOf("<lng>") + 5);
-                        string cLng = cXml.Substring(0, cXml.IndexOf("<"));
-                        */
-                        extEvent.ConfirmedAddress = string.IsNullOrEmpty(cFormattedAdress) ? cAdressComponents : cFormattedAdress;
-                        extEvent.Latitude = double.Parse(cLatitude, NumberStyles.Any, CultureInfo.InvariantCulture);
-                        extEvent.Longitude = double.Parse(cLongitude, NumberStyles.Any, CultureInfo.InvariantCulture);
-                        extEvent.GotCorrectPosition = true;
-
-                        xLog.Debug("EventCollection: EventsChecker: Updateposition: " + calEvent.ExternalID + ": " + calEvent.Location);
-                        return true;
-                    }
+                    xLog.Debug("EventCollection: EventsChecker: Updateposition: " + calEvent.ExternalID + ": " + calEvent.Location);
+                    return true;
                 }
             }
             catch (Exception ex)
