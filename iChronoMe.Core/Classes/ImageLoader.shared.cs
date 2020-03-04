@@ -142,6 +142,7 @@ namespace iChronoMe.Core.Classes
                 string cGroup = "";
                 string cFile = "";
                 string cMd5 = "";
+                string cMd5Thumb = "";
                 foreach (string cLine in list)
                 {
                     if (cLine.StartsWith("group:"))
@@ -151,6 +152,10 @@ namespace iChronoMe.Core.Classes
                     else if (cLine.StartsWith("path:"))
                     {
                         cFile = cLine.Substring(cLine.IndexOf(" ") + 1);
+                    }
+                    else if (cLine.StartsWith("md5_thumb:"))
+                    {
+                        cMd5Thumb = cLine.Substring(cLine.IndexOf(" ") + 1);
                     }
                     else if (cLine.StartsWith("md5:"))
                     {
@@ -166,7 +171,7 @@ namespace iChronoMe.Core.Classes
                                     if (File.Exists(cLocal))
                                     {
                                         string cLocalMd5 = sys.CalculateFileMD5(cLocal);
-                                        if (cMd5.Equals(cLocalMd5))
+                                        if (cMd5.Equals(cLocalMd5) || cMd5Thumb.Equals(cLocalMd5))
                                             bLoadFile = false;
                                     }
 
@@ -179,7 +184,7 @@ namespace iChronoMe.Core.Classes
                     }
                     else
                     {
-                        cFile = cMd5 = "";
+                        cGroup = cFile = cMd5Thumb = cMd5 = "";
                     }
                 }
 

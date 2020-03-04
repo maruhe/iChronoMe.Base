@@ -555,4 +555,7 @@ wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder a
   <data name="withoutSecondHand" xml:space="preserve">
     <value>without second-hand</value>
   </data>
+  <data name="serviceAboutIntor" xml:space="preserve">
+    <value>this app was created be me, the creator. I call myself 'I'.</value>
+  </data>
 </root>

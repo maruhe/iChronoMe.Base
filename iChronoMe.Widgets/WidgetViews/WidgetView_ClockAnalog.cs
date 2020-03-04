@@ -60,6 +60,8 @@ namespace iChronoMe.Widgets
         public List<ClockPath> SecondPathList { get; set; } = new List<ClockPath>(new ClockPath[] { new ClockPath { Path = "M 0 50 0 -400", StorkeWidth = 5, OffsetX = 500, OffsetY = 500 } });
         public List<ClockPath> CapPathList { get; set; }
 
+        public xColor MainBackColor { get; set; } = xColor.Transparent;
+
         TimeSpan tsMin = TimeSpan.FromHours(1);
         TimeSpan tsMax = TimeSpan.FromTicks(0);
         TimeSpan tsAllSum = TimeSpan.FromTicks(0);
@@ -126,17 +128,18 @@ namespace iChronoMe.Widgets
             MinutePathList = cfg.MinuteHandConfig.MinutePathList;
             SecondPathList = cfg.SecondHandConfig.SecondPathList;
             CapPathList = cfg.CapConfig.CapPathList;
+            MainBackColor = cfg.MainBackColor;
         }
 
-        public void DrawCanvas(SKCanvas canvas, DateTime dateTime, int width = 512, int height = 512, bool bDrawBackImage = false, float? nSecondHandOverrideSecond = null)
+        public void DrawCanvas(SKCanvas canvas, DateTime dateTime, int width = 512, int height = 512, bool bDrawBackImage = false)
         {
             var t = dateTime.TimeOfDay;
-            DrawCanvas(canvas, t.TotalHours, t.TotalMinutes % 60, t.TotalSeconds % 60, width, height, bDrawBackImage, nSecondHandOverrideSecond);
+            DrawCanvas(canvas, t.TotalHours, t.TotalMinutes % 60, t.TotalSeconds % 60, width, height, bDrawBackImage);
         }
 
         SKBitmap bmpBackCache = null;
 
-        public void DrawCanvas(SKCanvas canvas, double hour, double minute, double second, int width = 512, int height = 512, bool bDrawBackImage = false, float? nSecondHandOverrideSecond = null)
+        public void DrawCanvas(SKCanvas canvas, double hour, double minute, double second, int width = 512, int height = 512, bool bDrawBackImage = false)
         {
             DateTime swStart = DateTime.Now;
 
@@ -313,14 +316,14 @@ namespace iChronoMe.Widgets
 
                 if (!string.IsNullOrEmpty(path.StrokeColor) && !"-".Equals(path.StrokeColor))
                 {
-                    strokePaint.Color = colorStroke.IsEmpty ? SKColor.Parse(path.StrokeColor) : colorStroke.ToSKColor();
+                    strokePaint.Color = colorStroke.IsEmpty ? path.GetStrokeColor(MainBackColor).ToSKColor() : colorStroke.ToSKColor();
                     strokePaint.StrokeWidth = path.StorkeWidth;
                     canvas.DrawPath(path.SkPath, strokePaint);
                 }
 
                 if (!string.IsNullOrEmpty(path.FillColor) && !"-".Equals(path.FillColor))
                 {
-                    fillPaint.Color = colorFill.IsEmpty ? SKColor.Parse(path.FillColor) : colorFill.ToSKColor();
+                    fillPaint.Color = colorFill.IsEmpty ? path.GetFillColor(MainBackColor).ToSKColor() : colorFill.ToSKColor();
                     canvas.DrawPath(path.SkPath, fillPaint);
                 }
 

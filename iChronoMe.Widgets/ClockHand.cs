@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.Interfaces;
+using iChronoMe.Core.Types;
 using SkiaSharp;
 using SQLite;
 
@@ -48,9 +49,17 @@ namespace iChronoMe.Widgets
             return new List<string>(HandCollection.Keys);
         }
 
+        public static ClockfaceInfo GetFaceInfo(string clockface)
+        {
+            if (FaceInfos.ContainsKey(clockface))
+                return FaceInfos[clockface];
+            return null;
+        }
+
         static Dictionary<string, ClockHandConfig> HandCollection = new Dictionary<string, ClockHandConfig>();
         static Dictionary<string, List<ClockPath>> PathList = new Dictionary<string, List<ClockPath>>();
         static Dictionary<string, ClockHandConfig> DefaultLinks = new Dictionary<string, ClockHandConfig>();
+        static Dictionary<string, ClockfaceInfo> FaceInfos = new Dictionary<string, ClockfaceInfo>();
 
         static ClockHandConfig()
         {
@@ -137,6 +146,10 @@ namespace iChronoMe.Widgets
                             }
                         }
                     }
+                    FaceInfos.Clear();
+                    var faces = db.Query<ClockfaceInfo>("select * from ClockfaceInfo");
+                    foreach (var face in faces)
+                        FaceInfos[face.Clockface] = face;
                 }
                 db.Close();
                 return true;
@@ -213,6 +226,46 @@ namespace iChronoMe.Widgets
                     return _skPath;
                 }
             }
+
+            public xColor GetStrokeColor(xColor clrBack)
+            {
+                if ("_".Equals(StrokeColor))
+                    return xColor.Transparent;
+
+                var clr = xColor.FromHex(StrokeColor);
+
+                if (clrBack.A > 0)
+                {
+                    if (clrBack.Luminosity < .3 != clr.Luminosity > .7)
+                        return clr.Invert();
+                }
+                return clr;
+            }
+
+            public xColor GetFillColor(xColor clrBack)
+            {
+                if ("_".Equals(FillColor))
+                    return xColor.Transparent;
+
+                var clr = xColor.FromHex(FillColor);
+
+                if (clrBack.A > 0)
+                {
+                    if (clrBack.Luminosity < .3 != clr.Luminosity > .7)
+                        return clr.Invert();
+                }
+                return clr;
+            }
+        }
+
+        public class ClockfaceInfo
+        {
+            public string Clockface { get; set; }
+            public string MainColor { get; set; }
+            public int ForceHandColor { get; set; }
+            public bool AskUserBackgroundColor { get; set; }
+            public bool AllowTint { get; set; }
+            public string Info { get; set; }
         }
     }
 }

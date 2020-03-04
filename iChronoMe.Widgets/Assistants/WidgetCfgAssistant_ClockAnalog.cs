@@ -150,6 +150,7 @@ namespace iChronoMe.Widgets
                     cfg.ColorBackground = x.ColorBackground;
                     cfg.ColorTickMarks = x.ColorTickMarks;
                 }
+                cfg.CheckSampleSmooth(false);
                 return cfg;
             }
         }
@@ -315,6 +316,7 @@ namespace iChronoMe.Widgets
                     clrS.Add(clr.HexString);
                     cfg = BaseSample.GetConfigClone();
                     cfg.ColorBackground = clr;
+                    cfg.CheckSampleSmooth(false);
 
                     Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(clr.HexString, cfg));
                 }

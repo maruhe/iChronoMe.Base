@@ -711,15 +711,16 @@ namespace iChronoMe.Widgets
         public string BackgroundImage;
         public TickMarkStyle TickMarkStyle = TickMarkStyle.Dotts;
 
-        public xColor ColorTickMarks = xColor.White;
-        public xColor ColorHourHandStroke = xColor.White;
+        public xColor ColorTickMarks = xColor.Black;
+        public xColor ColorHourHandStroke = xColor.Black;
         public xColor ColorHourHandFill = xColor.FromHex("#FF620000");
-        public xColor ColorMinuteHandStroke = xColor.White;
+        public xColor ColorMinuteHandStroke = xColor.Black;
         public xColor ColorMinuteHandFill = xColor.FromHex("#FF930000");
-        public xColor ColorSecondHandStroke = xColor.White;
+        public xColor ColorSecondHandStroke = xColor.Black;
         public xColor ColorSecondHandFill = xColor.FromHex("#FFBC0000");
-        public xColor ColorCenterCapStroke = xColor.White;
+        public xColor ColorCenterCapStroke = xColor.Black;
         public xColor ColorCenterCapFill = xColor.FromHex("#FFBC0000");
+        public xColor MainBackColor = xColor.Transparent;
 
         public void SetDefaultColors()
         {
@@ -739,8 +740,25 @@ namespace iChronoMe.Widgets
         {
             if (hasChangedBackground && BackImageAllowsBackColor)
                 ColorBackground = xColor.White;
-        }
 
+            MainBackColor = ColorBackground;
+
+            if (!string.IsNullOrEmpty(BackgroundImage))
+            {
+                var fi = ClockHandConfig.GetFaceInfo(Path.GetFileNameWithoutExtension(BackgroundImage));
+                if (fi != null)
+                {
+                    MainBackColor = fi.MainColor;
+                }
+            } 
+            else if (ColorTickMarks.A > 0)
+            {
+                if (MainBackColor.Luminosity < .3 != ColorTickMarks.Luminosity > .7)
+                    ColorTickMarks = ColorTickMarks.Invert();
+
+            }
+        }
+        
         public bool BackImageAllowsBackColor { get => !string.IsNullOrEmpty(BackgroundImage) && BackgroundImage.Contains("01_simple_face"); } 
     }
 

@@ -72,7 +72,7 @@ namespace iChronoMe.Core.Types
             }
         }
 
-        public xColor InvertLuminosityDiff()
+        public xColor Invert()
         {
             return new xColor(1 - R, 1 - G, 1 - B, A);
         }

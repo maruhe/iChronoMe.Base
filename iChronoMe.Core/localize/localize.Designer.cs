@@ -1062,6 +1062,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die this app was created be me, the creator. I call myself &apos;I&apos;. ähnelt.
+        /// </summary>
+        public static string serviceAboutIntor {
+            get {
+                return ResourceManager.GetString("serviceAboutIntor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Alle Farben auf einmal ähnelt.
         /// </summary>
         public static string SetAllColorsAtOnce {
