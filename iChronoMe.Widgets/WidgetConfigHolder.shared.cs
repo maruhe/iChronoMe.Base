@@ -711,16 +711,15 @@ namespace iChronoMe.Widgets
         public string BackgroundImage;
         public TickMarkStyle TickMarkStyle = TickMarkStyle.Dotts;
 
-        public xColor ColorTickMarks = xColor.Black;
-        public xColor ColorHourHandStroke = xColor.Black;
+        public xColor ColorTickMarks = xColor.White;
+        public xColor ColorHourHandStroke = xColor.White;
         public xColor ColorHourHandFill = xColor.FromHex("#FF620000");
-        public xColor ColorMinuteHandStroke = xColor.Black;
+        public xColor ColorMinuteHandStroke = xColor.White;
         public xColor ColorMinuteHandFill = xColor.FromHex("#FF930000");
-        public xColor ColorSecondHandStroke = xColor.Black;
+        public xColor ColorSecondHandStroke = xColor.White;
         public xColor ColorSecondHandFill = xColor.FromHex("#FFBC0000");
-        public xColor ColorCenterCapStroke = xColor.Black;
+        public xColor ColorCenterCapStroke = xColor.White;
         public xColor ColorCenterCapFill = xColor.FromHex("#FFBC0000");
-        public xColor MainBackColor = xColor.Transparent;
 
         public void SetDefaultColors()
         {
@@ -733,29 +732,14 @@ namespace iChronoMe.Widgets
             ColorCenterCapStroke = xColor.MakeEmptyColor(ColorCenterCapStroke);
             ColorCenterCapFill = xColor.MakeEmptyColor(ColorCenterCapFill);
 
-            CheckSampleSmooth(true);
-        }
 
-        public void CheckSampleSmooth(bool hasChangedBackground)
-        {
-            if (hasChangedBackground && BackImageAllowsBackColor)
+            if (!string.IsNullOrEmpty(BackgroundImage) && BackImageAllowsBackColor)
                 ColorBackground = xColor.White;
 
-            MainBackColor = ColorBackground;
-
-            if (!string.IsNullOrEmpty(BackgroundImage))
+            if (string.IsNullOrEmpty(BackgroundImage) && ColorTickMarks.A > 0)
             {
-                var fi = ClockHandConfig.GetFaceInfo(Path.GetFileNameWithoutExtension(BackgroundImage));
-                if (fi != null)
-                {
-                    MainBackColor = fi.MainColor;
-                }
-            } 
-            else if (ColorTickMarks.A > 0)
-            {
-                if (MainBackColor.Luminosity < .3 != ColorTickMarks.Luminosity > .7)
+                if (ColorBackground.IsSimilar(ColorTickMarks))
                     ColorTickMarks = ColorTickMarks.Invert();
-
             }
         }
         

@@ -4,7 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Threading;
-
+using System.Xml.Serialization;
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.Types;
 
@@ -55,12 +55,23 @@ namespace iChronoMe.Widgets
         };
 
 
-        public List<ClockPath> HourPathList { get; set; } = new List<ClockPath>(new ClockPath[] { new ClockPath { Path = "M 0 40 0 -200", StorkeWidth = 15, OffsetX = 500, OffsetY = 500 } });
-        public List<ClockPath> MinutePathList { get; set; } = new List<ClockPath>(new ClockPath[] { new ClockPath { Path = "M 0 48 0 -380", StorkeWidth = 15, OffsetX = 500, OffsetY = 500 } });
-        public List<ClockPath> SecondPathList { get; set; } = new List<ClockPath>(new ClockPath[] { new ClockPath { Path = "M 0 50 0 -400", StorkeWidth = 5, OffsetX = 500, OffsetY = 500 } });
+        public List<ClockPath> HourPathList { get; set; } = ClockHandConfig.defaultHands.HourPathList;
+        public List<ClockPath> MinutePathList { get; set; } = ClockHandConfig.defaultHands.MinutePathList;
+        public List<ClockPath> SecondPathList { get; set; } = ClockHandConfig.defaultHands.SecondPathList;
         public List<ClockPath> CapPathList { get; set; }
 
-        public xColor MainBackColor { get; set; } = xColor.Transparent;
+        ClockfaceInfo _clockfaceInfo = null;
+        [XmlIgnore] public ClockfaceInfo ClockfaceInfo 
+        { 
+            get
+            {
+                if (string.IsNullOrEmpty(BackgroundImage))
+                    return null;
+                if (_clockfaceInfo == null || BackgroundImage.Contains(_clockfaceInfo.Clockface))
+                    _clockfaceInfo = ClockHandConfig.GetFaceInfo(Path.GetFileNameWithoutExtension(BackgroundImage));
+                return _clockfaceInfo;
+            }
+        }
 
         TimeSpan tsMin = TimeSpan.FromHours(1);
         TimeSpan tsMax = TimeSpan.FromTicks(0);
@@ -128,7 +139,6 @@ namespace iChronoMe.Widgets
             MinutePathList = cfg.MinuteHandConfig.MinutePathList;
             SecondPathList = cfg.SecondHandConfig.SecondPathList;
             CapPathList = cfg.CapConfig.CapPathList;
-            MainBackColor = cfg.MainBackColor;
         }
 
         public void DrawCanvas(SKCanvas canvas, DateTime dateTime, int width = 512, int height = 512, bool bDrawBackImage = false)
@@ -316,14 +326,14 @@ namespace iChronoMe.Widgets
 
                 if (!string.IsNullOrEmpty(path.StrokeColor) && !"-".Equals(path.StrokeColor))
                 {
-                    strokePaint.Color = colorStroke.IsEmpty ? path.GetStrokeColor(MainBackColor).ToSKColor() : colorStroke.ToSKColor();
-                    strokePaint.StrokeWidth = path.StorkeWidth;
+                    strokePaint.Color = colorStroke.IsEmpty ? path.GetStrokeColor(ClockfaceInfo != null ? ClockfaceInfo.MainColor + " " + ClockfaceInfo.HandColorsBanned : ColorBackground.HexString, ClockfaceInfo?.HandColorSuggestion).ToSKColor() : colorStroke.ToSKColor();
+                    strokePaint.StrokeWidth = path.StrokeWidth;
                     canvas.DrawPath(path.SkPath, strokePaint);
                 }
 
                 if (!string.IsNullOrEmpty(path.FillColor) && !"-".Equals(path.FillColor))
                 {
-                    fillPaint.Color = colorFill.IsEmpty ? path.GetFillColor(MainBackColor).ToSKColor() : colorFill.ToSKColor();
+                    fillPaint.Color = colorFill.IsEmpty ? path.GetFillColor(ClockfaceInfo != null ? ClockfaceInfo.MainColor + " " + ClockfaceInfo.HandColorsBanned : ColorBackground.HexString, ClockfaceInfo?.HandColorSuggestion).ToSKColor() : colorFill.ToSKColor();
                     canvas.DrawPath(path.SkPath, fillPaint);
                 }
 

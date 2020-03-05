@@ -37,7 +37,7 @@ using System.Globalization;
 
 namespace iChronoMe.Core.Types
 {
-    [DebuggerDisplay("R={R}, G={G}, B={B}, A={A}, Hue={Hue}, Saturation={Saturation}, Luminosity={Luminosity}")]
+    //[DebuggerDisplay("{HexString} => R={R}, G={G}, B={B}, A={A}, Hue={Hue}, Saturation={Saturation}, Luminosity={Luminosity}")]
     //[TypeConverter(typeof(ColorTypeConverter))]
     public partial struct xColor
     {
@@ -401,7 +401,7 @@ namespace iChronoMe.Core.Types
         public string ToHex(bool bIncludeEmptyToken)
         {
             if (bIncludeEmptyToken)
-                return ToHex().Replace('#', '$');
+                return IsEmpty ? ToHex().Replace('#', '$') : ToHex();
             return ToHex();
         }
             
@@ -699,6 +699,92 @@ namespace iChronoMe.Core.Types
         public static readonly xColor WhiteSmoke = FromRgb(245, 245, 245);
         public static readonly xColor Yellow = FromRgb(255, 255, 0);
         public static readonly xColor YellowGreen = FromRgb(154, 205, 50);
+
+        #endregion
+
+        #region ColorDiff
+
+        private static int[] _rgb2lab(double r, double g, double b)
+        {
+            //http://www.brucelindbloom.com
+
+            double X, Y, Z, fx, fy, fz, xr, yr, zr;
+            double Ls, As, Bs;
+            double eps = 216f / 24389f;
+            double k = 24389f / 27f;
+
+            double Xr = 0.964221f;  // reference white D50
+            double Yr = 1.0f;
+            double Zr = 0.825211f;
+
+            // assuming sRGB (D65)
+            if (r <= 0.04045)
+                r = r / 12.92;
+            else
+                r = Math.Pow((r + 0.055) / 1.055, 2.4);
+
+            if (g <= 0.04045)
+                g = g / 12.92;
+            else
+                g = Math.Pow((g + 0.055) / 1.055, 2.4);
+
+            if (b <= 0.04045)
+                b = b / 12.92;
+            else
+                b = Math.Pow((b + 0.055) / 1.055, 2.4);
+
+            X = 0.436052025f * r + 0.385081593f * g + 0.143087414f * b;
+            Y = 0.222491598f * r + 0.71688606f * g + 0.060621486f * b;
+            Z = 0.013929122f * r + 0.097097002f * g + 0.71418547f * b;
+
+            // XYZ to Lab
+            xr = X / Xr;
+            yr = Y / Yr;
+            zr = Z / Zr;
+
+            if (xr > eps)
+                fx = Math.Pow(xr, 1 / 3.0);
+            else
+                fx = ((k * xr + 16.0) / 116.0);
+
+            if (yr > eps)
+                fy = Math.Pow(yr, 1 / 3.0);
+            else
+                fy = ((k * yr + 16.0) / 116.0);
+
+            if (zr > eps)
+                fz = Math.Pow(zr, 1 / 3.0);
+            else
+                fz = ((k * zr + 16.0) / 116);
+
+            Ls = (116 * fy) - 16;
+            As = 500 * (fx - fy);
+            Bs = 200 * (fy - fz);
+
+            int[] lab = new int[3];
+            lab[0] = (int)(2.55 * Ls + .5);
+            lab[1] = (int)(As + .5);
+            lab[2] = (int)(Bs + .5);
+            return lab;
+        }
+
+        /**
+         * Computes the difference between two RGB colors by converting them to the L*a*b scale and
+         * comparing them using the CIE76 algorithm { http://en.wikipedia.org/wiki/Color_difference#CIE76}
+         */
+        public static double GetColorDifference(xColor a, xColor b)
+        {
+            int[] lab1 = _rgb2lab(a.R, a.G, a.B);
+            int[] lab2 = _rgb2lab(b.R, b.G, b.B);
+            var diff = Math.Sqrt(Math.Pow(lab2[0] - lab1[0], 2) + Math.Pow(lab2[1] - lab1[1], 2) + Math.Pow(lab2[2] - lab1[2], 2)); //0-255
+            return diff / 2.55; // => 0-100;
+        }
+
+        public double GetColorDifference(xColor other)
+            => GetColorDifference(this, other);
+
+        public bool IsSimilar(xColor other, int maxDiff = 30)
+            => GetColorDifference(this, other) <= maxDiff;
 
         #endregion
     }

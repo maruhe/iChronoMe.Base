@@ -109,29 +109,23 @@ namespace iChronoMe.Widgets
                         if (!string.IsNullOrEmpty(cfg.HourPaths) && PathList.ContainsKey(cfg.HourPaths))
                         {
                             cfg.HourPathList = new List<ClockPath>(PathList[cfg.HourPaths]);
-                            foreach (var p in cfg.HourPathList)
-                            {
-                                cfg.AllowHourStroke = cfg.AllowHourStroke && !"-".Equals(p.StrokeColor);
-                                cfg.AllowHourFill = cfg.AllowHourFill && !"-".Equals(p.FillColor);
-                            }
+                            var x = CheckHasCustomizablePaths(cfg.HourPathList);
+                            cfg.AllowCustomHourStroke = x.stroke;
+                            cfg.AllowCustomHourFill = x.fill;
                         }
                         if (!string.IsNullOrEmpty(cfg.MinutePaths) && PathList.ContainsKey(cfg.MinutePaths))
                         { 
                             cfg.MinutePathList = new List<ClockPath>(PathList[cfg.MinutePaths]);
-                            foreach (var p in cfg.MinutePathList)
-                            {
-                                cfg.AllowHourStroke = cfg.AllowHourStroke && !"-".Equals(p.StrokeColor);
-                                cfg.AllowHourFill = cfg.AllowHourFill && !"-".Equals(p.FillColor);
-                            }
+                            var x = CheckHasCustomizablePaths(cfg.MinutePathList);
+                            cfg.AllowCustomMinuteStroke = x.stroke;
+                            cfg.AllowCustomMinuteFill = x.fill;
                         }
                         if (!string.IsNullOrEmpty(cfg.SecondPaths) && PathList.ContainsKey(cfg.SecondPaths))
                         { 
                             cfg.SecondPathList = new List<ClockPath>(PathList[cfg.SecondPaths]);
-                            foreach (var p in cfg.SecondPathList)
-                            {
-                                cfg.AllowMinuteStroke = cfg.AllowMinuteStroke && !"-".Equals(p.StrokeColor);
-                                cfg.AllowMinuteFill = cfg.AllowMinuteFill && !"-".Equals(p.FillColor);
-                            }
+                            var x = CheckHasCustomizablePaths(cfg.SecondPathList);
+                            cfg.AllowCustomSecondStroke = x.stroke;
+                            cfg.AllowCustomSecondFill = x.fill;
                         }
                         if (!string.IsNullOrEmpty(cfg.CapPaths) && PathList.ContainsKey(cfg.CapPaths))
                         { 
@@ -167,6 +161,19 @@ namespace iChronoMe.Widgets
             return false;
         }
 
+        private static (bool stroke, bool fill) CheckHasCustomizablePaths(List<ClockPath> pathList)
+        {
+            int iStrokes = 0, iFills = 0;
+            foreach (var p in pathList)
+            {
+                if (!"-".Equals(p.StrokeColor) && p.StrokeWidth > 1)
+                    iStrokes++;
+                if (!"-".Equals(p.FillColor))
+                    iFills++;
+            }
+            return (iStrokes > 0, iFills > 0);
+        }
+
         public static List<ClockPath> GetPaths(string pathName)
         {
             if (PathList.ContainsKey(pathName))
@@ -182,12 +189,12 @@ namespace iChronoMe.Widgets
         public string SecondPaths { get; set; }
         public string CapPaths { get; set; }
 
-        [Ignore] public bool AllowHourStroke { get; set; } = true;
-        [Ignore] public bool AllowHourFill { get; set; } = true;
-        [Ignore] public bool AllowMinuteStroke { get; set; } = true;
-        [Ignore] public bool AllowMinuteFill { get; set; } = true;
-        [Ignore] public bool AllowSecondStroke { get; set; } = true;
-        [Ignore] public bool AllowSecondFill { get; set; } = true;
+        [Ignore] public bool AllowCustomHourStroke { get; set; } = false;
+        [Ignore] public bool AllowCustomHourFill { get; set; } = false;
+        [Ignore] public bool AllowCustomMinuteStroke { get; set; } = false;
+        [Ignore] public bool AllowCustomMinuteFill { get; set; } = false;
+        [Ignore] public bool AllowCustomSecondStroke { get; set; } = false;
+        [Ignore] public bool AllowCustomSecondFill { get; set; } = false;
 
         [Ignore]public List<ClockPath> HourPathList { get; set; }
         [Ignore] public List<ClockPath> MinutePathList { get; set; }
@@ -199,12 +206,12 @@ namespace iChronoMe.Widgets
             return (ClockHandConfig)MemberwiseClone();
         }
 
-        static ClockHandConfig defaultHands = new ClockHandConfig
+        public static ClockHandConfig defaultHands = new ClockHandConfig
         {
             ID = "_",
-            HourPathList = new List<ClockPath>(new ClockPath[] { new ClockPath { Path = "M 0 40 0 -200", StorkeWidth = 15, OffsetX = 500, OffsetY = 500 } }),
-            MinutePathList = new List<ClockPath>(new ClockPath[] { new ClockPath { Path = "M 0 48 0 -380", StorkeWidth = 15, OffsetX = 500, OffsetY = 500 } }),
-            CapPathList = new List<ClockPath>(new ClockPath[] { new ClockPath { Path = "M 0 50 0 -400", StorkeWidth = 5, OffsetX = 500, OffsetY = 500 } })
+            HourPathList = new List<ClockPath>(new ClockPath[] { new ClockPath { Path = "M 0 40 0 -200", StrokeWidth = 15, OffsetX = 500, OffsetY = 500, StrokeColor = "#FFF", FillColor = "-" } }),
+            MinutePathList = new List<ClockPath>(new ClockPath[] { new ClockPath { Path = "M 0 48 0 -380", StrokeWidth = 15, OffsetX = 500, OffsetY = 500, StrokeColor = "#FFF", FillColor = "-" } }),
+            SecondPathList = new List<ClockPath>(new ClockPath[] { new ClockPath { Path = "M 0 50 0 -400", StrokeWidth = 5, OffsetX = 500, OffsetY = 500, StrokeColor = "#FFF", FillColor = "-" } })
         };
 
         public class ClockPath
@@ -212,7 +219,7 @@ namespace iChronoMe.Widgets
             public string ID { get; set; }
             public string Name { get; set; }
             public string Path { get; set; }
-            public float StorkeWidth { get; set; }
+            public float StrokeWidth { get; set; }
             public string StrokeColor { get; set; }
             public string FillColor { get; set; }
             public int OffsetX { get; set; }
@@ -227,32 +234,83 @@ namespace iChronoMe.Widgets
                 }
             }
 
-            public xColor GetStrokeColor(xColor clrBack)
+            public xColor GetStrokeColor(string bannedColors, string suggestedColor)
             {
                 if ("_".Equals(StrokeColor))
                     return xColor.Transparent;
 
                 var clr = xColor.FromHex(StrokeColor);
+                if (string.IsNullOrEmpty(bannedColors))
+                    return clr;
 
-                if (clrBack.A > 0)
+                int iTry = string.IsNullOrEmpty(suggestedColor) ? 1 : 0;
+                while (iTry < 5)
                 {
-                    if (clrBack.Luminosity < .3 != clr.Luminosity > .7)
-                        return clr.Invert();
+                    iTry++;
+                    bool bIsValid = true;
+                    foreach (string cBanned in bannedColors.Trim().Split(' '))
+                    {
+                        if (clr.IsSimilar(xColor.FromHex(cBanned)))
+                        {
+                            bIsValid = false;
+                            continue;
+                        }
+                    }
+
+                    if (bIsValid)
+                        return clr;
+
+                    if (iTry == 1)
+                        clr = suggestedColor;
+                    if (iTry == 2)
+                        clr = clr.Invert();
+                    if (iTry == 3)
+                        clr = xColor.MaterialBlue;
+                    if (iTry == 4)
+                        clr = xColor.MaterialGreen;
+                    if (iTry == 5)
+                        clr = xColor.MaterialRed;
                 }
                 return clr;
             }
 
-            public xColor GetFillColor(xColor clrBack)
+            public xColor GetFillColor(string bannedColors, string suggestedColor)
             {
-                if ("_".Equals(FillColor))
+                if ("_".Equals(StrokeColor))
                     return xColor.Transparent;
 
                 var clr = xColor.FromHex(FillColor);
 
-                if (clrBack.A > 0)
+                if (string.IsNullOrEmpty(bannedColors))
+                    return clr;
+
+                int iTry = string.IsNullOrEmpty(suggestedColor) ? 1 : 0;
+                while (iTry < 5)
                 {
-                    if (clrBack.Luminosity < .3 != clr.Luminosity > .7)
-                        return clr.Invert();
+                    iTry++;
+                    bool bIsValid = true;
+                    foreach (string cBanned in bannedColors.Trim().Split(' '))
+                    {
+                        if (clr.IsSimilar(xColor.FromHex(cBanned)))
+                        {
+                            bIsValid = false;
+                            continue;
+                        }
+                    }
+
+                    if (bIsValid)
+                        return clr;
+
+                    if (iTry == 1)
+                        clr = suggestedColor;
+                    if (iTry == 2)
+                        clr = clr.Invert();
+                    if (iTry == 3)
+                        clr = xColor.MaterialBlue;
+                    if (iTry == 4)
+                        clr = xColor.MaterialGreen;
+                    if (iTry == 5)
+                        clr = xColor.MaterialRed;
                 }
                 return clr;
             }
@@ -262,7 +320,8 @@ namespace iChronoMe.Widgets
         {
             public string Clockface { get; set; }
             public string MainColor { get; set; }
-            public int ForceHandColor { get; set; }
+            public string HandColorsBanned { get; set; }
+            public string HandColorSuggestion { get; set; }
             public bool AskUserBackgroundColor { get; set; }
             public bool AllowTint { get; set; }
             public string Info { get; set; }

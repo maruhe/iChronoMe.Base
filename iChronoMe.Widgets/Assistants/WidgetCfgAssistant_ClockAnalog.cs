@@ -5,6 +5,7 @@ using System.Net;
 
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.DynamicCalendar;
+using iChronoMe.Core.Extentions;
 using iChronoMe.Core.Interfaces;
 using iChronoMe.Core.Types;
 
@@ -18,10 +19,11 @@ namespace iChronoMe.Widgets
 
             ShowPreviewImage = false;
             var cfg = baseSample == null ? new WidgetCfg_ClockAnalog() : baseSample.GetConfigClone();
+            cfg.SetDefaultColors();
             cfg.PositionType = WidgetCfgPositionType.LivePosition;
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.CurrentLocation, (WidgetCfg_ClockAnalog)cfg.Clone()));
             cfg.PositionType = WidgetCfgPositionType.StaticPosition;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.StaticLocation, cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.StaticLocation, (WidgetCfg_ClockAnalog)cfg.Clone()));
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase);
         }
 
@@ -43,13 +45,13 @@ namespace iChronoMe.Widgets
                 sample.WidgetConfig.Longitude = pos.Longitude;
             }
             if (ClockHandConfig.Count > 1)
-                NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_FirstStyle);
+                NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_StartStyle);
         }
     }
 
-    public class WidgetCfgAssistant_ClockAnalog_FirstStyle : WidgetConfigAssistant<WidgetCfg_ClockAnalog>
+    public class WidgetCfgAssistant_ClockAnalog_StartStyle : WidgetConfigAssistant<WidgetCfg_ClockAnalog>
     {
-        public WidgetCfgAssistant_ClockAnalog_FirstStyle(WidgetCfgSample<WidgetCfg_ClockAnalog> baseSample)
+        public WidgetCfgAssistant_ClockAnalog_StartStyle(WidgetCfgSample<WidgetCfg_ClockAnalog> baseSample)
         {
             Title = localize.Style;
             BaseSample = baseSample;
@@ -61,13 +63,24 @@ namespace iChronoMe.Widgets
             cfg.ColorHourHandStroke = cfg.ColorHourHandFill = cfg.ColorMinuteHandStroke = cfg.ColorMinuteHandFill =
                  cfg.ColorSecondHandStroke = cfg.ColorSecondHandFill = cfg.ColorTickMarks = xColor.White;
 
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("simple", cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("simple white", cfg));
+
+            cfg = (WidgetCfg_ClockAnalog)cfg.Clone();
+            cfg.ColorHourHandStroke = cfg.ColorHourHandFill = cfg.ColorMinuteHandStroke = cfg.ColorMinuteHandFill =
+                 cfg.ColorSecondHandStroke = cfg.ColorSecondHandFill = cfg.ColorTickMarks = xColor.MaterialTextBlack;
+            
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("simple black", cfg));
 
             cfg = BaseSample.GetConfigClone();
             cfg.AllHandConfigID = "cute";
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("cute", cfg));
 
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.MoreOptionsAndColors, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase)));
+            cfg.ColorBackground = xColor.MaterialTeal.WithAlpha(.7);
+            cfg.ColorHourHandStroke = cfg.ColorHourHandFill = xColor.MaterialOrange;
+            cfg.ColorMinuteHandStroke = cfg.ColorMinuteHandFill = xColor.MaterialIndigo;
+            cfg.ColorSecondHandStroke = cfg.ColorSecondHandFill = xColor.MaterialGreen;
+            cfg.ColorTickMarks = xColor.MaterialBlueGray;
+
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.MoreOptionsAndColors, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase), cfg));
 
             NextStepAssistantType = null;
         }
@@ -150,7 +163,7 @@ namespace iChronoMe.Widgets
                     cfg.ColorBackground = x.ColorBackground;
                     cfg.ColorTickMarks = x.ColorTickMarks;
                 }
-                cfg.CheckSampleSmooth(false);
+                cfg.SetDefaultColors();
                 return cfg;
             }
         }
@@ -184,7 +197,7 @@ namespace iChronoMe.Widgets
                         cfg.ColorBackground = xColor.Transparent;
                         cfg.ColorTickMarks = xColor.Transparent;
 
-                        cfg.CheckSampleSmooth(true);
+                        cfg.SetDefaultColors();
 
                         string cDefaultHands = ClockHandConfig.GetDefaultID(Path.GetFileNameWithoutExtension(cfg.BackgroundImage));
                         if (!string.IsNullOrEmpty(cDefaultHands))
@@ -235,7 +248,7 @@ namespace iChronoMe.Widgets
                     cfg.ColorBackground = xColor.Transparent;
                     cfg.ColorTickMarks = xColor.Transparent;
 
-                    cfg.CheckSampleSmooth(true);
+                    cfg.SetDefaultColors();
 
                     string cDefaultHands = ClockHandConfig.GetDefaultID(Path.GetFileNameWithoutExtension(cfg.BackgroundImage));
                     if (!string.IsNullOrEmpty(cDefaultHands))
@@ -300,7 +313,8 @@ namespace iChronoMe.Widgets
             AllowCustom = true;
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase);
 
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.current, BaseSample.GetConfigClone()));
+            if (baseSample.WidgetConfig.ColorBackground.A > 0)
+                Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.current, BaseSample.GetConfigClone()));
             var cfg = BaseSample.GetConfigClone();
             cfg.ColorBackground = xColor.Transparent;
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.transparent, cfg));
@@ -316,7 +330,7 @@ namespace iChronoMe.Widgets
                     clrS.Add(clr.HexString);
                     cfg = BaseSample.GetConfigClone();
                     cfg.ColorBackground = clr;
-                    cfg.CheckSampleSmooth(false);
+                    cfg.SetDefaultColors();
 
                     Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(clr.HexString, cfg));
                 }
@@ -364,7 +378,11 @@ namespace iChronoMe.Widgets
                 cfg.AllHandConfigID = id;
                 var prev = (WidgetCfg_ClockAnalog)cfg.Clone();
                 prev.SetDefaultColors();
-                Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(sys.Debugmode ? id : " ", null, cfg, null, prev));
+                Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(sys.Debugmode ? id
+                    + " " + cfg.HourHandConfig.AllowCustomHourStroke.ToInt() + cfg.HourHandConfig.AllowCustomHourFill.ToInt()
+                    + " " + cfg.MinuteHandConfig.AllowCustomMinuteStroke.ToInt() + cfg.MinuteHandConfig.AllowCustomMinuteFill.ToInt()
+                    + " " + cfg.SecondHandConfig.AllowCustomSecondStroke.ToInt() + cfg.SecondHandConfig.AllowCustomSecondFill.ToInt()
+                    : " ", null, cfg, null, prev));
             }
         }
 
@@ -431,9 +449,9 @@ namespace iChronoMe.Widgets
             var clrs = DynamicColors.SampleColorSetS[5];
 
             var cfg = BaseSample.GetConfigClone();
-            bool bHasFilled = cfg.HourHandConfig.AllowHourFill || cfg.MinuteHandConfig.AllowMinuteFill || cfg.SecondHandConfig.AllowSecondFill;
+            bool bHasFilled = cfg.HourHandConfig.AllowCustomHourFill || cfg.MinuteHandConfig.AllowCustomMinuteFill || cfg.SecondHandConfig.AllowCustomSecondFill;
 
-            if (bHasFilled && cfg.HourHandConfig.AllowHourStroke)
+            if (bHasFilled && cfg.HourHandConfig.AllowCustomHourStroke)
             {
                 AddSample(localize.colorcfgBlackTransparent, xColor.Black, xColor.Transparent, xColor.Black, xColor.Transparent, xColor.Black, xColor.Transparent, "SetDone");
 
@@ -447,7 +465,7 @@ namespace iChronoMe.Widgets
             else
                 AddSample(localize.colorcfgBlack, xColor.Black, xColor.Black, xColor.Black, xColor.Black, xColor.Black, xColor.Black, "SetDone");
 
-            if (bHasFilled && cfg.HourHandConfig.AllowHourStroke)
+            if (bHasFilled && cfg.HourHandConfig.AllowCustomHourStroke)
             {
                 AddSample(localize.colorcfgWhiteTransparent, xColor.White, xColor.Transparent, xColor.White, xColor.Transparent, xColor.White, xColor.Transparent, "SetDone");
 
@@ -460,16 +478,16 @@ namespace iChronoMe.Widgets
             else
                 AddSample(localize.colorcfgWhite, xColor.White, xColor.White, xColor.White, xColor.White, xColor.White, xColor.White, "SetDone");
 
-            if (cfg.HourHandConfig.AllowHourStroke)
+            if (cfg.HourHandConfig.AllowCustomHourStroke)
                 AddSample(localize.colorcfgSingleColor, clrs[0], xColor.Transparent, clrs[0], xColor.Transparent, clrs[0], xColor.Transparent, new object[] { 0, xColor.Transparent, 0, xColor.Transparent, 0, xColor.Transparent });
 
-            if (bHasFilled || !cfg.HourHandConfig.AllowHourStroke)
+            if (bHasFilled || !cfg.HourHandConfig.AllowCustomHourStroke)
                 AddSample(localize.colorcfgSingleColorFilled, clrs[0], clrs[1], clrs[0], clrs[1], clrs[0], clrs[1], new object[] { 0, 1, 0, 1, 0, 1 });
 
-            if (cfg.HourHandConfig.AllowHourStroke) 
+            if (cfg.HourHandConfig.AllowCustomHourStroke) 
                 AddSample(localize.colorcfgMultiColor, clrs[0], xColor.Transparent, clrs[2], xColor.Transparent, clrs[4], xColor.Transparent, new object[] { 0, xColor.Transparent, 2, xColor.Transparent, 4, xColor.Transparent });
 
-            if (bHasFilled || !cfg.HourHandConfig.AllowHourStroke)
+            if (bHasFilled || !cfg.HourHandConfig.AllowCustomHourStroke)
                 AddSample(localize.colorcfgMultiColorFilled, clrs[0], clrs[1], clrs[2], clrs[3], clrs[4], clrs[0], new object[] { 0, 1, 2, 3, 4, 5 });
         }
 
@@ -516,7 +534,7 @@ namespace iChronoMe.Widgets
             {
                 xColor? clr = null;
 
-                if (BaseSample.WidgetConfig.HourHandConfig.AllowHourStroke)
+                if (BaseSample.WidgetConfig.HourHandConfig.AllowCustomHourStroke)
                 {
                     clr = await handler.UserSelectColor(localize.HourHandStroke, org.ColorHourHandStroke);
                     if (clr == null)
@@ -525,7 +543,7 @@ namespace iChronoMe.Widgets
                     bIsValid = true;
                 }
 
-                if (BaseSample.WidgetConfig.HourHandConfig.AllowHourFill)
+                if (BaseSample.WidgetConfig.HourHandConfig.AllowCustomHourFill)
                 {
                     clr = await handler.UserSelectColor(localize.HourHandFill, org.ColorHourHandFill);
                     if (clr == null)
@@ -534,7 +552,7 @@ namespace iChronoMe.Widgets
                     bIsValid = true;
                 }
 
-                if (BaseSample.WidgetConfig.MinuteHandConfig.AllowMinuteStroke)
+                if (BaseSample.WidgetConfig.MinuteHandConfig.AllowCustomMinuteStroke)
                 {
                     clr = await handler.UserSelectColor(localize.MinuteHandStroke, org.ColorMinuteHandStroke);
                     if (clr == null)
@@ -542,7 +560,7 @@ namespace iChronoMe.Widgets
                     cfg.ColorMinuteHandStroke = clr.Value;
                 }
 
-                if (BaseSample.WidgetConfig.MinuteHandConfig.AllowMinuteFill)
+                if (BaseSample.WidgetConfig.MinuteHandConfig.AllowCustomMinuteFill)
                 {
                     clr = await handler.UserSelectColor(localize.MinuteHandFill, org.ColorMinuteHandFill);
                     if (clr == null)
@@ -550,7 +568,7 @@ namespace iChronoMe.Widgets
                     cfg.ColorMinuteHandFill = clr.Value;
                 }
 
-                if (cfg.ShowSeconds && BaseSample.WidgetConfig.SecondHandConfig.AllowSecondStroke)
+                if (cfg.ShowSeconds && BaseSample.WidgetConfig.SecondHandConfig.AllowCustomSecondStroke)
                 {
                     clr = await handler.UserSelectColor(localize.SecondHandStroke, org.ColorSecondHandStroke);
                     if (clr == null)
@@ -558,7 +576,7 @@ namespace iChronoMe.Widgets
                     cfg.ColorSecondHandStroke = clr.Value;
                 }
 
-                if (cfg.ShowSeconds && BaseSample.WidgetConfig.SecondHandConfig.AllowSecondFill)
+                if (cfg.ShowSeconds && BaseSample.WidgetConfig.SecondHandConfig.AllowCustomSecondFill)
                 {
                     clr = await handler.UserSelectColor(localize.SecondHandFill, org.ColorSecondHandFill);
                     if (clr == null)
@@ -597,9 +615,9 @@ namespace iChronoMe.Widgets
             AllowCustom = true;
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase);
 
-            bHourIsFilled = BaseSample.WidgetConfig.HourHandConfig.AllowHourFill;
-            bMinuteIsFilled = BaseSample.WidgetConfig.MinuteHandConfig.AllowMinuteFill;
-            bSecondIsFilled = BaseSample.WidgetConfig.SecondHandConfig.AllowSecondFill;
+            bHourIsFilled = BaseSample.WidgetConfig.HourHandConfig.AllowCustomHourFill;
+            bMinuteIsFilled = BaseSample.WidgetConfig.MinuteHandConfig.AllowCustomMinuteFill;
+            bSecondIsFilled = BaseSample.WidgetConfig.SecondHandConfig.AllowCustomSecondFill;
 
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.current, BaseSample.GetConfigClone()));
             LoadSamples();
@@ -768,6 +786,10 @@ namespace iChronoMe.Widgets
             foreach (var o in Enum.GetValues(typeof(TickMarkStyle)))
             {
                 var cfg = BaseSample.GetConfigClone();
+                if (cfg.ColorTickMarks.A == 0)
+                    cfg.ColorTickMarks = cfg.ColorHourHandStroke;
+                if (cfg.ColorTickMarks.A == 0)
+                    cfg.ColorTickMarks = cfg.ColorHourHandFill;
                 cfg.TickMarkStyle = (TickMarkStyle)o;
                 Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(o.ToString(), cfg));
             }
@@ -791,7 +813,8 @@ namespace iChronoMe.Widgets
             AllowCustom = true;
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase);
 
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.current, BaseSample.GetConfigClone()));
+            if (BaseSample.WidgetConfig.ColorTickMarks.A > 0)
+                Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.current, BaseSample.GetConfigClone()));
             LoadSamples();
         }
 
