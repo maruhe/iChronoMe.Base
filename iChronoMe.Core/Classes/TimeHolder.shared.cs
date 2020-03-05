@@ -50,13 +50,23 @@ namespace iChronoMe.Core.Classes
 
         public static void Resync()
         {
+            //   NTP DISABLED !!!
+            mLastNtpDiff = TimeSpan.FromTicks(0);
+            State = TimeHolderState.Synchron;
+            mLastNtp = DateTime.Now;
+            return;
+
             State = TimeHolderState.Init;
 
             iErrorCount = 0;
 
-            Task.Factory.StartNew(() => { mNtp.BeginRequestTime(); });
+            Task.Factory.StartNew(() => {
+                requestStart = DateTime.Now;
+                mNtp.BeginRequestTime(); 
+            });
         }
 
+        static DateTime requestStart;
         static int iErrorCount;
         private static void Client_ErrorOccurred(object sender, NtpNetworkErrorEventArgs e)
         {
@@ -68,6 +78,7 @@ namespace iChronoMe.Core.Classes
                 {
                     await Task.Delay(500);
                     NewServer();
+                    requestStart = DateTime.Now;
                     mNtp.BeginRequestTime();
                 });
             }
@@ -75,11 +86,12 @@ namespace iChronoMe.Core.Classes
 
         private static void Client_TimeReceived(object sender, NtpTimeReceivedEventArgs e)
         {
-            var diff = e.ReceivedAt - e.CurrentTime;
+            var tsResponse = DateTime.Now - requestStart;
+            var tsDeviceTimeOffset = e.ReceivedAt - e.CurrentTime - tsResponse;
 
-            if (diff.TotalMinutes > -5 && diff.TotalMinutes < 5)
+            if (tsDeviceTimeOffset.TotalMinutes > -15 && tsDeviceTimeOffset.TotalMinutes < 15)
             {
-                mLastNtpDiff = diff;
+                mLastNtpDiff = tsDeviceTimeOffset;
                 State = TimeHolderState.Synchron;
             }
             else

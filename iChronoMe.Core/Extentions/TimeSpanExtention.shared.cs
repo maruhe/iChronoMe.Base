@@ -6,12 +6,9 @@ namespace iChronoMe.Core.Types
     {
         public static string ToShortString(this TimeSpan ts)
         {
+            ts = ts.ToPositive();
             int iMins = (int)ts.TotalMinutes;
-            if (iMins < 0)
-                iMins = iMins * -1;
             int iSecs = ts.Seconds;
-            if (iSecs < 0)
-                iSecs = iSecs * -1;
             return string.Format("{0:D2}:{1:D2}", iMins, iSecs);
 
             string cFormat = @"mm\:ss";
@@ -21,15 +18,12 @@ namespace iChronoMe.Core.Types
         }
         public static string ToDynamicString(this TimeSpan ts)
         {
+            ts = ts.ToPositive();
             if (ts.TotalHours >= 1)
                 return ts.ToString(@"h\:mm\:ss");
 
             int iMins = (int)ts.TotalMinutes;
-            if (iMins < 0)
-                iMins = iMins * -1;
             int iSecs = ts.Seconds;
-            if (iSecs < 0)
-                iSecs = iSecs * -1;
 
             if (iMins > 0)
                 return string.Format("{0:D2}:{1:D2}", iMins, iSecs);
@@ -41,6 +35,14 @@ namespace iChronoMe.Core.Types
                 return string.Format("{0:D2}.{1:D3}sec", iSecs, ts.Milliseconds);
 
             return string.Format("{0:D3}ms", ts.Milliseconds);
+        }
+
+        public static TimeSpan ToPositive(this TimeSpan value)
+        {
+            long ticks = value.Ticks;
+            if (ticks < 0)
+                ticks *= -1;
+            return TimeSpan.FromTicks(ticks);
         }
     }
 }
