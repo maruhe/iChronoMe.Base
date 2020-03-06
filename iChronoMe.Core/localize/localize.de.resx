@@ -157,7 +157,7 @@
     <value>Farben</value>
   </data>
   <data name="ContentAnColors" xml:space="preserve">
-    <value>Content and Colors</value>
+    <value>Inhalt und Farben</value>
   </data>
   <data name="Contents" xml:space="preserve">
     <value>Inhalte</value>
@@ -218,7 +218,7 @@
     <value>Zeilen</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Location</value>
+    <value>Standort</value>
   </data>
   <data name="MaxCount" xml:space="preserve">
     <value>Maximale Anzahl</value>
@@ -230,10 +230,10 @@
     <value>Name</value>
   </data>
   <data name="Offset" xml:space="preserve">
-    <value>Offset</value>
+    <value>Abweichung</value>
   </data>
   <data name="OnClick" xml:space="preserve">
-    <value>on click</value>
+    <value>beim Klick</value>
   </data>
   <data name="Options" xml:space="preserve">
     <value>Optionen</value>
@@ -294,5 +294,266 @@
   </data>
   <data name="WidgetTitle" xml:space="preserve">
     <value>Widget-Titel</value>
+  </data>
+  <data name="action_SaveAndQuit" xml:space="preserve">
+    <value>Speichern und beenden</value>
+  </data>
+  <data name="aRainbowPerMonth" xml:space="preserve">
+    <value>Ein Regenbogen pro Monat</value>
+  </data>
+  <data name="aRainbowPerYear" xml:space="preserve">
+    <value>Ein Regenbogen pro Jahr</value>
+  </data>
+  <data name="BackgroundImage" xml:space="preserve">
+    <value>Hintergrundbild</value>
+  </data>
+  <data name="CalendarType" xml:space="preserve">
+    <value>Kalendertyp</value>
+  </data>
+  <data name="ClockFace" xml:space="preserve">
+    <value>Ziffernblatt</value>
+  </data>
+  <data name="ClockHandColors" xml:space="preserve">
+    <value>Zeigerfarben</value>
+  </data>
+  <data name="colorcfgBlack" xml:space="preserve">
+    <value>schwarz</value>
+  </data>
+  <data name="colorcfgBlackCustom" xml:space="preserve">
+    <value>schwarz / benutzerdefiniert</value>
+  </data>
+  <data name="colorcfgBlackTransparent" xml:space="preserve">
+    <value>schwarz / transparent</value>
+  </data>
+  <data name="colorcfgBlackWhite" xml:space="preserve">
+    <value>schwarz / weiß</value>
+  </data>
+  <data name="colorcfgMultiColor" xml:space="preserve">
+    <value>Mehrfärbig</value>
+  </data>
+  <data name="colorcfgMultiColorFilled" xml:space="preserve">
+    <value>Mehrfärbig gefüllt</value>
+  </data>
+  <data name="colorcfgSingleColor" xml:space="preserve">
+    <value>einfärbig</value>
+  </data>
+  <data name="colorcfgSingleColorFilled" xml:space="preserve">
+    <value>einfärbig gefüllt</value>
+  </data>
+  <data name="colorcfgWhite" xml:space="preserve">
+    <value>weiß</value>
+  </data>
+  <data name="colorcfgWhiteBlack" xml:space="preserve">
+    <value>schwarz</value>
+  </data>
+  <data name="colorcfgWhiteCurstom" xml:space="preserve">
+    <value>weiß / benutzerdefiniert</value>
+  </data>
+  <data name="colorcfgWhiteTransparent" xml:space="preserve">
+    <value>weiß / transparen</value>
+  </data>
+  <data name="current" xml:space="preserve">
+    <value>(aktuell)</value>
+  </data>
+  <data name="CurrentLocation" xml:space="preserve">
+    <value>Aktueller Standort</value>
+  </data>
+  <data name="DarkToLight" xml:space="preserve">
+    <value>dunkel nach hell</value>
+  </data>
+  <data name="DayColors" xml:space="preserve">
+    <value>Farben</value>
+  </data>
+  <data name="DayColorType" xml:space="preserve">
+    <value>Tagesfarben</value>
+  </data>
+  <data name="DeletedWidgets" xml:space="preserve">
+    <value>gelöschte Widgets</value>
+  </data>
+  <data name="error_SloarTimeNeedLocation" xml:space="preserve">
+    <value>Sonnenzeit braucht einen Standort!</value>
+  </data>
+  <data name="fiveColors" xml:space="preserve">
+    <value>fünf Farben</value>
+  </data>
+  <data name="fourColors" xml:space="preserve">
+    <value>vier Farben</value>
+  </data>
+  <data name="HandColors" xml:space="preserve">
+    <value>Farben</value>
+  </data>
+  <data name="HandColorTypes" xml:space="preserve">
+    <value>Zeigerfarben</value>
+  </data>
+  <data name="LightToDark" xml:space="preserve">
+    <value>Hell nach Dunkel</value>
+  </data>
+  <data name="LocationType" xml:space="preserve">
+    <value>Standort-Typ</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>Monate</value>
+  </data>
+  <data name="NoHighlite" xml:space="preserve">
+    <value>nicht hervorheben</value>
+  </data>
+  <data name="oneMonth" xml:space="preserve">
+    <value>Ein Monat</value>
+  </data>
+  <data name="oneYear" xml:space="preserve">
+    <value>Ein Jahr</value>
+  </data>
+  <data name="Sample" xml:space="preserve">
+    <value>Beispiel</value>
+  </data>
+  <data name="SingleColor" xml:space="preserve">
+    <value>einfärbig</value>
+  </data>
+  <data name="StaticLocation" xml:space="preserve">
+    <value>festen Standort wählen</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Design</value>
+  </data>
+  <data name="threeColors" xml:space="preserve">
+    <value>drei Farben</value>
+  </data>
+  <data name="threeMonths" xml:space="preserve">
+    <value>drei Monate</value>
+  </data>
+  <data name="threeWeeks" xml:space="preserve">
+    <value>drei Wochen</value>
+  </data>
+  <data name="TimeSpan" xml:space="preserve">
+    <value>Zeitraum</value>
+  </data>
+  <data name="title_EditWidget" xml:space="preserve">
+    <value>Widget bearbeiten</value>
+  </data>
+  <data name="TodayColor" xml:space="preserve">
+    <value>Farbe für heute</value>
+  </data>
+  <data name="transparent" xml:space="preserve">
+    <value>transparent</value>
+  </data>
+  <data name="twoColors" xml:space="preserve">
+    <value>zweifarbig</value>
+  </data>
+  <data name="twoMonths" xml:space="preserve">
+    <value>zwei Monate</value>
+  </data>
+  <data name="twoWeeks" xml:space="preserve">
+    <value>zwei Wochen</value>
+  </data>
+  <data name="WidgetTitleAgenda" xml:space="preserve">
+    <value>Agenda</value>
+  </data>
+  <data name="WidgetTitleCircleWave" xml:space="preserve">
+    <value>Kreis</value>
+  </data>
+  <data name="WidgetTitleMonthView" xml:space="preserve">
+    <value>Monatsansicht</value>
+  </data>
+  <data name="DayColorsTimeSpan" xml:space="preserve">
+    <value>Zeitspanne des Farbverlaufs</value>
+  </data>
+  <data name="DayColorTypeCustomInfo" xml:space="preserve">
+    <value>Es erscheinen nun Fenster zur Farbauswahl
+jede gewählte Farbe wird dem Farbverlauf hinzugefügt
+wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder auf 'Zurück'</value>
+  </data>
+  <data name="perMonth" xml:space="preserve">
+    <value>je Monat</value>
+  </data>
+  <data name="perWeek" xml:space="preserve">
+    <value>je Woche</value>
+  </data>
+  <data name="perYear" xml:space="preserve">
+    <value>je Jahr</value>
+  </data>
+  <data name="ActionButtonStyle" xml:space="preserve">
+    <value>Stiel</value>
+  </data>
+  <data name="ActionButtonStyle_eye_animated" xml:space="preserve">
+    <value>iChronEye animiert
+(Doppelklick = Aktion)</value>
+  </data>
+  <data name="ActionButtonStyle_eye_static" xml:space="preserve">
+    <value>iChronEye start</value>
+  </data>
+  <data name="AnimationDuriation" xml:space="preserve">
+    <value>Animationsdauer</value>
+  </data>
+  <data name="AnimationRounds" xml:space="preserve">
+    <value>Animationsrunden</value>
+  </data>
+  <data name="ClickAction" xml:space="preserve">
+    <value>Aktion beim Klicken</value>
+  </data>
+  <data name="IconColor" xml:space="preserve">
+    <value>Symbol/Farbe</value>
+  </data>
+  <data name="nAnimationRounds" xml:space="preserve">
+    <value>{0} Runde(n)</value>
+  </data>
+  <data name="nSeconds" xml:space="preserve">
+    <value>{0} Sekunde(n)</value>
+  </data>
+  <data name="HourHandFill" xml:space="preserve">
+    <value>Stundenzeiger Füllbarbe</value>
+  </data>
+  <data name="HourHandStroke" xml:space="preserve">
+    <value>Stundenzeiger Linienfarbe</value>
+  </data>
+  <data name="MinuteHandFill" xml:space="preserve">
+    <value>Minutenzeiger Füllbarbe</value>
+  </data>
+  <data name="MinuteHandStroke" xml:space="preserve">
+    <value>Minutenzeiger Linienfarbe</value>
+  </data>
+  <data name="SecondHandStroke" xml:space="preserve">
+    <value>Sekundenzeiger Linienfarbe</value>
+  </data>
+  <data name="ImageLoader_progress_n_packages" xml:space="preserve">
+    <value>{0} Pakete geladen...</value>
+  </data>
+  <data name="ImageLoader_progress_one_package" xml:space="preserve">
+    <value>ein Paket wird geladen...</value>
+  </data>
+  <data name="ImageLoader_success_n_packages" xml:space="preserve">
+    <value>{0} von {1} Paketen geladen ...</value>
+  </data>
+  <data name="ImageLoader_success_one_package" xml:space="preserve">
+    <value>ein Paket geladen...</value>
+  </data>
+  <data name="HandTypes" xml:space="preserve">
+    <value>Zeigerarten</value>
+  </data>
+  <data name="MoreOptionsAndColors" xml:space="preserve">
+    <value>mehr Optionen und Farben</value>
+  </data>
+  <data name="DataLoader_error_list_broken" xml:space="preserve">
+    <value>Datenliste kann nicht interpretiert werden</value>
+  </data>
+  <data name="DataLoader_error_list_unloadable" xml:space="preserve">
+    <value>Daten konnten nicht geladen werden</value>
+  </data>
+  <data name="ProgressUpdateBaseData" xml:space="preserve">
+    <value>Basisdaten werden aktualisiert</value>
+  </data>
+  <data name="SecondHandFill" xml:space="preserve">
+    <value>Sekundenzeiger Füllbarbe</value>
+  </data>
+  <data name="Default" xml:space="preserve">
+    <value>(Standard)</value>
+  </data>
+  <data name="withoutSecondHand" xml:space="preserve">
+    <value>ohne Sekundenzeiger</value>
+  </data>
+  <data name="serviceAboutIntor" xml:space="preserve">
+    <value>Diese App wurde von mir, dem Schöpfer, erstellt. Ich nenne mich 'I'.</value>
+  </data>
+  <data name="Style" xml:space="preserve">
+    <value>Stiel</value>
   </data>
 </root>

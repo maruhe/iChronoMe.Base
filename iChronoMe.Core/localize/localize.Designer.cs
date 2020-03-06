@@ -79,7 +79,8 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die theEye animiert (Doppelklick = Aktion) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die iChronEye animated
+        ///(doubleclick = action) ähnelt.
         /// </summary>
         public static string ActionButtonStyle_eye_animated {
             get {
@@ -88,7 +89,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die theEye starr ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die iChronEye static ähnelt.
         /// </summary>
         public static string ActionButtonStyle_eye_static {
             get {
@@ -124,7 +125,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Termin-Name ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die event name ähnelt.
         /// </summary>
         public static string AppointmentName {
             get {
@@ -133,7 +134,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Termine ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die events ähnelt.
         /// </summary>
         public static string Appointments {
             get {
@@ -142,7 +143,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Termin-Symbole ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die event symbols ähnelt.
         /// </summary>
         public static string AppointmentSymbols {
             get {
@@ -151,7 +152,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Termin-Zeit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die event time ähnelt.
         /// </summary>
         public static string AppointmentTime {
             get {
@@ -169,7 +170,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ein Regenbogen pro Monat ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die one rainbow per month ähnelt.
         /// </summary>
         public static string aRainbowPerMonth {
             get {
@@ -178,7 +179,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ein Regenbogen pro Jahr ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die one rainbow per year ähnelt.
         /// </summary>
         public static string aRainbowPerYear {
             get {
@@ -187,7 +188,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hintergrund ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die background ähnelt.
         /// </summary>
         public static string Background {
             get {
@@ -196,7 +197,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hintergrundfarbe ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die background color ähnelt.
         /// </summary>
         public static string BackgroundColor {
             get {
@@ -214,7 +215,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Rahmen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die border ähnelt.
         /// </summary>
         public static string Border {
             get {
@@ -223,7 +224,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Knopffarben ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die header colors ähnelt.
         /// </summary>
         public static string ButtonColor {
             get {
@@ -232,7 +233,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Kalendermodell ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die calendar model ähnelt.
         /// </summary>
         public static string CalendarModel {
             get {
@@ -241,7 +242,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Calendar-Type ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die calendar type ähnelt.
         /// </summary>
         public static string CalendarType {
             get {
@@ -259,7 +260,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ziffernblatt ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die clock face ähnelt.
         /// </summary>
         public static string ClockFace {
             get {
@@ -268,7 +269,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Zeigerfarben ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die hand colors ähnelt.
         /// </summary>
         public static string ClockHandColors {
             get {
@@ -277,7 +278,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Farbe ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die color ähnelt.
         /// </summary>
         public static string Color {
             get {
@@ -286,7 +287,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Schwarz ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die black ähnelt.
         /// </summary>
         public static string colorcfgBlack {
             get {
@@ -295,7 +296,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Schwarz/Custom ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die black/custom ähnelt.
         /// </summary>
         public static string colorcfgBlackCustom {
             get {
@@ -304,7 +305,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Schwarz/Transparent ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die black/transparent ähnelt.
         /// </summary>
         public static string colorcfgBlackTransparent {
             get {
@@ -313,7 +314,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Schwarz/Weiß ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die black/white ähnelt.
         /// </summary>
         public static string colorcfgBlackWhite {
             get {
@@ -322,7 +323,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Mehrfärbig ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die multicolor ähnelt.
         /// </summary>
         public static string colorcfgMultiColor {
             get {
@@ -331,7 +332,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Mehrfärbig gefüllt ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die multicolor filled ähnelt.
         /// </summary>
         public static string colorcfgMultiColorFilled {
             get {
@@ -340,7 +341,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Einfärbig ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die single color ähnelt.
         /// </summary>
         public static string colorcfgSingleColor {
             get {
@@ -349,7 +350,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Einfärbig gefüllt ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die single color filled ähnelt.
         /// </summary>
         public static string colorcfgSingleColorFilled {
             get {
@@ -358,7 +359,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Weiß ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die white ähnelt.
         /// </summary>
         public static string colorcfgWhite {
             get {
@@ -367,7 +368,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Weiß/Schwarz ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die white / black ähnelt.
         /// </summary>
         public static string colorcfgWhiteBlack {
             get {
@@ -376,7 +377,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Weiß/Custom ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die white / custom ähnelt.
         /// </summary>
         public static string colorcfgWhiteCurstom {
             get {
@@ -385,7 +386,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Weiß/Transparent ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die white / transparent ähnelt.
         /// </summary>
         public static string colorcfgWhiteTransparent {
             get {
@@ -394,7 +395,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Farben ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die colors ähnelt.
         /// </summary>
         public static string Colors {
             get {
@@ -403,7 +404,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Content and Colors ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die content and colors ähnelt.
         /// </summary>
         public static string ContentAnColors {
             get {
@@ -412,7 +413,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Inhalte ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die content ähnelt.
         /// </summary>
         public static string Contents {
             get {
@@ -430,7 +431,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Aktueller Standort ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die current location ähnelt.
         /// </summary>
         public static string CurrentLocation {
             get {
@@ -439,7 +440,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hell nach Dunkel ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die dark to light ähnelt.
         /// </summary>
         public static string DarkToLight {
             get {
@@ -475,7 +476,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Zeitspanne des Farbverlaufs ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die brush timespan ähnelt.
         /// </summary>
         public static string DayColorsTimeSpan {
             get {
@@ -493,9 +494,9 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Es erscheinen nun Fenster zur Farbauswahl
-        ///jede gewählte Farbe wird dem Farbverlauf hinzugefügt
-        ///wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder auf &apos;Zurück&apos; ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die there will popup color selectors
+        ///each selected color will be added to the brush
+        ///if you have enoug colors just click &apos;back&apos; or somewhere outside the window ähnelt.
         /// </summary>
         public static string DayColorTypeCustomInfo {
             get {
@@ -531,7 +532,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Beschreibung ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die discription ähnelt.
         /// </summary>
         public static string Description {
             get {
@@ -549,7 +550,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Fehler oder Probleme ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die errors or problems ähnelt.
         /// </summary>
         public static string ErrorsOrProblems {
             get {
@@ -558,7 +559,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Füllung ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die fill ähnelt.
         /// </summary>
         public static string Filling {
             get {
@@ -567,7 +568,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die five Colors ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die five colors ähnelt.
         /// </summary>
         public static string fiveColors {
             get {
@@ -585,7 +586,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die fourColors ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die four colors ähnelt.
         /// </summary>
         public static string fourColors {
             get {
@@ -630,7 +631,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Knopffarbe ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die button color ähnelt.
         /// </summary>
         public static string HeaderColor {
             get {
@@ -657,7 +658,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Stunden ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die hours ähnelt.
         /// </summary>
         public static string Hours {
             get {
@@ -774,7 +775,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Lebenszeit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die live-time ähnelt.
         /// </summary>
         public static string LifeTime {
             get {
@@ -783,7 +784,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Lebensstart ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die live-start ähnelt.
         /// </summary>
         public static string LifeTimeStart {
             get {
@@ -792,7 +793,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die LightToDark ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die light to dark ähnelt.
         /// </summary>
         public static string LightToDark {
             get {
@@ -801,7 +802,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Zeilen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die lines ähnelt.
         /// </summary>
         public static string Lines {
             get {
@@ -810,7 +811,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Location ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die location ähnelt.
         /// </summary>
         public static string Location {
             get {
@@ -819,7 +820,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Standort-Typ ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die location type ähnelt.
         /// </summary>
         public static string LocationType {
             get {
@@ -828,7 +829,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Maximale Anzahl ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die max count ähnelt.
         /// </summary>
         public static string MaxCount {
             get {
@@ -855,7 +856,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Minuten ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die minutes ähnelt.
         /// </summary>
         public static string Minutes {
             get {
@@ -864,7 +865,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Months ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die months ähnelt.
         /// </summary>
         public static string Months {
             get {
@@ -882,7 +883,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Name ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die name ähnelt.
         /// </summary>
         public static string Name {
             get {
@@ -954,7 +955,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Optionen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die options ähnelt.
         /// </summary>
         public static string Options {
             get {
@@ -963,7 +964,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Weiteres ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die additional ähnelt.
         /// </summary>
         public static string OtherAdditional {
             get {
@@ -972,7 +973,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die je Monat ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die per month ähnelt.
         /// </summary>
         public static string perMonth {
             get {
@@ -981,7 +982,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die je Woche ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die per week ähnelt.
         /// </summary>
         public static string perWeek {
             get {
@@ -990,7 +991,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die je Jahr ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die per year ähnelt.
         /// </summary>
         public static string perYear {
             get {
@@ -999,7 +1000,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Probleme ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die problems ähnelt.
         /// </summary>
         public static string Problems {
             get {
@@ -1026,7 +1027,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Widget speichern ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die save widget ähnelt.
         /// </summary>
         public static string SaveWidget {
             get {
@@ -1053,7 +1054,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sekunden ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die seconds ähnelt.
         /// </summary>
         public static string Seconds {
             get {
@@ -1071,7 +1072,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Alle Farben auf einmal ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die all colors at ones ähnelt.
         /// </summary>
         public static string SetAllColorsAtOnce {
             get {
@@ -1080,7 +1081,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Alle Kalender anzeigen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die show all calendars ähnelt.
         /// </summary>
         public static string ShowAllCalendars {
             get {
@@ -1089,7 +1090,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Terminfarben anzeigen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die show event-colors ähnelt.
         /// </summary>
         public static string ShowAppointmentColors {
             get {
@@ -1098,7 +1099,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ort anzeigen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die show location ähnelt.
         /// </summary>
         public static string ShowLocation {
             get {
@@ -1116,7 +1117,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Festen Standort wählen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die choose static location ähnelt.
         /// </summary>
         public static string StaticLocation {
             get {
@@ -1188,7 +1189,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Skala ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die tick marks ähnelt.
         /// </summary>
         public static string TickMarks {
             get {
@@ -1197,7 +1198,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Skala-Farbe ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die tick marks color ähnelt.
         /// </summary>
         public static string TickMarksColor {
             get {
@@ -1206,7 +1207,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Zeit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die time ähnelt.
         /// </summary>
         public static string Time {
             get {
@@ -1215,7 +1216,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Zeitunterschied ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die time offset ähnelt.
         /// </summary>
         public static string TimeOffset {
             get {
@@ -1224,7 +1225,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Zeitraum ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die timescale ähnelt.
         /// </summary>
         public static string TimeScale {
             get {
@@ -1242,7 +1243,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Zeit-Typ ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die time-type ähnelt.
         /// </summary>
         public static string TimeType {
             get {
@@ -1260,7 +1261,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Titelfarbe ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die title color ähnelt.
         /// </summary>
         public static string TitleColor {
             get {
@@ -1278,7 +1279,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die transparen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die transparent ähnelt.
         /// </summary>
         public static string transparent {
             get {
@@ -1310,15 +1311,6 @@ namespace iChronoMe {
         public static string twoWeeks {
             get {
                 return ResourceManager.GetString("twoWeeks", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die WidgetCfgAssistant_ClockAnalog_Start_Title ähnelt.
-        /// </summary>
-        public static string WidgetCfgAssistant_ClockAnalog_Start_Title {
-            get {
-                return ResourceManager.GetString("WidgetCfgAssistant_ClockAnalog_Start_Title", resourceCulture);
             }
         }
         

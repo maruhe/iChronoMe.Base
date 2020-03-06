@@ -24,13 +24,13 @@ namespace iChronoMe.Core.Classes
                         Description = "our interface to GMT 0", 
                         WebLink = "https://github.com/Yortw/Yort.Ntp" 
                     });
-                    _allCredits.Add(new ContributorInfo
+                    /*_allCredits.Add(new ContributorInfo
                     {
                         License = "MIT",
                         Name = "Newtonsoft.Json",
                         Description = "JSON input/output in high-performance",
                         WebLink = "https://github.com/JamesNK/Newtonsoft.Json"
-                    });
+                    });*/
                     //_allCredits.Add(new CreditInfo { License = "MIT", Name = "TimeZoneConverter", Description = "for Windows-Users", WebLink = "https://github.com/mj1856/TimeZoneConverter" });
 
                     _allCredits.Add(new ContributorInfo { 

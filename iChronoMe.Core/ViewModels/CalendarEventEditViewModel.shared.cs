@@ -69,6 +69,7 @@ namespace iChronoMe.Core.ViewModels
                         EventCollection.UpdateEventDisplayTime(calEvent, calEvent.Extention, locationTimeHolder, extEvent.TimeType, cal);
                     bIsReady = true;
                     tcsReady.TrySetResult(true);
+                    Ready?.Invoke(this, new EventArgs());
                 }
                 catch (Exception ex)
                 {
@@ -395,6 +396,9 @@ namespace iChronoMe.Core.ViewModels
         Task tskPositionSearcher = null;
         DateTime tLastLocationChange = DateTime.MinValue;
         DateTime tLastPositionSearch = DateTime.MinValue;
+
+        public event EventHandler Ready;
+
         private void SearchPositionByLocation()
         {
             tLastLocationChange = DateTime.Now;

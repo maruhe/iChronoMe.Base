@@ -391,9 +391,9 @@ namespace iChronoMe.Core.Classes
         public static string GetExceptionFullLogText(Exception ex, string cMessage, string cAppVersionInfo, string cDeviceInfo = "")
         {
             if (ex == null)
-                return "Empty Exception @ " + DateTime.Now.ToString("s");
+                return string.Concat("Empty Exception\n", cDeviceInfo);
 
-            string cRes = ex.GetType().FullName + "\n" + DateTime.Now.ToString("s");
+            string cRes = ex.GetType().FullName;
             if (!string.IsNullOrEmpty(cMessage))
                 cRes += "\n" + cMessage;
 
@@ -453,18 +453,31 @@ namespace iChronoMe.Core.Classes
 #endif
         }
 
+        static Dictionary<string, int> loggedExceptions = new Dictionary<string, int>();
         public static void LogException(Exception exception, string cMessage = null, bool bTryShowUser = true)
         {
             string errorFilePath = null;
             try
             {
-                string errorFileName = DateTime.Now.ToString("yyyy_MM_dd___hh_mm__ss_fff") + ".log";
+                var tNow = DateTime.Now;
+                string errorFileName = tNow.ToString("yyyy_MM_dd___hh_mm__ss_fff") + ".log";
                 var libraryPath = ErrorLogPath; // iOS: Environment.SpecialFolder.Resources
                 if (!Directory.Exists(libraryPath))
                     Directory.CreateDirectory(libraryPath);
 
                 errorFilePath = Path.Combine(libraryPath, errorFileName);
                 var errorMessage = sys.GetExceptionFullLogText(exception, cMessage, cAppVersionInfo, cDeviceInfo);
+                
+                string cHash = (sys.CalculateMD5Hash(errorMessage));
+                int errorCount = 0;
+                if (loggedExceptions.ContainsKey(cHash))
+                    errorCount = loggedExceptions[cHash];
+                errorCount++;
+                loggedExceptions[cHash] = errorCount;
+                if (errorCount > 3)
+                    return;
+
+                errorMessage = tNow.ToString("s") + "." + tNow.Millisecond + "\n" + errorMessage;
                 File.WriteAllText(errorFilePath, errorMessage);
 
                 xLog.Error("Crash Report\n" + errorMessage);

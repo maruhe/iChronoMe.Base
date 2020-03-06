@@ -124,109 +124,109 @@
     <value>save and quit</value>
   </data>
   <data name="AppointmentName" xml:space="preserve">
-    <value>Termin-Name</value>
+    <value>event name</value>
   </data>
   <data name="Appointments" xml:space="preserve">
-    <value>Termine</value>
+    <value>events</value>
   </data>
   <data name="AppointmentSymbols" xml:space="preserve">
-    <value>Termin-Symbole</value>
+    <value>event symbols</value>
   </data>
   <data name="AppointmentTime" xml:space="preserve">
-    <value>Termin-Zeit</value>
+    <value>event time</value>
   </data>
   <data name="AppTitle" xml:space="preserve">
     <value>iChronoMe</value>
   </data>
   <data name="aRainbowPerMonth" xml:space="preserve">
-    <value>Ein Regenbogen pro Monat</value>
+    <value>one rainbow per month</value>
   </data>
   <data name="aRainbowPerYear" xml:space="preserve">
-    <value>Ein Regenbogen pro Jahr</value>
+    <value>one rainbow per year</value>
   </data>
   <data name="Background" xml:space="preserve">
-    <value>Hintergrund</value>
+    <value>background</value>
   </data>
   <data name="BackgroundColor" xml:space="preserve">
-    <value>Hintergrundfarbe</value>
+    <value>background color</value>
   </data>
   <data name="BackgroundImage" xml:space="preserve">
     <value>background image</value>
   </data>
   <data name="Border" xml:space="preserve">
-    <value>Rahmen</value>
+    <value>border</value>
   </data>
   <data name="ButtonColor" xml:space="preserve">
-    <value>Knopffarben</value>
+    <value>header colors</value>
   </data>
   <data name="CalendarModel" xml:space="preserve">
-    <value>Kalendermodell</value>
+    <value>calendar model</value>
   </data>
   <data name="CalendarType" xml:space="preserve">
-    <value>Calendar-Type</value>
+    <value>calendar type</value>
   </data>
   <data name="ClockFace" xml:space="preserve">
-    <value>Ziffernblatt</value>
+    <value>clock face</value>
   </data>
   <data name="ClockHandColors" xml:space="preserve">
-    <value>Zeigerfarben</value>
+    <value>hand colors</value>
   </data>
   <data name="Color" xml:space="preserve">
-    <value>Farbe</value>
+    <value>color</value>
   </data>
   <data name="colorcfgBlack" xml:space="preserve">
-    <value>Schwarz</value>
+    <value>black</value>
   </data>
   <data name="colorcfgBlackCustom" xml:space="preserve">
-    <value>Schwarz/Custom</value>
+    <value>black/custom</value>
   </data>
   <data name="colorcfgBlackTransparent" xml:space="preserve">
-    <value>Schwarz/Transparent</value>
+    <value>black/transparent</value>
   </data>
   <data name="colorcfgBlackWhite" xml:space="preserve">
-    <value>Schwarz/Weiß</value>
+    <value>black/white</value>
   </data>
   <data name="colorcfgMultiColor" xml:space="preserve">
-    <value>Mehrfärbig</value>
+    <value>multicolor</value>
   </data>
   <data name="colorcfgMultiColorFilled" xml:space="preserve">
-    <value>Mehrfärbig gefüllt</value>
+    <value>multicolor filled</value>
   </data>
   <data name="colorcfgSingleColor" xml:space="preserve">
-    <value>Einfärbig</value>
+    <value>single color</value>
   </data>
   <data name="colorcfgSingleColorFilled" xml:space="preserve">
-    <value>Einfärbig gefüllt</value>
+    <value>single color filled</value>
   </data>
   <data name="colorcfgWhite" xml:space="preserve">
-    <value>Weiß</value>
+    <value>white</value>
   </data>
   <data name="colorcfgWhiteBlack" xml:space="preserve">
-    <value>Weiß/Schwarz</value>
+    <value>white / black</value>
   </data>
   <data name="colorcfgWhiteCurstom" xml:space="preserve">
-    <value>Weiß/Custom</value>
+    <value>white / custom</value>
   </data>
   <data name="colorcfgWhiteTransparent" xml:space="preserve">
-    <value>Weiß/Transparent</value>
+    <value>white / transparent</value>
   </data>
   <data name="Colors" xml:space="preserve">
-    <value>Farben</value>
+    <value>colors</value>
   </data>
   <data name="ContentAnColors" xml:space="preserve">
-    <value>Content and Colors</value>
+    <value>content and colors</value>
   </data>
   <data name="Contents" xml:space="preserve">
-    <value>Inhalte</value>
+    <value>content</value>
   </data>
   <data name="current" xml:space="preserve">
     <value>current</value>
   </data>
   <data name="CurrentLocation" xml:space="preserve">
-    <value>Aktueller Standort</value>
+    <value>current location</value>
   </data>
   <data name="DarkToLight" xml:space="preserve">
-    <value>Hell nach Dunkel</value>
+    <value>dark to light</value>
   </data>
   <data name="DayColors" xml:space="preserve">
     <value>day colors</value>
@@ -241,26 +241,26 @@
     <value>deleted widges</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Beschreibung</value>
+    <value>discription</value>
   </data>
   <data name="ErrorsOrProblems" xml:space="preserve">
-    <value>Fehler oder Probleme</value>
+    <value>errors or problems</value>
   </data>
   <data name="error_SloarTimeNeedLocation" xml:space="preserve">
     <value>solar time needs a location!</value>
   </data>
   <data name="Filling" xml:space="preserve">
-    <value>Füllung</value>
+    <value>fill</value>
   </data>
   <data name="fiveColors" xml:space="preserve">
-    <value>five Colors</value>
+    <value>five colors</value>
   </data>
   <data name="Flow" xml:space="preserve">
     <value>flow</value>
     <comment>flow ClockHands</comment>
   </data>
   <data name="fourColors" xml:space="preserve">
-    <value>fourColors</value>
+    <value>four colors</value>
   </data>
   <data name="FunctionInTitle" xml:space="preserve">
     <value>Funktionen im Titel</value>
@@ -272,10 +272,10 @@
     <value>hand color types</value>
   </data>
   <data name="HeaderColor" xml:space="preserve">
-    <value>Knopffarbe</value>
+    <value>button color</value>
   </data>
   <data name="Hours" xml:space="preserve">
-    <value>Stunden</value>
+    <value>hours</value>
   </data>
   <data name="ImageLoader_error_list_broken" xml:space="preserve">
     <value>unable to interprete image-list</value>
@@ -299,34 +299,34 @@
     <value>one image loadet...</value>
   </data>
   <data name="LifeTime" xml:space="preserve">
-    <value>Lebenszeit</value>
+    <value>live-time</value>
   </data>
   <data name="LifeTimeStart" xml:space="preserve">
-    <value>Lebensstart</value>
+    <value>live-start</value>
   </data>
   <data name="LightToDark" xml:space="preserve">
-    <value>LightToDark</value>
+    <value>light to dark</value>
   </data>
   <data name="Lines" xml:space="preserve">
-    <value>Zeilen</value>
+    <value>lines</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Location</value>
+    <value>location</value>
   </data>
   <data name="LocationType" xml:space="preserve">
-    <value>Standort-Typ</value>
+    <value>location type</value>
   </data>
   <data name="MaxCount" xml:space="preserve">
-    <value>Maximale Anzahl</value>
+    <value>max count</value>
   </data>
   <data name="Minutes" xml:space="preserve">
-    <value>Minuten</value>
+    <value>minutes</value>
   </data>
   <data name="Months" xml:space="preserve">
-    <value>Months</value>
+    <value>months</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Name</value>
+    <value>name</value>
   </data>
   <data name="NoHighlite" xml:space="preserve">
     <value>no highlite</value>
@@ -344,40 +344,40 @@
     <value>one Year</value>
   </data>
   <data name="Options" xml:space="preserve">
-    <value>Optionen</value>
+    <value>options</value>
   </data>
   <data name="OtherAdditional" xml:space="preserve">
-    <value>Weiteres</value>
+    <value>additional</value>
   </data>
   <data name="Problems" xml:space="preserve">
-    <value>Probleme</value>
+    <value>problems</value>
   </data>
   <data name="Sample" xml:space="preserve">
     <value>sample</value>
   </data>
   <data name="SaveWidget" xml:space="preserve">
-    <value>Widget speichern</value>
+    <value>save widget</value>
   </data>
   <data name="Seconds" xml:space="preserve">
-    <value>Sekunden</value>
+    <value>seconds</value>
   </data>
   <data name="SetAllColorsAtOnce" xml:space="preserve">
-    <value>Alle Farben auf einmal</value>
+    <value>all colors at ones</value>
   </data>
   <data name="ShowAllCalendars" xml:space="preserve">
-    <value>Alle Kalender anzeigen</value>
+    <value>show all calendars</value>
   </data>
   <data name="ShowAppointmentColors" xml:space="preserve">
-    <value>Terminfarben anzeigen</value>
+    <value>show event-colors</value>
   </data>
   <data name="ShowLocation" xml:space="preserve">
-    <value>Ort anzeigen</value>
+    <value>show location</value>
   </data>
   <data name="SingleColor" xml:space="preserve">
     <value>single color</value>
   </data>
   <data name="StaticLocation" xml:space="preserve">
-    <value>Festen Standort wählen</value>
+    <value>choose static location</value>
   </data>
   <data name="Symbols" xml:space="preserve">
     <value>Symbole</value>
@@ -398,28 +398,28 @@
     <value>three Weeks</value>
   </data>
   <data name="TickMarks" xml:space="preserve">
-    <value>Skala</value>
+    <value>tick marks</value>
   </data>
   <data name="TickMarksColor" xml:space="preserve">
-    <value>Skala-Farbe</value>
+    <value>tick marks color</value>
   </data>
   <data name="Time" xml:space="preserve">
-    <value>Zeit</value>
+    <value>time</value>
   </data>
   <data name="TimeOffset" xml:space="preserve">
-    <value>Zeitunterschied</value>
+    <value>time offset</value>
   </data>
   <data name="TimeScale" xml:space="preserve">
-    <value>Zeitraum</value>
+    <value>timescale</value>
   </data>
   <data name="TimeSpan" xml:space="preserve">
     <value>timespan</value>
   </data>
   <data name="TimeType" xml:space="preserve">
-    <value>Zeit-Typ</value>
+    <value>time-type</value>
   </data>
   <data name="TitleColor" xml:space="preserve">
-    <value>Titelfarbe</value>
+    <value>title color</value>
   </data>
   <data name="title_EditWidget" xml:space="preserve">
     <value>edit Widget</value>
@@ -428,7 +428,7 @@
     <value>today-color</value>
   </data>
   <data name="transparent" xml:space="preserve">
-    <value>transparen</value>
+    <value>transparent</value>
   </data>
   <data name="twoColors" xml:space="preserve">
     <value>two Colors</value>
@@ -438,9 +438,6 @@
   </data>
   <data name="twoWeeks" xml:space="preserve">
     <value>two Weeks</value>
-  </data>
-  <data name="WidgetCfgAssistant_ClockAnalog_Start_Title" xml:space="preserve">
-    <value>WidgetCfgAssistant_ClockAnalog_Start_Title</value>
   </data>
   <data name="WidgetHeaderAndSeparatingLine" xml:space="preserve">
     <value>Widget-Kopf und Trennzeile</value>
@@ -458,30 +455,31 @@
     <value>month-view</value>
   </data>
   <data name="DayColorsTimeSpan" xml:space="preserve">
-    <value>Zeitspanne des Farbverlaufs</value>
+    <value>brush timespan</value>
   </data>
   <data name="DayColorTypeCustomInfo" xml:space="preserve">
-    <value>Es erscheinen nun Fenster zur Farbauswahl
-jede gewählte Farbe wird dem Farbverlauf hinzugefügt
-wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder auf 'Zurück'</value>
+    <value>there will popup color selectors
+each selected color will be added to the brush
+if you have enoug colors just click 'back' or somewhere outside the window</value>
   </data>
   <data name="perMonth" xml:space="preserve">
-    <value>je Monat</value>
+    <value>per month</value>
   </data>
   <data name="perWeek" xml:space="preserve">
-    <value>je Woche</value>
+    <value>per week</value>
   </data>
   <data name="perYear" xml:space="preserve">
-    <value>je Jahr</value>
+    <value>per year</value>
   </data>
   <data name="ActionButtonStyle" xml:space="preserve">
     <value>style</value>
   </data>
   <data name="ActionButtonStyle_eye_animated" xml:space="preserve">
-    <value>theEye animiert (Doppelklick = Aktion)</value>
+    <value>iChronEye animated
+(doubleclick = action)</value>
   </data>
   <data name="ActionButtonStyle_eye_static" xml:space="preserve">
-    <value>theEye starr</value>
+    <value>iChronEye static</value>
   </data>
   <data name="AnimationDuriation" xml:space="preserve">
     <value>animation duriation</value>
@@ -534,9 +532,6 @@ wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder a
   <data name="MoreOptionsAndColors" xml:space="preserve">
     <value>more options and colors</value>
   </data>
-  <data name="Style" xml:space="preserve">
-    <value>style</value>
-  </data>
   <data name="DataLoader_error_list_broken" xml:space="preserve">
     <value>unable to interprete data-list</value>
   </data>
@@ -557,5 +552,8 @@ wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder a
   </data>
   <data name="serviceAboutIntor" xml:space="preserve">
     <value>this app was created be me, the creator. I call myself 'I'.</value>
+  </data>
+  <data name="Style" xml:space="preserve">
+    <value>style</value>
   </data>
 </root>

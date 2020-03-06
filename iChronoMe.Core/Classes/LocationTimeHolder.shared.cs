@@ -362,8 +362,14 @@ namespace iChronoMe.Core
                     GetLocationInfo();
                 }
                 catch (ThreadAbortException)
-                { locationTask = null; return; }
-                catch { }
+                { 
+                    locationTask = null; 
+                    return; 
+                }
+                catch (Exception ex)
+                {
+                    xLog.Error(ex);
+                }
                 finally
                 {
                     locationTask = null;
@@ -412,7 +418,17 @@ namespace iChronoMe.Core
                     TimeZoneName = tz.timezoneId;
                     TimeZoneOffsetGmt = tz.gmtOffset;
                     TimeZoneOffsetDst = tz.dstOffset;
-                    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(tz.timezoneId);
+                    if (!string.IsNullOrEmpty(tz.timezoneId))
+                    {
+                        try
+                        {
+                            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(tz.timezoneId);
+                        } 
+                        catch (Exception ex)
+                        {
+                            sys.LogException(ex, "TimeZoneInfoCache.FromLocation " + sys.DezimalGradToString(Latitude, Longitude));
+                        }
+                    }
                 }
             }
 
