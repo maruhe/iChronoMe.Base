@@ -48,7 +48,7 @@ namespace iChronoMe.Widgets
         }
     }
 
-    public class WidgetCfgAssistant_ActionButton_ClickAction : WidgetConfigAssistant<WidgetCfg_ActionButton>
+    public partial class WidgetCfgAssistant_ActionButton_ClickAction : WidgetConfigAssistant<WidgetCfg_ActionButton>
     {
         public WidgetCfgAssistant_ActionButton_ClickAction(WidgetCfgSample<WidgetCfg_ActionButton> baseSample)
         {

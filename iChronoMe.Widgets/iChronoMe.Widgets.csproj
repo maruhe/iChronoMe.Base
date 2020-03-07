@@ -1,17 +1,102 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="MSBuild.Sdk.Extras/2.0.54">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.1.0</Version>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard2.0;MonoAndroid90;Xamarin.iOS10;uap10.0.16299;</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard2.0;MonoAndroid90;Xamarin.iOS10;</TargetFrameworks>
+    <AssemblyName>iChronoMe.Widgets</AssemblyName>
+    <RootNamespace>iChronoMe.Widgets</RootNamespace>
+    <PackageId>iChronoMe.Widgets</PackageId>
+    <PackageIconUrl>https://raw.githubusercontent.com/maruhe/icronome/master/Assets/iChronoMe.Core_128x128.png</PackageIconUrl>
+    <Summary>iChronoMe.Widgets: a kit Widgets based on iChronoMe Information</Summary>
+    <PackageTags>xamarin, windows, ios, android, xamarin.forms, watchos, tvos, toolkit, iChronoMe, iChronoMe.Core, iChronoMe.Widgets, Widgets, kit</PackageTags>
+    <Title>iChronoMe.Widgets</Title>
+    <Description>iChronoMe.Widgets: iChronoMe's Widgets</Description>
+    <Product>$(AssemblyName) ($(TargetFramework))</Product>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
+    <Version>1.0.0</Version>
+    <PackageVersion>$(Version)$(VersionSuffix)</PackageVersion>
+    <Authors>maruhe</Authors>
+    <Owners>everyone</Owners>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Copyright>rights are just illusions</Copyright>
+    <RepositoryUrl>https://github.com/maruhe/ichronome</RepositoryUrl>
+    <PackageReleaseNotes>See: https://ichrono.me/ichronome-widgets-releasenotes</PackageReleaseNotes>
+    <LangVersion>7.3</LangVersion>
+    <DefineConstants>$(DefineConstants);</DefineConstants>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
+    <PackageLicenseUrl>https://go.microsoft.com/fwlink/?linkid=868961</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://github.com/maruhe/ichronome</PackageProjectUrl>
+    <MDocDocumentationDirectory>$(MSBuildThisFileDirectory)..\docs\en</MDocDocumentationDirectory>
+    <Configurations>Debug;Release;Samples;Docs</Configurations>
+    <DebugType>portable</DebugType>
+ </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="SkiaSharp" Version="1.68.1.1" />
-    <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
+  <PropertyGroup Condition=" '$(Configuration)'=='Release' And '$(OS)' == 'Windows_NT' ">
+    <!-- sourcelink: Declare that the Repository URL can be published to NuSpec -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <!-- sourcelink: Embed source files that are not tracked by the source control manager to the PDB -->
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <!-- sourcelink: Include PDB in the built .nupkg -->
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(Configuration)'=='Release' And '$(OS)' == 'Windows_NT' ">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" PrivateAssets="All" />    
   </ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Essentials" Version="1.5.0" />
+	<PackageReference Include="SkiaSharp" Version="1.68.1.1" />
+    <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
+    <Compile Include="**\*.shared.cs" />
+    <Compile Include="**\*.shared.*.cs" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\iChronoMe.Core\iChronoMe.Core.csproj" />
+  </ItemGroup>  
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
+    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+    <Compile Include="**\*.netstandard.cs" />
+    <Compile Include="**\*.netstandard.*.cs" />
   </ItemGroup>
-
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.9" />
+    <PackageReference Include="TimeZoneConverter" Version="3.2.0" />
+    <Compile Include="**\*.uwp.cs" />
+    <Compile Include="**\*.uwp.*.cs" />
+    <SDKReference Include="WindowsMobile, Version=10.0.16299.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
+  </ItemGroup>
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+    <Compile Include="**\*.android.cs" />
+    <Compile Include="**\*.android.*.cs" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
+    <AndroidResource Include="Resources\xml\*.xml" />
+    <PackageReference Include="Xamarin.Android.Support.Compat" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.3" />
+	<PackageReference Include="Xamarin.Android.Support.v4">
+		<Version>28.0.0.3</Version>
+	</PackageReference>
+	<PackageReference Include="Xamarin.Android.Support.v7.AppCompat">
+		<Version>28.0.0.3</Version>
+	</PackageReference>		  
+      <PackageReference Condition=" '$(OS)' == 'Windows_NT' And $(TargetFrameworkVersion.TrimStart('vV')) &lt; 9.0" Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.3" />
+    <PackageReference Condition=" '$(OS)' != 'Windows_NT' " Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.3" />
+  </ItemGroup>
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+    <Compile Include="**\*.ios.cs" />
+    <Compile Include="**\*.ios.*.cs" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
+    <Reference Include="OpenTK-1.0" />
+  </ItemGroup>
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('tizen')) ">
+    <PackageReference Include="Tizen.NET" Version="6.0.0.14995" />
+    <Compile Include="**\*.tizen.cs" />
+    <Compile Include="**\*.tizen.*.cs" />
+  </ItemGroup>
 </Project>

@@ -274,10 +274,10 @@ namespace iChronoMe.Core.DataBinding
             if (!BinderIsRunning || IsWritingToView)
                 return;
             if (sender is Spinner)
-                ProcessViewPropertyChanged(sender as Spinner, (sender as Spinner).SelectedItemPosition);
+                ProcessViewPropertyChanged(sender as Spinner, (sender as Spinner).SelectedItemPosition, (sender.GetType().Name.Equals("AlwaysSpinner")));
         }
 
-        private void ProcessViewPropertyChanged(View view, object value)
+        private void ProcessViewPropertyChanged(View view, object value, bool bForce = false)
         {
             try
             {
@@ -288,7 +288,7 @@ namespace iChronoMe.Core.DataBinding
                 if (link.Property.CanWrite)
                 {
                     var old = link.Property.GetValue(link.Object);
-                    if (!Equals(old, value))
+                    if (!Equals(old, value) || bForce)
                     {
                         lock (LastViewValues)
                         {

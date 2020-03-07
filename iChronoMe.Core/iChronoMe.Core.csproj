@@ -20,7 +20,7 @@
     <NeutralLanguage>en</NeutralLanguage>
     <Copyright>rights are just illusions</Copyright>
     <RepositoryUrl>https://github.com/maruhe/ichronome</RepositoryUrl>
-    <PackageReleaseNotes>See: https://icrono.me/ichronome-core-releasenotes</PackageReleaseNotes>
+    <PackageReleaseNotes>See: https://ichrono.me/ichronome-core-releasenotes</PackageReleaseNotes>
     <LangVersion>7.3</LangVersion>
     <DefineConstants>$(DefineConstants);</DefineConstants>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
