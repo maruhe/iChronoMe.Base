@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 
 /* Unmerged change from project 'iChronoMe.Core (uap10.0.16299)'
 Before:
@@ -404,7 +403,7 @@ namespace iChronoMe.Core.Types
                 return IsEmpty ? ToHex().Replace('#', '$') : ToHex();
             return ToHex();
         }
-            
+
         public string ToHex()
         {
             var red = (uint)(R * 255);
@@ -443,7 +442,8 @@ namespace iChronoMe.Core.Types
             if (hex[0] == '$')
                 return MakeEmptyColor(FromHex(hex.Replace('$', '#')));
             int idx = (hex[0] == '#') ? 1 : 0;
-            try {
+            try
+            {
                 switch (hex.Length - idx)
                 {
                     case 3: //#rgb => ffrrggbb

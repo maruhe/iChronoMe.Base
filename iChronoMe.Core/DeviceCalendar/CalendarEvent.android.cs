@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+
 using iChronoMe.Core.Classes;
 
 namespace iChronoMe.DeviceCalendar
@@ -38,7 +39,8 @@ namespace iChronoMe.DeviceCalendar
         public Java.Util.Calendar guiDisplayEnd
         {
             get => sys.DateTimeToJava(DisplayEnd);
-            set {
+            set
+            {
                 DisplayEnd = sys.DateTimeFromJava(value);
                 OnPropertyChanged();
             }

@@ -1,10 +1,64 @@
 ﻿using System;
-using System.Collections;
-using System.Globalization;
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (uap10.0.16299)"
+Vor:
 using System.Xml;
 using GeoJSON.Net.Geometry;
 using iChronoMe.Core.Tools;
 using Newtonsoft.Json;
+using SQLite;
+Nach:
+using System.Xml;
+
+using GeoJSON.Net.Geometry;
+
+using iChronoMe.Core.Tools;
+
+using Newtonsoft.Json;
+
+using SQLite;
+*/
+
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (Xamarin.iOS10)"
+Vor:
+using System.Xml;
+using GeoJSON.Net.Geometry;
+using iChronoMe.Core.Tools;
+using Newtonsoft.Json;
+using SQLite;
+Nach:
+using System.Xml;
+
+using GeoJSON.Net.Geometry;
+
+using iChronoMe.Core.Tools;
+
+using Newtonsoft.Json;
+
+using SQLite;
+*/
+
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (MonoAndroid90)"
+Vor:
+using System.Xml;
+using GeoJSON.Net.Geometry;
+using iChronoMe.Core.Tools;
+using Newtonsoft.Json;
+using SQLite;
+Nach:
+using System.Xml;
+
+using GeoJSON.Net.Geometry;
+
+using iChronoMe.Core.Tools;
+
+using Newtonsoft.Json;
+
+using SQLite;
+*/
+
+
+using iChronoMe.Core.Tools;
+
 using SQLite;
 
 using Xamarin.Essentials;
@@ -84,7 +138,7 @@ namespace iChronoMe.Core.Classes
 
                 return ai;
             }
-        }   
+        }
 
         public class AreaInfo : dbObject
         {
@@ -96,7 +150,7 @@ namespace iChronoMe.Core.Classes
             public string locality { get; set; }
             public string route { get; set; }
             public string postalCode { get; set; }
-            public string toponymName { get; set; }           
+            public string toponymName { get; set; }
 
             public double pointLat { get; set; }
             public double pointLng { get; set; }
@@ -117,7 +171,7 @@ namespace iChronoMe.Core.Classes
 
             [Ignore]
             public int BoxWidth { get => (int)(Location.CalculateDistance(boxNorth, boxWest, boxNorth, boxEast, DistanceUnits.Kilometers) * 1000); set { } }
-            [Ignore] 
+            [Ignore]
             public int BoxHeitgh { get => (int)(Location.CalculateDistance(boxNorth, boxWest, boxSouth, boxWest, DistanceUnits.Kilometers) * 1000); set { } }
 
             public bool CheckBoxIsUpToDate(double nLatitude, double nLongitude)

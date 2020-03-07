@@ -467,7 +467,7 @@ namespace iChronoMe.Core.Classes
 
                 errorFilePath = Path.Combine(libraryPath, errorFileName);
                 var errorMessage = sys.GetExceptionFullLogText(exception, cMessage, cAppVersionInfo, cDeviceInfo);
-                
+
                 string cHash = (sys.CalculateMD5Hash(errorMessage));
                 int errorCount = 0;
                 if (loggedExceptions.ContainsKey(cHash))

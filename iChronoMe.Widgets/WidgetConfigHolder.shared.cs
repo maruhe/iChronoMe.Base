@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
+
 using iChronoMe.Core;
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.DynamicCalendar;
@@ -316,9 +317,9 @@ namespace iChronoMe.Widgets
             WidgetTitle = "iChronoMe";
         }
 
-        public ActionButton_ClickAction ClickAction = ActionButton_ClickAction.OpenApp;
+        public ClickAction ClickAction = new ClickAction(ClickActionType.OpenApp);
 
-        public ActionButton_Style Style = ActionButton_Style.iChronoEye;
+        public ActionButton_Style Style = ActionButton_Style.iChronEye;
 
         public string IconName;
 
@@ -331,22 +332,38 @@ namespace iChronoMe.Widgets
         public float AnimationRounds = 1;
     }
 
-    public enum ActionButton_ClickAction
+    public enum ClickActionType
     {
-        Animate,
+        Animate = 1001,
 #if DEBUG
-        TestActivity,
+        TestActivity = 10000,
 #endif
-        OpenApp,
-        OpenCalendar,
-        CreateEvent,
-        CreateAlarm,
-        TimeToTimeDialog
+        None = -1,
+        OpenSettings = 0,
+        OpenApp = 100,
+        OpenClock = 120,
+        OpenCalendar = 101,
+        CreateEvent = 111,
+        CreateAlarm = 211,
+        OpenOtherApp = 800
     }
     public enum ActionButton_Style
     {
-        iChronoEye,
+        iChronEye,
         Icon
+    }
+
+    public class ClickAction
+    {
+        public ClickAction() { }
+        public ClickAction(ClickActionType type)
+        {
+            Type = type;
+        }
+
+        public ClickActionType Type = ClickActionType.OpenSettings;
+
+        public string[] Params;
     }
 
     public class WidgetCfg_Moon : WidgetCfg
@@ -618,7 +635,7 @@ namespace iChronoMe.Widgets
     [XmlInclude(typeof(WidgetCfg_ClockAnalog))]
     public abstract class WidgetCfg_Clock : WidgetCfg
     {
-        public WidgetCfgClickAction ClickAction = WidgetCfgClickAction.OpenSettings;
+        public ClickAction ClickAction = new ClickAction(ClickActionType.OpenSettings);
         public WidgetCfgPositionType PositionType = WidgetCfgPositionType.None;
 
         public double Latitude = 0;
@@ -641,7 +658,10 @@ namespace iChronoMe.Widgets
         public bool FlowMinuteHand = false;
         public bool FlowSecondHand = false;
 
-        [XmlIgnore] public string AllHandConfigID { set
+        [XmlIgnore]
+        public string AllHandConfigID
+        {
+            set
             {
                 HourHandConfigID = MinuteHandConfigID = SecondHandConfigID = CapConfigID = value;
             }
@@ -742,8 +762,8 @@ namespace iChronoMe.Widgets
                     ColorTickMarks = ColorTickMarks.Invert();
             }
         }
-        
-        public bool BackImageAllowsBackColor { get => !string.IsNullOrEmpty(BackgroundImage) && BackgroundImage.Contains("01_simple_face"); } 
+
+        public bool BackImageAllowsBackColor { get => !string.IsNullOrEmpty(BackgroundImage) && BackgroundImage.Contains("01_simple_face"); }
     }
 
     public enum WidgetCfgPositionType
@@ -754,16 +774,6 @@ namespace iChronoMe.Widgets
         StaticPosition = 10,
         [XmlEnum(Name = "20")]
         LivePosition = 20
-    }
-
-    public enum WidgetCfgClickAction
-    {
-        [XmlEnum(Name = "0")]
-        None,
-        [XmlEnum(Name = "10")]
-        OpenSettings,
-        [XmlEnum(Name = "20")]
-        OpenApp
     }
 
     public enum TickMarkStyle

@@ -68,7 +68,7 @@ namespace iChronoMe.Widgets
             cfg = (WidgetCfg_ClockAnalog)cfg.Clone();
             cfg.ColorHourHandStroke = cfg.ColorHourHandFill = cfg.ColorMinuteHandStroke = cfg.ColorMinuteHandFill =
                  cfg.ColorSecondHandStroke = cfg.ColorSecondHandFill = cfg.ColorTickMarks = xColor.MaterialTextBlack;
-            
+
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("simple black", cfg));
 
             cfg = BaseSample.GetConfigClone();
@@ -405,12 +405,12 @@ namespace iChronoMe.Widgets
 
             var cfg = BaseSample.GetConfigClone();
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.withoutSecondHand, cfg));
-            
+
             foreach (string cId in ClockHandConfig.GetAllIds())
             {
                 var chc = ClockHandConfig.Get(cId);
                 if (chc.SecondPathList != null)
-                {                    
+                {
                     cfg = BaseSample.GetConfigClone();
                     cfg.SecondHandConfigID = cId;
                     cfg.SetDefaultColors();
@@ -484,7 +484,7 @@ namespace iChronoMe.Widgets
             if (bHasFilled || !cfg.HourHandConfig.AllowCustomHourStroke)
                 AddSample(localize.colorcfgSingleColorFilled, clrs[0], clrs[1], clrs[0], clrs[1], clrs[0], clrs[1], new object[] { 0, 1, 0, 1, 0, 1 });
 
-            if (cfg.HourHandConfig.AllowCustomHourStroke) 
+            if (cfg.HourHandConfig.AllowCustomHourStroke)
                 AddSample(localize.colorcfgMultiColor, clrs[0], xColor.Transparent, clrs[2], xColor.Transparent, clrs[4], xColor.Transparent, new object[] { 0, xColor.Transparent, 2, xColor.Transparent, 4, xColor.Transparent });
 
             if (bHasFilled || !cfg.HourHandConfig.AllowCustomHourStroke)

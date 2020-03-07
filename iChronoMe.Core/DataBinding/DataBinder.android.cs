@@ -131,7 +131,7 @@ namespace iChronoMe.Core.DataBinding
                 }
                 catch (Exception ex)
                 {
-                    Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+                    sys.LogException(ex);
                 }
             }
             IsWritingToView = false;

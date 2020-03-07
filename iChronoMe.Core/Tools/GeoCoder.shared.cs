@@ -1,7 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using 
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (uap10.0.16299)"
+Vor:
 using System.Text;
 using static iChronoMe.Core.Classes.GeoInfo;
+Nach:
+using System.Text;
+
+using static iChronoMe.Core.Classes.GeoInfo;
+*/
+
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (Xamarin.iOS10)"
+Vor:
+using System.Text;
+using static iChronoMe.Core.Classes.GeoInfo;
+Nach:
+using System.Text;
+
+using static iChronoMe.Core.Classes.GeoInfo;
+*/
+
+/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (MonoAndroid90)"
+Vor:
+using System.Text;
+using static iChronoMe.Core.Classes.GeoInfo;
+Nach:
+using System.Text;
+
+using static iChronoMe.Core.Classes.GeoInfo;
+*/
+static iChronoMe.Core.Classes.GeoInfo;
 
 namespace iChronoMe.Core.Tools
 {

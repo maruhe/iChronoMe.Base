@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.Interfaces;
 using iChronoMe.Core.Types;
+
 using SkiaSharp;
+
 using SQLite;
 
 namespace iChronoMe.Widgets
@@ -114,21 +117,21 @@ namespace iChronoMe.Widgets
                             cfg.AllowCustomHourFill = x.fill;
                         }
                         if (!string.IsNullOrEmpty(cfg.MinutePaths) && PathList.ContainsKey(cfg.MinutePaths))
-                        { 
+                        {
                             cfg.MinutePathList = new List<ClockPath>(PathList[cfg.MinutePaths]);
                             var x = CheckHasCustomizablePaths(cfg.MinutePathList);
                             cfg.AllowCustomMinuteStroke = x.stroke;
                             cfg.AllowCustomMinuteFill = x.fill;
                         }
                         if (!string.IsNullOrEmpty(cfg.SecondPaths) && PathList.ContainsKey(cfg.SecondPaths))
-                        { 
+                        {
                             cfg.SecondPathList = new List<ClockPath>(PathList[cfg.SecondPaths]);
                             var x = CheckHasCustomizablePaths(cfg.SecondPathList);
                             cfg.AllowCustomSecondStroke = x.stroke;
                             cfg.AllowCustomSecondFill = x.fill;
                         }
                         if (!string.IsNullOrEmpty(cfg.CapPaths) && PathList.ContainsKey(cfg.CapPaths))
-                        { 
+                        {
                             cfg.CapPathList = new List<ClockPath>(PathList[cfg.CapPaths]);
                         }
 
@@ -196,7 +199,7 @@ namespace iChronoMe.Widgets
         [Ignore] public bool AllowCustomSecondStroke { get; set; } = false;
         [Ignore] public bool AllowCustomSecondFill { get; set; } = false;
 
-        [Ignore]public List<ClockPath> HourPathList { get; set; }
+        [Ignore] public List<ClockPath> HourPathList { get; set; }
         [Ignore] public List<ClockPath> MinutePathList { get; set; }
         [Ignore] public List<ClockPath> SecondPathList { get; set; }
         [Ignore] public List<ClockPath> CapPathList { get; set; }
@@ -226,7 +229,10 @@ namespace iChronoMe.Widgets
             public int OffsetY { get; set; }
 
             SKPath _skPath;
-            [Ignore] public SKPath SkPath { get
+            [Ignore]
+            public SKPath SkPath
+            {
+                get
                 {
                     if (_skPath == null)
                         _skPath = SKPath.ParseSvgPathData(Path);

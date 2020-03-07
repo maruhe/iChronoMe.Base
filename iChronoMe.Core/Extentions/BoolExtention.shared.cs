@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace iChronoMe.Core.Extentions
+﻿namespace iChronoMe.Core.Extentions
 {
     public static class BoolExtention
     {

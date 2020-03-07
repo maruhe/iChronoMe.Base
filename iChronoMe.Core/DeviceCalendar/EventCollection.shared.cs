@@ -2,11 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Net;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Xml;
 
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.Tools;

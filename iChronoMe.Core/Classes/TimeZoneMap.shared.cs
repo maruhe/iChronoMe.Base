@@ -56,7 +56,7 @@ namespace iChronoMe.Core.Classes
 
         private static void InitMap()
         {
-            if (loading == false)
+            if (loading)
                 return;
             loading = true;
             loadstart = DateTime.Now;

@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
-using System.Text;
 using System.Xml;
+
 using iChronoMe.Core.Classes;
+
 using static iChronoMe.Core.Classes.GeoInfo;
 
 namespace iChronoMe.Core.Tools

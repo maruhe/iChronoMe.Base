@@ -60,9 +60,10 @@ namespace iChronoMe.Core.Classes
 
             iErrorCount = 0;
 
-            Task.Factory.StartNew(() => {
+            Task.Factory.StartNew(() =>
+            {
                 requestStart = DateTime.Now;
-                mNtp.BeginRequestTime(); 
+                mNtp.BeginRequestTime();
             });
         }
 

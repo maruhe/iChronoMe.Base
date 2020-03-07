@@ -362,9 +362,9 @@ namespace iChronoMe.Core
                     GetLocationInfo();
                 }
                 catch (ThreadAbortException)
-                { 
-                    locationTask = null; 
-                    return; 
+                {
+                    locationTask = null;
+                    return;
                 }
                 catch (Exception ex)
                 {
@@ -423,7 +423,7 @@ namespace iChronoMe.Core
                         try
                         {
                             timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(tz.timezoneId);
-                        } 
+                        }
                         catch (Exception ex)
                         {
                             sys.LogException(ex, "TimeZoneInfoCache.FromLocation " + sys.DezimalGradToString(Latitude, Longitude));
@@ -440,7 +440,7 @@ namespace iChronoMe.Core
 
         public void SaveLocal()
         {
-            if (this == _localInstance)
+            if (IsLocalInstance)
             {
                 var cfg = AppConfigHolder.LocationConfig;
                 cfg.Latitude = Latitude;
@@ -451,6 +451,14 @@ namespace iChronoMe.Core
                 cfg.TimeZoneOffsetGmt = TimeZoneOffsetGmt;
                 cfg.TimeZoneOffsetDst = TimeZoneOffsetDst;
                 AppConfigHolder.SaveLocationConfig();
+            }
+        }
+
+        public bool IsLocalInstance
+        {
+            get
+            {
+                return this == _localInstance;
             }
         }
 

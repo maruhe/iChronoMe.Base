@@ -12,17 +12,19 @@ namespace iChronoMe.Core.Classes
                 if (_allCredits == null)
                 {
                     _allCredits = new List<ContributorInfo>();
-                    _allCredits.Add(new ContributorInfo { 
-                        Name = "GitHub", 
-                        Description = "pleasure to have the option to code all together as once", 
-                        WebLink = "https://github.com" 
+                    _allCredits.Add(new ContributorInfo
+                    {
+                        Name = "GitHub",
+                        Description = "pleasure to have the option to code all together as once",
+                        WebLink = "https://github.com"
                     });
 
-                    _allCredits.Add(new ContributorInfo { 
-                        License = "MIT", 
-                        Name = "Yort.Ntp", 
-                        Description = "our interface to GMT 0", 
-                        WebLink = "https://github.com/Yortw/Yort.Ntp" 
+                    _allCredits.Add(new ContributorInfo
+                    {
+                        License = "MIT",
+                        Name = "Yort.Ntp",
+                        Description = "our interface to GMT 0",
+                        WebLink = "https://github.com/Yortw/Yort.Ntp"
                     });
                     /*_allCredits.Add(new ContributorInfo
                     {
@@ -33,10 +35,12 @@ namespace iChronoMe.Core.Classes
                     });*/
                     //_allCredits.Add(new CreditInfo { License = "MIT", Name = "TimeZoneConverter", Description = "for Windows-Users", WebLink = "https://github.com/mj1856/TimeZoneConverter" });
 
-                    _allCredits.Add(new ContributorInfo { 
-                        Name = "icons8.com", 
-                        Description = "more icons than I ever could implement", 
-                        WebLink = "https://icons8.com" });
+                    _allCredits.Add(new ContributorInfo
+                    {
+                        Name = "icons8.com",
+                        Description = "more icons than I ever could implement",
+                        WebLink = "https://icons8.com"
+                    });
                 }
 
                 return _allCredits;

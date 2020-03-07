@@ -1,6 +1,4 @@
-﻿
-using iChronoMe.Core.Classes;
-using iChronoMe.Core.Types;
+﻿using iChronoMe.Core.Types;
 
 namespace iChronoMe.Widgets
 {

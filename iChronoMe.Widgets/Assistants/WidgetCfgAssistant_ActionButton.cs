@@ -56,17 +56,17 @@ namespace iChronoMe.Widgets
             BaseSample = baseSample;
             ShowPreviewImage = false;
 
-            foreach (ActionButton_ClickAction ca in Enum.GetValues(typeof(ActionButton_ClickAction)))
+            foreach (ClickActionType ca in Enum.GetValues(typeof(ClickActionType)))
             {
                 var cfg = new WidgetCfg_ActionButton();
-                cfg.ClickAction = ca;
-                if (ca == ActionButton_ClickAction.Animate)
+                cfg.ClickAction = new ClickAction(ca);
+                if (ca == ClickActionType.Animate)
                 {
                     cfg.WidgetTitle = "";
-                    cfg.Style = ActionButton_Style.iChronoEye;
+                    cfg.Style = ActionButton_Style.iChronEye;
                     cfg.AnimateOnFirstClick = true;
                 }
-                else if (ca != ActionButton_ClickAction.OpenApp)
+                else if (ca != ClickActionType.OpenApp)
                     cfg.WidgetTitle = ca.ToString();
 
                 Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(ca.ToString(), cfg));
@@ -84,33 +84,33 @@ namespace iChronoMe.Widgets
             BaseSample = baseSample;
 
             var cfg = baseSample.GetConfigClone();
-            cfg.Style = ActionButton_Style.iChronoEye;
+            cfg.Style = ActionButton_Style.iChronEye;
             cfg.AnimateOnFirstClick = false;
             Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(localize.ActionButtonStyle_eye_static, cfg));
 
             cfg = baseSample.GetConfigClone();
-            cfg.Style = ActionButton_Style.iChronoEye;
+            cfg.Style = ActionButton_Style.iChronEye;
             cfg.AnimateOnFirstClick = true;
             Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(localize.ActionButtonStyle_eye_animated, cfg));
 
             string cIconPrefix = "";
-            switch (cfg.ClickAction)
+            switch (cfg.ClickAction.Type)
             {
-                case ActionButton_ClickAction.OpenApp:
+                case ClickActionType.OpenApp:
                     //cIconPrefix = "icons8_calendar_plus";
                     break;
-                case ActionButton_ClickAction.OpenCalendar:
+                case ClickActionType.OpenCalendar:
                     cIconPrefix = "icons8_calendar";
                     break;
-                case ActionButton_ClickAction.CreateEvent:
+                case ClickActionType.CreateEvent:
                     cIconPrefix = "icons8_calendar_plus_";
                     break;
-                case ActionButton_ClickAction.CreateAlarm:
+                case ClickActionType.CreateAlarm:
                     cIconPrefix = "icons8_alarm";
                     break;
-                case ActionButton_ClickAction.TimeToTimeDialog:
-                    cIconPrefix = "icons8_map_marker";
-                    break;
+                    //case ClickActionType.TimeToTimeDialog:
+                    //  cIconPrefix = "icons8_map_marker";
+                    //break;
             }
             if (!string.IsNullOrEmpty(cIconPrefix))
             {
@@ -132,7 +132,7 @@ namespace iChronoMe.Widgets
         public override void AfterSelect(IUserIO handler, WidgetCfgSample<WidgetCfg_ActionButton> sample)
         {
             base.AfterSelect(handler, sample);
-            if (sample.WidgetConfig.Style == ActionButton_Style.iChronoEye && sample.WidgetConfig.AnimateOnFirstClick)
+            if (sample.WidgetConfig.Style == ActionButton_Style.iChronEye && sample.WidgetConfig.AnimateOnFirstClick)
                 NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_AnimationDuriation);
 
             if (sample.WidgetConfig.Style == ActionButton_Style.Icon)

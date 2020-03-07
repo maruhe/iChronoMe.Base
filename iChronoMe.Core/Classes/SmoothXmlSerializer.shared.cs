@@ -9,8 +9,6 @@ using System.Xml.Serialization;
 
 using iChronoMe.Core.Types;
 
-using Newtonsoft.Json;
-
 namespace iChronoMe.Core.Classes
 {
     public class SmoothXmlSerializer
@@ -501,7 +499,7 @@ namespace iChronoMe.Core.Classes
             if (string.IsNullOrEmpty(cNodeType))
                 cNodeType = node.GetAttribute("xsi:type");
             if (!string.IsNullOrEmpty(cNodeType))
-            {                
+            {
                 baseType = typeAssemblies[classMappings[cNodeType]].GetType(classMappings[cNodeType]);
                 cFullCassName = baseType.FullName;
             }

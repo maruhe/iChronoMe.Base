@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Threading;
 using System.Xml.Serialization;
+
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.Types;
 
 using SkiaSharp;
+
 using static iChronoMe.Widgets.ClockHandConfig;
 //using SKSvg = SkiaSharp.Extended.Svg.SKSvg;
 
@@ -61,8 +62,9 @@ namespace iChronoMe.Widgets
         public List<ClockPath> CapPathList { get; set; }
 
         ClockfaceInfo _clockfaceInfo = null;
-        [XmlIgnore] public ClockfaceInfo ClockfaceInfo 
-        { 
+        [XmlIgnore]
+        public ClockfaceInfo ClockfaceInfo
+        {
             get
             {
                 if (string.IsNullOrEmpty(BackgroundImage))
@@ -278,7 +280,7 @@ namespace iChronoMe.Widgets
                 canvas.RotateDegrees((float)(30 * hour), 500, 500);
 
                 drawClockPaths(canvas, HourPathList, ColorHourHandStroke, ColorHourHandFill);
-                
+
                 canvas.RotateDegrees((float)(-30 * hour), 500, 500);
             }
 
@@ -345,7 +347,7 @@ namespace iChronoMe.Widgets
         {
             get
             {
-                if (DateTime.Now.Second <2)
+                if (DateTime.Now.Second < 2)
                 {
                     tsMin = TimeSpan.FromHours(1);
                     tsMax = TimeSpan.FromTicks(0);

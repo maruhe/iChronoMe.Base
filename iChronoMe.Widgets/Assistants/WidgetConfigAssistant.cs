@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using iChronoMe.Core.Classes;
 using iChronoMe.Core.Interfaces;
 
 namespace iChronoMe.Widgets
