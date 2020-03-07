@@ -556,4 +556,13 @@ if you have enoug colors just click 'back' or somewhere outside the window</valu
   <data name="Style" xml:space="preserve">
     <value>style</value>
   </data>
+  <data name="TimeType_RealSunTime" xml:space="preserve">
+    <value>real sun time</value>
+  </data>
+  <data name="TimeType_MiddleSunTime" xml:space="preserve">
+    <value>middle sun time</value>
+  </data>
+  <data name="TimeType_TimeZoneTime" xml:space="preserve">
+    <value>timezone time</value>
+  </data>
 </root>

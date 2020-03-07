@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using iChronoMe.Core;
 using iChronoMe.Core.DynamicCalendar;
 using iChronoMe.Core.Interfaces;
 using iChronoMe.Core.Types;
@@ -35,6 +35,34 @@ namespace iChronoMe.Widgets
         }
     }
 
+    public class WidgetCfgAssistant_Calendar_OptionsBase : WidgetConfigAssistant<WidgetCfg_Calendar>
+    {
+        public WidgetCfgAssistant_Calendar_OptionsBase(WidgetCfgSample<WidgetCfg_Calendar> baseSample)
+        {
+            Title = localize.title_EditWidget;
+            BaseSample = baseSample;
+            ShowPreviewImage = false;
+            ShowFirstPreviewImage = true;
+
+            Samples.Add(new WidgetCfgSample<WidgetCfg_Calendar>(localize.action_SaveAndQuit, BaseSample.GetConfigClone()));
+
+            var cfg = BaseSample.GetConfigClone();
+
+            Samples.Add(new WidgetCfgSample<WidgetCfg_Calendar>(localize.Theme, null, cfg, typeof(WidgetCfgAssistant_Calendar_Theme)));
+            if (cfg.SupportsWidgetTimeType)
+                Samples.Add(new WidgetCfgSample<WidgetCfg_Calendar>(localize.TimeType, null, cfg, typeof(WidgetCfgAssistant_Calendar_WidgetTimeType)));
+
+            NextStepAssistantType = null;
+        }
+
+        public override void AfterSelect(IUserIO handler, WidgetCfgSample<WidgetCfg_Calendar> sample)
+        {
+            base.AfterSelect(handler, sample);
+
+            NextStepAssistantType = (sample.Tag as Type);
+        }
+    }
+
     public class WidgetCfgAssistant_Calendar_Theme : WidgetConfigAssistant<WidgetCfg_Calendar>
     {
         public WidgetCfgAssistant_Calendar_Theme(WidgetCfgSample<WidgetCfg_Calendar> baseSample)
@@ -48,12 +76,36 @@ namespace iChronoMe.Widgets
                 Samples.Add(new WidgetCfgSample<WidgetCfg_Calendar>(o.ToString(), cfg));
             }
 
-            NextStepAssistantType = null;
+            if (baseSample.WidgetConfig.WidgetId != 0)
+                NextStepAssistantType = typeof(WidgetCfgAssistant_Calendar_OptionsBase);
         }
 
         public override void AfterSelect(IUserIO handler, WidgetCfgSample<WidgetCfg_Calendar> sample)
         {
             base.AfterSelect(handler, sample);
+        }
+    }
+
+    public class WidgetCfgAssistant_Calendar_WidgetTimeType : WidgetConfigAssistant<WidgetCfg_Calendar>
+    {
+        public WidgetCfgAssistant_Calendar_WidgetTimeType(WidgetCfgSample<WidgetCfg_Calendar> baseSample)
+        {
+            Title = localize.HandColorTypes;
+            BaseSample = baseSample;
+            ShowPreviewImage = false;
+            NextStepAssistantType = typeof(WidgetCfgAssistant_Calendar_OptionsBase);
+
+            var cfg = BaseSample.GetConfigClone();
+            cfg.WidgetTimeType = cfg.CurrentTimeType = TimeType.RealSunTime;
+            Samples.Add(new WidgetCfgSample<WidgetCfg_Calendar>(localize.TimeType_RealSunTime, cfg));
+
+            cfg = BaseSample.GetConfigClone();
+            cfg.WidgetTimeType = cfg.CurrentTimeType = TimeType.MiddleSunTime;
+            Samples.Add(new WidgetCfgSample<WidgetCfg_Calendar>(localize.TimeType_MiddleSunTime, cfg));
+
+            cfg = BaseSample.GetConfigClone();
+            cfg.WidgetTimeType = cfg.CurrentTimeType = TimeType.TimeZoneTime;
+            Samples.Add(new WidgetCfgSample<WidgetCfg_Calendar>(localize.TimeType_TimeZoneTime, cfg));
         }
     }
 

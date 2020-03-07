@@ -220,7 +220,11 @@ namespace iChronoMe.Widgets
         public int WidgetWidth;
         public int WidgetHeight;
 
-        public TimeType ShowTimeType = sys.DefaultTimeType;
+        [XmlIgnore] public bool SupportsChangeTimeType = false;
+        [XmlIgnore] public bool SupportsWidgetTimeType = false;
+
+        public TimeType CurrentTimeType = sys.DefaultTimeType;
+        public TimeType WidgetTimeType = sys.DefaultTimeType;
         public string CalendarModelId;
 
         public xColor ColorTitleText = xColor.White;
@@ -336,15 +340,16 @@ namespace iChronoMe.Widgets
     {
         Animate = 1001,
 #if DEBUG
-        TestActivity = 10000,
+        TestActivity = -25,
 #endif
         None = -1,
         OpenSettings = 0,
         OpenApp = 100,
-        OpenClock = 120,
-        OpenCalendar = 101,
-        CreateEvent = 111,
-        CreateAlarm = 211,
+        OpenClock = 111,
+        OpenCalendar = 112,
+        OpenWorldTimeMap = 113,
+        CreateEvent = 211,
+        CreateAlarm = 251,
         OpenOtherApp = 800
     }
     public enum ActionButton_Style
@@ -600,6 +605,11 @@ namespace iChronoMe.Widgets
 
     public class WidgetCfg_CalendarTimetable : WidgetCfg_Calendar
     {
+        public WidgetCfg_CalendarTimetable()
+        {
+            SupportsWidgetTimeType = SupportsChangeTimeType = true;
+        }
+
         public int MaxFutureDays { get; set; } = 21;
 
         public int MaxLoadCount { get; set; } = 100;
@@ -653,6 +663,10 @@ namespace iChronoMe.Widgets
 
     public class WidgetCfg_ClockAnalog : WidgetCfg_Clock
     {
+        public WidgetCfg_ClockAnalog()
+        {
+            SupportsWidgetTimeType = SupportsChangeTimeType = true;
+        }
 
         public bool FlowHourHand = true;
         public bool FlowMinuteHand = false;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-
+using iChronoMe.Core;
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.DynamicCalendar;
 using iChronoMe.Core.Extentions;
@@ -122,6 +122,7 @@ namespace iChronoMe.Widgets
                 cfgPrev.ColorTickMarks = xColor.HotPink;
                 Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.ClockFace, null, cfg, typeof(WidgetCfgAssistant_ClockAnalog_TickMarks), cfgPrev));
             }
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.TimeType, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_ClockAnalog_WidgetTimeType)));            
 
             NextStepAssistantType = null;
         }
@@ -851,6 +852,29 @@ namespace iChronoMe.Widgets
             cfg.ColorTickMarks = clr.Value;
             BaseSample = new WidgetCfgSample<WidgetCfg_ClockAnalog>("custom", cfg);
             handler.TriggerPositiveButtonClicked();
+        }
+    }
+
+    public class WidgetCfgAssistant_ClockAnalog_WidgetTimeType : WidgetConfigAssistant<WidgetCfg_ClockAnalog>
+    {
+        public WidgetCfgAssistant_ClockAnalog_WidgetTimeType(WidgetCfgSample<WidgetCfg_ClockAnalog> baseSample)
+        {
+            Title = localize.HandColorTypes;
+            BaseSample = baseSample;
+            ShowPreviewImage = false;
+            NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase);
+           
+            var cfg = BaseSample.GetConfigClone();
+            cfg.WidgetTimeType = cfg.CurrentTimeType = TimeType.RealSunTime;
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.TimeType_RealSunTime, cfg));
+
+            cfg = BaseSample.GetConfigClone();
+            cfg.WidgetTimeType = cfg.CurrentTimeType = TimeType.MiddleSunTime;
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.TimeType_MiddleSunTime, cfg));
+
+            cfg = BaseSample.GetConfigClone();
+            cfg.WidgetTimeType = cfg.CurrentTimeType = TimeType.TimeZoneTime;
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.TimeType_TimeZoneTime, cfg));
         }
     }
 }

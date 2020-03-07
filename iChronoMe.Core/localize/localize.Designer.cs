@@ -1252,6 +1252,33 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die middle sun time ähnelt.
+        /// </summary>
+        public static string TimeType_MiddleSunTime {
+            get {
+                return ResourceManager.GetString("TimeType_MiddleSunTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die real sun time ähnelt.
+        /// </summary>
+        public static string TimeType_RealSunTime {
+            get {
+                return ResourceManager.GetString("TimeType_RealSunTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die timezone time ähnelt.
+        /// </summary>
+        public static string TimeType_TimeZoneTime {
+            get {
+                return ResourceManager.GetString("TimeType_TimeZoneTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die edit Widget ähnelt.
         /// </summary>
         public static string title_EditWidget {
