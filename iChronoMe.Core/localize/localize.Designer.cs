@@ -11,6 +11,11 @@
 namespace iChronoMe {
     using System;
     
+
+
+    //asdjaskdjas
+
+
     
     /// <summary>
     ///   Eine stark typisierte Ressourcenklasse zum Suchen von lokalisierten Zeichenfolgen usw.
@@ -1591,6 +1596,15 @@ namespace iChronoMe {
         public static string ImageLoader_success_one_package {
             get {
                 return ResourceManager.GetString("ImageLoader_success_one_package", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die no widget&apos;s found\nyou can create new widgets on your lauchen-screen! ähnelt.
+        /// </summary>
+        public static string info_no_widgets_found {
+            get {
+                return ResourceManager.GetString("info_no_widgets_found", resourceCulture);
             }
         }
         

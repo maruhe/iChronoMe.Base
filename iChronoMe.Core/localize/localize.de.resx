@@ -444,7 +444,7 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
     <value>Einstellungen anzeigen</value>
   </data>
   <data name="ClickActionType_OpenApp" xml:space="preserve">
-    <value>iChronoMe starten"</value>
+    <value>iChronoMe starten</value>
   </data>
   <data name="ClickActionType_OpenClock" xml:space="preserve">
     <value>"öffne 'Uhr'"</value>
@@ -815,9 +815,6 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
   <data name="TimeScale" xml:space="preserve">
     <value>Zeitraum</value>
   </data>
-  <data name="TimeType" xml:space="preserve">
-    <value>Zeit-Typ</value>
-  </data>
   <data name="TitleColor" xml:space="preserve">
     <value>Titelfarbe</value>
   </data>
@@ -1087,14 +1084,5 @@ wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder a
   </data>
   <data name="Style" xml:space="preserve">
     <value>Stiel</value>
-  </data>
-  <data name="TimeType_RealSunTime" xml:space="preserve">
-    <value>wahre Ortszeit</value>
-  </data>
-  <data name="TimeType_MiddleSunTime" xml:space="preserve">
-    <value>mittlere Ortzzeit</value>
-  </data>
-  <data name="TimeType_TimeZoneTime" xml:space="preserve">
-    <value>Zeitzonen Zeit</value>
   </data>
 </root>

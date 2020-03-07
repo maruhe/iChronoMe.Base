@@ -39,6 +39,7 @@ namespace iChronoMe.Widgets
         public int WidgetCount { get => WidgetConfigList.Count; }
 
         public T GetWidgetCfg<T>(int iWidgetId, bool bCreateIfNotExisting = true)
+            where T : WidgetCfg
         {
             xLog.Debug("GetWidgetCfg: " + iWidgetId.ToString() + " " + bTest.ToString() + ": " + iTest.ToString());
 

@@ -8,9 +8,9 @@ using iChronoMe.Core.Types;
 
 namespace iChronoMe.Widgets
 {
-    public class WidgetCfgAssistant_ActionButton_OptionBase : WidgetConfigAssistant<WidgetCfg_ActionButton>
+    public class WidgetCfgAssistant_ActionButton_OptionsBase : WidgetConfigAssistant<WidgetCfg_ActionButton>
     {
-        public WidgetCfgAssistant_ActionButton_OptionBase(WidgetCfgSample<WidgetCfg_ActionButton> baseSample)
+        public WidgetCfgAssistant_ActionButton_OptionsBase(WidgetCfgSample<WidgetCfg_ActionButton> baseSample)
         {
             Title = localize.title_EditWidget;
             BaseSample = baseSample;
@@ -58,6 +58,11 @@ namespace iChronoMe.Widgets
 
             foreach (ClickActionType ca in Enum.GetValues(typeof(ClickActionType)))
             {
+                string c = ca.ToString();
+                var res = typeof(localize).GetProperty("ClickActionType_" + c);
+                if (res != null)
+                    c = (string)res.GetValue(null);
+
                 var cfg = new WidgetCfg_ActionButton();
                 cfg.ClickAction = new ClickAction(ca);
                 if (ca == ClickActionType.Animate)
@@ -66,13 +71,10 @@ namespace iChronoMe.Widgets
                     cfg.Style = ActionButton_Style.iChronEye;
                     cfg.AnimateOnFirstClick = true;
                 }
+                else if (ca == ClickActionType.None)
+                    cfg.WidgetTitle = "  ";
                 else if (ca != ClickActionType.OpenApp)
-                    cfg.WidgetTitle = ca.ToString();
-
-                string c = ca.ToString();
-                var res = typeof(localize).GetProperty("ClickActionType_" + c);
-                if (res != null)
-                    c = (string)res.GetValue(null);
+                    cfg.WidgetTitle = c;
 
                 Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(c, cfg));
             }
@@ -131,7 +133,7 @@ namespace iChronoMe.Widgets
                 }
             }
 
-            NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_OptionBase);
+            NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_OptionsBase);
         }
 
         public override void AfterSelect(IUserIO handler, WidgetCfgSample<WidgetCfg_ActionButton> sample)
@@ -182,7 +184,7 @@ namespace iChronoMe.Widgets
                 Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(string.Format(localize.nAnimationRounds, i), cfg));
             }
 
-            NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_OptionBase);
+            NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_OptionsBase);
         }
     }
 
@@ -195,7 +197,7 @@ namespace iChronoMe.Widgets
 
             var cfg = baseSample.GetConfigClone();
 
-            NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_OptionBase);
+            NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_OptionsBase);
         }
 
         public override void PerformPreperation(IUserIO handler)
@@ -223,7 +225,7 @@ namespace iChronoMe.Widgets
                 Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(o.ToString(), cfg));
             }
 
-            NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_OptionBase);
+            NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_OptionsBase);
         }
 
         public override async void ExecCustom(IUserIO handler)
@@ -250,7 +252,7 @@ namespace iChronoMe.Widgets
             BaseSample = baseSample;
             AllowCustom = true;
 
-            NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_OptionBase);
+            NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_OptionsBase);
         }
 
         public override void PerformPreperation(IUserIO handler)
