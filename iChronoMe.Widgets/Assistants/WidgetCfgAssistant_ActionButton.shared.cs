@@ -69,7 +69,12 @@ namespace iChronoMe.Widgets
                 else if (ca != ClickActionType.OpenApp)
                     cfg.WidgetTitle = ca.ToString();
 
-                Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(ca.ToString(), cfg));
+                string c = ca.ToString();
+                var res = typeof(localize).GetProperty("ClickActionType_" + c);
+                if (res != null)
+                    c = (string)res.GetValue(null);
+
+                Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(c, cfg));
             }
 
             NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_Style);

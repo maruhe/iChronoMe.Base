@@ -61,11 +61,425 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die abort ähnelt.
+        /// </summary>
+        public static string action_abort {
+            get {
+                return ResourceManager.GetString("action_abort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die accept ähnelt.
+        /// </summary>
+        public static string action_accept {
+            get {
+                return ResourceManager.GetString("action_accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die allow sending error-logs ähnelt.
+        /// </summary>
+        public static string action_allow_send_errorlogs {
+            get {
+                return ResourceManager.GetString("action_allow_send_errorlogs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die back ähnelt.
+        /// </summary>
+        public static string action_back {
+            get {
+                return ResourceManager.GetString("action_back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die background ähnelt.
+        /// </summary>
+        public static string action_background {
+            get {
+                return ResourceManager.GetString("action_background", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die always show clock in notifocation area ähnelt.
+        /// </summary>
+        public static string action_backgroundservice_showalways {
+            get {
+                return ResourceManager.GetString("action_backgroundservice_showalways", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die block ähnelt.
+        /// </summary>
+        public static string action_block {
+            get {
+                return ResourceManager.GetString("action_block", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die use default TimeType in Calendar ähnelt.
+        /// </summary>
+        public static string action_calendar_UsesDefaultTimeType {
+            get {
+                return ResourceManager.GetString("action_calendar_UsesDefaultTimeType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die cancel ähnelt.
+        /// </summary>
+        public static string action_cancel {
+            get {
+                return ResourceManager.GetString("action_cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die show allday appointments ähnelt.
+        /// </summary>
+        public static string action_cfg_calendar_show_allday {
+            get {
+                return ResourceManager.GetString("action_cfg_calendar_show_allday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die change theme ähnelt.
+        /// </summary>
+        public static string action_change_theme {
+            get {
+                return ResourceManager.GetString("action_change_theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die clear cache ähnelt.
+        /// </summary>
+        public static string action_clear_cache {
+            get {
+                return ResourceManager.GetString("action_clear_cache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die close ähnelt.
+        /// </summary>
+        public static string action_close {
+            get {
+                return ResourceManager.GetString("action_close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die colors ähnelt.
+        /// </summary>
+        public static string action_colors {
+            get {
+                return ResourceManager.GetString("action_colors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die continue ähnelt.
+        /// </summary>
+        public static string action_continue {
+            get {
+                return ResourceManager.GetString("action_continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die decline ähnelt.
+        /// </summary>
+        public static string action_decline {
+            get {
+                return ResourceManager.GetString("action_decline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die only error-logs without screenshots ähnelt.
+        /// </summary>
+        public static string action_deny_error_screentshot {
+            get {
+                return ResourceManager.GetString("action_deny_error_screentshot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die hand colors ähnelt.
+        /// </summary>
+        public static string action_handcolors {
+            get {
+                return ResourceManager.GetString("action_handcolors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die hand types ähnelt.
+        /// </summary>
+        public static string action_handtypes {
+            get {
+                return ResourceManager.GetString("action_handtypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ignore ähnelt.
+        /// </summary>
+        public static string action_ignore {
+            get {
+                return ResourceManager.GetString("action_ignore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die current Location ähnelt.
+        /// </summary>
+        public static string action_location_type_live {
+            get {
+                return ResourceManager.GetString("action_location_type_live", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die choose a location-type ähnelt.
+        /// </summary>
+        public static string action_location_type_promt {
+            get {
+                return ResourceManager.GetString("action_location_type_promt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die static Location ähnelt.
+        /// </summary>
+        public static string action_location_type_static {
+            get {
+                return ResourceManager.GetString("action_location_type_static", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die more ähnelt.
+        /// </summary>
+        public static string action_more {
+            get {
+                return ResourceManager.GetString("action_more", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die no ähnelt.
+        /// </summary>
+        public static string action_no {
+            get {
+                return ResourceManager.GetString("action_no", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die on notification click ähnelt.
+        /// </summary>
+        public static string action_notification_click_action {
+            get {
+                return ResourceManager.GetString("action_notification_click_action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die configure notifocation area ähnelt.
+        /// </summary>
+        public static string action_notification_config {
+            get {
+                return ResourceManager.GetString("action_notification_config", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die always show clock in notifocation area ähnelt.
+        /// </summary>
+        public static string action_notification_show_always {
+            get {
+                return ResourceManager.GetString("action_notification_show_always", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ok ähnelt.
+        /// </summary>
+        public static string action_ok {
+            get {
+                return ResourceManager.GetString("action_ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Options ähnelt.
+        /// </summary>
+        public static string action_options {
+            get {
+                return ResourceManager.GetString("action_options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die refresh current location ähnelt.
+        /// </summary>
+        public static string action_refresh_location {
+            get {
+                return ResourceManager.GetString("action_refresh_location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die refresh location continuous ähnelt.
+        /// </summary>
+        public static string action_refresh_location_continuous {
+            get {
+                return ResourceManager.GetString("action_refresh_location_continuous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die remove ähnelt.
+        /// </summary>
+        public static string action_remove {
+            get {
+                return ResourceManager.GetString("action_remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die remove all ähnelt.
+        /// </summary>
+        public static string action_remove_all {
+            get {
+                return ResourceManager.GetString("action_remove_all", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die save ähnelt.
+        /// </summary>
+        public static string action_save {
+            get {
+                return ResourceManager.GetString("action_save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die save and quit ähnelt.
         /// </summary>
         public static string action_SaveAndQuit {
             get {
                 return ResourceManager.GetString("action_SaveAndQuit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die search for location ähnelt.
+        /// </summary>
+        public static string action_search_location {
+            get {
+                return ResourceManager.GetString("action_search_location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die select ähnelt.
+        /// </summary>
+        public static string action_select {
+            get {
+                return ResourceManager.GetString("action_select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die select location ähnelt.
+        /// </summary>
+        public static string action_select_location {
+            get {
+                return ResourceManager.GetString("action_select_location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die send this time ähnelt.
+        /// </summary>
+        public static string action_send_errorlog_once {
+            get {
+                return ResourceManager.GetString("action_send_errorlog_once", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die send log ähnelt.
+        /// </summary>
+        public static string action_send_testlog {
+            get {
+                return ResourceManager.GetString("action_send_testlog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Settings ähnelt.
+        /// </summary>
+        public static string action_settings {
+            get {
+                return ResourceManager.GetString("action_settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tick marks ähnelt.
+        /// </summary>
+        public static string action_tickmarks {
+            get {
+                return ResourceManager.GetString("action_tickmarks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die today ähnelt.
+        /// </summary>
+        public static string action_today {
+            get {
+                return ResourceManager.GetString("action_today", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die try again ähnelt.
+        /// </summary>
+        public static string action_try_again {
+            get {
+                return ResourceManager.GetString("action_try_again", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die web-page ähnelt.
+        /// </summary>
+        public static string action_webpage {
+            get {
+                return ResourceManager.GetString("action_webpage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die yes ähnelt.
+        /// </summary>
+        public static string action_yes {
+            get {
+                return ResourceManager.GetString("action_yes", resourceCulture);
             }
         }
         
@@ -98,6 +512,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die no calendars found! ähnelt.
+        /// </summary>
+        public static string alert_no_calendar_found {
+            get {
+                return ResourceManager.GetString("alert_no_calendar_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die animation duriation ähnelt.
         /// </summary>
         public static string AnimationDuriation {
@@ -112,6 +535,24 @@ namespace iChronoMe {
         public static string AnimationRounds {
             get {
                 return ResourceManager.GetString("AnimationRounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;only with a location-information it is possible to calculate correct solar times&quot; ähnelt.
+        /// </summary>
+        public static string app_needs_location_description {
+            get {
+                return ResourceManager.GetString("app_needs_location_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die time is dynamic ähnelt.
+        /// </summary>
+        public static string app_slogan {
+            get {
+                return ResourceManager.GetString("app_slogan", resourceCulture);
             }
         }
         
@@ -188,6 +629,77 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 
+        ///		&quot;to display calendar-events in solar time we need permission here&quot;
+        ///	 ähnelt.
+        /// </summary>
+        public static string assistant_permission_calendar {
+            get {
+                return ResourceManager.GetString("assistant_permission_calendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 
+        ///		&quot;the app needs permission to your location to calculate correct solar time&quot;
+        ///	 ähnelt.
+        /// </summary>
+        public static string assistant_permission_location {
+            get {
+                return ResourceManager.GetString("assistant_permission_location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 
+        ///		&quot;and if you like we can display the preview for a widget with your wallpaper-image, therefore we need permission to the device-storage&quot;
+        ///	 ähnelt.
+        /// </summary>
+        public static string assistant_permission_storage {
+            get {
+                return ResourceManager.GetString("assistant_permission_storage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 
+        ///		&quot;yep, we need some permissions:&quot;
+        ///	 ähnelt.
+        /// </summary>
+        public static string assistant_permission_welcome {
+            get {
+                return ResourceManager.GetString("assistant_permission_welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;we don&apos;t beleve in unhackable anything&quot; ähnelt.
+        /// </summary>
+        public static string assistant_privacy_message {
+            get {
+                return ResourceManager.GetString("assistant_privacy_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die you may mind about data privacy? ähnelt.
+        /// </summary>
+        public static string assistant_privacy_question {
+            get {
+                return ResourceManager.GetString("assistant_privacy_question", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die data privacy information: ähnelt.
+        /// </summary>
+        public static string assistant_privacy_title {
+            get {
+                return ResourceManager.GetString("assistant_privacy_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die background ähnelt.
         /// </summary>
         public static string Background {
@@ -215,6 +727,26 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 
+        ///		&quot;to show a clock as widget that does show a custom time a service needs to be running in background\nsince android 7 it is needet to show a notification while a background-service is running\nyou can customize this notification or disable it in system-settings
+        ///	 ähnelt.
+        /// </summary>
+        public static string backgroundservice_info_explenation {
+            get {
+                return ResourceManager.GetString("backgroundservice_info_explenation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die why do I see a clock in notification area? ähnelt.
+        /// </summary>
+        public static string backgroundservice_info_why {
+            get {
+                return ResourceManager.GetString("backgroundservice_info_why", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die border ähnelt.
         /// </summary>
         public static string Border {
@@ -229,6 +761,132 @@ namespace iChronoMe {
         public static string ButtonColor {
             get {
                 return ResourceManager.GetString("ButtonColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die all day ähnelt.
+        /// </summary>
+        public static string calendar_event_all_day {
+            get {
+                return ResourceManager.GetString("calendar_event_all_day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die multi day ähnelt.
+        /// </summary>
+        public static string calendar_event_multi_day {
+            get {
+                return ResourceManager.GetString("calendar_event_multi_day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Position wird ermittelt ähnelt.
+        /// </summary>
+        public static string calendar_event_position_is_determined {
+            get {
+                return ResourceManager.GetString("calendar_event_position_is_determined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die to ähnelt.
+        /// </summary>
+        public static string calendar_event_to {
+            get {
+                return ResourceManager.GetString("calendar_event_to", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die position and local time unclear ähnelt.
+        /// </summary>
+        public static string calendar_event_unclear_position_time {
+            get {
+                return ResourceManager.GetString("calendar_event_unclear_position_time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die show maximal: ähnelt.
+        /// </summary>
+        public static string calendar_monthview_appointmentdisplaymode_max_title {
+            get {
+                return ResourceManager.GetString("calendar_monthview_appointmentdisplaymode_max_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die display mode: ähnelt.
+        /// </summary>
+        public static string calendar_monthview_appointmentdisplaymode_title {
+            get {
+                return ResourceManager.GetString("calendar_monthview_appointmentdisplaymode_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die show appointments: ähnelt.
+        /// </summary>
+        public static string calendar_monthview_appointmentviewtypes_title {
+            get {
+                return ResourceManager.GetString("calendar_monthview_appointmentviewtypes_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die day-view ähnelt.
+        /// </summary>
+        public static string calendar_viewtype_DayView {
+            get {
+                return ResourceManager.GetString("calendar_viewtype_DayView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die month-view ähnelt.
+        /// </summary>
+        public static string calendar_viewtype_MonthView {
+            get {
+                return ResourceManager.GetString("calendar_viewtype_MonthView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die timeline ähnelt.
+        /// </summary>
+        public static string calendar_viewtype_Timeline {
+            get {
+                return ResourceManager.GetString("calendar_viewtype_Timeline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die week-view ähnelt.
+        /// </summary>
+        public static string calendar_viewtype_WeekView {
+            get {
+                return ResourceManager.GetString("calendar_viewtype_WeekView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die work-week ähnelt.
+        /// </summary>
+        public static string calendar_viewtype_WorkWeek {
+            get {
+                return ResourceManager.GetString("calendar_viewtype_WorkWeek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die loading events... ähnelt.
+        /// </summary>
+        public static string calendar_widget_loading {
+            get {
+                return ResourceManager.GetString("calendar_widget_loading", resourceCulture);
             }
         }
         
@@ -256,6 +914,87 @@ namespace iChronoMe {
         public static string ClickAction {
             get {
                 return ResourceManager.GetString("ClickAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die create alarm ähnelt.
+        /// </summary>
+        public static string ClickActionType_CreateAlarm {
+            get {
+                return ResourceManager.GetString("ClickActionType_CreateAlarm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die create event ähnelt.
+        /// </summary>
+        public static string ClickActionType_CreateEvent {
+            get {
+                return ResourceManager.GetString("ClickActionType_CreateEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die do nothing ähnelt.
+        /// </summary>
+        public static string ClickActionType_None {
+            get {
+                return ResourceManager.GetString("ClickActionType_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die start iChronoMe ähnelt.
+        /// </summary>
+        public static string ClickActionType_OpenApp {
+            get {
+                return ResourceManager.GetString("ClickActionType_OpenApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;open &apos;calendar&apos;&quot; ähnelt.
+        /// </summary>
+        public static string ClickActionType_OpenCalendar {
+            get {
+                return ResourceManager.GetString("ClickActionType_OpenCalendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;open &apos;clock&apos;&quot; ähnelt.
+        /// </summary>
+        public static string ClickActionType_OpenClock {
+            get {
+                return ResourceManager.GetString("ClickActionType_OpenClock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die open another app ähnelt.
+        /// </summary>
+        public static string ClickActionType_OpenOtherApp {
+            get {
+                return ResourceManager.GetString("ClickActionType_OpenOtherApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die show settings ähnelt.
+        /// </summary>
+        public static string ClickActionType_OpenSettings {
+            get {
+                return ResourceManager.GetString("ClickActionType_OpenSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;open &apos;World-Time Map&apos;&quot; ähnelt.
+        /// </summary>
+        public static string ClickActionType_OpenWorldTimeMap {
+            get {
+                return ResourceManager.GetString("ClickActionType_OpenWorldTimeMap", resourceCulture);
             }
         }
         
@@ -541,6 +1280,60 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die keeps the Clock-Widges going on ähnelt.
+        /// </summary>
+        public static string description_BackgroundService {
+            get {
+                return ResourceManager.GetString("description_BackgroundService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;don&apos;t ask again&quot; ähnelt.
+        /// </summary>
+        public static string dont_ask_again {
+            get {
+                return ResourceManager.GetString("dont_ask_again", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;this app need&apos;s a location to work&quot; ähnelt.
+        /// </summary>
+        public static string error_location_is_needet {
+            get {
+                return ResourceManager.GetString("error_location_is_needet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die parameter error, try again ähnelt.
+        /// </summary>
+        public static string error_message_paramers {
+            get {
+                return ResourceManager.GetString("error_message_paramers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die unable to demiter a location ähnelt.
+        /// </summary>
+        public static string error_no_location_demitered {
+            get {
+                return ResourceManager.GetString("error_no_location_demitered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die error saving event ähnelt.
+        /// </summary>
+        public static string error_saving_event {
+            get {
+                return ResourceManager.GetString("error_saving_event", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die solar time needs a location! ähnelt.
         /// </summary>
         public static string error_SloarTimeNeedLocation {
@@ -555,6 +1348,33 @@ namespace iChronoMe {
         public static string ErrorsOrProblems {
             get {
                 return ResourceManager.GetString("ErrorsOrProblems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0} widges aktiv ähnelt.
+        /// </summary>
+        public static string ezmz_runningwidgets_more {
+            get {
+                return ResourceManager.GetString("ezmz_runningwidgets_more", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ein widget aktiv ähnelt.
+        /// </summary>
+        public static string ezmz_runningwidgets_one {
+            get {
+                return ResourceManager.GetString("ezmz_runningwidgets_one", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die no aktiv widget ähnelt.
+        /// </summary>
+        public static string ezmz_runningwidgets_zero {
+            get {
+                return ResourceManager.GetString("ezmz_runningwidgets_zero", resourceCulture);
             }
         }
         
@@ -775,6 +1595,141 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die just a moment... ähnelt.
+        /// </summary>
+        public static string just_a_moment {
+            get {
+                return ResourceManager.GetString("just_a_moment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Widget Update-Service ähnelt.
+        /// </summary>
+        public static string label_BackgroundService {
+            get {
+                return ResourceManager.GetString("label_BackgroundService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die calendar TimeType: ähnelt.
+        /// </summary>
+        public static string label_calendar_TimeType {
+            get {
+                return ResourceManager.GetString("label_calendar_TimeType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die core time ähnelt.
+        /// </summary>
+        public static string label_cfg_calendar_core_time {
+            get {
+                return ResourceManager.GetString("label_cfg_calendar_core_time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die show weeknumbers ähnelt.
+        /// </summary>
+        public static string label_cfg_calendar_show_weeknumbers {
+            get {
+                return ResourceManager.GetString("label_cfg_calendar_show_weeknumbers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die visible time ähnelt.
+        /// </summary>
+        public static string label_cfg_calendar_visible_time {
+            get {
+                return ResourceManager.GetString("label_cfg_calendar_visible_time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die days count ähnelt.
+        /// </summary>
+        public static string label_cfg_timeline_days_count {
+            get {
+                return ResourceManager.GetString("label_cfg_timeline_days_count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;choose your default Time-Type:&quot; ähnelt.
+        /// </summary>
+        public static string label_choose_default_timetype {
+            get {
+                return ResourceManager.GetString("label_choose_default_timetype", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;at first choose your colors:&quot; ähnelt.
+        /// </summary>
+        public static string label_choose_theme_firsttime {
+            get {
+                return ResourceManager.GetString("label_choose_theme_firsttime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die default TimeType: ähnelt.
+        /// </summary>
+        public static string label_default_TimeType {
+            get {
+                return ResourceManager.GetString("label_default_TimeType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die error ähnelt.
+        /// </summary>
+        public static string label_error {
+            get {
+                return ResourceManager.GetString("label_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die error log ähnelt.
+        /// </summary>
+        public static string label_errorlog {
+            get {
+                return ResourceManager.GetString("label_errorlog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die screenshot ähnelt.
+        /// </summary>
+        public static string label_sceenshot {
+            get {
+                return ResourceManager.GetString("label_sceenshot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;short cut&apos;s&quot; ähnelt.
+        /// </summary>
+        public static string label_ShortCutActivity {
+            get {
+                return ResourceManager.GetString("label_ShortCutActivity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die title ähnelt.
+        /// </summary>
+        public static string label_title {
+            get {
+                return ResourceManager.GetString("label_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die live-time ähnelt.
         /// </summary>
         public static string LifeTime {
@@ -811,11 +1766,38 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die loading... ähnelt.
+        /// </summary>
+        public static string loading {
+            get {
+                return ResourceManager.GetString("loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die location ähnelt.
         /// </summary>
         public static string Location {
             get {
                 return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your location-services seems to be disabled! ähnelt.
+        /// </summary>
+        public static string location_provider_disabled_alert {
+            get {
+                return ResourceManager.GetString("location_provider_disabled_alert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die do you want to enable it? ähnelt.
+        /// </summary>
+        public static string location_provider_disabled_question {
+            get {
+                return ResourceManager.GetString("location_provider_disabled_question", resourceCulture);
             }
         }
         
@@ -834,6 +1816,87 @@ namespace iChronoMe {
         public static string MaxCount {
             get {
                 return ResourceManager.GetString("MaxCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die About ähnelt.
+        /// </summary>
+        public static string menu_about {
+            get {
+                return ResourceManager.GetString("menu_about", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Calendar ähnelt.
+        /// </summary>
+        public static string menu_calendar {
+            get {
+                return ResourceManager.GetString("menu_calendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Clock ähnelt.
+        /// </summary>
+        public static string menu_clock {
+            get {
+                return ResourceManager.GetString("menu_clock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die FAQ ähnelt.
+        /// </summary>
+        public static string menu_faq {
+            get {
+                return ResourceManager.GetString("menu_faq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Service ähnelt.
+        /// </summary>
+        public static string menu_service {
+            get {
+                return ResourceManager.GetString("menu_service", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Settings ähnelt.
+        /// </summary>
+        public static string menu_settings {
+            get {
+                return ResourceManager.GetString("menu_settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Share ähnelt.
+        /// </summary>
+        public static string menu_share {
+            get {
+                return ResourceManager.GetString("menu_share", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tools ähnelt.
+        /// </summary>
+        public static string menu_tools {
+            get {
+                return ResourceManager.GetString("menu_tools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die World-Time Map ähnelt.
+        /// </summary>
+        public static string menu_world_time_map {
+            get {
+                return ResourceManager.GetString("menu_world_time_map", resourceCulture);
             }
         }
         
@@ -901,11 +1964,47 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Close navigation drawer ähnelt.
+        /// </summary>
+        public static string navigation_drawer_close {
+            get {
+                return ResourceManager.GetString("navigation_drawer_close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open navigation drawer ähnelt.
+        /// </summary>
+        public static string navigation_drawer_open {
+            get {
+                return ResourceManager.GetString("navigation_drawer_open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die your are free ähnelt.
+        /// </summary>
+        public static string No_Appointments {
+            get {
+                return ResourceManager.GetString("No_Appointments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die no highlite ähnelt.
         /// </summary>
         public static string NoHighlite {
             get {
                 return ResourceManager.GetString("NoHighlite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;no selected date&quot; ähnelt.
+        /// </summary>
+        public static string NoSelectedDate {
+            get {
+                return ResourceManager.GetString("NoSelectedDate", resourceCulture);
             }
         }
         
@@ -1009,11 +2108,119 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die clear cache ähnelt.
+        /// </summary>
+        public static string progress_clearcache_action {
+            get {
+                return ResourceManager.GetString("progress_clearcache_action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die you will have to restart iChronome after continue ähnelt.
+        /// </summary>
+        public static string progress_clearcache_message {
+            get {
+                return ResourceManager.GetString("progress_clearcache_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die clear cache? ähnelt.
+        /// </summary>
+        public static string progress_clearcache_title {
+            get {
+                return ResourceManager.GetString("progress_clearcache_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die all error-logs have been deleted ähnelt.
+        /// </summary>
+        public static string progress_deleteerrorlog_done {
+            get {
+                return ResourceManager.GetString("progress_deleteerrorlog_done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die preparing timezones... ähnelt.
+        /// </summary>
+        public static string progress_overlay_timezones_title {
+            get {
+                return ResourceManager.GetString("progress_overlay_timezones_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die preparing data... ähnelt.
+        /// </summary>
+        public static string progress_preparing_data {
+            get {
+                return ResourceManager.GetString("progress_preparing_data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die do you allow to send error-logs to help solving such problems? theese logs contain tecnical parameters of you device and as you allow a screenshot, but no other kind of personal information ähnelt.
+        /// </summary>
+        public static string progress_senderrorlog_message {
+            get {
+                return ResourceManager.GetString("progress_senderrorlog_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die more information ähnelt.
+        /// </summary>
+        public static string progress_senderrorlog_more {
+            get {
+                return ResourceManager.GetString("progress_senderrorlog_more", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die something got wrong or the App crashed last time ähnelt.
+        /// </summary>
+        public static string progress_senderrorlog_title {
+            get {
+                return ResourceManager.GetString("progress_senderrorlog_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die system test ähnelt.
+        /// </summary>
+        public static string progress_systemtest_action {
+            get {
+                return ResourceManager.GetString("progress_systemtest_action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die system test ähnelt.
+        /// </summary>
+        public static string progress_systemtest_title {
+            get {
+                return ResourceManager.GetString("progress_systemtest_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die update base-data ähnelt.
         /// </summary>
         public static string ProgressUpdateBaseData {
             get {
                 return ResourceManager.GetString("ProgressUpdateBaseData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die you like to create a new Calendar? ähnelt.
+        /// </summary>
+        public static string question_create_new_calendar {
+            get {
+                return ResourceManager.GetString("question_create_new_calendar", resourceCulture);
             }
         }
         
@@ -1032,6 +2239,15 @@ namespace iChronoMe {
         public static string SaveWidget {
             get {
                 return ResourceManager.GetString("SaveWidget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die the hint so search ;-) ähnelt.
+        /// </summary>
+        public static string search_hint {
+            get {
+                return ResourceManager.GetString("search_hint", resourceCulture);
             }
         }
         
@@ -1081,6 +2297,60 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die add alarm ähnelt.
+        /// </summary>
+        public static string shortcut_create_alarm {
+            get {
+                return ResourceManager.GetString("shortcut_create_alarm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die not working? why not? ähnelt.
+        /// </summary>
+        public static string shortcut_create_alarm_disabled {
+            get {
+                return ResourceManager.GetString("shortcut_create_alarm_disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die long description... ähnelt.
+        /// </summary>
+        public static string shortcut_create_alarm_long {
+            get {
+                return ResourceManager.GetString("shortcut_create_alarm_long", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die create event ähnelt.
+        /// </summary>
+        public static string shortcut_create_calender_event {
+            get {
+                return ResourceManager.GetString("shortcut_create_calender_event", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die not working? why not? ähnelt.
+        /// </summary>
+        public static string shortcut_create_calender_event_disabled {
+            get {
+                return ResourceManager.GetString("shortcut_create_calender_event_disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die long description... ähnelt.
+        /// </summary>
+        public static string shortcut_create_calender_event_long {
+            get {
+                return ResourceManager.GetString("shortcut_create_calender_event_long", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die show all calendars ähnelt.
         /// </summary>
         public static string ShowAllCalendars {
@@ -1126,6 +2396,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die thanks ähnelt.
+        /// </summary>
+        public static string stop_alarm {
+            get {
+                return ResourceManager.GetString("stop_alarm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die style ähnelt.
         /// </summary>
         public static string Style {
@@ -1140,6 +2419,15 @@ namespace iChronoMe {
         public static string Symbols {
             get {
                 return ResourceManager.GetString("Symbols", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die if you see this text please tell me: ähnelt.
+        /// </summary>
+        public static string text_ServiceInfo {
+            get {
+                return ResourceManager.GetString("text_ServiceInfo", resourceCulture);
             }
         }
         
@@ -1261,11 +2549,33 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 
+        ///		&quot;the time based on the current longitude of your location\naround the year the difference between real an middle solar time can be up to about 18 minutes\nevery day has exact 24 hours and the offset to timezone-time is stable&quot;
+        ///	 ähnelt.
+        /// </summary>
+        public static string TimeType_MiddleSunTime_Desc {
+            get {
+                return ResourceManager.GetString("TimeType_MiddleSunTime_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die real sun time ähnelt.
         /// </summary>
         public static string TimeType_RealSunTime {
             get {
                 return ResourceManager.GetString("TimeType_RealSunTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 
+        ///		&quot;the time, by the real position of the sun where the highest point of the sun means 12 o&apos;clock\nthis means a day is a little bit less or a little bit more than 24 hours and every day is diffrent, like nature is\nthe offset to timezone-time is changing every day&quot;
+        ///	 ähnelt.
+        /// </summary>
+        public static string TimeType_RealSunTime_Desc {
+            get {
+                return ResourceManager.GetString("TimeType_RealSunTime_Desc", resourceCulture);
             }
         }
         
@@ -1279,11 +2589,58 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 
+        ///		&quot;this time is based on the borders of the country you enjoy currently\nmay this is far far away from the real time on your location&quot;
+        ///	 ähnelt.
+        /// </summary>
+        public static string TimeType_TimeZoneTime_Desc {
+            get {
+                return ResourceManager.GetString("TimeType_TimeZoneTime_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die edit event ähnelt.
+        /// </summary>
+        public static string title_edit_event {
+            get {
+                return ResourceManager.GetString("title_edit_event", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die edit Widget ähnelt.
         /// </summary>
         public static string title_EditWidget {
             get {
                 return ResourceManager.GetString("title_EditWidget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die select a location ähnelt.
+        /// </summary>
+        public static string title_location_picker {
+            get {
+                return ResourceManager.GetString("title_location_picker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die new event ähnelt.
+        /// </summary>
+        public static string title_new_event {
+            get {
+                return ResourceManager.GetString("title_new_event", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die these informations will be send: ähnelt.
+        /// </summary>
+        public static string title_send_errorlog {
+            get {
+                return ResourceManager.GetString("title_send_errorlog", resourceCulture);
             }
         }
         
@@ -1338,6 +2695,150 @@ namespace iChronoMe {
         public static string twoWeeks {
             get {
                 return ResourceManager.GetString("twoWeeks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die unkwnown_position ähnelt.
+        /// </summary>
+        public static string unknown_position {
+            get {
+                return ResourceManager.GetString("unknown_position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die analog solar clock ähnelt.
+        /// </summary>
+        public static string wallpaper_title_clock_analog {
+            get {
+                return ResourceManager.GetString("wallpaper_title_clock_analog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;welcome to iChronoMe!&quot; ähnelt.
+        /// </summary>
+        public static string welcome_ichronomy {
+            get {
+                return ResourceManager.GetString("welcome_ichronomy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die the calender-widget\&apos;s only work with access to your calendar and location ähnelt.
+        /// </summary>
+        public static string widget_error_location_is_requered {
+            get {
+                return ResourceManager.GetString("widget_error_location_is_requered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;missing calendar-permission\nplease click here&quot; ähnelt.
+        /// </summary>
+        public static string widget_error_permission_calendar {
+            get {
+                return ResourceManager.GetString("widget_error_permission_calendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;missing localtion-permission\nplease click here&quot; ähnelt.
+        /// </summary>
+        public static string widget_error_permission_location {
+            get {
+                return ResourceManager.GetString("widget_error_permission_location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die one &quot;tropical year&quot; is:\n365 d 5 h 48 min and 45,261 s ähnelt.
+        /// </summary>
+        public static string widget_lifetime_loading {
+            get {
+                return ResourceManager.GetString("widget_lifetime_loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die time is just illusion\u2026 ähnelt.
+        /// </summary>
+        public static string widget_loading {
+            get {
+                return ResourceManager.GetString("widget_loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die I need some permissions, click here please ähnelt.
+        /// </summary>
+        public static string widget_permission_error {
+            get {
+                return ResourceManager.GetString("widget_permission_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die action button ähnelt.
+        /// </summary>
+        public static string widget_title_actionbutton {
+            get {
+                return ResourceManager.GetString("widget_title_actionbutton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die solar time calendar widget ähnelt.
+        /// </summary>
+        public static string widget_title_calendar {
+            get {
+                return ResourceManager.GetString("widget_title_calendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die analog solar time ähnelt.
+        /// </summary>
+        public static string widget_title_clock_analog {
+            get {
+                return ResourceManager.GetString("widget_title_clock_analog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die lifetime ähnelt.
+        /// </summary>
+        public static string widget_title_lifetime {
+            get {
+                return ResourceManager.GetString("widget_title_lifetime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die click here to configure the widget ähnelt.
+        /// </summary>
+        public static string widget_unconfigured {
+            get {
+                return ResourceManager.GetString("widget_unconfigured", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die current location out of date ähnelt.
+        /// </summary>
+        public static string widget_warning_location_out_of_date {
+            get {
+                return ResourceManager.GetString("widget_warning_location_out_of_date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die current location unknown ähnelt.
+        /// </summary>
+        public static string widget_warning_location_unknown {
+            get {
+                return ResourceManager.GetString("widget_warning_location_unknown", resourceCulture);
             }
         }
         
