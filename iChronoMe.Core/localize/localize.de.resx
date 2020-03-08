@@ -130,30 +130,24 @@
     <value>mittlere Ortzzeit</value>
   </data>
   <data name="TimeType_MiddleSunTime_Desc" xml:space="preserve">
-    <value>
-"die Uhrzeit basierend auf dem Längengrad deines Standortes und einer 'mittleren Sonnenposition'
+    <value>die Uhrzeit basierend auf dem Längengrad deines Standortes und einer 'mittleren Sonnenposition'
 im Laufe eines Jahres kann die Abweichung zur 'wahren Ortszeit' bis zu 18 Minuten betragen
-jeder Tag ist exakt 24 Stunden lang und die Abweichung der Zeitzonen-Zeit bleibt konstant"
-  </value>
+jeder Tag ist exakt 24 Stunden lang und die Abweichung der Zeitzonen-Zeit bleibt konstant</value>
   </data>
   <data name="TimeType_RealSunTime" xml:space="preserve">
     <value>wahre Ortszeit</value>
   </data>
   <data name="TimeType_RealSunTime_Desc" xml:space="preserve">
-    <value>
-"die Uhrzeit gemessen an der echten Position der Sonne, wobei der Tageshöchststand der Sonne 12 Uhr bedeutet
+    <value>die Uhrzeit gemessen an der echten Position der Sonne, wobei der Tageshöchststand der Sonne 12 Uhr bedeutet
 dadurch sind manche Tage etwas kürzer und manche Tage etwas länger als 24 Stunden, wie die Natur nunmal
-die Abweichtung der Zeitzonen-Zeit ändert sich konstant"
-  </value>
+die Abweichtung der Zeitzonen-Zeit ändert sich konstant</value>
   </data>
   <data name="TimeType_TimeZoneTime" xml:space="preserve">
     <value>Zeitzonen Zeit</value>
   </data>
   <data name="TimeType_TimeZoneTime_Desc" xml:space="preserve">
-    <value>
-"diese Zeit basiert unter anderem auf den vermeidlichen Ländergrenzen und Gesetzten des Landes, das du gerade genießt
-oft ist diese Angabe weit entfernt von der wahren Zeit an diesem Ort"
-  </value>
+    <value>diese Zeit basiert unter anderem auf den vermeidlichen Ländergrenzen und Gesetzten des Landes, das du gerade genießt
+oft ist diese Angabe weit entfernt von der wahren Zeit an diesem Ort</value>
   </data>
   <data name="action_abort" xml:space="preserve">
     <value>abbrechen</value>
@@ -309,40 +303,24 @@ oft ist diese Angabe weit entfernt von der wahren Zeit an diesem Ort"
     <value>Zeit ist dynamisch</value>
   </data>
   <data name="assistant_permission_calendar" xml:space="preserve">
-    <value>
-    "um deine Termine in Sonnenzeit anzeigen zu können wird der Zugriff aud deinen Kalender benötigt"
-  </value>
+    <value>um deine Termine in Sonnenzeit anzeigen zu können wird der Zugriff aud deinen Kalender benötigt</value>
   </data>
   <data name="assistant_permission_location" xml:space="preserve">
-    <value>
-    der Zugriff auf den Standort ist wichtig um die Sonnenzeit berechnen zu können"
-  </value>
+    <value>der Zugriff auf den Standort ist wichtig um die Sonnenzeit berechnen zu können</value>
   </data>
   <data name="assistant_permission_storage" xml:space="preserve">
-    <value>
-    "und solltes du auch den Zugriff auf den Gerätespeicher zulassen kann die Voschau von Widges auch gleich mit deinem Hintergrundbild angezeigt werden"
-  </value>
+    <value>und solltes du auch den Zugriff auf den Gerätespeicher zulassen kann die Voschau von Widges auch gleich mit deinem Hintergrundbild angezeigt werden</value>
   </data>
   <data name="assistant_permission_welcome" xml:space="preserve">
-    <value>
-    "ein paar Berechtigungen wünsche ich mir:"
-  </value>
-  </data>
-  <data name="assistant_privacy_message" xml:space="preserve">
-    <value>alles kann man klacken...</value>
+    <value>ein paar Berechtigungen wünsche ich mir:</value>
   </data>
   <data name="assistant_privacy_question" xml:space="preserve">
     <value>hast du Interesse an unseren Informationen zu Dateschutz und Privatsphäre?</value>
   </data>
-  <data name="assistant_privacy_title" xml:space="preserve">
-    <value>Informationen zu Dateschutz und Privatsphäre?</value>
-  </data>
   <data name="backgroundservice_info_explenation" xml:space="preserve">
-    <value>
-"um ein Uhr-Widget mit benutzerdefinierter Zeit anzeigen zu können, muss ein Dienst im Hintergund laufen
+    <value>um ein Uhr-Widget mit benutzerdefinierter Zeit anzeigen zu können, muss ein Dienst im Hintergund laufen
 seit Android 7 ist es notwendig eine Benachrichtigung anzuzeigen solange im Hintergrund Aktionen ausgeführt werden
-du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellungen blockieren
-  </value>
+du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellungen blockieren</value>
   </data>
   <data name="backgroundservice_info_why" xml:space="preserve">
     <value>warum sehe ich diese Uhr im Benachrichtigunsbereich?</value>
@@ -408,7 +386,7 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
     <value>short cut\'s</value>
   </data>
   <data name="label_calendar_TimeType" xml:space="preserve">
-    <value>Kalender Zeit-Typ</value>
+    <value>Kalender Zeit-Typ:</value>
   </data>
   <data name="label_cfg_calendar_core_time" xml:space="preserve">
     <value>Kernzeiten</value>
@@ -423,13 +401,13 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
     <value>Tage</value>
   </data>
   <data name="label_choose_default_timetype" xml:space="preserve">
-    <value>"wähle einen Zeit-Typ als Standard:"</value>
+    <value>wähle einen Zeit-Typ als Standard:</value>
   </data>
   <data name="label_choose_theme_firsttime" xml:space="preserve">
-    <value>zu erst wähle deine Farben</value>
+    <value>zu erst wähle deine Farben:</value>
   </data>
   <data name="label_default_TimeType" xml:space="preserve">
-    <value>standard Zeit-Typ</value>
+    <value>standard Zeit-Typ:</value>
   </data>
   <data name="label_error" xml:space="preserve">
     <value>Fehler</value>
@@ -447,13 +425,13 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
     <value>iChronoMe starten</value>
   </data>
   <data name="ClickActionType_OpenClock" xml:space="preserve">
-    <value>"öffne 'Uhr'"</value>
+    <value>öffne 'Uhr'</value>
   </data>
   <data name="ClickActionType_OpenCalendar" xml:space="preserve">
-    <value>"öffne 'Kalender'"</value>
+    <value>öffne 'Kalender'</value>
   </data>
   <data name="ClickActionType_OpenWorldTimeMap" xml:space="preserve">
-    <value>"öffne 'Welt-Zeit Karte'"</value>
+    <value>öffne 'Welt-Zeit Karte'</value>
   </data>
   <data name="ClickActionType_CreateEvent" xml:space="preserve">
     <value>Termin anlegen</value>
@@ -463,6 +441,9 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
   </data>
   <data name="ClickActionType_OpenOtherApp" xml:space="preserve">
     <value>eine andere App öffnen</value>
+  </data>
+  <data name="ClickActionType_Animate" xml:space="preserve">
+    <value>einfach animieren</value>
   </data>
   <data name="label_sceenshot" xml:space="preserve">
     <value>Screenshot</value>
@@ -519,19 +500,19 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
     <value>anschließend kannst du iChronoMe einfach wieder starten</value>
   </data>
   <data name="progress_clearcache_title" xml:space="preserve">
-    <value>Zwischenspeicher löschen</value>
+    <value>Zwischenspeicher löschen?</value>
   </data>
   <data name="progress_deleteerrorlog_done" xml:space="preserve">
     <value>alle Fehlerprotokolle wurden gelöscht</value>
   </data>
   <data name="progress_overlay_timezones_title" xml:space="preserve">
-    <value>Zeitzonen werden aufbereitet</value>
+    <value>Zeitzonen werden aufbereitet...</value>
   </data>
   <data name="progress_preparing_data" xml:space="preserve">
     <value>Daten werden vorbereitet...</value>
   </data>
   <data name="progress_senderrorlog_message" xml:space="preserve">
-    <value>dürfen Fehlerprotokolle übertragen werden, damit sowas gelöst werden kann? diese Protokollen enthalten technische Parameter deines Geräts und sofern du erlaubst einen Screenshot, aber sonst natürlich keinerlei persönliche Informationen!</value>
+    <value>dürfen Fehlerprotokolle übertragen werden, damit sowas gelöst werden kann? diese Protokollen enthalten technische Parameter deines Geräts und sofern du erlaubst einen Screenshot, aber sonst natürlich keinerlei persönliche Informationen</value>
   </data>
   <data name="progress_senderrorlog_more" xml:space="preserve">
     <value>mehr Informationen</value>
@@ -618,7 +599,7 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
     <value>Lebenszeit</value>
   </data>
   <data name="widget_unconfigured" xml:space="preserve">
-    <value>hier klicken um das Widget zu konfigurieren!</value>
+    <value>hier klicken um das Widget zu konfigurieren</value>
   </data>
   <data name="calendar_event_all_day" xml:space="preserve">
     <value>ganztägig</value>
@@ -645,10 +626,10 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
     <value>Standort-Berechtigungen fehlen</value>
   </data>
   <data name="widget_warning_location_out_of_date" xml:space="preserve">
-    <value>aktuelle Position veraltet!</value>
+    <value>aktuelle Position veraltet</value>
   </data>
   <data name="widget_warning_location_unknown" xml:space="preserve">
-    <value>aktuelle Position unbekannt!</value>
+    <value>aktuelle Position unbekannt</value>
   </data>
   <data name="AppName" xml:space="preserve">
     <value>iChronoMe</value>
@@ -667,9 +648,6 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
   </data>
   <data name="AppTitle" xml:space="preserve">
     <value>iChronoMe</value>
-  </data>
-  <data name="Background" xml:space="preserve">
-    <value>Hintergrund</value>
   </data>
   <data name="BackgroundColor" xml:space="preserve">
     <value>Hintergrundfarbe</value>
@@ -1084,5 +1062,12 @@ wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder a
   </data>
   <data name="Style" xml:space="preserve">
     <value>Stiel</value>
+  </data>
+  <data name="info_no_widgets_found" xml:space="preserve">
+    <value>keine Widgets gefunden
+am Starbildschirm deines Geräts kannst du neue Widgets erstellen!</value>
+  </data>
+  <data name="Background" xml:space="preserve">
+    <value>Hintergrund</value>
   </data>
 </root>

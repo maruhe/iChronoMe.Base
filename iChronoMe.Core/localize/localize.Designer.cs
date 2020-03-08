@@ -250,7 +250,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die choose a location-type ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die choose a location-type: ähnelt.
         /// </summary>
         public static string action_location_type_promt {
             get {
@@ -521,6 +521,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die all day ähnelt.
+        /// </summary>
+        public static string all_day {
+            get {
+                return ResourceManager.GetString("all_day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die animation duriation ähnelt.
         /// </summary>
         public static string AnimationDuriation {
@@ -539,7 +548,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;only with a location-information it is possible to calculate correct solar times&quot; ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die only with a location-information it is possible to calculate correct solar times ähnelt.
         /// </summary>
         public static string app_needs_location_description {
             get {
@@ -629,9 +638,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 
-        ///		&quot;to display calendar-events in solar time we need permission here&quot;
-        ///	 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die to display calendar-events in solar time we need permission here ähnelt.
         /// </summary>
         public static string assistant_permission_calendar {
             get {
@@ -640,9 +647,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 
-        ///		&quot;the app needs permission to your location to calculate correct solar time&quot;
-        ///	 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die the app needs permission to your location to calculate correct solar time ähnelt.
         /// </summary>
         public static string assistant_permission_location {
             get {
@@ -651,9 +656,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 
-        ///		&quot;and if you like we can display the preview for a widget with your wallpaper-image, therefore we need permission to the device-storage&quot;
-        ///	 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die and if you like we can display the preview for a widget with your wallpaper-image, therefore we need permission to the device-storage ähnelt.
         /// </summary>
         public static string assistant_permission_storage {
             get {
@@ -662,22 +665,11 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 
-        ///		&quot;yep, we need some permissions:&quot;
-        ///	 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die yep, we need some permissions: ähnelt.
         /// </summary>
         public static string assistant_permission_welcome {
             get {
                 return ResourceManager.GetString("assistant_permission_welcome", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;we don&apos;t beleve in unhackable anything&quot; ähnelt.
-        /// </summary>
-        public static string assistant_privacy_message {
-            get {
-                return ResourceManager.GetString("assistant_privacy_message", resourceCulture);
             }
         }
         
@@ -687,15 +679,6 @@ namespace iChronoMe {
         public static string assistant_privacy_question {
             get {
                 return ResourceManager.GetString("assistant_privacy_question", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die data privacy information: ähnelt.
-        /// </summary>
-        public static string assistant_privacy_title {
-            get {
-                return ResourceManager.GetString("assistant_privacy_title", resourceCulture);
             }
         }
         
@@ -727,9 +710,9 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 
-        ///		&quot;to show a clock as widget that does show a custom time a service needs to be running in background\nsince android 7 it is needet to show a notification while a background-service is running\nyou can customize this notification or disable it in system-settings
-        ///	 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die to show a clock as widget that does show a custom time a service needs to be running in background
+        ///since android 7 it is needet to show a notification while a background-service is running
+        ///you can customize this notification or disable it in system-settings ähnelt.
         /// </summary>
         public static string backgroundservice_info_explenation {
             get {
@@ -918,6 +901,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die just animate ähnelt.
+        /// </summary>
+        public static string ClickActionType_Animate {
+            get {
+                return ResourceManager.GetString("ClickActionType_Animate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die create alarm ähnelt.
         /// </summary>
         public static string ClickActionType_CreateAlarm {
@@ -954,7 +946,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;open &apos;calendar&apos;&quot; ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die open &apos;calendar&apos; ähnelt.
         /// </summary>
         public static string ClickActionType_OpenCalendar {
             get {
@@ -963,7 +955,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;open &apos;clock&apos;&quot; ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die open &apos;clock&apos; ähnelt.
         /// </summary>
         public static string ClickActionType_OpenClock {
             get {
@@ -990,7 +982,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;open &apos;World-Time Map&apos;&quot; ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die open &apos;World-Time Map&apos; ähnelt.
         /// </summary>
         public static string ClickActionType_OpenWorldTimeMap {
             get {
@@ -1280,7 +1272,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die keeps the Clock-Widges going on ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die keeps the Clock-Widges going on.. ähnelt.
         /// </summary>
         public static string description_BackgroundService {
             get {
@@ -1289,7 +1281,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;don&apos;t ask again&quot; ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die don&apos;t ask again ähnelt.
         /// </summary>
         public static string dont_ask_again {
             get {
@@ -1298,7 +1290,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;this app need&apos;s a location to work&quot; ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die this app need&apos;s a location to work ähnelt.
         /// </summary>
         public static string error_location_is_needet {
             get {
@@ -1375,6 +1367,46 @@ namespace iChronoMe {
         public static string ezmz_runningwidgets_zero {
             get {
                 return ResourceManager.GetString("ezmz_runningwidgets_zero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die this is a qute question ähnelt.
+        /// </summary>
+        public static string faq_item_1 {
+            get {
+                return ResourceManager.GetString("faq_item_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die and here the answer
+        ///with lin 2 ähnelt.
+        /// </summary>
+        public static string faq_item_1_value {
+            get {
+                return ResourceManager.GetString("faq_item_1_value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die here another question ähnelt.
+        /// </summary>
+        public static string faq_item_2 {
+            get {
+                return ResourceManager.GetString("faq_item_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die and also a answer
+        ///with a line 2
+        ///line3
+        ///and lin 4 ähnelt.
+        /// </summary>
+        public static string faq_item_2_value {
+            get {
+                return ResourceManager.GetString("faq_item_2_value", resourceCulture);
             }
         }
         
@@ -1595,7 +1627,8 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die no widget&apos;s found\nyou can create new widgets on your lauchen-screen! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die no widget&apos;s found
+        ///you can create new widgets on your lauchen-screen! ähnelt.
         /// </summary>
         public static string info_no_widgets_found {
             get {
@@ -1667,7 +1700,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;choose your default Time-Type:&quot; ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die choose your default Time-Type: ähnelt.
         /// </summary>
         public static string label_choose_default_timetype {
             get {
@@ -1676,7 +1709,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;at first choose your colors:&quot; ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die at first choose your colors: ähnelt.
         /// </summary>
         public static string label_choose_theme_firsttime {
             get {
@@ -1721,7 +1754,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;short cut&apos;s&quot; ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die short cut&apos;s ähnelt.
         /// </summary>
         public static string label_ShortCutActivity {
             get {
@@ -1793,7 +1826,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Your location-services seems to be disabled! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die location-services seems to be disabled ähnelt.
         /// </summary>
         public static string location_provider_disabled_alert {
             get {
@@ -2009,7 +2042,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;no selected date&quot; ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die no selected date ähnelt.
         /// </summary>
         public static string NoSelectedDate {
             get {
@@ -2189,7 +2222,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die something got wrong or the App crashed last time ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die something got wrong or the App crashed last time! ähnelt.
         /// </summary>
         public static string progress_senderrorlog_title {
             get {
@@ -2558,9 +2591,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 
-        ///		&quot;the time based on the current longitude of your location\naround the year the difference between real an middle solar time can be up to about 18 minutes\nevery day has exact 24 hours and the offset to timezone-time is stable&quot;
-        ///	 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die the time based on the current longitude of your location\naround the year the difference between real an middle solar time can be up to about 18 minutes\nevery day has exact 24 hours and the offset to timezone-time is stable ähnelt.
         /// </summary>
         public static string TimeType_MiddleSunTime_Desc {
             get {
@@ -2578,9 +2609,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 
-        ///		&quot;the time, by the real position of the sun where the highest point of the sun means 12 o&apos;clock\nthis means a day is a little bit less or a little bit more than 24 hours and every day is diffrent, like nature is\nthe offset to timezone-time is changing every day&quot;
-        ///	 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die the time, by the real position of the sun where the highest point of the sun means 12 o&apos;clock\nthis means a day is a little bit less or a little bit more than 24 hours and every day is diffrent, like nature is\nthe offset to timezone-time is changing every day ähnelt.
         /// </summary>
         public static string TimeType_RealSunTime_Desc {
             get {
@@ -2598,9 +2627,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 
-        ///		&quot;this time is based on the borders of the country you enjoy currently\nmay this is far far away from the real time on your location&quot;
-        ///	 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die this time is based on the borders of the country you enjoy currently\nmay this is far far away from the real time on your location ähnelt.
         /// </summary>
         public static string TimeType_TimeZoneTime_Desc {
             get {
@@ -2726,7 +2753,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;welcome to iChronoMe!&quot; ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die welcome to iChronoMe! ähnelt.
         /// </summary>
         public static string welcome_ichronomy {
             get {
@@ -2735,7 +2762,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die the calender-widget\&apos;s only work with access to your calendar and location ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die the calender-widget\&apos;s only work with access to your calendar and location! ähnelt.
         /// </summary>
         public static string widget_error_location_is_requered {
             get {
@@ -2744,7 +2771,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;missing calendar-permission\nplease click here&quot; ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die missing calendar-permission\nplease click here ähnelt.
         /// </summary>
         public static string widget_error_permission_calendar {
             get {
@@ -2753,7 +2780,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;missing localtion-permission\nplease click here&quot; ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die missing localtion-permission\nplease click here ähnelt.
         /// </summary>
         public static string widget_error_permission_location {
             get {

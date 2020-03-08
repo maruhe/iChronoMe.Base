@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NoSelectedDate" xml:space="preserve">
-    <value>"no selected date"</value>
+    <value>no selected date</value>
   </data>
   <data name="No_Appointments" xml:space="preserve">
     <value>your are free</value>
@@ -130,25 +130,19 @@
     <value>middle sun time</value>
   </data>
   <data name="TimeType_MiddleSunTime_Desc" xml:space="preserve">
-    <value>
-		"the time based on the current longitude of your location\naround the year the difference between real an middle solar time can be up to about 18 minutes\nevery day has exact 24 hours and the offset to timezone-time is stable"
-	</value>
+    <value>the time based on the current longitude of your location\naround the year the difference between real an middle solar time can be up to about 18 minutes\nevery day has exact 24 hours and the offset to timezone-time is stable</value>
   </data>
   <data name="TimeType_RealSunTime" xml:space="preserve">
     <value>real sun time</value>
   </data>
   <data name="TimeType_RealSunTime_Desc" xml:space="preserve">
-    <value>
-		"the time, by the real position of the sun where the highest point of the sun means 12 o'clock\nthis means a day is a little bit less or a little bit more than 24 hours and every day is diffrent, like nature is\nthe offset to timezone-time is changing every day"
-	</value>
+    <value>the time, by the real position of the sun where the highest point of the sun means 12 o'clock\nthis means a day is a little bit less or a little bit more than 24 hours and every day is diffrent, like nature is\nthe offset to timezone-time is changing every day</value>
   </data>
   <data name="TimeType_TimeZoneTime" xml:space="preserve">
     <value>timezone time</value>
   </data>
   <data name="TimeType_TimeZoneTime_Desc" xml:space="preserve">
-    <value>
-		"this time is based on the borders of the country you enjoy currently\nmay this is far far away from the real time on your location"
-	</value>
+    <value>this time is based on the borders of the country you enjoy currently\nmay this is far far away from the real time on your location</value>
   </data>
   <data name="action_abort" xml:space="preserve">
     <value>abort</value>
@@ -214,7 +208,7 @@
     <value>current Location</value>
   </data>
   <data name="action_location_type_promt" xml:space="preserve">
-    <value>choose a location-type</value>
+    <value>choose a location-type:</value>
   </data>
   <data name="action_location_type_static" xml:space="preserve">
     <value>static Location</value>
@@ -310,13 +304,13 @@
     <value>Position wird ermittelt</value>
   </data>
   <data name="widget_error_permission_calendar" xml:space="preserve">
-    <value>"missing calendar-permission\nplease click here"</value>
+    <value>missing calendar-permission\nplease click here</value>
   </data>
   <data name="widget_error_permission_location" xml:space="preserve">
-    <value>"missing localtion-permission\nplease click here"</value>
+    <value>missing localtion-permission\nplease click here</value>
   </data>
   <data name="widget_error_location_is_requered" xml:space="preserve">
-    <value>the calender-widget\'s only work with access to your calendar and location</value>
+    <value>the calender-widget\'s only work with access to your calendar and location!</value>
   </data>
   <data name="widget_warning_location_unknown" xml:space="preserve">
     <value>current location unknown</value>
@@ -325,44 +319,30 @@
     <value>current location out of date</value>
   </data>
   <data name="app_needs_location_description" xml:space="preserve">
-    <value>"only with a location-information it is possible to calculate correct solar times"</value>
+    <value>only with a location-information it is possible to calculate correct solar times</value>
   </data>
   <data name="app_slogan" xml:space="preserve">
     <value>time is dynamic</value>
   </data>
   <data name="assistant_permission_calendar" xml:space="preserve">
-    <value>
-		"to display calendar-events in solar time we need permission here"
-	</value>
+    <value>to display calendar-events in solar time we need permission here</value>
   </data>
   <data name="assistant_permission_location" xml:space="preserve">
-    <value>
-		"the app needs permission to your location to calculate correct solar time"
-	</value>
+    <value>the app needs permission to your location to calculate correct solar time</value>
   </data>
   <data name="assistant_permission_storage" xml:space="preserve">
-    <value>
-		"and if you like we can display the preview for a widget with your wallpaper-image, therefore we need permission to the device-storage"
-	</value>
+    <value>and if you like we can display the preview for a widget with your wallpaper-image, therefore we need permission to the device-storage</value>
   </data>
   <data name="assistant_permission_welcome" xml:space="preserve">
-    <value>
-		"yep, we need some permissions:"
-	</value>
-  </data>
-  <data name="assistant_privacy_message" xml:space="preserve">
-    <value>"we don't beleve in unhackable anything"</value>
+    <value>yep, we need some permissions:</value>
   </data>
   <data name="assistant_privacy_question" xml:space="preserve">
     <value>you may mind about data privacy?</value>
   </data>
-  <data name="assistant_privacy_title" xml:space="preserve">
-    <value>data privacy information:</value>
-  </data>
   <data name="backgroundservice_info_explenation" xml:space="preserve">
-    <value>
-		"to show a clock as widget that does show a custom time a service needs to be running in background\nsince android 7 it is needet to show a notification while a background-service is running\nyou can customize this notification or disable it in system-settings
-	</value>
+    <value>to show a clock as widget that does show a custom time a service needs to be running in background
+since android 7 it is needet to show a notification while a background-service is running
+you can customize this notification or disable it in system-settings</value>
   </data>
   <data name="backgroundservice_info_why" xml:space="preserve">
     <value>why do I see a clock in notification area?</value>
@@ -395,13 +375,13 @@
     <value>loading events...</value>
   </data>
   <data name="description_BackgroundService" xml:space="preserve">
-    <value>keeps the Clock-Widges going on</value>
+    <value>keeps the Clock-Widges going on..</value>
   </data>
   <data name="dont_ask_again" xml:space="preserve">
-    <value>"don't ask again"</value>
+    <value>don't ask again</value>
   </data>
   <data name="error_location_is_needet" xml:space="preserve">
-    <value>"this app need's a location to work"</value>
+    <value>this app need's a location to work</value>
   </data>
   <data name="error_message_paramers" xml:space="preserve">
     <value>parameter error, try again</value>
@@ -425,7 +405,7 @@
     <value>Widget Update-Service</value>
   </data>
   <data name="label_ShortCutActivity" xml:space="preserve">
-    <value>"short cut's"</value>
+    <value>short cut's</value>
   </data>
   <data name="label_calendar_TimeType" xml:space="preserve">
     <value>calendar TimeType:</value>
@@ -443,10 +423,10 @@
     <value>days count</value>
   </data>
   <data name="label_choose_default_timetype" xml:space="preserve">
-    <value>"choose your default Time-Type:"</value>
+    <value>choose your default Time-Type:</value>
   </data>
   <data name="label_choose_theme_firsttime" xml:space="preserve">
-    <value>"at first choose your colors:"</value>
+    <value>at first choose your colors:</value>
   </data>
   <data name="label_default_TimeType" xml:space="preserve">
     <value>default TimeType:</value>
@@ -467,13 +447,13 @@
     <value>start iChronoMe</value>
   </data>
   <data name="ClickActionType_OpenClock" xml:space="preserve">
-    <value>"open 'clock'"</value>
+    <value>open 'clock'</value>
   </data>
   <data name="ClickActionType_OpenCalendar" xml:space="preserve">
-    <value>"open 'calendar'"</value>
+    <value>open 'calendar'</value>
   </data>
   <data name="ClickActionType_OpenWorldTimeMap" xml:space="preserve">
-    <value>"open 'World-Time Map'"</value>
+    <value>open 'World-Time Map'</value>
   </data>
   <data name="ClickActionType_CreateEvent" xml:space="preserve">
     <value>create event</value>
@@ -483,6 +463,9 @@
   </data>
   <data name="ClickActionType_OpenOtherApp" xml:space="preserve">
     <value>open another app</value>
+  </data>
+  <data name="ClickActionType_Animate" xml:space="preserve">
+    <value>just animate</value>
   </data>
   <data name="label_sceenshot" xml:space="preserve">
     <value>screenshot</value>
@@ -494,7 +477,7 @@
     <value>loading...</value>
   </data>
   <data name="location_provider_disabled_alert" xml:space="preserve">
-    <value>Your location-services seems to be disabled!</value>
+    <value>location-services seems to be disabled</value>
   </data>
   <data name="location_provider_disabled_question" xml:space="preserve">
     <value>do you want to enable it?</value>
@@ -557,7 +540,7 @@
     <value>more information</value>
   </data>
   <data name="progress_senderrorlog_title" xml:space="preserve">
-    <value>something got wrong or the App crashed last time</value>
+    <value>something got wrong or the App crashed last time!</value>
   </data>
   <data name="progress_systemtest_action" xml:space="preserve">
     <value>system test</value>
@@ -614,7 +597,7 @@
     <value>analog solar clock</value>
   </data>
   <data name="welcome_ichronomy" xml:space="preserve">
-    <value>"welcome to iChronoMe!"</value>
+    <value>welcome to iChronoMe!</value>
   </data>
   <data name="widget_lifetime_loading" xml:space="preserve">
     <value>one "tropical year" is:\n365 d 5 h 48 min and 45,261 s</value>
@@ -666,9 +649,6 @@
   </data>
   <data name="aRainbowPerYear" xml:space="preserve">
     <value>one rainbow per year</value>
-  </data>
-  <data name="Background" xml:space="preserve">
-    <value>background</value>
   </data>
   <data name="BackgroundColor" xml:space="preserve">
     <value>background color</value>
@@ -1076,6 +1056,29 @@ if you have enoug colors just click 'back' or somewhere outside the window</valu
     <value>style</value>
   </data>
   <data name="info_no_widgets_found" xml:space="preserve">
-    <value>no widget's found\nyou can create new widgets on your lauchen-screen!</value>
+    <value>no widget's found
+you can create new widgets on your lauchen-screen!</value>
+  </data>
+  <data name="faq_item_1" xml:space="preserve">
+    <value>this is a qute question</value>
+  </data>
+  <data name="faq_item_1_value" xml:space="preserve">
+    <value>and here the answer
+with lin 2</value>
+  </data>
+  <data name="faq_item_2" xml:space="preserve">
+    <value>here another question</value>
+  </data>
+  <data name="faq_item_2_value" xml:space="preserve">
+    <value>and also a answer
+with a line 2
+line3
+and lin 4</value>
+  </data>
+  <data name="all_day" xml:space="preserve">
+    <value>all day</value>
+  </data>
+  <data name="Background" xml:space="preserve">
+    <value>background</value>
   </data>
 </root>
