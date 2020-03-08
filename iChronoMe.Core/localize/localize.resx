@@ -130,19 +130,23 @@
     <value>middle sun time</value>
   </data>
   <data name="TimeType_MiddleSunTime_Desc" xml:space="preserve">
-    <value>the time based on the current longitude of your location\naround the year the difference between real an middle solar time can be up to about 18 minutes\nevery day has exact 24 hours and the offset to timezone-time is stable</value>
+    <value>the time based on the current longitude of your location
+around the year the difference between real an middle solar time can be up to about 18 minutes
+every day has exact 24 hours and the offset to timezone-time is stable</value>
   </data>
   <data name="TimeType_RealSunTime" xml:space="preserve">
     <value>real sun time</value>
   </data>
   <data name="TimeType_RealSunTime_Desc" xml:space="preserve">
-    <value>the time, by the real position of the sun where the highest point of the sun means 12 o'clock\nthis means a day is a little bit less or a little bit more than 24 hours and every day is diffrent, like nature is\nthe offset to timezone-time is changing every day</value>
+    <value>the time, by the real position of the sun where the highest point of the sun means 12 o'clock
+this means a day is a little bit less or a little bit more than 24 hours and every day is diffrent, like nature is\nthe offset to timezone-time is changing every day</value>
   </data>
   <data name="TimeType_TimeZoneTime" xml:space="preserve">
     <value>timezone time</value>
   </data>
   <data name="TimeType_TimeZoneTime_Desc" xml:space="preserve">
-    <value>this time is based on the borders of the country you enjoy currently\nmay this is far far away from the real time on your location</value>
+    <value>this time is based on the borders of the country you enjoy currently
+may this can be far far away from the real time on your location</value>
   </data>
   <data name="action_abort" xml:space="preserve">
     <value>abort</value>
@@ -304,10 +308,12 @@
     <value>Position wird ermittelt</value>
   </data>
   <data name="widget_error_permission_calendar" xml:space="preserve">
-    <value>missing calendar-permission\nplease click here</value>
+    <value>missing calendar-permission
+please click here</value>
   </data>
   <data name="widget_error_permission_location" xml:space="preserve">
-    <value>missing localtion-permission\nplease click here</value>
+    <value>missing localtion-permission
+please click here</value>
   </data>
   <data name="widget_error_location_is_requered" xml:space="preserve">
     <value>the calender-widget\'s only work with access to your calendar and location!</value>
@@ -551,7 +557,7 @@ you can customize this notification or disable it in system-settings</value>
   <data name="question_create_new_calendar" xml:space="preserve">
     <value>you like to create a new Calendar?</value>
   </data>
-  <data name="text_search_hint" xml:space="preserve">
+  <data name="search_hint" xml:space="preserve">
     <value>the hint so search ;-)</value>
   </data>
   <data name="shortcut_create_alarm" xml:space="preserve">
@@ -590,7 +596,7 @@ you can customize this notification or disable it in system-settings</value>
   <data name="title_send_errorlog" xml:space="preserve">
     <value>these informations will be send:</value>
   </data>
-  <data name="text_unknown_position" xml:space="preserve">
+  <data name="unknown_position" xml:space="preserve">
     <value>unkwnown_position</value>
   </data>
   <data name="wallpaper_title_clock_analog" xml:space="preserve">
@@ -622,6 +628,12 @@ you can customize this notification or disable it in system-settings</value>
   </data>
   <data name="widget_unconfigured" xml:space="preserve">
     <value>click here to configure the widget</value>
+  </data>
+  <data name="text_search_hint" xml:space="preserve">
+    <value>the hint so search ;-)</value>
+  </data>
+  <data name="text_unknown_position" xml:space="preserve">
+    <value>unkwnown_position</value>
   </data>
   <data name="AppName" xml:space="preserve">
     <value>iChronoMe</value>

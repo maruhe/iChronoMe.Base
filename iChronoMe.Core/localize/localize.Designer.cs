@@ -2204,6 +2204,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die the hint so search ;-) ähnelt.
+        /// </summary>
+        public static string search_hint {
+            get {
+                return ResourceManager.GetString("search_hint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die this app was created be me, the creator. I call myself &apos;I&apos;. ähnelt.
         /// </summary>
         public static string serviceAboutIntro {
@@ -2663,7 +2672,9 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die the time based on the current longitude of your location\naround the year the difference between real an middle solar time can be up to about 18 minutes\nevery day has exact 24 hours and the offset to timezone-time is stable ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die the time based on the current longitude of your location
+        ///around the year the difference between real an middle solar time can be up to about 18 minutes
+        ///every day has exact 24 hours and the offset to timezone-time is stable ähnelt.
         /// </summary>
         public static string TimeType_MiddleSunTime_Desc {
             get {
@@ -2681,7 +2692,8 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die the time, by the real position of the sun where the highest point of the sun means 12 o&apos;clock\nthis means a day is a little bit less or a little bit more than 24 hours and every day is diffrent, like nature is\nthe offset to timezone-time is changing every day ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die the time, by the real position of the sun where the highest point of the sun means 12 o&apos;clock
+        ///this means a day is a little bit less or a little bit more than 24 hours and every day is diffrent, like nature is\nthe offset to timezone-time is changing every day ähnelt.
         /// </summary>
         public static string TimeType_RealSunTime_Desc {
             get {
@@ -2699,7 +2711,8 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die this time is based on the borders of the country you enjoy currently\nmay this is far far away from the real time on your location ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die this time is based on the borders of the country you enjoy currently
+        ///may this can be far far away from the real time on your location ähnelt.
         /// </summary>
         public static string TimeType_TimeZoneTime_Desc {
             get {
@@ -2753,6 +2766,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die unkwnown_position ähnelt.
+        /// </summary>
+        public static string unknown_position {
+            get {
+                return ResourceManager.GetString("unknown_position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die analog solar clock ähnelt.
         /// </summary>
         public static string wallpaper_title_clock_analog {
@@ -2780,7 +2802,8 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die missing calendar-permission\nplease click here ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die missing calendar-permission
+        ///please click here ähnelt.
         /// </summary>
         public static string widget_error_permission_calendar {
             get {
@@ -2789,7 +2812,8 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die missing localtion-permission\nplease click here ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die missing localtion-permission
+        ///please click here ähnelt.
         /// </summary>
         public static string widget_error_permission_location {
             get {

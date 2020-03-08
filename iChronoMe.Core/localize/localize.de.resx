@@ -529,7 +529,7 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
   <data name="question_create_new_calendar" xml:space="preserve">
     <value>soll ein neuer Calendar angelegt werden?</value>
   </data>
-  <data name="text_search_hint" xml:space="preserve">
+  <data name="search_hint" xml:space="preserve">
     <value>wenn dieser Text auftaucht bitte bescheid geben ;-)</value>
   </data>
   <data name="shortcut_create_alarm" xml:space="preserve">
@@ -568,7 +568,7 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
   <data name="title_send_errorlog" xml:space="preserve">
     <value>diese Informationen werden übertragen:</value>
   </data>
-  <data name="text_unknown_position" xml:space="preserve">
+  <data name="unknown_position" xml:space="preserve">
     <value>unbekannte Position</value>
   </data>
   <data name="wallpaper_title_clock_analog" xml:space="preserve">
@@ -584,7 +584,8 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
     <value>Zeit ist nur Illusion\u2026</value>
   </data>
   <data name="widget_permission_error" xml:space="preserve">
-    <value>ich brauche mehr Berechtigungen, klick here bitte</value>
+    <value>ich brauche mehr Berechtigungen
+bitte hier klicken</value>
   </data>
   <data name="widget_title_actionbutton" xml:space="preserve">
     <value>Aktions-Knopf</value>
@@ -620,16 +621,24 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
     <value>Die Kalender-Widget\'s funktionieren nur mit Zugriff auf Kalender und Standort!</value>
   </data>
   <data name="widget_error_permission_calendar" xml:space="preserve">
-    <value>Kalender-Berechtigungen fehlen</value>
+    <value>Kalender-Berechtigungen fehlen
+bitte hier klicken</value>
   </data>
   <data name="widget_error_permission_location" xml:space="preserve">
-    <value>Standort-Berechtigungen fehlen</value>
+    <value>Standort-Berechtigungen fehlen
+bitte hier klicken</value>
   </data>
   <data name="widget_warning_location_out_of_date" xml:space="preserve">
     <value>aktuelle Position veraltet</value>
   </data>
   <data name="widget_warning_location_unknown" xml:space="preserve">
     <value>aktuelle Position unbekannt</value>
+  </data>
+  <data name="text_search_hint" xml:space="preserve">
+    <value>wenn dieser Text auftaucht bitte bescheid geben ;-)</value>
+  </data>
+  <data name="text_unknown_position" xml:space="preserve">
+    <value>unbekannte Position</value>
   </data>
   <data name="AppName" xml:space="preserve">
     <value>iChronoMe</value>
