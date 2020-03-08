@@ -11,11 +11,6 @@
 namespace iChronoMe {
     using System;
     
-
-
-    //asdjaskdjas
-
-
     
     /// <summary>
     ///   Eine stark typisierte Ressourcenklasse zum Suchen von lokalisierten Zeichenfolgen usw.
