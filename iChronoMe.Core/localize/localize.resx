@@ -551,7 +551,7 @@ you can customize this notification or disable it in system-settings</value>
   <data name="question_create_new_calendar" xml:space="preserve">
     <value>you like to create a new Calendar?</value>
   </data>
-  <data name="search_hint" xml:space="preserve">
+  <data name="text_search_hint" xml:space="preserve">
     <value>the hint so search ;-)</value>
   </data>
   <data name="shortcut_create_alarm" xml:space="preserve">
@@ -590,7 +590,7 @@ you can customize this notification or disable it in system-settings</value>
   <data name="title_send_errorlog" xml:space="preserve">
     <value>these informations will be send:</value>
   </data>
-  <data name="unknown_position" xml:space="preserve">
+  <data name="text_unknown_position" xml:space="preserve">
     <value>unkwnown_position</value>
   </data>
   <data name="wallpaper_title_clock_analog" xml:space="preserve">
@@ -833,16 +833,16 @@ you can customize this notification or disable it in system-settings</value>
   <data name="NoHighlite" xml:space="preserve">
     <value>no highlite</value>
   </data>
-  <data name="Offset" xml:space="preserve">
+  <data name="text_Offset" xml:space="preserve">
     <value>Offset</value>
   </data>
-  <data name="OnClick" xml:space="preserve">
+  <data name="text_OnClick" xml:space="preserve">
     <value>on click</value>
   </data>
-  <data name="oneMonth" xml:space="preserve">
+  <data name="text_oneMonth" xml:space="preserve">
     <value>one Month</value>
   </data>
-  <data name="oneYear" xml:space="preserve">
+  <data name="text_oneYear" xml:space="preserve">
     <value>one Year</value>
   </data>
   <data name="Options" xml:space="preserve">
@@ -851,37 +851,37 @@ you can customize this notification or disable it in system-settings</value>
   <data name="OtherAdditional" xml:space="preserve">
     <value>additional</value>
   </data>
-  <data name="Problems" xml:space="preserve">
+  <data name="text_Problems" xml:space="preserve">
     <value>problems</value>
   </data>
-  <data name="Sample" xml:space="preserve">
+  <data name="text_Sample" xml:space="preserve">
     <value>sample</value>
   </data>
-  <data name="SaveWidget" xml:space="preserve">
+  <data name="action_SaveWidget" xml:space="preserve">
     <value>save widget</value>
   </data>
-  <data name="Seconds" xml:space="preserve">
+  <data name="text_Seconds" xml:space="preserve">
     <value>seconds</value>
   </data>
-  <data name="SetAllColorsAtOnce" xml:space="preserve">
+  <data name="text_SetAllColorsAtOnce" xml:space="preserve">
     <value>all colors at ones</value>
   </data>
-  <data name="ShowAllCalendars" xml:space="preserve">
+  <data name="text_ShowAllCalendars" xml:space="preserve">
     <value>show all calendars</value>
   </data>
-  <data name="ShowAppointmentColors" xml:space="preserve">
+  <data name="text_ShowAppointmentColors" xml:space="preserve">
     <value>show event-colors</value>
   </data>
-  <data name="ShowLocation" xml:space="preserve">
+  <data name="text_ShowLocation" xml:space="preserve">
     <value>show location</value>
   </data>
-  <data name="SingleColor" xml:space="preserve">
+  <data name="text_SingleColor" xml:space="preserve">
     <value>single color</value>
   </data>
-  <data name="StaticLocation" xml:space="preserve">
+  <data name="text_StaticLocation" xml:space="preserve">
     <value>choose static location</value>
   </data>
-  <data name="Symbols" xml:space="preserve">
+  <data name="text_Symbols" xml:space="preserve">
     <value>Symbole</value>
   </data>
   <data name="TextColor" xml:space="preserve">
@@ -890,19 +890,19 @@ you can customize this notification or disable it in system-settings</value>
   <data name="Theme" xml:space="preserve">
     <value>theme</value>
   </data>
-  <data name="threeColors" xml:space="preserve">
+  <data name="text_threeColors" xml:space="preserve">
     <value>three Colors</value>
   </data>
-  <data name="threeMonths" xml:space="preserve">
+  <data name="text_threeMonths" xml:space="preserve">
     <value>three Months</value>
   </data>
-  <data name="threeWeeks" xml:space="preserve">
+  <data name="text_threeWeeks" xml:space="preserve">
     <value>three Weeks</value>
   </data>
-  <data name="TickMarks" xml:space="preserve">
+  <data name="text_TickMarks" xml:space="preserve">
     <value>tick marks</value>
   </data>
-  <data name="TickMarksColor" xml:space="preserve">
+  <data name="text_TickMarksColor" xml:space="preserve">
     <value>tick marks color</value>
   </data>
   <data name="Time" xml:space="preserve">
@@ -917,25 +917,25 @@ you can customize this notification or disable it in system-settings</value>
   <data name="TimeSpan" xml:space="preserve">
     <value>timespan</value>
   </data>
-  <data name="TitleColor" xml:space="preserve">
+  <data name="text_TitleColor" xml:space="preserve">
     <value>title color</value>
   </data>
   <data name="title_EditWidget" xml:space="preserve">
     <value>edit Widget</value>
   </data>
-  <data name="TodayColor" xml:space="preserve">
+  <data name="text_TodayColor" xml:space="preserve">
     <value>today-color</value>
   </data>
-  <data name="transparent" xml:space="preserve">
+  <data name="text_transparent" xml:space="preserve">
     <value>transparent</value>
   </data>
-  <data name="twoColors" xml:space="preserve">
+  <data name="text_twoColors" xml:space="preserve">
     <value>two Colors</value>
   </data>
-  <data name="twoMonths" xml:space="preserve">
+  <data name="text_twoMonths" xml:space="preserve">
     <value>two Months</value>
   </data>
-  <data name="twoWeeks" xml:space="preserve">
+  <data name="text_twoWeeks" xml:space="preserve">
     <value>two Weeks</value>
   </data>
   <data name="WidgetHeaderAndSeparatingLine" xml:space="preserve">
@@ -961,13 +961,13 @@ you can customize this notification or disable it in system-settings</value>
 each selected color will be added to the brush
 if you have enoug colors just click 'back' or somewhere outside the window</value>
   </data>
-  <data name="perMonth" xml:space="preserve">
+  <data name="text_perMonth" xml:space="preserve">
     <value>per month</value>
   </data>
-  <data name="perWeek" xml:space="preserve">
+  <data name="text_perWeek" xml:space="preserve">
     <value>per week</value>
   </data>
-  <data name="perYear" xml:space="preserve">
+  <data name="text_perYear" xml:space="preserve">
     <value>per year</value>
   </data>
   <data name="ActionButtonStyle" xml:space="preserve">
@@ -1010,7 +1010,7 @@ if you have enoug colors just click 'back' or somewhere outside the window</valu
   <data name="MinuteHandStroke" xml:space="preserve">
     <value>minute hand stroke color</value>
   </data>
-  <data name="SecondHandStroke" xml:space="preserve">
+  <data name="text_SecondHandStroke" xml:space="preserve">
     <value>second hand stroke color</value>
   </data>
   <data name="ImageLoader_progress_n_packages" xml:space="preserve">
@@ -1040,19 +1040,19 @@ if you have enoug colors just click 'back' or somewhere outside the window</valu
   <data name="ProgressUpdateBaseData" xml:space="preserve">
     <value>update base-data</value>
   </data>
-  <data name="SecondHandFill" xml:space="preserve">
+  <data name="text_SecondHandFill" xml:space="preserve">
     <value>second hand fill color</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>default</value>
   </data>
-  <data name="withoutSecondHand" xml:space="preserve">
+  <data name="text_withoutSecondHand" xml:space="preserve">
     <value>without second-hand</value>
   </data>
-  <data name="serviceAboutIntor" xml:space="preserve">
+  <data name="serviceAboutIntro" xml:space="preserve">
     <value>this app was created be me, the creator. I call myself 'I'.</value>
   </data>
-  <data name="Style" xml:space="preserve">
+  <data name="text_Style" xml:space="preserve">
     <value>style</value>
   </data>
   <data name="info_no_widgets_found" xml:space="preserve">

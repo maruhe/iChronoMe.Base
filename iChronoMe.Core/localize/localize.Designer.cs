@@ -385,6 +385,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die save widget ähnelt.
+        /// </summary>
+        public static string action_SaveWidget {
+            get {
+                return ResourceManager.GetString("action_SaveWidget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die search for location ähnelt.
         /// </summary>
         public static string action_search_location {
@@ -2060,42 +2069,6 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Offset ähnelt.
-        /// </summary>
-        public static string Offset {
-            get {
-                return ResourceManager.GetString("Offset", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die on click ähnelt.
-        /// </summary>
-        public static string OnClick {
-            get {
-                return ResourceManager.GetString("OnClick", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die one Month ähnelt.
-        /// </summary>
-        public static string oneMonth {
-            get {
-                return ResourceManager.GetString("oneMonth", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die one Year ähnelt.
-        /// </summary>
-        public static string oneYear {
-            get {
-                return ResourceManager.GetString("oneYear", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die options ähnelt.
         /// </summary>
         public static string Options {
@@ -2110,42 +2083,6 @@ namespace iChronoMe {
         public static string OtherAdditional {
             get {
                 return ResourceManager.GetString("OtherAdditional", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die per month ähnelt.
-        /// </summary>
-        public static string perMonth {
-            get {
-                return ResourceManager.GetString("perMonth", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die per week ähnelt.
-        /// </summary>
-        public static string perWeek {
-            get {
-                return ResourceManager.GetString("perWeek", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die per year ähnelt.
-        /// </summary>
-        public static string perYear {
-            get {
-                return ResourceManager.GetString("perYear", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die problems ähnelt.
-        /// </summary>
-        public static string Problems {
-            get {
-                return ResourceManager.GetString("Problems", resourceCulture);
             }
         }
         
@@ -2267,74 +2204,11 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die sample ähnelt.
-        /// </summary>
-        public static string Sample {
-            get {
-                return ResourceManager.GetString("Sample", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die save widget ähnelt.
-        /// </summary>
-        public static string SaveWidget {
-            get {
-                return ResourceManager.GetString("SaveWidget", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die the hint so search ;-) ähnelt.
-        /// </summary>
-        public static string search_hint {
-            get {
-                return ResourceManager.GetString("search_hint", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die second hand fill color ähnelt.
-        /// </summary>
-        public static string SecondHandFill {
-            get {
-                return ResourceManager.GetString("SecondHandFill", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die second hand stroke color ähnelt.
-        /// </summary>
-        public static string SecondHandStroke {
-            get {
-                return ResourceManager.GetString("SecondHandStroke", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die seconds ähnelt.
-        /// </summary>
-        public static string Seconds {
-            get {
-                return ResourceManager.GetString("Seconds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die this app was created be me, the creator. I call myself &apos;I&apos;. ähnelt.
         /// </summary>
-        public static string serviceAboutIntor {
+        public static string serviceAboutIntro {
             get {
-                return ResourceManager.GetString("serviceAboutIntor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die all colors at ones ähnelt.
-        /// </summary>
-        public static string SetAllColorsAtOnce {
-            get {
-                return ResourceManager.GetString("SetAllColorsAtOnce", resourceCulture);
+                return ResourceManager.GetString("serviceAboutIntro", resourceCulture);
             }
         }
         
@@ -2393,51 +2267,6 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die show all calendars ähnelt.
-        /// </summary>
-        public static string ShowAllCalendars {
-            get {
-                return ResourceManager.GetString("ShowAllCalendars", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die show event-colors ähnelt.
-        /// </summary>
-        public static string ShowAppointmentColors {
-            get {
-                return ResourceManager.GetString("ShowAppointmentColors", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die show location ähnelt.
-        /// </summary>
-        public static string ShowLocation {
-            get {
-                return ResourceManager.GetString("ShowLocation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die single color ähnelt.
-        /// </summary>
-        public static string SingleColor {
-            get {
-                return ResourceManager.GetString("SingleColor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die choose static location ähnelt.
-        /// </summary>
-        public static string StaticLocation {
-            get {
-                return ResourceManager.GetString("StaticLocation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die thanks ähnelt.
         /// </summary>
         public static string stop_alarm {
@@ -2447,20 +2276,119 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die style ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Offset ähnelt.
         /// </summary>
-        public static string Style {
+        public static string text_Offset {
             get {
-                return ResourceManager.GetString("Style", resourceCulture);
+                return ResourceManager.GetString("text_Offset", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Symbole ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die on click ähnelt.
         /// </summary>
-        public static string Symbols {
+        public static string text_OnClick {
             get {
-                return ResourceManager.GetString("Symbols", resourceCulture);
+                return ResourceManager.GetString("text_OnClick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die one Month ähnelt.
+        /// </summary>
+        public static string text_oneMonth {
+            get {
+                return ResourceManager.GetString("text_oneMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die one Year ähnelt.
+        /// </summary>
+        public static string text_oneYear {
+            get {
+                return ResourceManager.GetString("text_oneYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die per month ähnelt.
+        /// </summary>
+        public static string text_perMonth {
+            get {
+                return ResourceManager.GetString("text_perMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die per week ähnelt.
+        /// </summary>
+        public static string text_perWeek {
+            get {
+                return ResourceManager.GetString("text_perWeek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die per year ähnelt.
+        /// </summary>
+        public static string text_perYear {
+            get {
+                return ResourceManager.GetString("text_perYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die problems ähnelt.
+        /// </summary>
+        public static string text_Problems {
+            get {
+                return ResourceManager.GetString("text_Problems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die sample ähnelt.
+        /// </summary>
+        public static string text_Sample {
+            get {
+                return ResourceManager.GetString("text_Sample", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die the hint so search ;-) ähnelt.
+        /// </summary>
+        public static string text_search_hint {
+            get {
+                return ResourceManager.GetString("text_search_hint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die second hand fill color ähnelt.
+        /// </summary>
+        public static string text_SecondHandFill {
+            get {
+                return ResourceManager.GetString("text_SecondHandFill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die second hand stroke color ähnelt.
+        /// </summary>
+        public static string text_SecondHandStroke {
+            get {
+                return ResourceManager.GetString("text_SecondHandStroke", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die seconds ähnelt.
+        /// </summary>
+        public static string text_Seconds {
+            get {
+                return ResourceManager.GetString("text_Seconds", resourceCulture);
             }
         }
         
@@ -2470,6 +2398,195 @@ namespace iChronoMe {
         public static string text_ServiceInfo {
             get {
                 return ResourceManager.GetString("text_ServiceInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die all colors at ones ähnelt.
+        /// </summary>
+        public static string text_SetAllColorsAtOnce {
+            get {
+                return ResourceManager.GetString("text_SetAllColorsAtOnce", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die show all calendars ähnelt.
+        /// </summary>
+        public static string text_ShowAllCalendars {
+            get {
+                return ResourceManager.GetString("text_ShowAllCalendars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die show event-colors ähnelt.
+        /// </summary>
+        public static string text_ShowAppointmentColors {
+            get {
+                return ResourceManager.GetString("text_ShowAppointmentColors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die show location ähnelt.
+        /// </summary>
+        public static string text_ShowLocation {
+            get {
+                return ResourceManager.GetString("text_ShowLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die single color ähnelt.
+        /// </summary>
+        public static string text_SingleColor {
+            get {
+                return ResourceManager.GetString("text_SingleColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die choose static location ähnelt.
+        /// </summary>
+        public static string text_StaticLocation {
+            get {
+                return ResourceManager.GetString("text_StaticLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die style ähnelt.
+        /// </summary>
+        public static string text_Style {
+            get {
+                return ResourceManager.GetString("text_Style", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Symbole ähnelt.
+        /// </summary>
+        public static string text_Symbols {
+            get {
+                return ResourceManager.GetString("text_Symbols", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die three Colors ähnelt.
+        /// </summary>
+        public static string text_threeColors {
+            get {
+                return ResourceManager.GetString("text_threeColors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die three Months ähnelt.
+        /// </summary>
+        public static string text_threeMonths {
+            get {
+                return ResourceManager.GetString("text_threeMonths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die three Weeks ähnelt.
+        /// </summary>
+        public static string text_threeWeeks {
+            get {
+                return ResourceManager.GetString("text_threeWeeks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tick marks ähnelt.
+        /// </summary>
+        public static string text_TickMarks {
+            get {
+                return ResourceManager.GetString("text_TickMarks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tick marks color ähnelt.
+        /// </summary>
+        public static string text_TickMarksColor {
+            get {
+                return ResourceManager.GetString("text_TickMarksColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die title color ähnelt.
+        /// </summary>
+        public static string text_TitleColor {
+            get {
+                return ResourceManager.GetString("text_TitleColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die today-color ähnelt.
+        /// </summary>
+        public static string text_TodayColor {
+            get {
+                return ResourceManager.GetString("text_TodayColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die transparent ähnelt.
+        /// </summary>
+        public static string text_transparent {
+            get {
+                return ResourceManager.GetString("text_transparent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die two Colors ähnelt.
+        /// </summary>
+        public static string text_twoColors {
+            get {
+                return ResourceManager.GetString("text_twoColors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die two Months ähnelt.
+        /// </summary>
+        public static string text_twoMonths {
+            get {
+                return ResourceManager.GetString("text_twoMonths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die two Weeks ähnelt.
+        /// </summary>
+        public static string text_twoWeeks {
+            get {
+                return ResourceManager.GetString("text_twoWeeks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die unkwnown_position ähnelt.
+        /// </summary>
+        public static string text_unknown_position {
+            get {
+                return ResourceManager.GetString("text_unknown_position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die without second-hand ähnelt.
+        /// </summary>
+        public static string text_withoutSecondHand {
+            get {
+                return ResourceManager.GetString("text_withoutSecondHand", resourceCulture);
             }
         }
         
@@ -2488,51 +2605,6 @@ namespace iChronoMe {
         public static string Theme {
             get {
                 return ResourceManager.GetString("Theme", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die three Colors ähnelt.
-        /// </summary>
-        public static string threeColors {
-            get {
-                return ResourceManager.GetString("threeColors", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die three Months ähnelt.
-        /// </summary>
-        public static string threeMonths {
-            get {
-                return ResourceManager.GetString("threeMonths", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die three Weeks ähnelt.
-        /// </summary>
-        public static string threeWeeks {
-            get {
-                return ResourceManager.GetString("threeWeeks", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die tick marks ähnelt.
-        /// </summary>
-        public static string TickMarks {
-            get {
-                return ResourceManager.GetString("TickMarks", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die tick marks color ähnelt.
-        /// </summary>
-        public static string TickMarksColor {
-            get {
-                return ResourceManager.GetString("TickMarksColor", resourceCulture);
             }
         }
         
@@ -2677,69 +2749,6 @@ namespace iChronoMe {
         public static string title_send_errorlog {
             get {
                 return ResourceManager.GetString("title_send_errorlog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die title color ähnelt.
-        /// </summary>
-        public static string TitleColor {
-            get {
-                return ResourceManager.GetString("TitleColor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die today-color ähnelt.
-        /// </summary>
-        public static string TodayColor {
-            get {
-                return ResourceManager.GetString("TodayColor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die transparent ähnelt.
-        /// </summary>
-        public static string transparent {
-            get {
-                return ResourceManager.GetString("transparent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die two Colors ähnelt.
-        /// </summary>
-        public static string twoColors {
-            get {
-                return ResourceManager.GetString("twoColors", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die two Months ähnelt.
-        /// </summary>
-        public static string twoMonths {
-            get {
-                return ResourceManager.GetString("twoMonths", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die two Weeks ähnelt.
-        /// </summary>
-        public static string twoWeeks {
-            get {
-                return ResourceManager.GetString("twoWeeks", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die unkwnown_position ähnelt.
-        /// </summary>
-        public static string unknown_position {
-            get {
-                return ResourceManager.GetString("unknown_position", resourceCulture);
             }
         }
         
@@ -2920,15 +2929,6 @@ namespace iChronoMe {
         public static string WidgetTitleMonthView {
             get {
                 return ResourceManager.GetString("WidgetTitleMonthView", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die without second-hand ähnelt.
-        /// </summary>
-        public static string withoutSecondHand {
-            get {
-                return ResourceManager.GetString("withoutSecondHand", resourceCulture);
             }
         }
     }

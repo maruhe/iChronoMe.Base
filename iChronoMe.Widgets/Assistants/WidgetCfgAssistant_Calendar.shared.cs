@@ -141,7 +141,7 @@ namespace iChronoMe.Widgets
             cfg = BaseSample.GetConfigClone();
             cfgPrev = BaseSample.GetConfigClone();
             cfgPrev.ColorTodayBackground = xColor.HotPink;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.TodayColor, null, cfg, typeof(WidgetCfgAssistant_CalendarCircleWave_TodayDayColor), cfgPrev));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.text_TodayColor, null, cfg, typeof(WidgetCfgAssistant_CalendarCircleWave_TodayDayColor), cfgPrev));
 
             NextStepAssistantType = null;
         }
@@ -165,31 +165,31 @@ namespace iChronoMe.Widgets
             cfg.FirstDayType = FirstDayType.WeekStart;
             cfg.TimeUnit = TimeUnit.Week;
             cfg.TimeUnitCount = 2;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.twoWeeks, cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.text_twoWeeks, cfg));
 
             cfg = baseSample.GetConfigClone();
             cfg.FirstDayType = FirstDayType.WeekStart;
             cfg.TimeUnit = TimeUnit.Week;
             cfg.TimeUnitCount = 3;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.threeWeeks, cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.text_threeWeeks, cfg));
 
             cfg = baseSample.GetConfigClone();
             cfg.FirstDayType = FirstDayType.MonthStart;
             cfg.TimeUnit = TimeUnit.Month;
             cfg.TimeUnitCount = 1;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.oneMonth, cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.text_oneMonth, cfg));
 
             cfg = baseSample.GetConfigClone();
             cfg.FirstDayType = FirstDayType.MonthStart;
             cfg.TimeUnit = TimeUnit.Month;
             cfg.TimeUnitCount = 2;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.twoMonths, cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.text_twoMonths, cfg));
 
             cfg = baseSample.GetConfigClone();
             cfg.FirstDayType = FirstDayType.MonthStart;
             cfg.TimeUnit = TimeUnit.Month;
             cfg.TimeUnitCount = 3;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.threeMonths, cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.text_threeMonths, cfg));
 
             cfg = baseSample.GetConfigClone();
             cfg.FirstDayType = FirstDayType.MonthStart;
@@ -201,7 +201,7 @@ namespace iChronoMe.Widgets
             cfg.FirstDayType = FirstDayType.YearStart;
             cfg.TimeUnit = TimeUnit.Year;
             cfg.TimeUnitCount = 1;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.oneYear, cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.text_oneYear, cfg));
 
             NextStepAssistantType = typeof(WidgetCfgAssistant_CalendarCircleWave_OptionsBase);
         }
@@ -219,7 +219,7 @@ namespace iChronoMe.Widgets
 
             var cfg = baseSample.GetConfigClone();
             cfg.DayBackgroundGradient = new DateGradient() { GradientS = { new DynamicGradient(cfg.TimeUnit, Core.DynamicCalendar.GradientType.StaticColor) { CustomColors = new xColor[] { clr } } } };
-            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.SingleColor, cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.text_SingleColor, cfg));
 
             var clr1 = clr.AddLuminosity(.1);
             var clr2 = clr.AddLuminosity(-.1);
@@ -239,11 +239,11 @@ namespace iChronoMe.Widgets
 
             cfg = baseSample.GetConfigClone();
             cfg.DayBackgroundGradient = new DateGradient() { GradientS = { new DynamicGradient(cfg.TimeUnit, new xColor[] { clrs[0], clrs[1] }) } };
-            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.twoColors, cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.text_twoColors, cfg));
 
             cfg = baseSample.GetConfigClone();
             cfg.DayBackgroundGradient = new DateGradient() { GradientS = { new DynamicGradient(cfg.TimeUnit, new xColor[] { clrs[0], clrs[1], clrs[2] }) } };
-            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.threeColors, cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.text_threeColors, cfg));
 
             cfg = baseSample.GetConfigClone();
             cfg.DayBackgroundGradient = new DateGradient() { GradientS = { new DynamicGradient(cfg.TimeUnit, new xColor[] { clrs[0], clrs[1], clrs[2], clrs[3] }) } };
@@ -313,15 +313,15 @@ namespace iChronoMe.Widgets
 
             var cfg = baseSample.GetConfigClone();
             cfg.DayBackgroundGradient.GradientS[0].TimeUnit = TimeUnit.Week;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.perWeek, cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.text_perWeek, cfg));
 
             cfg = baseSample.GetConfigClone();
             cfg.DayBackgroundGradient.GradientS[0].TimeUnit = TimeUnit.Month;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.perMonth, cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.text_perMonth, cfg));
 
             cfg = baseSample.GetConfigClone();
             cfg.DayBackgroundGradient.GradientS[0].TimeUnit = TimeUnit.Year;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.perYear, cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.text_perYear, cfg));
 
             NextStepAssistantType = typeof(WidgetCfgAssistant_CalendarCircleWave_OptionsBase);
         }
@@ -378,7 +378,7 @@ namespace iChronoMe.Widgets
                     xclrs.Add(clr2);
                 }
                 cfg.DayBackgroundGradient = new DateGradient() { GradientS = { new DynamicGradient(cfg.TimeUnit, xclrs.ToArray()) } };
-                Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.Sample + " " + i, cfg));
+                Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.text_Sample + " " + i, cfg));
 
             }
 
@@ -421,7 +421,7 @@ namespace iChronoMe.Widgets
     {
         public WidgetCfgAssistant_CalendarCircleWave_TodayDayColor(WidgetCfgSample<WidgetCfg_CalendarCircleWave> baseSample)
         {
-            Title = localize.TodayColor;
+            Title = localize.text_TodayColor;
             BaseSample = baseSample;
             AllowCustom = true;
 
@@ -460,7 +460,7 @@ namespace iChronoMe.Widgets
         {
             base.ExecCustom(handler);
             NextStepAssistantType = typeof(WidgetCfgAssistant_CalendarCircleWave_OptionsBase);
-            var clr = await handler.UserSelectColor(localize.TodayColor);
+            var clr = await handler.UserSelectColor(localize.text_TodayColor);
 
             if (clr != null)
             {

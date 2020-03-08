@@ -529,7 +529,7 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
   <data name="question_create_new_calendar" xml:space="preserve">
     <value>soll ein neuer Calendar angelegt werden?</value>
   </data>
-  <data name="search_hint" xml:space="preserve">
+  <data name="text_search_hint" xml:space="preserve">
     <value>wenn dieser Text auftaucht bitte bescheid geben ;-)</value>
   </data>
   <data name="shortcut_create_alarm" xml:space="preserve">
@@ -568,7 +568,7 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
   <data name="title_send_errorlog" xml:space="preserve">
     <value>diese Informationen werden übertragen:</value>
   </data>
-  <data name="unknown_position" xml:space="preserve">
+  <data name="text_unknown_position" xml:space="preserve">
     <value>unbekannte Position</value>
   </data>
   <data name="wallpaper_title_clock_analog" xml:space="preserve">
@@ -739,10 +739,10 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="Offset" xml:space="preserve">
+  <data name="text_Offset" xml:space="preserve">
     <value>Abweichung</value>
   </data>
-  <data name="OnClick" xml:space="preserve">
+  <data name="text_OnClick" xml:space="preserve">
     <value>beim Klick</value>
   </data>
   <data name="Options" xml:space="preserve">
@@ -751,37 +751,37 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
   <data name="OtherAdditional" xml:space="preserve">
     <value>Weiteres</value>
   </data>
-  <data name="Problems" xml:space="preserve">
+  <data name="text_Problems" xml:space="preserve">
     <value>Probleme</value>
   </data>
-  <data name="SaveWidget" xml:space="preserve">
+  <data name="action_SaveWidget" xml:space="preserve">
     <value>Widget speichern</value>
   </data>
-  <data name="Seconds" xml:space="preserve">
+  <data name="text_Seconds" xml:space="preserve">
     <value>Sekunden</value>
   </data>
-  <data name="SetAllColorsAtOnce" xml:space="preserve">
+  <data name="text_SetAllColorsAtOnce" xml:space="preserve">
     <value>Alle Farben auf einmal</value>
   </data>
-  <data name="ShowAllCalendars" xml:space="preserve">
+  <data name="text_ShowAllCalendars" xml:space="preserve">
     <value>Alle Kalender anzeigen</value>
   </data>
-  <data name="ShowAppointmentColors" xml:space="preserve">
+  <data name="text_ShowAppointmentColors" xml:space="preserve">
     <value>Terminfarben anzeigen</value>
   </data>
-  <data name="ShowLocation" xml:space="preserve">
+  <data name="text_ShowLocation" xml:space="preserve">
     <value>Ort anzeigen</value>
   </data>
-  <data name="Symbols" xml:space="preserve">
+  <data name="text_Symbols" xml:space="preserve">
     <value>Symbole</value>
   </data>
   <data name="TextColor" xml:space="preserve">
     <value>Textfarbe</value>
   </data>
-  <data name="TickMarks" xml:space="preserve">
+  <data name="text_TickMarks" xml:space="preserve">
     <value>Skala</value>
   </data>
-  <data name="TickMarksColor" xml:space="preserve">
+  <data name="text_TickMarksColor" xml:space="preserve">
     <value>Skala-Farbe</value>
   </data>
   <data name="Time" xml:space="preserve">
@@ -793,7 +793,7 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
   <data name="TimeScale" xml:space="preserve">
     <value>Zeitraum</value>
   </data>
-  <data name="TitleColor" xml:space="preserve">
+  <data name="text_TitleColor" xml:space="preserve">
     <value>Titelfarbe</value>
   </data>
   <data name="WidgetHeaderAndSeparatingLine" xml:space="preserve">
@@ -904,31 +904,31 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
   <data name="NoHighlite" xml:space="preserve">
     <value>nicht hervorheben</value>
   </data>
-  <data name="oneMonth" xml:space="preserve">
+  <data name="text_oneMonth" xml:space="preserve">
     <value>Ein Monat</value>
   </data>
-  <data name="oneYear" xml:space="preserve">
+  <data name="text_oneYear" xml:space="preserve">
     <value>Ein Jahr</value>
   </data>
-  <data name="Sample" xml:space="preserve">
+  <data name="text_Sample" xml:space="preserve">
     <value>Beispiel</value>
   </data>
-  <data name="SingleColor" xml:space="preserve">
+  <data name="text_SingleColor" xml:space="preserve">
     <value>einfärbig</value>
   </data>
-  <data name="StaticLocation" xml:space="preserve">
+  <data name="text_StaticLocation" xml:space="preserve">
     <value>festen Standort wählen</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Design</value>
   </data>
-  <data name="threeColors" xml:space="preserve">
+  <data name="text_threeColors" xml:space="preserve">
     <value>drei Farben</value>
   </data>
-  <data name="threeMonths" xml:space="preserve">
+  <data name="text_threeMonths" xml:space="preserve">
     <value>drei Monate</value>
   </data>
-  <data name="threeWeeks" xml:space="preserve">
+  <data name="text_threeWeeks" xml:space="preserve">
     <value>drei Wochen</value>
   </data>
   <data name="TimeSpan" xml:space="preserve">
@@ -937,19 +937,19 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
   <data name="title_EditWidget" xml:space="preserve">
     <value>Widget bearbeiten</value>
   </data>
-  <data name="TodayColor" xml:space="preserve">
+  <data name="text_TodayColor" xml:space="preserve">
     <value>Farbe für heute</value>
   </data>
-  <data name="transparent" xml:space="preserve">
+  <data name="text_transparent" xml:space="preserve">
     <value>transparent</value>
   </data>
-  <data name="twoColors" xml:space="preserve">
+  <data name="text_twoColors" xml:space="preserve">
     <value>zweifarbig</value>
   </data>
-  <data name="twoMonths" xml:space="preserve">
+  <data name="text_twoMonths" xml:space="preserve">
     <value>zwei Monate</value>
   </data>
-  <data name="twoWeeks" xml:space="preserve">
+  <data name="text_twoWeeks" xml:space="preserve">
     <value>zwei Wochen</value>
   </data>
   <data name="WidgetTitleAgenda" xml:space="preserve">
@@ -969,13 +969,13 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
 jede gewählte Farbe wird dem Farbverlauf hinzugefügt
 wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder auf 'Zurück'</value>
   </data>
-  <data name="perMonth" xml:space="preserve">
+  <data name="text_perMonth" xml:space="preserve">
     <value>je Monat</value>
   </data>
-  <data name="perWeek" xml:space="preserve">
+  <data name="text_perWeek" xml:space="preserve">
     <value>je Woche</value>
   </data>
-  <data name="perYear" xml:space="preserve">
+  <data name="text_perYear" xml:space="preserve">
     <value>je Jahr</value>
   </data>
   <data name="ActionButtonStyle" xml:space="preserve">
@@ -1018,7 +1018,7 @@ wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder a
   <data name="MinuteHandStroke" xml:space="preserve">
     <value>Minutenzeiger Linienfarbe</value>
   </data>
-  <data name="SecondHandStroke" xml:space="preserve">
+  <data name="text_SecondHandStroke" xml:space="preserve">
     <value>Sekundenzeiger Linienfarbe</value>
   </data>
   <data name="ImageLoader_progress_n_packages" xml:space="preserve">
@@ -1048,19 +1048,19 @@ wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder a
   <data name="ProgressUpdateBaseData" xml:space="preserve">
     <value>Basisdaten werden aktualisiert</value>
   </data>
-  <data name="SecondHandFill" xml:space="preserve">
+  <data name="text_SecondHandFill" xml:space="preserve">
     <value>Sekundenzeiger Füllbarbe</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>(Standard)</value>
   </data>
-  <data name="withoutSecondHand" xml:space="preserve">
+  <data name="text_withoutSecondHand" xml:space="preserve">
     <value>ohne Sekundenzeiger</value>
   </data>
-  <data name="serviceAboutIntor" xml:space="preserve">
+  <data name="serviceAboutIntro" xml:space="preserve">
     <value>Diese App wurde von mir, dem Schöpfer, erstellt. Ich nenne mich 'I'.</value>
   </data>
-  <data name="Style" xml:space="preserve">
+  <data name="text_Style" xml:space="preserve">
     <value>Stiel</value>
   </data>
   <data name="info_no_widgets_found" xml:space="preserve">
