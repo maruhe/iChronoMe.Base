@@ -117,37 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NoSelectedDate" xml:space="preserve">
-    <value>no selected date</value>
-  </data>
-  <data name="No_Appointments" xml:space="preserve">
-    <value>your are free</value>
-  </data>
-  <data name="TimeType" xml:space="preserve">
-    <value>time-type</value>
-  </data>
-  <data name="TimeType_MiddleSunTime" xml:space="preserve">
-    <value>middle sun time</value>
-  </data>
-  <data name="TimeType_MiddleSunTime_Desc" xml:space="preserve">
-    <value>the time based on the current longitude of your location
-around the year the difference between real an middle solar time can be up to about 18 minutes
-every day has exact 24 hours and the offset to timezone-time is stable</value>
-  </data>
-  <data name="TimeType_RealSunTime" xml:space="preserve">
-    <value>real sun time</value>
-  </data>
-  <data name="TimeType_RealSunTime_Desc" xml:space="preserve">
-    <value>the time, by the real position of the sun where the highest point of the sun means 12 o'clock
-this means a day is a little bit less or a little bit more than 24 hours and every day is diffrent, like nature is\nthe offset to timezone-time is changing every day</value>
-  </data>
-  <data name="TimeType_TimeZoneTime" xml:space="preserve">
-    <value>timezone time</value>
-  </data>
-  <data name="TimeType_TimeZoneTime_Desc" xml:space="preserve">
-    <value>this time is based on the borders of the country you enjoy currently
-may this can be far far away from the real time on your location</value>
-  </data>
   <data name="action_abort" xml:space="preserve">
     <value>abort</value>
   </data>
@@ -189,6 +158,9 @@ may this can be far far away from the real time on your location</value>
   </data>
   <data name="action_colors" xml:space="preserve">
     <value>colors</value>
+  </data>
+  <data name="action_ContactUs" xml:space="preserve">
+    <value>contact / feedback</value>
   </data>
   <data name="action_continue" xml:space="preserve">
     <value>continue</value>
@@ -253,6 +225,12 @@ may this can be far far away from the real time on your location</value>
   <data name="action_save" xml:space="preserve">
     <value>save</value>
   </data>
+  <data name="action_SaveAndQuit" xml:space="preserve">
+    <value>save and quit</value>
+  </data>
+  <data name="action_SaveWidget" xml:space="preserve">
+    <value>save widget</value>
+  </data>
   <data name="action_search_location" xml:space="preserve">
     <value>search for location</value>
   </data>
@@ -271,6 +249,9 @@ may this can be far far away from the real time on your location</value>
   <data name="action_settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="action_SupportThisProject" xml:space="preserve">
+    <value>support this project</value>
+  </data>
   <data name="action_tickmarks" xml:space="preserve">
     <value>tick marks</value>
   </data>
@@ -286,49 +267,57 @@ may this can be far far away from the real time on your location</value>
   <data name="action_yes" xml:space="preserve">
     <value>yes</value>
   </data>
-  <data name="error_no_location_demitered" xml:space="preserve">
-    <value>unable to demiter a location</value>
+  <data name="ActionButtonStyle" xml:space="preserve">
+    <value>style</value>
+  </data>
+  <data name="ActionButtonStyle_eye_animated" xml:space="preserve">
+    <value>iChronEye animated
+(doubleclick = action)</value>
+  </data>
+  <data name="ActionButtonStyle_eye_static" xml:space="preserve">
+    <value>iChronEye static</value>
   </data>
   <data name="alert_no_calendar_found" xml:space="preserve">
     <value>no calendars found!</value>
   </data>
-  <data name="calendar_event_all_day" xml:space="preserve">
+  <data name="all_day" xml:space="preserve">
     <value>all day</value>
   </data>
-  <data name="calendar_event_multi_day" xml:space="preserve">
-    <value>multi day</value>
+  <data name="AnimationDuriation" xml:space="preserve">
+    <value>animation duriation</value>
   </data>
-  <data name="calendar_event_to" xml:space="preserve">
-    <value>to</value>
-  </data>
-  <data name="calendar_event_unclear_position_time" xml:space="preserve">
-    <value>position and local time unclear</value>
-  </data>
-  <data name="calendar_event_position_is_determined" xml:space="preserve">
-    <value>Position wird ermittelt</value>
-  </data>
-  <data name="widget_error_permission_calendar" xml:space="preserve">
-    <value>missing calendar-permission
-please click here</value>
-  </data>
-  <data name="widget_error_permission_location" xml:space="preserve">
-    <value>missing localtion-permission
-please click here</value>
-  </data>
-  <data name="widget_error_location_is_requered" xml:space="preserve">
-    <value>the calender-widget\'s only work with access to your calendar and location!</value>
-  </data>
-  <data name="widget_warning_location_unknown" xml:space="preserve">
-    <value>current location unknown</value>
-  </data>
-  <data name="widget_warning_location_out_of_date" xml:space="preserve">
-    <value>current location out of date</value>
+  <data name="AnimationRounds" xml:space="preserve">
+    <value>animation rounds</value>
   </data>
   <data name="app_needs_location_description" xml:space="preserve">
     <value>only with a location-information it is possible to calculate correct solar times</value>
   </data>
   <data name="app_slogan" xml:space="preserve">
     <value>time is dynamic</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>iChronoMe</value>
+  </data>
+  <data name="AppointmentName" xml:space="preserve">
+    <value>event name</value>
+  </data>
+  <data name="Appointments" xml:space="preserve">
+    <value>events</value>
+  </data>
+  <data name="AppointmentSymbols" xml:space="preserve">
+    <value>event symbols</value>
+  </data>
+  <data name="AppointmentTime" xml:space="preserve">
+    <value>event time</value>
+  </data>
+  <data name="AppTitle" xml:space="preserve">
+    <value>iChronoMe</value>
+  </data>
+  <data name="aRainbowPerMonth" xml:space="preserve">
+    <value>one rainbow per month</value>
+  </data>
+  <data name="aRainbowPerYear" xml:space="preserve">
+    <value>one rainbow per year</value>
   </data>
   <data name="assistant_permission_calendar" xml:space="preserve">
     <value>to display calendar-events in solar time we need permission here</value>
@@ -345,6 +334,15 @@ please click here</value>
   <data name="assistant_privacy_question" xml:space="preserve">
     <value>you may mind about data privacy?</value>
   </data>
+  <data name="Background" xml:space="preserve">
+    <value>background</value>
+  </data>
+  <data name="BackgroundColor" xml:space="preserve">
+    <value>background color</value>
+  </data>
+  <data name="BackgroundImage" xml:space="preserve">
+    <value>background image</value>
+  </data>
   <data name="backgroundservice_info_explenation" xml:space="preserve">
     <value>to show a clock as widget that does show a custom time a service needs to be running in background
 since android 7 it is needet to show a notification while a background-service is running
@@ -352,6 +350,27 @@ you can customize this notification or disable it in system-settings</value>
   </data>
   <data name="backgroundservice_info_why" xml:space="preserve">
     <value>why do I see a clock in notification area?</value>
+  </data>
+  <data name="Border" xml:space="preserve">
+    <value>border</value>
+  </data>
+  <data name="ButtonColor" xml:space="preserve">
+    <value>header colors</value>
+  </data>
+  <data name="calendar_event_all_day" xml:space="preserve">
+    <value>all day</value>
+  </data>
+  <data name="calendar_event_multi_day" xml:space="preserve">
+    <value>multi day</value>
+  </data>
+  <data name="calendar_event_position_is_determined" xml:space="preserve">
+    <value>Position wird ermittelt</value>
+  </data>
+  <data name="calendar_event_to" xml:space="preserve">
+    <value>to</value>
+  </data>
+  <data name="calendar_event_unclear_position_time" xml:space="preserve">
+    <value>position and local time unclear</value>
   </data>
   <data name="calendar_monthview_appointmentdisplaymode_max_title" xml:space="preserve">
     <value>show maximal:</value>
@@ -380,305 +399,44 @@ you can customize this notification or disable it in system-settings</value>
   <data name="calendar_widget_loading" xml:space="preserve">
     <value>loading events...</value>
   </data>
-  <data name="description_BackgroundService" xml:space="preserve">
-    <value>keeps the Clock-Widges going on..</value>
-  </data>
-  <data name="dont_ask_again" xml:space="preserve">
-    <value>don't ask again</value>
-  </data>
-  <data name="error_location_is_needet" xml:space="preserve">
-    <value>this app need's a location to work</value>
-  </data>
-  <data name="error_message_paramers" xml:space="preserve">
-    <value>parameter error, try again</value>
-  </data>
-  <data name="error_saving_event" xml:space="preserve">
-    <value>error saving event</value>
-  </data>
-  <data name="ezmz_runningwidgets_more" xml:space="preserve">
-    <value>{0} widges aktiv</value>
-  </data>
-  <data name="ezmz_runningwidgets_one" xml:space="preserve">
-    <value>ein widget aktiv</value>
-  </data>
-  <data name="ezmz_runningwidgets_zero" xml:space="preserve">
-    <value>no aktiv widget</value>
-  </data>
-  <data name="just_a_moment" xml:space="preserve">
-    <value>just a moment...</value>
-  </data>
-  <data name="label_BackgroundService" xml:space="preserve">
-    <value>Widget Update-Service</value>
-  </data>
-  <data name="label_ShortCutActivity" xml:space="preserve">
-    <value>short cut's</value>
-  </data>
-  <data name="label_calendar_TimeType" xml:space="preserve">
-    <value>calendar TimeType:</value>
-  </data>
-  <data name="label_cfg_calendar_core_time" xml:space="preserve">
-    <value>core time</value>
-  </data>
-  <data name="label_cfg_calendar_show_weeknumbers" xml:space="preserve">
-    <value>show weeknumbers</value>
-  </data>
-  <data name="label_cfg_calendar_visible_time" xml:space="preserve">
-    <value>visible time</value>
-  </data>
-  <data name="label_cfg_timeline_days_count" xml:space="preserve">
-    <value>days count</value>
-  </data>
-  <data name="label_choose_default_timetype" xml:space="preserve">
-    <value>choose your default Time-Type:</value>
-  </data>
-  <data name="label_choose_theme_firsttime" xml:space="preserve">
-    <value>at first choose your colors:</value>
-  </data>
-  <data name="label_default_TimeType" xml:space="preserve">
-    <value>default TimeType:</value>
-  </data>
-  <data name="label_error" xml:space="preserve">
-    <value>error</value>
-  </data>
-  <data name="label_errorlog" xml:space="preserve">
-    <value>error log</value>
-  </data>
-  <data name="ClickActionType_None" xml:space="preserve">
-    <value>do nothing</value>
-  </data>
-  <data name="ClickActionType_OpenSettings" xml:space="preserve">
-    <value>show settings</value>
-  </data>
-  <data name="ClickActionType_OpenApp" xml:space="preserve">
-    <value>start iChronoMe</value>
-  </data>
-  <data name="ClickActionType_OpenClock" xml:space="preserve">
-    <value>open 'clock'</value>
-  </data>
-  <data name="ClickActionType_OpenCalendar" xml:space="preserve">
-    <value>open 'calendar'</value>
-  </data>
-  <data name="ClickActionType_OpenWorldTimeMap" xml:space="preserve">
-    <value>open 'World-Time Map'</value>
-  </data>
-  <data name="ClickActionType_CreateEvent" xml:space="preserve">
-    <value>create event</value>
-  </data>
-  <data name="ClickActionType_CreateAlarm" xml:space="preserve">
-    <value>create alarm</value>
-  </data>
-  <data name="ClickActionType_OpenOtherApp" xml:space="preserve">
-    <value>open another app</value>
-  </data>
-  <data name="ClickActionType_Animate" xml:space="preserve">
-    <value>just animate</value>
-  </data>
-  <data name="label_sceenshot" xml:space="preserve">
-    <value>screenshot</value>
-  </data>
-  <data name="label_title" xml:space="preserve">
-    <value>title</value>
-  </data>
-  <data name="loading" xml:space="preserve">
-    <value>loading...</value>
-  </data>
-  <data name="location_provider_disabled_alert" xml:space="preserve">
-    <value>location-services seems to be disabled</value>
-  </data>
-  <data name="location_provider_disabled_question" xml:space="preserve">
-    <value>do you want to enable it?</value>
-  </data>
-  <data name="menu_about" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="menu_calendar" xml:space="preserve">
-    <value>Calendar</value>
-  </data>
-  <data name="menu_clock" xml:space="preserve">
-    <value>Clock</value>
-  </data>
-  <data name="menu_faq" xml:space="preserve">
-    <value>FAQ</value>
-  </data>
-  <data name="menu_service" xml:space="preserve">
-    <value>Service</value>
-  </data>
-  <data name="menu_settings" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="menu_share" xml:space="preserve">
-    <value>Share</value>
-  </data>
-  <data name="menu_tools" xml:space="preserve">
-    <value>Tools</value>
-  </data>
-  <data name="menu_world_time_map" xml:space="preserve">
-    <value>World-Time Map</value>
-  </data>
-  <data name="navigation_drawer_close" xml:space="preserve">
-    <value>Close navigation drawer</value>
-  </data>
-  <data name="navigation_drawer_open" xml:space="preserve">
-    <value>Open navigation drawer</value>
-  </data>
-  <data name="progress_clearcache_action" xml:space="preserve">
-    <value>clear cache</value>
-  </data>
-  <data name="progress_clearcache_message" xml:space="preserve">
-    <value>you will have to restart iChronome after continue</value>
-  </data>
-  <data name="progress_clearcache_title" xml:space="preserve">
-    <value>clear cache?</value>
-  </data>
-  <data name="progress_deleteerrorlog_done" xml:space="preserve">
-    <value>all error-logs have been deleted</value>
-  </data>
-  <data name="progress_overlay_timezones_title" xml:space="preserve">
-    <value>preparing timezones...</value>
-  </data>
-  <data name="progress_preparing_data" xml:space="preserve">
-    <value>preparing data...</value>
-  </data>
-  <data name="progress_senderrorlog_message" xml:space="preserve">
-    <value>do you allow to send error-logs to help solving such problems? theese logs contain tecnical parameters of you device and as you allow a screenshot, but no other kind of personal information</value>
-  </data>
-  <data name="progress_senderrorlog_more" xml:space="preserve">
-    <value>more information</value>
-  </data>
-  <data name="progress_senderrorlog_title" xml:space="preserve">
-    <value>something got wrong or the App crashed last time!</value>
-  </data>
-  <data name="progress_systemtest_action" xml:space="preserve">
-    <value>system test</value>
-  </data>
-  <data name="progress_systemtest_title" xml:space="preserve">
-    <value>system test</value>
-  </data>
-  <data name="question_create_new_calendar" xml:space="preserve">
-    <value>you like to create a new Calendar?</value>
-  </data>
-  <data name="search_hint" xml:space="preserve">
-    <value>the hint so search ;-)</value>
-  </data>
-  <data name="shortcut_create_alarm" xml:space="preserve">
-    <value>add alarm</value>
-  </data>
-  <data name="shortcut_create_alarm_disabled" xml:space="preserve">
-    <value>not working? why not?</value>
-  </data>
-  <data name="shortcut_create_alarm_long" xml:space="preserve">
-    <value>long description...</value>
-  </data>
-  <data name="shortcut_create_calender_event" xml:space="preserve">
-    <value>create event</value>
-  </data>
-  <data name="shortcut_create_calender_event_disabled" xml:space="preserve">
-    <value>not working? why not?</value>
-  </data>
-  <data name="shortcut_create_calender_event_long" xml:space="preserve">
-    <value>long description...</value>
-  </data>
-  <data name="stop_alarm" xml:space="preserve">
-    <value>thanks</value>
-  </data>
-  <data name="text_ServiceInfo" xml:space="preserve">
-    <value>if you see this text please tell me:</value>
-  </data>
-  <data name="title_edit_event" xml:space="preserve">
-    <value>edit event</value>
-  </data>
-  <data name="title_location_picker" xml:space="preserve">
-    <value>select a location</value>
-  </data>
-  <data name="title_new_event" xml:space="preserve">
-    <value>new event</value>
-  </data>
-  <data name="title_send_errorlog" xml:space="preserve">
-    <value>these informations will be send:</value>
-  </data>
-  <data name="unknown_position" xml:space="preserve">
-    <value>unkwnown_position</value>
-  </data>
-  <data name="wallpaper_title_clock_analog" xml:space="preserve">
-    <value>analog solar clock</value>
-  </data>
-  <data name="welcome_ichronomy" xml:space="preserve">
-    <value>welcome to iChronoMe!</value>
-  </data>
-  <data name="widget_lifetime_loading" xml:space="preserve">
-    <value>one "tropical year" is:\n365 d 5 h 48 min and 45,261 s</value>
-  </data>
-  <data name="widget_loading" xml:space="preserve">
-    <value>time is just illusion\u2026</value>
-  </data>
-  <data name="widget_permission_error" xml:space="preserve">
-    <value>I need some permissions, click here please</value>
-  </data>
-  <data name="widget_title_actionbutton" xml:space="preserve">
-    <value>action button</value>
-  </data>
-  <data name="widget_title_calendar" xml:space="preserve">
-    <value>solar time calendar widget</value>
-  </data>
-  <data name="widget_title_clock_analog" xml:space="preserve">
-    <value>analog solar time</value>
-  </data>
-  <data name="widget_title_lifetime" xml:space="preserve">
-    <value>lifetime</value>
-  </data>
-  <data name="widget_unconfigured" xml:space="preserve">
-    <value>click here to configure the widget</value>
-  </data>
-  <data name="text_search_hint" xml:space="preserve">
-    <value>the hint so search ;-)</value>
-  </data>
-  <data name="text_unknown_position" xml:space="preserve">
-    <value>unkwnown_position</value>
-  </data>
-  <data name="AppName" xml:space="preserve">
-    <value>iChronoMe</value>
-  </data>
-  <data name="action_SaveAndQuit" xml:space="preserve">
-    <value>save and quit</value>
-  </data>
-  <data name="AppointmentName" xml:space="preserve">
-    <value>event name</value>
-  </data>
-  <data name="Appointments" xml:space="preserve">
-    <value>events</value>
-  </data>
-  <data name="AppointmentSymbols" xml:space="preserve">
-    <value>event symbols</value>
-  </data>
-  <data name="AppointmentTime" xml:space="preserve">
-    <value>event time</value>
-  </data>
-  <data name="AppTitle" xml:space="preserve">
-    <value>iChronoMe</value>
-  </data>
-  <data name="aRainbowPerMonth" xml:space="preserve">
-    <value>one rainbow per month</value>
-  </data>
-  <data name="aRainbowPerYear" xml:space="preserve">
-    <value>one rainbow per year</value>
-  </data>
-  <data name="BackgroundColor" xml:space="preserve">
-    <value>background color</value>
-  </data>
-  <data name="BackgroundImage" xml:space="preserve">
-    <value>background image</value>
-  </data>
-  <data name="Border" xml:space="preserve">
-    <value>border</value>
-  </data>
-  <data name="ButtonColor" xml:space="preserve">
-    <value>header colors</value>
-  </data>
   <data name="CalendarModel" xml:space="preserve">
     <value>calendar model</value>
   </data>
   <data name="CalendarType" xml:space="preserve">
     <value>calendar type</value>
+  </data>
+  <data name="ClickAction" xml:space="preserve">
+    <value>action on click</value>
+  </data>
+  <data name="ClickActionType_Animate" xml:space="preserve">
+    <value>just animate</value>
+  </data>
+  <data name="ClickActionType_CreateAlarm" xml:space="preserve">
+    <value>create alarm</value>
+  </data>
+  <data name="ClickActionType_CreateEvent" xml:space="preserve">
+    <value>create event</value>
+  </data>
+  <data name="ClickActionType_None" xml:space="preserve">
+    <value>do nothing</value>
+  </data>
+  <data name="ClickActionType_OpenApp" xml:space="preserve">
+    <value>start iChronoMe</value>
+  </data>
+  <data name="ClickActionType_OpenCalendar" xml:space="preserve">
+    <value>open 'calendar'</value>
+  </data>
+  <data name="ClickActionType_OpenClock" xml:space="preserve">
+    <value>open 'clock'</value>
+  </data>
+  <data name="ClickActionType_OpenOtherApp" xml:space="preserve">
+    <value>open another app</value>
+  </data>
+  <data name="ClickActionType_OpenSettings" xml:space="preserve">
+    <value>show settings</value>
+  </data>
+  <data name="ClickActionType_OpenWorldTimeMap" xml:space="preserve">
+    <value>open 'World-Time Map'</value>
   </data>
   <data name="ClockFace" xml:space="preserve">
     <value>clock face</value>
@@ -743,14 +501,31 @@ you can customize this notification or disable it in system-settings</value>
   <data name="DarkToLight" xml:space="preserve">
     <value>dark to light</value>
   </data>
+  <data name="DataLoader_error_list_broken" xml:space="preserve">
+    <value>unable to interprete data-list</value>
+  </data>
+  <data name="DataLoader_error_list_unloadable" xml:space="preserve">
+    <value>unable to load data-list</value>
+  </data>
   <data name="DayColors" xml:space="preserve">
     <value>day colors</value>
+  </data>
+  <data name="DayColorsTimeSpan" xml:space="preserve">
+    <value>brush timespan</value>
   </data>
   <data name="DayColorType" xml:space="preserve">
     <value>day-color type</value>
   </data>
+  <data name="DayColorTypeCustomInfo" xml:space="preserve">
+    <value>there will popup color selectors
+each selected color will be added to the brush
+if you have enoug colors just click 'back' or somewhere outside the window</value>
+  </data>
   <data name="DayTitle" xml:space="preserve">
     <value>Tagestitel</value>
+  </data>
+  <data name="Default" xml:space="preserve">
+    <value>default</value>
   </data>
   <data name="DeletedWidgets" xml:space="preserve">
     <value>deleted widges</value>
@@ -758,11 +533,54 @@ you can customize this notification or disable it in system-settings</value>
   <data name="Description" xml:space="preserve">
     <value>discription</value>
   </data>
-  <data name="ErrorsOrProblems" xml:space="preserve">
-    <value>errors or problems</value>
+  <data name="description_BackgroundService" xml:space="preserve">
+    <value>keeps the Clock-Widges going on..</value>
+  </data>
+  <data name="dont_ask_again" xml:space="preserve">
+    <value>don't ask again</value>
+  </data>
+  <data name="error_location_is_needet" xml:space="preserve">
+    <value>this app need's a location to work</value>
+  </data>
+  <data name="error_message_paramers" xml:space="preserve">
+    <value>parameter error, try again</value>
+  </data>
+  <data name="error_no_location_demitered" xml:space="preserve">
+    <value>unable to demiter a location</value>
+  </data>
+  <data name="error_saving_event" xml:space="preserve">
+    <value>error saving event</value>
   </data>
   <data name="error_SloarTimeNeedLocation" xml:space="preserve">
     <value>solar time needs a location!</value>
+  </data>
+  <data name="ErrorsOrProblems" xml:space="preserve">
+    <value>errors or problems</value>
+  </data>
+  <data name="ezmz_runningwidgets_more" xml:space="preserve">
+    <value>{0} widges aktiv</value>
+  </data>
+  <data name="ezmz_runningwidgets_one" xml:space="preserve">
+    <value>ein widget aktiv</value>
+  </data>
+  <data name="ezmz_runningwidgets_zero" xml:space="preserve">
+    <value>no aktiv widget</value>
+  </data>
+  <data name="faq_item_1" xml:space="preserve">
+    <value>this is a qute question</value>
+  </data>
+  <data name="faq_item_1_value" xml:space="preserve">
+    <value>and here the answer
+with lin 2</value>
+  </data>
+  <data name="faq_item_2" xml:space="preserve">
+    <value>here another question</value>
+  </data>
+  <data name="faq_item_2_value" xml:space="preserve">
+    <value>and also a answer
+with a line 2
+line3
+and lin 4</value>
   </data>
   <data name="Filling" xml:space="preserve">
     <value>fill</value>
@@ -785,11 +603,29 @@ you can customize this notification or disable it in system-settings</value>
   <data name="HandColorTypes" xml:space="preserve">
     <value>hand color types</value>
   </data>
+  <data name="HandTypes" xml:space="preserve">
+    <value>hand types</value>
+  </data>
   <data name="HeaderColor" xml:space="preserve">
     <value>button color</value>
   </data>
+  <data name="hint_GpsOnlyIsActive" xml:space="preserve">
+    <value>currently only GPS is active, this may needs more battery\nif you change to 'battery saving' or 'high accuracy' this app and may also other will need less battery</value>
+  </data>
+  <data name="HourHandFill" xml:space="preserve">
+    <value>hour hand fill color</value>
+  </data>
+  <data name="HourHandStroke" xml:space="preserve">
+    <value>hour hand stroke color</value>
+  </data>
   <data name="Hours" xml:space="preserve">
     <value>hours</value>
+  </data>
+  <data name="ichronome_Link" xml:space="preserve">
+    <value>&lt;a href="http://ichrono.me"&gt;http://ichrono.me&lt;/a&gt;</value>
+  </data>
+  <data name="IconColor" xml:space="preserve">
+    <value>icon color</value>
   </data>
   <data name="ImageLoader_error_list_broken" xml:space="preserve">
     <value>unable to interprete image-list</value>
@@ -800,8 +636,14 @@ you can customize this notification or disable it in system-settings</value>
   <data name="ImageLoader_progress_n_images" xml:space="preserve">
     <value>loading {0} images...</value>
   </data>
+  <data name="ImageLoader_progress_n_packages" xml:space="preserve">
+    <value>loading {0} packages...</value>
+  </data>
   <data name="ImageLoader_progress_one_image" xml:space="preserve">
     <value>loading one image...</value>
+  </data>
+  <data name="ImageLoader_progress_one_package" xml:space="preserve">
+    <value>loading one package...</value>
   </data>
   <data name="ImageLoader_progress_title" xml:space="preserve">
     <value>updating preview-images...</value>
@@ -809,8 +651,63 @@ you can customize this notification or disable it in system-settings</value>
   <data name="ImageLoader_success_n_images" xml:space="preserve">
     <value>{0} of {1} images loadet...</value>
   </data>
+  <data name="ImageLoader_success_n_packages" xml:space="preserve">
+    <value>{0} of {1} packages loadet...</value>
+  </data>
   <data name="ImageLoader_success_one_image" xml:space="preserve">
     <value>one image loadet...</value>
+  </data>
+  <data name="ImageLoader_success_one_package" xml:space="preserve">
+    <value>one package loadet...</value>
+  </data>
+  <data name="info_no_widgets_found" xml:space="preserve">
+    <value>no widget's found
+you can create new widgets on your lauchen-screen!</value>
+  </data>
+  <data name="just_a_moment" xml:space="preserve">
+    <value>just a moment...</value>
+  </data>
+  <data name="label_BackgroundService" xml:space="preserve">
+    <value>Widget Update-Service</value>
+  </data>
+  <data name="label_calendar_TimeType" xml:space="preserve">
+    <value>calendar TimeType:</value>
+  </data>
+  <data name="label_cfg_calendar_core_time" xml:space="preserve">
+    <value>core time</value>
+  </data>
+  <data name="label_cfg_calendar_show_weeknumbers" xml:space="preserve">
+    <value>show weeknumbers</value>
+  </data>
+  <data name="label_cfg_calendar_visible_time" xml:space="preserve">
+    <value>visible time</value>
+  </data>
+  <data name="label_cfg_timeline_days_count" xml:space="preserve">
+    <value>days count</value>
+  </data>
+  <data name="label_choose_default_timetype" xml:space="preserve">
+    <value>choose your default Time-Type:</value>
+  </data>
+  <data name="label_choose_theme_firsttime" xml:space="preserve">
+    <value>at first choose your colors:</value>
+  </data>
+  <data name="label_default_TimeType" xml:space="preserve">
+    <value>default TimeType:</value>
+  </data>
+  <data name="label_error" xml:space="preserve">
+    <value>error</value>
+  </data>
+  <data name="label_errorlog" xml:space="preserve">
+    <value>error log</value>
+  </data>
+  <data name="label_sceenshot" xml:space="preserve">
+    <value>screenshot</value>
+  </data>
+  <data name="label_ShortCutActivity" xml:space="preserve">
+    <value>short cut's</value>
+  </data>
+  <data name="label_title" xml:space="preserve">
+    <value>title</value>
   </data>
   <data name="LifeTime" xml:space="preserve">
     <value>live-time</value>
@@ -824,8 +721,17 @@ you can customize this notification or disable it in system-settings</value>
   <data name="Lines" xml:space="preserve">
     <value>lines</value>
   </data>
+  <data name="loading" xml:space="preserve">
+    <value>loading...</value>
+  </data>
   <data name="Location" xml:space="preserve">
     <value>location</value>
+  </data>
+  <data name="location_provider_disabled_alert" xml:space="preserve">
+    <value>location-services seems to be disabled</value>
+  </data>
+  <data name="location_provider_disabled_question" xml:space="preserve">
+    <value>do you want to enable it?</value>
   </data>
   <data name="LocationType" xml:space="preserve">
     <value>location type</value>
@@ -833,17 +739,146 @@ you can customize this notification or disable it in system-settings</value>
   <data name="MaxCount" xml:space="preserve">
     <value>max count</value>
   </data>
+  <data name="menu_about" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="menu_calendar" xml:space="preserve">
+    <value>Calendar</value>
+  </data>
+  <data name="menu_clock" xml:space="preserve">
+    <value>Clock</value>
+  </data>
+  <data name="menu_faq" xml:space="preserve">
+    <value>FAQ</value>
+  </data>
+  <data name="menu_service" xml:space="preserve">
+    <value>Service</value>
+  </data>
+  <data name="menu_settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="menu_share" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="menu_tools" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="menu_world_time_map" xml:space="preserve">
+    <value>World-Time Map</value>
+  </data>
+  <data name="MinuteHandFill" xml:space="preserve">
+    <value>minute hand fill color</value>
+  </data>
+  <data name="MinuteHandStroke" xml:space="preserve">
+    <value>minute hand stroke color</value>
+  </data>
   <data name="Minutes" xml:space="preserve">
     <value>minutes</value>
   </data>
   <data name="Months" xml:space="preserve">
     <value>months</value>
   </data>
+  <data name="MoreOptionsAndColors" xml:space="preserve">
+    <value>more options and colors</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>name</value>
   </data>
+  <data name="nAnimationRounds" xml:space="preserve">
+    <value>{0} round(s)</value>
+  </data>
+  <data name="navigation_drawer_close" xml:space="preserve">
+    <value>Close navigation drawer</value>
+  </data>
+  <data name="navigation_drawer_open" xml:space="preserve">
+    <value>Open navigation drawer</value>
+  </data>
+  <data name="No_Appointments" xml:space="preserve">
+    <value>your are free</value>
+  </data>
   <data name="NoHighlite" xml:space="preserve">
     <value>no highlite</value>
+  </data>
+  <data name="NoSelectedDate" xml:space="preserve">
+    <value>no selected date</value>
+  </data>
+  <data name="nSeconds" xml:space="preserve">
+    <value>{0} second(s)</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>options</value>
+  </data>
+  <data name="OtherAdditional" xml:space="preserve">
+    <value>additional</value>
+  </data>
+  <data name="progress_clearcache_action" xml:space="preserve">
+    <value>clear cache</value>
+  </data>
+  <data name="progress_clearcache_message" xml:space="preserve">
+    <value>you will have to restart iChronome after continue</value>
+  </data>
+  <data name="progress_clearcache_title" xml:space="preserve">
+    <value>clear cache?</value>
+  </data>
+  <data name="progress_deleteerrorlog_done" xml:space="preserve">
+    <value>all error-logs have been deleted</value>
+  </data>
+  <data name="progress_determineLocation" xml:space="preserve">
+    <value>determine location...</value>
+  </data>
+  <data name="progress_overlay_timezones_title" xml:space="preserve">
+    <value>preparing timezones...</value>
+  </data>
+  <data name="progress_preparing_data" xml:space="preserve">
+    <value>preparing data...</value>
+  </data>
+  <data name="progress_senderrorlog_message" xml:space="preserve">
+    <value>do you allow to send error-logs to help solving such problems? theese logs contain tecnical parameters of you device and as you allow a screenshot, but no other kind of personal information</value>
+  </data>
+  <data name="progress_senderrorlog_more" xml:space="preserve">
+    <value>more information</value>
+  </data>
+  <data name="progress_senderrorlog_title" xml:space="preserve">
+    <value>something got wrong or the App crashed last time!</value>
+  </data>
+  <data name="progress_systemtest_action" xml:space="preserve">
+    <value>system test</value>
+  </data>
+  <data name="progress_systemtest_title" xml:space="preserve">
+    <value>system test</value>
+  </data>
+  <data name="ProgressUpdateBaseData" xml:space="preserve">
+    <value>update base-data</value>
+  </data>
+  <data name="question_create_new_calendar" xml:space="preserve">
+    <value>you like to create a new Calendar?</value>
+  </data>
+  <data name="search_hint" xml:space="preserve">
+    <value>the hint so search ;-)</value>
+  </data>
+  <data name="service_AboutIntro" xml:space="preserve">
+    <value>this app was created be me, the creator. I call myself 'I'.</value>
+  </data>
+  <data name="shortcut_create_alarm" xml:space="preserve">
+    <value>add alarm</value>
+  </data>
+  <data name="shortcut_create_alarm_disabled" xml:space="preserve">
+    <value>not working? why not?</value>
+  </data>
+  <data name="shortcut_create_alarm_long" xml:space="preserve">
+    <value>long description...</value>
+  </data>
+  <data name="shortcut_create_calender_event" xml:space="preserve">
+    <value>create event</value>
+  </data>
+  <data name="shortcut_create_calender_event_disabled" xml:space="preserve">
+    <value>not working? why not?</value>
+  </data>
+  <data name="shortcut_create_calender_event_long" xml:space="preserve">
+    <value>long description...</value>
+  </data>
+  <data name="stop_alarm" xml:space="preserve">
+    <value>thanks</value>
   </data>
   <data name="text_Offset" xml:space="preserve">
     <value>Offset</value>
@@ -857,11 +892,14 @@ you can customize this notification or disable it in system-settings</value>
   <data name="text_oneYear" xml:space="preserve">
     <value>one Year</value>
   </data>
-  <data name="Options" xml:space="preserve">
-    <value>options</value>
+  <data name="text_perMonth" xml:space="preserve">
+    <value>per month</value>
   </data>
-  <data name="OtherAdditional" xml:space="preserve">
-    <value>additional</value>
+  <data name="text_perWeek" xml:space="preserve">
+    <value>per week</value>
+  </data>
+  <data name="text_perYear" xml:space="preserve">
+    <value>per year</value>
   </data>
   <data name="text_Problems" xml:space="preserve">
     <value>problems</value>
@@ -869,11 +907,20 @@ you can customize this notification or disable it in system-settings</value>
   <data name="text_Sample" xml:space="preserve">
     <value>sample</value>
   </data>
-  <data name="action_SaveWidget" xml:space="preserve">
-    <value>save widget</value>
+  <data name="text_search_hint" xml:space="preserve">
+    <value>the hint so search ;-)</value>
+  </data>
+  <data name="text_SecondHandFill" xml:space="preserve">
+    <value>second hand fill color</value>
+  </data>
+  <data name="text_SecondHandStroke" xml:space="preserve">
+    <value>second hand stroke color</value>
   </data>
   <data name="text_Seconds" xml:space="preserve">
     <value>seconds</value>
+  </data>
+  <data name="text_ServiceInfo" xml:space="preserve">
+    <value>if you see this text please tell me:</value>
   </data>
   <data name="text_SetAllColorsAtOnce" xml:space="preserve">
     <value>all colors at ones</value>
@@ -893,14 +940,11 @@ you can customize this notification or disable it in system-settings</value>
   <data name="text_StaticLocation" xml:space="preserve">
     <value>choose static location</value>
   </data>
+  <data name="text_Style" xml:space="preserve">
+    <value>style</value>
+  </data>
   <data name="text_Symbols" xml:space="preserve">
     <value>Symbole</value>
-  </data>
-  <data name="TextColor" xml:space="preserve">
-    <value>Textfarbe</value>
-  </data>
-  <data name="Theme" xml:space="preserve">
-    <value>theme</value>
   </data>
   <data name="text_threeColors" xml:space="preserve">
     <value>three Colors</value>
@@ -917,23 +961,8 @@ you can customize this notification or disable it in system-settings</value>
   <data name="text_TickMarksColor" xml:space="preserve">
     <value>tick marks color</value>
   </data>
-  <data name="Time" xml:space="preserve">
-    <value>time</value>
-  </data>
-  <data name="TimeOffset" xml:space="preserve">
-    <value>time offset</value>
-  </data>
-  <data name="TimeScale" xml:space="preserve">
-    <value>timescale</value>
-  </data>
-  <data name="TimeSpan" xml:space="preserve">
-    <value>timespan</value>
-  </data>
   <data name="text_TitleColor" xml:space="preserve">
     <value>title color</value>
-  </data>
-  <data name="title_EditWidget" xml:space="preserve">
-    <value>edit Widget</value>
   </data>
   <data name="text_TodayColor" xml:space="preserve">
     <value>today-color</value>
@@ -950,6 +979,123 @@ you can customize this notification or disable it in system-settings</value>
   <data name="text_twoWeeks" xml:space="preserve">
     <value>two Weeks</value>
   </data>
+  <data name="text_unknown_position" xml:space="preserve">
+    <value>unkwnown_position</value>
+  </data>
+  <data name="text_withoutSecondHand" xml:space="preserve">
+    <value>without second-hand</value>
+  </data>
+  <data name="TextColor" xml:space="preserve">
+    <value>Textfarbe</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>theme</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>time</value>
+  </data>
+  <data name="TimeOffset" xml:space="preserve">
+    <value>time offset</value>
+  </data>
+  <data name="TimeScale" xml:space="preserve">
+    <value>timescale</value>
+  </data>
+  <data name="TimeSpan" xml:space="preserve">
+    <value>timespan</value>
+  </data>
+  <data name="TimeType" xml:space="preserve">
+    <value>time-type</value>
+  </data>
+  <data name="TimeType_MiddleSunTime" xml:space="preserve">
+    <value>middle sun time</value>
+  </data>
+  <data name="TimeType_MiddleSunTime_Desc" xml:space="preserve">
+    <value>the time based on the current longitude of your location
+around the year the difference between real an middle solar time can be up to about 18 minutes
+every day has exact 24 hours and the offset to timezone-time is stable</value>
+  </data>
+  <data name="TimeType_RealSunTime" xml:space="preserve">
+    <value>real sun time</value>
+  </data>
+  <data name="TimeType_RealSunTime_Desc" xml:space="preserve">
+    <value>the time, by the real position of the sun where the highest point of the sun means 12 o'clock
+this means a day is a little bit less or a little bit more than 24 hours and every day is diffrent, like nature is\nthe offset to timezone-time is changing every day</value>
+  </data>
+  <data name="TimeType_TimeZoneTime" xml:space="preserve">
+    <value>timezone time</value>
+  </data>
+  <data name="TimeType_TimeZoneTime_Desc" xml:space="preserve">
+    <value>this time is based on the borders of the country you enjoy currently
+may this can be far far away from the real time on your location</value>
+  </data>
+  <data name="title_edit_event" xml:space="preserve">
+    <value>edit event</value>
+  </data>
+  <data name="title_EditWidget" xml:space="preserve">
+    <value>edit Widget</value>
+  </data>
+  <data name="title_JustATipp" xml:space="preserve">
+    <value>just a tipp</value>
+  </data>
+  <data name="title_location_picker" xml:space="preserve">
+    <value>select a location</value>
+  </data>
+  <data name="title_new_event" xml:space="preserve">
+    <value>new event</value>
+  </data>
+  <data name="title_send_errorlog" xml:space="preserve">
+    <value>these informations will be send:</value>
+  </data>
+  <data name="unknown_position" xml:space="preserve">
+    <value>unkwnown_position</value>
+  </data>
+  <data name="wallpaper_title_clock_analog" xml:space="preserve">
+    <value>analog solar clock</value>
+  </data>
+  <data name="welcome_ichronomy" xml:space="preserve">
+    <value>welcome to iChronoMe!</value>
+  </data>
+  <data name="widget_error_location_is_requered" xml:space="preserve">
+    <value>the calender-widget\'s only work with access to your calendar and location!</value>
+  </data>
+  <data name="widget_error_permission_calendar" xml:space="preserve">
+    <value>missing calendar-permission
+please click here</value>
+  </data>
+  <data name="widget_error_permission_location" xml:space="preserve">
+    <value>missing localtion-permission
+please click here</value>
+  </data>
+  <data name="widget_lifetime_loading" xml:space="preserve">
+    <value>one "tropical year" is:\n365 d 5 h 48 min and 45,261 s</value>
+  </data>
+  <data name="widget_loading" xml:space="preserve">
+    <value>time is just illusion\u2026</value>
+  </data>
+  <data name="widget_permission_error" xml:space="preserve">
+    <value>I need some permissions, click here please</value>
+  </data>
+  <data name="widget_title_actionbutton" xml:space="preserve">
+    <value>action button</value>
+  </data>
+  <data name="widget_title_calendar" xml:space="preserve">
+    <value>solar time calendar widget</value>
+  </data>
+  <data name="widget_title_clock_analog" xml:space="preserve">
+    <value>analog solar time</value>
+  </data>
+  <data name="widget_title_lifetime" xml:space="preserve">
+    <value>lifetime</value>
+  </data>
+  <data name="widget_unconfigured" xml:space="preserve">
+    <value>click here to configure the widget</value>
+  </data>
+  <data name="widget_warning_location_out_of_date" xml:space="preserve">
+    <value>current location out of date</value>
+  </data>
+  <data name="widget_warning_location_unknown" xml:space="preserve">
+    <value>current location unknown</value>
+  </data>
   <data name="WidgetHeaderAndSeparatingLine" xml:space="preserve">
     <value>Widget-Kopf und Trennzeile</value>
   </data>
@@ -964,133 +1110,5 @@ you can customize this notification or disable it in system-settings</value>
   </data>
   <data name="WidgetTitleMonthView" xml:space="preserve">
     <value>month-view</value>
-  </data>
-  <data name="DayColorsTimeSpan" xml:space="preserve">
-    <value>brush timespan</value>
-  </data>
-  <data name="DayColorTypeCustomInfo" xml:space="preserve">
-    <value>there will popup color selectors
-each selected color will be added to the brush
-if you have enoug colors just click 'back' or somewhere outside the window</value>
-  </data>
-  <data name="text_perMonth" xml:space="preserve">
-    <value>per month</value>
-  </data>
-  <data name="text_perWeek" xml:space="preserve">
-    <value>per week</value>
-  </data>
-  <data name="text_perYear" xml:space="preserve">
-    <value>per year</value>
-  </data>
-  <data name="ActionButtonStyle" xml:space="preserve">
-    <value>style</value>
-  </data>
-  <data name="ActionButtonStyle_eye_animated" xml:space="preserve">
-    <value>iChronEye animated
-(doubleclick = action)</value>
-  </data>
-  <data name="ActionButtonStyle_eye_static" xml:space="preserve">
-    <value>iChronEye static</value>
-  </data>
-  <data name="AnimationDuriation" xml:space="preserve">
-    <value>animation duriation</value>
-  </data>
-  <data name="AnimationRounds" xml:space="preserve">
-    <value>animation rounds</value>
-  </data>
-  <data name="ClickAction" xml:space="preserve">
-    <value>action on click</value>
-  </data>
-  <data name="IconColor" xml:space="preserve">
-    <value>icon color</value>
-  </data>
-  <data name="nAnimationRounds" xml:space="preserve">
-    <value>{0} round(s)</value>
-  </data>
-  <data name="nSeconds" xml:space="preserve">
-    <value>{0} second(s)</value>
-  </data>
-  <data name="HourHandFill" xml:space="preserve">
-    <value>hour hand fill color</value>
-  </data>
-  <data name="HourHandStroke" xml:space="preserve">
-    <value>hour hand stroke color</value>
-  </data>
-  <data name="MinuteHandFill" xml:space="preserve">
-    <value>minute hand fill color</value>
-  </data>
-  <data name="MinuteHandStroke" xml:space="preserve">
-    <value>minute hand stroke color</value>
-  </data>
-  <data name="text_SecondHandStroke" xml:space="preserve">
-    <value>second hand stroke color</value>
-  </data>
-  <data name="ImageLoader_progress_n_packages" xml:space="preserve">
-    <value>loading {0} packages...</value>
-  </data>
-  <data name="ImageLoader_progress_one_package" xml:space="preserve">
-    <value>loading one package...</value>
-  </data>
-  <data name="ImageLoader_success_n_packages" xml:space="preserve">
-    <value>{0} of {1} packages loadet...</value>
-  </data>
-  <data name="ImageLoader_success_one_package" xml:space="preserve">
-    <value>one package loadet...</value>
-  </data>
-  <data name="HandTypes" xml:space="preserve">
-    <value>hand types</value>
-  </data>
-  <data name="MoreOptionsAndColors" xml:space="preserve">
-    <value>more options and colors</value>
-  </data>
-  <data name="DataLoader_error_list_broken" xml:space="preserve">
-    <value>unable to interprete data-list</value>
-  </data>
-  <data name="DataLoader_error_list_unloadable" xml:space="preserve">
-    <value>unable to load data-list</value>
-  </data>
-  <data name="ProgressUpdateBaseData" xml:space="preserve">
-    <value>update base-data</value>
-  </data>
-  <data name="text_SecondHandFill" xml:space="preserve">
-    <value>second hand fill color</value>
-  </data>
-  <data name="Default" xml:space="preserve">
-    <value>default</value>
-  </data>
-  <data name="text_withoutSecondHand" xml:space="preserve">
-    <value>without second-hand</value>
-  </data>
-  <data name="serviceAboutIntro" xml:space="preserve">
-    <value>this app was created be me, the creator. I call myself 'I'.</value>
-  </data>
-  <data name="text_Style" xml:space="preserve">
-    <value>style</value>
-  </data>
-  <data name="info_no_widgets_found" xml:space="preserve">
-    <value>no widget's found
-you can create new widgets on your lauchen-screen!</value>
-  </data>
-  <data name="faq_item_1" xml:space="preserve">
-    <value>this is a qute question</value>
-  </data>
-  <data name="faq_item_1_value" xml:space="preserve">
-    <value>and here the answer
-with lin 2</value>
-  </data>
-  <data name="faq_item_2" xml:space="preserve">
-    <value>here another question</value>
-  </data>
-  <data name="faq_item_2_value" xml:space="preserve">
-    <value>and also a answer
-with a line 2
-line3
-and lin 4</value>
-  </data>
-  <data name="all_day" xml:space="preserve">
-    <value>all day</value>
-  </data>
-  <data name="Background" xml:space="preserve">
-    <value>background</value>
   </data>
 </root>

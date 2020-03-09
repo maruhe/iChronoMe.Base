@@ -187,6 +187,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die contact / feedback ähnelt.
+        /// </summary>
+        public static string action_ContactUs {
+            get {
+                return ResourceManager.GetString("action_ContactUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die continue ähnelt.
         /// </summary>
         public static string action_continue {
@@ -444,6 +453,15 @@ namespace iChronoMe {
         public static string action_settings {
             get {
                 return ResourceManager.GetString("action_settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die support this project ähnelt.
+        /// </summary>
+        public static string action_SupportThisProject {
+            get {
+                return ResourceManager.GetString("action_SupportThisProject", resourceCulture);
             }
         }
         
@@ -1501,6 +1519,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die currently only GPS is active, this may needs more battery\nif you change to &apos;battery saving&apos; or &apos;high accuracy&apos; this app and may also other will need less battery ähnelt.
+        /// </summary>
+        public static string hint_GpsOnlyIsActive {
+            get {
+                return ResourceManager.GetString("hint_GpsOnlyIsActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die hour hand fill color ähnelt.
         /// </summary>
         public static string HourHandFill {
@@ -1524,6 +1551,15 @@ namespace iChronoMe {
         public static string Hours {
             get {
                 return ResourceManager.GetString("Hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;a href=&quot;http://ichrono.me&quot;&gt;http://ichrono.me&lt;/a&gt; ähnelt.
+        /// </summary>
+        public static string ichronome_Link {
+            get {
+                return ResourceManager.GetString("ichronome_Link", resourceCulture);
             }
         }
         
@@ -2123,6 +2159,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die determine location... ähnelt.
+        /// </summary>
+        public static string progress_determineLocation {
+            get {
+                return ResourceManager.GetString("progress_determineLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die preparing timezones... ähnelt.
         /// </summary>
         public static string progress_overlay_timezones_title {
@@ -2215,9 +2260,9 @@ namespace iChronoMe {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die this app was created be me, the creator. I call myself &apos;I&apos;. ähnelt.
         /// </summary>
-        public static string serviceAboutIntro {
+        public static string service_AboutIntro {
             get {
-                return ResourceManager.GetString("serviceAboutIntro", resourceCulture);
+                return ResourceManager.GetString("service_AboutIntro", resourceCulture);
             }
         }
         
@@ -2735,6 +2780,15 @@ namespace iChronoMe {
         public static string title_EditWidget {
             get {
                 return ResourceManager.GetString("title_EditWidget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die just a tipp ähnelt.
+        /// </summary>
+        public static string title_JustATipp {
+            get {
+                return ResourceManager.GetString("title_JustATipp", resourceCulture);
             }
         }
         

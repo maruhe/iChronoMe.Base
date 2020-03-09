@@ -21,18 +21,25 @@ namespace iChronoMe.Core.Classes
 
                     _allCredits.Add(new ContributorInfo
                     {
-                        License = "MIT",
-                        Name = "Yort.Ntp",
-                        Description = "our interface to GMT 0",
-                        WebLink = "https://github.com/Yortw/Yort.Ntp"
+                        Name = "stack overflow",
+                        Description = "100 million answers on 20 million questions",
+                        WebLink = "https://stackoverflow.com/"
                     });
-                    /*_allCredits.Add(new ContributorInfo
+
+                    _allCredits.Add(new ContributorInfo
+                    {
+                        Name = "the internet",
+                        Description = "research and mix it, so you may find your answer",
+                        WebLink = "https://en.wikipedia.org/wiki/ARPANET"
+                    });
+
+                    _allCredits.Add(new ContributorInfo
                     {
                         License = "MIT",
                         Name = "Newtonsoft.Json",
                         Description = "JSON input/output in high-performance",
                         WebLink = "https://github.com/JamesNK/Newtonsoft.Json"
-                    });*/
+                    });
                     //_allCredits.Add(new CreditInfo { License = "MIT", Name = "TimeZoneConverter", Description = "for Windows-Users", WebLink = "https://github.com/mj1856/TimeZoneConverter" });
 
                     _allCredits.Add(new ContributorInfo
@@ -41,6 +48,14 @@ namespace iChronoMe.Core.Classes
                         Description = "more icons than I ever could implement",
                         WebLink = "https://icons8.com"
                     });
+
+                    _allCredits.Add(new ContributorInfo
+                    {
+                        Name = "syncfusion",
+                        Description = "our nice calendar-view",
+                        WebLink = "https://www.syncfusion.com/"
+                    });
+
                 }
 
                 return _allCredits;
