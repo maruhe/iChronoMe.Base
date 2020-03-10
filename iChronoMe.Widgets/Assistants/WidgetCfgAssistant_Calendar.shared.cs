@@ -276,7 +276,7 @@ namespace iChronoMe.Widgets
         {
             base.ExecCustom(handler);
             NextStepAssistantType = typeof(WidgetCfgAssistant_CalendarCircleWave_OptionsBase);
-            if (await handler.UserShowYesNoMessage(localize.DayColorType, localize.DayColorTypeCustomInfo))
+            if (await handler.UserShowYesNoMessage(localize.DayColorType, localize.DayColorTypeCustomInfo, localize.action_continue, localize.action_abort))
             {
                 List<xColor> xclrs = new List<xColor>();
                 int iClr = 0;
@@ -389,7 +389,7 @@ namespace iChronoMe.Widgets
         {
             base.ExecCustom(handler);
             NextStepAssistantType = typeof(WidgetCfgAssistant_CalendarCircleWave_OptionsBase);
-            if (await handler.UserShowYesNoMessage(localize.DayColorType, localize.DayColorTypeCustomInfo))
+            if (await handler.UserShowYesNoMessage(localize.DayColorType, localize.DayColorTypeCustomInfo, localize.action_continue, localize.action_abort))
             {
                 List<xColor> xclrs = new List<xColor>();
                 int iClr = 0;

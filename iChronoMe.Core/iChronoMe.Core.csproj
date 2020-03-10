@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard2.0;MonoAndroid90;Xamarin.iOS10;uap10.0.16299;</TargetFrameworks>
     <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard2.0;MonoAndroid90;Xamarin.iOS10;</TargetFrameworks>
-    <AssemblyName>iChronoMe.Core</AssemblyName>
+    <AssemblyName>ichronoMe.Core</AssemblyName>
     <RootNamespace>iChronoMe.Core</RootNamespace>
     <PackageId>iChronoMe.Core</PackageId>
     <PackageIconUrl>https://raw.githubusercontent.com/maruhe/icronome/master/Assets/iChronoMe.Core_128x128.png</PackageIconUrl>

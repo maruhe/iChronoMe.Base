@@ -217,7 +217,8 @@ namespace iChronoMe.Core.Classes
                 loading = false;
                 ready = true;
                 var tsInit = DateTime.Now - swStart;
-                sys.MainUserIO?.ShowToast("Read Time-Zones-Map: " + (int)tsInit.TotalMilliseconds + "ms");
+                if (sys.Debugmode)
+                    sys.MainUserIO?.ShowToast("Read Time-Zones-Map: " + (int)tsInit.TotalMilliseconds + "ms");
                 return res;
             }
             catch (Exception ex)

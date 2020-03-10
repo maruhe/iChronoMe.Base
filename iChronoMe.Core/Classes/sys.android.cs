@@ -34,7 +34,10 @@ namespace iChronoMe.Core.Classes
                 try
                 {
                     if ("serial".Equals(prop.Name.ToLower())) //try to generate a anonym device-token for better error-logging
-                        infos.Add("DeviceToken".PadRight(15) + ": " + sys.CalculateMD5Hash("iChr" + sys.CalculateMD5Hash("iChr" + (string)prop.GetValue(null) + "onoMe") + cX + "onoMe"));
+                    {
+                        cDeviceToken = sys.CalculateMD5Hash("iChr" + sys.CalculateMD5Hash("iChr" + (string)prop.GetValue(null) + "onoMe") + cX + "onoMe");
+                        infos.Add("DeviceToken".PadRight(15) + ": " + cDeviceToken);
+                    }
                     else if (prop.PropertyType == typeof(string))
                         infos.Add(prop.Name.PadRight(15) + ": " + (string)prop.GetValue(null));
                     else if (prop.PropertyType == typeof(int))

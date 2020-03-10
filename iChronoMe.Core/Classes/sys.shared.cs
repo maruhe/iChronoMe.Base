@@ -442,6 +442,7 @@ namespace iChronoMe.Core.Classes
 
         public static string cAppVersionInfo { get; private set; } = "?";
         public static string cDeviceInfo { get; private set; } = "?";
+        public static string cDeviceToken { get; private set; } = "?";
 
         public static string ErrorLogPath { get => Path.Combine(Path.GetTempPath(), "ErrorLog"); }
         public static List<string> AllDrawables { get; } = new List<string>();
