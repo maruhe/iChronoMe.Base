@@ -18,8 +18,12 @@ namespace iChronoMe.Core.Classes
     {
         private static void PlatformInit()
         {
-            string xx = Build.Board + Build.Bootloader + Build.Brand + Build.CpuAbi + Build.CpuAbi2 + Build.Device + Build.Display + Build.Fingerprint + Build.Fingerprint + Build.Hardware + Build.Host + Build.Id + Build.Manufacturer + Build.Model + Build.Product + Build.Radio + Build.RadioVersion + Build.Serial + Build.Tags + Build.Type + Build.User;
-            xx = Build.VERSION.BaseOs + Build.VERSION.Codename + Build.VERSION.Incremental + Build.VERSION.Release + Build.VERSION.Sdk + Build.VERSION.SdkInt + Build.VERSION.SecurityPatch;
+            try
+            {
+                //make references to prevent removing by linker 
+                string xx = Build.Board + Build.Bootloader + Build.Brand + Build.CpuAbi + Build.CpuAbi2 + Build.Device + Build.Display + Build.Fingerprint + Build.Fingerprint + Build.Hardware + Build.Host + Build.Id + Build.Manufacturer + Build.Model + Build.Product + Build.Radio + Build.RadioVersion + Build.Serial + Build.Tags + Build.Type + Build.User;
+                xx = Build.VERSION.BaseOs + Build.VERSION.Codename + Build.VERSION.Incremental + Build.VERSION.Release + Build.VERSION.Sdk + Build.VERSION.SdkInt + Build.VERSION.SecurityPatch;
+            } catch { }
 
             var ctx = Application.Context;
             //Toast.MakeText(ctx, "PlatformInit", ToastLength.Long).Show();
@@ -34,7 +38,7 @@ namespace iChronoMe.Core.Classes
             List<string> infos = new List<string>();
 
             string cX = "23";
-            var props = typeof(Android.OS.Build).GetProperties(BindingFlags.Public | BindingFlags.Static);
+            var props = typeof(Build).GetProperties(BindingFlags.Public | BindingFlags.Static);
             //Toast.MakeText(ctx, "PlatformInit: "+ props.Length, ToastLength.Long).Show();
             foreach (var prop in props)
             {
@@ -55,14 +59,10 @@ namespace iChronoMe.Core.Classes
                     if ("device".Equals(prop.Name.ToLower()) || "id".Equals(prop.Name.ToLower()) || "model".Equals(prop.Name.ToLower()))
                         cX += ": " + (string)prop.GetValue(null);
                 }
-                catch (Exception e)
-                {
-                    e.ToString();
-                    Toast.MakeText(ctx, e.Message, ToastLength.Short).Show();
-                }
+                catch { }
             }
 
-            props = typeof(Android.OS.Build.VERSION).GetProperties(BindingFlags.Public | BindingFlags.Static);
+            props = typeof(Build.VERSION).GetProperties(BindingFlags.Public | BindingFlags.Static);
             foreach (var prop in props)
             {
                 try
@@ -77,11 +77,7 @@ namespace iChronoMe.Core.Classes
                     else
                         prop.ToString();
                 }
-                catch (Exception e)
-                {
-                    e.ToString();
-                    Toast.MakeText(ctx, e.Message, ToastLength.Short).Show();
-                }
+                catch { }
             }
             infos.Sort();
             try

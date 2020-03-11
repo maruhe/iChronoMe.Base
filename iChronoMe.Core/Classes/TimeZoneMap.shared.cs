@@ -223,7 +223,7 @@ namespace iChronoMe.Core.Classes
             }
             catch (Exception ex)
             {
-                ex.ToString();
+                xLog.Error(ex);
             }
             loading = false;
             return null;
