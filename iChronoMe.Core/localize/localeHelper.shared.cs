@@ -11,7 +11,6 @@ namespace iChronoMe.Core
             switch (tt)
             {
                 case TimeType.RealSunTime:
-                case TimeType.RealSunTimeOld:
                     return localize.TimeType_RealSunTime;
 
                 case TimeType.MiddleSunTime:

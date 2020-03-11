@@ -120,7 +120,7 @@ namespace iChronoMe.Core.Classes
         public int TimeLineDaysCount { get; set; } = -1;
 
         public int DayViewHourStart { get; set; } = 0;
-        public int DayViewHourEnd { get; set; } = 0;
+        public int DayViewHourEnd { get; set; } = 24;
         public int DayViewWorkHourStart { get; set; } = 8;
         public int DayViewWorkHourEnd { get; set; } = 18;
         public bool DayViewShowAllDay { get; set; } = true;
@@ -143,6 +143,45 @@ namespace iChronoMe.Core.Classes
         public int MonthViewNavigationDirection { get; set; } = 0;
         public bool MonthViewShowInlineEvents { get; set; } = false;
         public bool MonthViewShowAgenda { get; set; } = true;
+
+        public void CheckStartEndTimes()
+        {
+            if (TimeLineHourStart >= TimeLineHourEnd)
+            {
+                TimeLineHourStart = 0;
+                TimeLineHourEnd = 24;
+            }
+            if (DayViewHourStart >= DayViewHourEnd)
+            {
+                DayViewHourStart = 0;
+                DayViewHourEnd = 24;
+            }
+            if (DayViewWorkHourStart >= DayViewWorkHourEnd)
+            {
+                DayViewWorkHourStart = 8;
+                DayViewWorkHourEnd = 16;
+            }
+            if (WeekViewHourStart >= WeekViewHourEnd)
+            {
+                WeekViewHourStart = 0;
+                WeekViewHourEnd = 24;
+            }
+            if (WeekViewWorkHourStart >= WeekViewWorkHourEnd)
+            {
+                WeekViewWorkHourStart = 8;
+                WeekViewWorkHourEnd = 16;
+            }
+            if (WorkWeekHourStart >= WorkWeekHourEnd)
+            {
+                WorkWeekHourStart = 0;
+                WorkWeekHourEnd = 24;
+            }
+            if (WorkWeekWorkHourStart >= WorkWeekWorkHourEnd)
+            {
+                WorkWeekWorkHourStart = 8;
+                WorkWeekWorkHourEnd = 16;
+            }
+        }
     }
 
     public class CalendarGroupViewConfig
