@@ -621,9 +621,6 @@ and lin 4</value>
   <data name="Hours" xml:space="preserve">
     <value>hours</value>
   </data>
-  <data name="ichronome_Link" xml:space="preserve">
-    <value>&lt;a href="http://ichrono.me"&gt;http://ichrono.me&lt;/a&gt;</value>
-  </data>
   <data name="IconColor" xml:space="preserve">
     <value>icon color</value>
   </data>
@@ -964,8 +961,14 @@ you can create new widgets on your lauchen-screen!</value>
   <data name="text_TitleColor" xml:space="preserve">
     <value>title color</value>
   </data>
+  <data name="text_Today" xml:space="preserve">
+    <value>Today</value>
+  </data>
   <data name="text_TodayColor" xml:space="preserve">
     <value>today-color</value>
+  </data>
+  <data name="text_Tomorrow" xml:space="preserve">
+    <value>Tomorrow</value>
   </data>
   <data name="text_transparent" xml:space="preserve">
     <value>transparent</value>

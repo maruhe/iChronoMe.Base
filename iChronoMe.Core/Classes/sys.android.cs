@@ -9,14 +9,20 @@ using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Views;
+using Android.Widget;
 
 namespace iChronoMe.Core.Classes
 {
+    [Android.Runtime.Preserve(AllMembers = true)]
     public static partial class sys
     {
         private static void PlatformInit()
         {
+            string xx = Build.Board + Build.Bootloader + Build.Brand + Build.CpuAbi + Build.CpuAbi2 + Build.Device + Build.Display + Build.Fingerprint + Build.Fingerprint + Build.Hardware + Build.Host + Build.Id + Build.Manufacturer + Build.Model + Build.Product + Build.Radio + Build.RadioVersion + Build.Serial + Build.Tags + Build.Type + Build.User;
+            xx = Build.VERSION.BaseOs + Build.VERSION.Codename + Build.VERSION.Incremental + Build.VERSION.Release + Build.VERSION.Sdk + Build.VERSION.SdkInt + Build.VERSION.SecurityPatch;
+
             var ctx = Application.Context;
+            //Toast.MakeText(ctx, "PlatformInit", ToastLength.Long).Show();
             Init(OsType.Android);
             var pi = ctx.PackageManager.GetPackageInfo(ctx.PackageName, 0);
             cAppVersionInfo = pi.VersionName + ", " + pi.VersionCode.ToString(CultureInfo.InvariantCulture);
@@ -29,6 +35,7 @@ namespace iChronoMe.Core.Classes
 
             string cX = "23";
             var props = typeof(Android.OS.Build).GetProperties(BindingFlags.Public | BindingFlags.Static);
+            //Toast.MakeText(ctx, "PlatformInit: "+ props.Length, ToastLength.Long).Show();
             foreach (var prop in props)
             {
                 try
@@ -51,6 +58,7 @@ namespace iChronoMe.Core.Classes
                 catch (Exception e)
                 {
                     e.ToString();
+                    Toast.MakeText(ctx, e.Message, ToastLength.Short).Show();
                 }
             }
 
@@ -72,6 +80,7 @@ namespace iChronoMe.Core.Classes
                 catch (Exception e)
                 {
                     e.ToString();
+                    Toast.MakeText(ctx, e.Message, ToastLength.Short).Show();
                 }
             }
             infos.Sort();

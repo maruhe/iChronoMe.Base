@@ -945,8 +945,14 @@ am Starbildschirm deines Geräts kannst du neue Widgets erstellen!</value>
   <data name="text_TitleColor" xml:space="preserve">
     <value>Titelfarbe</value>
   </data>
+  <data name="text_Today" xml:space="preserve">
+    <value>Heute</value>
+  </data>
   <data name="text_TodayColor" xml:space="preserve">
     <value>Farbe für heute</value>
+  </data>
+  <data name="text_Tomorrow" xml:space="preserve">
+    <value>Morgen</value>
   </data>
   <data name="text_transparent" xml:space="preserve">
     <value>transparent</value>

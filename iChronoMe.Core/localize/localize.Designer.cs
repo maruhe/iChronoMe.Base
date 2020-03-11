@@ -1555,15 +1555,6 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;a href=&quot;http://ichrono.me&quot;&gt;http://ichrono.me&lt;/a&gt; ähnelt.
-        /// </summary>
-        public static string ichronome_Link {
-            get {
-                return ResourceManager.GetString("ichronome_Link", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die icon color ähnelt.
         /// </summary>
         public static string IconColor {
@@ -2582,11 +2573,29 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Today ähnelt.
+        /// </summary>
+        public static string text_Today {
+            get {
+                return ResourceManager.GetString("text_Today", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die today-color ähnelt.
         /// </summary>
         public static string text_TodayColor {
             get {
                 return ResourceManager.GetString("text_TodayColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tomorrow ähnelt.
+        /// </summary>
+        public static string text_Tomorrow {
+            get {
+                return ResourceManager.GetString("text_Tomorrow", resourceCulture);
             }
         }
         

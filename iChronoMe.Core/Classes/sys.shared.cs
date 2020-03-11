@@ -75,7 +75,6 @@ namespace iChronoMe.Core.Classes
         static sys()
         {
             SQLitePCL.Batteries_V2.Init();
-            PlatformInit();
 
             try
             {
@@ -102,7 +101,12 @@ namespace iChronoMe.Core.Classes
                     DisplayShortSite = DisplayWidth;
                 }
             }
-            catch { }
+            catch(Exception ex)
+            {
+                xLog.Error(ex);
+            }
+
+            PlatformInit();
         }
 
         public static int DpPx(double dp)
