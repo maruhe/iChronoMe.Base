@@ -257,7 +257,7 @@ namespace iChronoMe.Widgets
                         cfg.AllHandConfigID = cDefaultHands;
                         cfg.SetDefaultColors();
                     }
-                    Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(sys.Debugmode ? Path.GetFileNameWithoutExtension(cFile) : " ", cfg));
+                    Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(sys.Debugmode ? Path.GetFileNameWithoutExtension(cFile) : "", cfg));
                 }
             }
             catch { }
@@ -415,7 +415,7 @@ namespace iChronoMe.Widgets
                     cfg = BaseSample.GetConfigClone();
                     cfg.SecondHandConfigID = cId;
                     cfg.SetDefaultColors();
-                    Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(" ", cfg));
+                    Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("", cfg));
                 }
             }
         }
