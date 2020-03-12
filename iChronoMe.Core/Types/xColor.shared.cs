@@ -520,6 +520,10 @@ namespace iChronoMe.Core.Types
         {
             return new xColor((object)null, color);
         }
+        public static xColor MakeNonEmptyColor(xColor color)
+        {
+            return new xColor(color.A, color.G, color.B, color.A);
+        }
 
         private xColor(object oIsEmpty, xColor color)
         {

@@ -19,6 +19,7 @@ namespace iChronoMe.Widgets
     {
         private string cfgInstance = Guid.NewGuid().ToString();
         public string BackgroundImage { get; set; } = string.Empty;
+        public bool BackImageAllowsBackColor { get; set; } = false;
 
         public xColor ColorBackground { get; set; } = xColor.Transparent;
         public xColor ColorTickMarks { get; set; } = xColor.Black;
@@ -116,6 +117,7 @@ namespace iChronoMe.Widgets
             bmpBackCache = null;
 
             BackgroundImage = cfg.BackgroundImage;
+            BackImageAllowsBackColor = cfg.BackImageAllowsBackColor;
             TickMarkStyle = cfg.TickMarkStyle;
 
             ColorBackground = cfg.ColorBackground;
@@ -328,14 +330,14 @@ namespace iChronoMe.Widgets
 
                 if (!string.IsNullOrEmpty(path.StrokeColor) && !"-".Equals(path.StrokeColor))
                 {
-                    strokePaint.Color = colorStroke.IsEmpty ? path.GetStrokeColor(ClockfaceInfo != null ? ClockfaceInfo.MainColor + " " + ClockfaceInfo.HandColorsBanned : ColorBackground.HexString, ClockfaceInfo?.HandColorSuggestion).ToSKColor() : colorStroke.ToSKColor();
+                    strokePaint.Color = colorStroke.IsEmpty ? path.GetStrokeColor(ClockfaceInfo != null && !BackImageAllowsBackColor ? ClockfaceInfo.MainColor + " " + ClockfaceInfo.HandColorsBanned : ColorBackground.HexString, ClockfaceInfo?.HandColorSuggestion).ToSKColor() : colorStroke.ToSKColor();
                     strokePaint.StrokeWidth = path.StrokeWidth;
                     canvas.DrawPath(path.SkPath, strokePaint);
                 }
 
                 if (!string.IsNullOrEmpty(path.FillColor) && !"-".Equals(path.FillColor))
                 {
-                    fillPaint.Color = colorFill.IsEmpty ? path.GetFillColor(ClockfaceInfo != null ? ClockfaceInfo.MainColor + " " + ClockfaceInfo.HandColorsBanned : ColorBackground.HexString, ClockfaceInfo?.HandColorSuggestion).ToSKColor() : colorFill.ToSKColor();
+                    fillPaint.Color = colorFill.IsEmpty ? path.GetFillColor(ClockfaceInfo != null && !BackImageAllowsBackColor ? ClockfaceInfo.MainColor + " " + ClockfaceInfo.HandColorsBanned : ColorBackground.HexString, ClockfaceInfo?.HandColorSuggestion).ToSKColor() : colorFill.ToSKColor();
                     canvas.DrawPath(path.SkPath, fillPaint);
                 }
 

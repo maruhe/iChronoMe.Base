@@ -767,7 +767,6 @@ namespace iChronoMe.Widgets
             ColorCenterCapStroke = xColor.MakeEmptyColor(ColorCenterCapStroke);
             ColorCenterCapFill = xColor.MakeEmptyColor(ColorCenterCapFill);
 
-
             if (!string.IsNullOrEmpty(BackgroundImage) && BackImageAllowsBackColor)
                 ColorBackground = xColor.White;
 
@@ -776,6 +775,18 @@ namespace iChronoMe.Widgets
                 if (ColorBackground.IsSimilar(ColorTickMarks))
                     ColorTickMarks = ColorTickMarks.Invert();
             }
+        }
+
+        public void ApplyUserColors()
+        {
+            ColorHourHandStroke = xColor.MakeNonEmptyColor(ColorHourHandStroke);
+            ColorHourHandFill = xColor.MakeNonEmptyColor(ColorHourHandStroke);
+            ColorMinuteHandStroke = xColor.MakeNonEmptyColor(ColorHourHandStroke);
+            ColorMinuteHandFill = xColor.MakeNonEmptyColor(ColorHourHandStroke);
+            ColorSecondHandStroke = xColor.MakeNonEmptyColor(ColorHourHandStroke);
+            ColorSecondHandFill = xColor.MakeNonEmptyColor(ColorHourHandStroke);
+            ColorCenterCapStroke = xColor.MakeNonEmptyColor(ColorCenterCapStroke);
+            ColorCenterCapFill = xColor.MakeNonEmptyColor(ColorCenterCapFill);
         }
 
         public bool BackImageAllowsBackColor { get => !string.IsNullOrEmpty(BackgroundImage) && BackgroundImage.Contains("01_simple_face"); }
