@@ -197,6 +197,7 @@ namespace iChronoMe.Widgets
                     {
                         WidgetCfg_ClockAnalog cfg = BaseSample.GetConfigClone();
                         cfg.BackgroundImage = cFiles[rnd.Next(cFiles.Length - 1)];
+                        cfg.BackgroundImageTint = xColor.Transparent;
                         cfg.ColorBackground = xColor.Transparent;
                         cfg.ColorTickMarks = xColor.Transparent;
 
@@ -248,6 +249,7 @@ namespace iChronoMe.Widgets
                 {
                     WidgetCfg_ClockAnalog cfg = BaseSample.GetConfigClone();
                     cfg.BackgroundImage = cFile;
+                    cfg.BackgroundImageTint = xColor.Transparent;
                     cfg.ColorBackground = xColor.Transparent;
                     cfg.ColorTickMarks = xColor.Transparent;
 
@@ -270,7 +272,7 @@ namespace iChronoMe.Widgets
             base.AfterSelect(handler, sample);
 
             if (sample.WidgetConfig.BackImageAllowsBackColor)
-                NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_BackgroundColor);
+                NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_BackgroundImageTint);
             return;
             var cfg = sample.WidgetConfig;
 
@@ -335,6 +337,10 @@ namespace iChronoMe.Widgets
                 if (!clrS.Contains(clr.HexString))
                 {
                     clrS.Add(clr.HexString);
+
+                    if (!string.IsNullOrEmpty(cfg.BackgroundImage) && clr.IsSimilar(xColor.Black))
+                        continue;
+
                     cfg = BaseSample.GetConfigClone();
                     cfg.ColorBackground = clr;
                     cfg.SetDefaultColors();
@@ -359,6 +365,57 @@ namespace iChronoMe.Widgets
                 return;
             }
             cfg.ColorBackground = clr.Value;
+            BaseSample = new WidgetCfgSample<WidgetCfg_ClockAnalog>("custom", cfg);
+            handler.TriggerPositiveButtonClicked();
+        }
+    }
+    public class WidgetCfgAssistant_ClockAnalog_BackgroundImageTint : WidgetConfigAssistant<WidgetCfg_ClockAnalog>
+    {
+        public WidgetCfgAssistant_ClockAnalog_BackgroundImageTint(WidgetCfgSample<WidgetCfg_ClockAnalog> baseSample)
+        {
+            Title = localize.text_Tint;
+            BaseSample = baseSample;
+            AllowCustom = true;
+            NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_BackgroundColor);
+
+            var cfg = BaseSample.GetConfigClone();
+            cfg = BaseSample.GetConfigClone();
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.Default, cfg));
+
+            int i = 0;
+            List<string> clrS = new List<string>();
+            foreach (var clrs in DynamicColors.SampleColorSetS)
+            {
+                i++;
+                var clr = xColor.FromHex(clrs[0]);
+                if (!clrS.Contains(clr.HexString))
+                {
+                    clrS.Add(clr.HexString);
+                    if (clr.IsSimilar(xColor.White))
+                        continue;
+
+                    cfg = BaseSample.GetConfigClone();
+                    cfg.BackgroundImageTint = clr;
+
+                    Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(clr.HexString, cfg));
+                }
+            }
+        }
+
+        public override async void ExecCustom(IUserIO handler)
+        {
+            base.ExecCustom(handler);
+            NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase);
+
+            var cfg = BaseSample.GetConfigClone();
+
+            var clr = await handler.UserSelectColor(localize.text_Tint, cfg.BackgroundImageTint);
+            if (clr == null)
+            {
+                handler.TriggerNegativeButtonClicked();
+                return;
+            }
+            cfg.BackgroundImageTint = clr.Value;
             BaseSample = new WidgetCfgSample<WidgetCfg_ClockAnalog>("custom", cfg);
             handler.TriggerPositiveButtonClicked();
         }
@@ -407,7 +464,7 @@ namespace iChronoMe.Widgets
     {
         public WidgetCfgAssistant_ClockAnalog_SecondHandSelector(WidgetCfgSample<WidgetCfg_ClockAnalog> baseSample)
         {
-            Title = localize.HandColorTypes;
+            Title = localize.text_SecondHand;
             BaseSample = baseSample;
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_HandColorType);
 

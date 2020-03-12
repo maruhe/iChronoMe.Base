@@ -891,6 +891,9 @@ am Starbildschirm deines Geräts kannst du neue Widgets erstellen!</value>
   <data name="text_search_hint" xml:space="preserve">
     <value>wenn dieser Text auftaucht bitte bescheid geben ;-)</value>
   </data>
+  <data name="text_SecondHand" xml:space="preserve">
+    <value>Sekundenzeiger</value>
+  </data>
   <data name="text_SecondHandFill" xml:space="preserve">
     <value>Sekundenzeiger Füllbarbe</value>
   </data>

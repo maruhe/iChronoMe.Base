@@ -744,6 +744,7 @@ namespace iChronoMe.Widgets
 
 
         public string BackgroundImage;
+        public xColor BackgroundImageTint = xColor.Transparent;
         public TickMarkStyle TickMarkStyle = TickMarkStyle.Dotts;
 
         public xColor ColorTickMarks = xColor.White;

@@ -2411,6 +2411,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die second hand ähnelt.
+        /// </summary>
+        public static string text_SecondHand {
+            get {
+                return ResourceManager.GetString("text_SecondHand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die second hand fill color ähnelt.
         /// </summary>
         public static string text_SecondHandFill {
@@ -2560,6 +2569,15 @@ namespace iChronoMe {
         public static string text_TickMarksColor {
             get {
                 return ResourceManager.GetString("text_TickMarksColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tint ähnelt.
+        /// </summary>
+        public static string text_Tint {
+            get {
+                return ResourceManager.GetString("text_Tint", resourceCulture);
             }
         }
         

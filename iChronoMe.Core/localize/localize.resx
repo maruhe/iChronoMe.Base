@@ -907,6 +907,9 @@ you can create new widgets on your lauchen-screen!</value>
   <data name="text_search_hint" xml:space="preserve">
     <value>the hint so search ;-)</value>
   </data>
+  <data name="text_SecondHand" xml:space="preserve">
+    <value>second hand</value>
+  </data>
   <data name="text_SecondHandFill" xml:space="preserve">
     <value>second hand fill color</value>
   </data>
@@ -1113,5 +1116,8 @@ please click here</value>
   </data>
   <data name="WidgetTitleMonthView" xml:space="preserve">
     <value>month-view</value>
+  </data>
+  <data name="text_Tint" xml:space="preserve">
+    <value>Tint</value>
   </data>
 </root>
