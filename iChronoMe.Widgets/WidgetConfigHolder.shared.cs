@@ -7,6 +7,7 @@ using iChronoMe.Core;
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.DynamicCalendar;
 using iChronoMe.Core.Types;
+using static iChronoMe.Widgets.ClockHandConfig;
 
 namespace iChronoMe.Widgets
 {
@@ -742,6 +743,32 @@ namespace iChronoMe.Widgets
             }
         }
 
+        ClockfaceInfo _clockfaceInfo = null;
+        [XmlIgnore]
+        public ClockfaceInfo ClockfaceInfo
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(BackgroundImage))
+                    return null;
+                if (_clockfaceInfo == null || BackgroundImage.Contains(_clockfaceInfo.Clockface))
+                    _clockfaceInfo = ClockHandConfig.GetFaceInfo(Path.GetFileNameWithoutExtension(BackgroundImage));
+                return _clockfaceInfo;
+            }
+        }
+
+        [XmlIgnore]
+        public xColor VisibleBackgroundColor
+        {
+            get
+            {
+                if (ColorBackground.A > 0)
+                    return ColorBackground;
+                if (ClockfaceInfo != null)
+                    return ClockfaceInfo.MainColor;
+                return xColor.Transparent;
+            }
+        }
 
         public string BackgroundImage;
         public xColor BackgroundImageTint = xColor.Transparent;
@@ -760,11 +787,11 @@ namespace iChronoMe.Widgets
         public void SetDefaultColors()
         {
             ColorHourHandStroke = xColor.MakeEmptyColor(ColorHourHandStroke);
-            ColorHourHandFill = xColor.MakeEmptyColor(ColorHourHandStroke);
-            ColorMinuteHandStroke = xColor.MakeEmptyColor(ColorHourHandStroke);
-            ColorMinuteHandFill = xColor.MakeEmptyColor(ColorHourHandStroke);
-            ColorSecondHandStroke = xColor.MakeEmptyColor(ColorHourHandStroke);
-            ColorSecondHandFill = xColor.MakeEmptyColor(ColorHourHandStroke);
+            ColorHourHandFill = xColor.MakeEmptyColor(ColorHourHandFill);
+            ColorMinuteHandStroke = xColor.MakeEmptyColor(ColorMinuteHandStroke);
+            ColorMinuteHandFill = xColor.MakeEmptyColor(ColorMinuteHandFill);
+            ColorSecondHandStroke = xColor.MakeEmptyColor(ColorSecondHandStroke);
+            ColorSecondHandFill = xColor.MakeEmptyColor(ColorSecondHandFill);
             ColorCenterCapStroke = xColor.MakeEmptyColor(ColorCenterCapStroke);
             ColorCenterCapFill = xColor.MakeEmptyColor(ColorCenterCapFill);
 
@@ -781,11 +808,11 @@ namespace iChronoMe.Widgets
         public void ApplyUserColors()
         {
             ColorHourHandStroke = xColor.MakeNonEmptyColor(ColorHourHandStroke);
-            ColorHourHandFill = xColor.MakeNonEmptyColor(ColorHourHandStroke);
-            ColorMinuteHandStroke = xColor.MakeNonEmptyColor(ColorHourHandStroke);
-            ColorMinuteHandFill = xColor.MakeNonEmptyColor(ColorHourHandStroke);
-            ColorSecondHandStroke = xColor.MakeNonEmptyColor(ColorHourHandStroke);
-            ColorSecondHandFill = xColor.MakeNonEmptyColor(ColorHourHandStroke);
+            ColorHourHandFill = xColor.MakeNonEmptyColor(ColorHourHandFill);
+            ColorMinuteHandStroke = xColor.MakeNonEmptyColor(ColorMinuteHandStroke);
+            ColorMinuteHandFill = xColor.MakeNonEmptyColor(ColorMinuteHandFill);
+            ColorSecondHandStroke = xColor.MakeNonEmptyColor(ColorSecondHandStroke);
+            ColorSecondHandFill = xColor.MakeNonEmptyColor(ColorSecondHandFill);
             ColorCenterCapStroke = xColor.MakeNonEmptyColor(ColorCenterCapStroke);
             ColorCenterCapFill = xColor.MakeNonEmptyColor(ColorCenterCapFill);
         }

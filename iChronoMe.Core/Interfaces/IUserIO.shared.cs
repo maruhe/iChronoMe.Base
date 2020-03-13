@@ -2,6 +2,7 @@
 
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.Types;
+using Xamarin.Essentials;
 
 namespace iChronoMe.Core.Interfaces
 {
@@ -12,7 +13,7 @@ namespace iChronoMe.Core.Interfaces
         void TriggerNegativeButtonClicked();
         void TriggerDialogCanceled();
         void TriggerAbortProzess();
-        Task<SelectPositionResult> UserSelectMapsLocation();
+        Task<SelectPositionResult> UserSelectMapsLocation(Location center = null, Location marker = null);
         Task<bool> UserShowYesNoMessage(string title, string message, string yes = null, string no = null);
         Task<bool> UserShowYesNoMessage(int title, int message, int? yes = null, int? no = null);
         Task<xColor?> UserSelectColor(int title, xColor? current = null, xColor[] colors = null, bool allowCustom = true, bool allowAlpha = true);

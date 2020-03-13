@@ -256,6 +256,7 @@ namespace iChronoMe.Core.Types
         {
             return new xColor(_r, _g, _b, (double)iA / 255);
         }
+
         public xColor WithAlpha(double nA)
         {
             return new xColor(_r, _g, _b, nA);
@@ -522,7 +523,7 @@ namespace iChronoMe.Core.Types
         }
         public static xColor MakeNonEmptyColor(xColor color)
         {
-            return new xColor(color.A, color.G, color.B, color.A);
+            return new xColor(color.R, color.G, color.B, color.A);
         }
 
         private xColor(object oIsEmpty, xColor color)
