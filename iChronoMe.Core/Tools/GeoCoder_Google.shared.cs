@@ -13,7 +13,7 @@ namespace iChronoMe.Core.Tools
     {
         public AreaInfo GetAreaInfo(double lat, double lng)
         {
-            string cUri = "https://maps.googleapis.com/maps/api/geocode/xml?key=" + Secrets.GApiKey + "&latlng=" + lat.ToString("0.######", CultureInfo.InvariantCulture) + "," + lng.ToString("0.######", CultureInfo.InvariantCulture) + "&sensor=true";
+            string cUri = "https://maps.googleapis.com/maps/api/geocode/xml?key=" + Secrets.GoogleMapsApiKey + "&latlng=" + lat.ToString("0.######", CultureInfo.InvariantCulture) + "," + lng.ToString("0.######", CultureInfo.InvariantCulture) + "&sensor=true";
             string cGeoInfo = sys.GetUrlContent(cUri).Result;
 
             try
@@ -116,7 +116,7 @@ namespace iChronoMe.Core.Tools
 
         public AreaInfo GetPositionByName(string location)
         {
-            String urlString = "https://maps.googleapis.com/maps/api/geocode/xml?key=" + Secrets.GApiKey + "&address=" + WebUtility.UrlEncode(location);
+            String urlString = "https://maps.googleapis.com/maps/api/geocode/xml?key=" + Secrets.GoogleMapsApiKey + "&address=" + WebUtility.UrlEncode(location);
             String cXml = sys.GetUrlContent(urlString).Result;
             if (string.IsNullOrEmpty(cXml))
                 return null;

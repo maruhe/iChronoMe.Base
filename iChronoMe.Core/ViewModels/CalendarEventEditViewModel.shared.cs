@@ -136,6 +136,7 @@ namespace iChronoMe.Core.ViewModels
             OnPropertyChanged(nameof(EndTimeHelper));
 
             OnPropertyChanged(nameof(ShowTimeHelpers));
+            OnPropertyChanged(nameof(TimeTypeSpinnerPos));
         }
 
         public void ChangeDisplayTime(DateTime displayStart, DateTime displayEnd, bool allDay)
@@ -259,7 +260,7 @@ namespace iChronoMe.Core.ViewModels
 
         #region Extention-Properties
 
-        public TimeType TimeType { get => extEvent.TimeType; set { extEvent.TimeType = value; OnPropertyChanged(); OnPropertyChanged(nameof(TimeTypeSpinnerPos)); UpdateTimes(); } }
+        public TimeType TimeType { get => extEvent.TimeType; set { extEvent.TimeType = value; OnPropertyChanged(); UpdateTimes(); } }
 
         #endregion
 
