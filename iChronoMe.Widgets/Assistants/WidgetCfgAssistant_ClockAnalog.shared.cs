@@ -601,6 +601,8 @@ namespace iChronoMe.Widgets
             cfg.ColorMinuteHandFill = clrMinuteFill;
             cfg.ColorSecondHandStroke = clrSecond;
             cfg.ColorSecondHandFill = clrSecondFill;
+            cfg.ColorCenterCapStroke = clrHourStroke;
+            cfg.ColorCenterCapFill = clrHourFill;
 
             List<xColor> clrS = new List<xColor>();
             clrS.Add(clrHourStroke);
