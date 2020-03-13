@@ -338,11 +338,17 @@ namespace iChronoMe.Widgets
                 {
                     clrS.Add(clr.HexString);
 
-                    if (!string.IsNullOrEmpty(cfg.BackgroundImage) && clr.IsSimilar(xColor.Black))
+                    int iSim = 15;
+                    if (clr.IsSimilar(cfg.ColorHourHandStroke, iSim) ||
+                        clr.IsSimilar(cfg.ColorHourHandFill, iSim) ||
+                        clr.IsSimilar(cfg.ColorMinuteHandStroke, iSim) ||
+                        clr.IsSimilar(cfg.ColorSecondHandStroke, iSim)
+                        )
                         continue;
 
                     cfg = BaseSample.GetConfigClone();
                     cfg.ColorBackground = clr;
+                    cfg.ColorTickMarks = xColor.MakeEmptyColor(cfg.ColorTickMarks); //so TickMarks can switch color if needet
 
                     Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(clr.HexString, cfg));
                 }
@@ -494,14 +500,21 @@ namespace iChronoMe.Widgets
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_HandColors);
 
             var cfg = BaseSample.GetConfigClone();
-            bool bSeemsToBeDefault = cfg.ColorHourHandStroke.IsEmpty;
             cfg.ApplyUserColors();
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.current, cfg, "SetDone"));
 
-            //if (!bSeemsToBeDefault)
-            {
-                var def = (WidgetCfg_ClockAnalog)cfg.Clone();
-                def.SetDefaultColors();
+            var def = (WidgetCfg_ClockAnalog)cfg.Clone();
+            def.SetDefaultColors();
+            def.ApplyDefaultColors();
+            if (cfg.ColorHourHandStroke != def.ColorHourHandStroke ||
+                cfg.ColorHourHandFill != def.ColorHourHandFill ||
+                cfg.ColorMinuteHandStroke != def.ColorMinuteHandStroke ||
+                cfg.ColorMinuteHandFill != def.ColorMinuteHandFill ||
+                cfg.ColorSecondHandStroke != def.ColorSecondHandStroke ||
+                cfg.ColorSecondHandFill != def.ColorSecondHandFill ||
+                cfg.ColorCenterCapStroke != def.ColorCenterCapStroke ||
+                cfg.ColorCenterCapFill != def.ColorCenterCapFill)
+            { 
                 Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.Default, def, "SetDone"));
             }
 

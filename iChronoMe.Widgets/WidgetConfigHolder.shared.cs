@@ -786,6 +786,7 @@ namespace iChronoMe.Widgets
 
         public void SetDefaultColors()
         {
+            //Set all to empty so ClockView decides best colors
             ColorHourHandStroke = xColor.MakeEmptyColor(ColorHourHandStroke);
             ColorHourHandFill = xColor.MakeEmptyColor(ColorHourHandFill);
             ColorMinuteHandStroke = xColor.MakeEmptyColor(ColorMinuteHandStroke);
@@ -794,6 +795,7 @@ namespace iChronoMe.Widgets
             ColorSecondHandFill = xColor.MakeEmptyColor(ColorSecondHandFill);
             ColorCenterCapStroke = xColor.MakeEmptyColor(ColorCenterCapStroke);
             ColorCenterCapFill = xColor.MakeEmptyColor(ColorCenterCapFill);
+            ColorTickMarks = xColor.MakeEmptyColor(ColorTickMarks);
 
             if (!string.IsNullOrEmpty(BackgroundImage) && BackImageAllowsBackColor)
                 ColorBackground = xColor.White;
@@ -807,6 +809,7 @@ namespace iChronoMe.Widgets
 
         public void ApplyUserColors()
         {
+            //apply selected colors
             ColorHourHandStroke = xColor.MakeNonEmptyColor(ColorHourHandStroke);
             ColorHourHandFill = xColor.MakeNonEmptyColor(ColorHourHandFill);
             ColorMinuteHandStroke = xColor.MakeNonEmptyColor(ColorMinuteHandStroke);
@@ -815,6 +818,26 @@ namespace iChronoMe.Widgets
             ColorSecondHandFill = xColor.MakeNonEmptyColor(ColorSecondHandFill);
             ColorCenterCapStroke = xColor.MakeNonEmptyColor(ColorCenterCapStroke);
             ColorCenterCapFill = xColor.MakeNonEmptyColor(ColorCenterCapFill);
+            ColorTickMarks = xColor.MakeNonEmptyColor(ColorTickMarks);
+        }
+
+        public void ApplyDefaultColors()
+        {
+            //apply optimal colors from ClockView
+            var vClock = new WidgetView_ClockAnalog();
+            vClock.ReadConfig(this);
+            var h = vClock.drawClockPaths(null, HourHandConfig.HourPathList, ColorHourHandStroke, ColorHourHandFill);
+            ColorHourHandStroke = h.strokeClr.ToXColor();
+            ColorHourHandFill = h.fillClr.ToXColor();
+            var m = vClock.drawClockPaths(null, MinuteHandConfig.MinutePathList, ColorMinuteHandStroke, ColorMinuteHandFill);
+            ColorMinuteHandStroke = m.strokeClr.ToXColor();
+            ColorMinuteHandFill = m.fillClr.ToXColor();
+            var s = vClock.drawClockPaths(null, SecondHandConfig.SecondPathList, ColorSecondHandStroke, ColorSecondHandFill);
+            ColorSecondHandStroke = s.strokeClr.ToXColor();
+            ColorSecondHandFill = s.fillClr.ToXColor();
+            var c = vClock.drawClockPaths(null, CapConfig.CapPathList, ColorCenterCapStroke, ColorCenterCapFill);
+            ColorCenterCapStroke = c.strokeClr.ToXColor();
+            ColorCenterCapFill = c.fillClr.ToXColor();
         }
 
         public bool BackImageAllowsBackColor { get => !string.IsNullOrEmpty(BackgroundImage) && BackgroundImage.Contains("01_simple_face"); }

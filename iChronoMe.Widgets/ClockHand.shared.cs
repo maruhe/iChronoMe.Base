@@ -245,39 +245,7 @@ namespace iChronoMe.Widgets
                 if ("_".Equals(StrokeColor))
                     return xColor.Transparent;
 
-                var clr = xColor.FromHex(StrokeColor);
-                if (string.IsNullOrEmpty(bannedColors))
-                    return clr;
-
-                int iTry = string.IsNullOrEmpty(suggestedColor) ? 1 : 0;
-                while (iTry < 5)
-                {
-                    iTry++;
-                    bool bIsValid = true;
-                    foreach (string cBanned in bannedColors.Trim().Split(' '))
-                    {
-                        if (clr.IsSimilar(xColor.FromHex(cBanned)))
-                        {
-                            bIsValid = false;
-                            continue;
-                        }
-                    }
-
-                    if (bIsValid)
-                        return clr;
-
-                    if (iTry == 1)
-                        clr = suggestedColor;
-                    if (iTry == 2)
-                        clr = clr.Invert();
-                    if (iTry == 3)
-                        clr = xColor.MaterialBlue;
-                    if (iTry == 4)
-                        clr = xColor.MaterialGreen;
-                    if (iTry == 5)
-                        clr = xColor.MaterialRed;
-                }
-                return clr;
+                return GetBestColor(xColor.FromHex(StrokeColor), bannedColors, suggestedColor);
             }
 
             public xColor GetFillColor(string bannedColors, string suggestedColor)
@@ -285,8 +253,11 @@ namespace iChronoMe.Widgets
                 if ("_".Equals(StrokeColor))
                     return xColor.Transparent;
 
-                var clr = xColor.FromHex(FillColor);
+                return GetBestColor(xColor.FromHex(FillColor), bannedColors, suggestedColor);
+            }
 
+            public static xColor GetBestColor(xColor clr, string bannedColors, string suggestedColor)
+            {
                 if (string.IsNullOrEmpty(bannedColors))
                     return clr;
 
@@ -320,7 +291,7 @@ namespace iChronoMe.Widgets
                 }
                 return clr;
             }
-        }
+        }    
 
         public class ClockfaceInfo
         {

@@ -221,6 +221,9 @@ namespace iChronoMe.Widgets
                     IsAntialias = true
                 };
 
+                if (ColorTickMarks.IsEmpty)
+                    tickPaint.Color = ClockPath.GetBestColor(ColorTickMarks, ClockfaceInfo != null && !BackImageAllowsBackColor ? ClockfaceInfo.MainColor + " " + ClockfaceInfo.HandColorsBanned : ColorBackground.HexString, ClockfaceInfo?.HandColorSuggestion).ToSKColor();
+
                 switch (TickMarkStyle)
                 {
                     case TickMarkStyle.Dotts:
@@ -237,7 +240,7 @@ namespace iChronoMe.Widgets
                     case TickMarkStyle.Circle:
                         tickPaint.Style = SKPaintStyle.Stroke;
                         tickPaint.StrokeWidth = 20;
-                        canvas.DrawCircle(500, 500, 460, tickPaint);
+                        canvas.DrawCircle(500, 500, 470, tickPaint);
 
                         break;
 
@@ -320,29 +323,30 @@ namespace iChronoMe.Widgets
                 tsMax = tsDraw;
         }
 
-        private void drawClockPaths(SKCanvas canvas, List<ClockPath> pathList, xColor colorStroke, xColor colorFill)
+        internal (SKColor strokeClr, SKColor fillClr) drawClockPaths(SKCanvas canvas, List<ClockPath> pathList, xColor colorStroke, xColor colorFill)
         {
-            fillPaint.Color = colorStroke.ToSKColor();
             strokePaint.Color = colorFill.ToSKColor();
+            fillPaint.Color = colorStroke.ToSKColor();
             foreach (var path in pathList)
             {
-                canvas.Translate(path.OffsetX, path.OffsetY);
+                canvas?.Translate(path.OffsetX, path.OffsetY);
 
                 if (!string.IsNullOrEmpty(path.StrokeColor) && !"-".Equals(path.StrokeColor))
                 {
                     strokePaint.Color = colorStroke.IsEmpty ? path.GetStrokeColor(ClockfaceInfo != null && !BackImageAllowsBackColor ? ClockfaceInfo.MainColor + " " + ClockfaceInfo.HandColorsBanned : ColorBackground.HexString, ClockfaceInfo?.HandColorSuggestion).ToSKColor() : colorStroke.ToSKColor();
                     strokePaint.StrokeWidth = path.StrokeWidth;
-                    canvas.DrawPath(path.SkPath, strokePaint);
+                    canvas?.DrawPath(path.SkPath, strokePaint);
                 }
 
                 if (!string.IsNullOrEmpty(path.FillColor) && !"-".Equals(path.FillColor))
                 {
                     fillPaint.Color = colorFill.IsEmpty ? path.GetFillColor(ClockfaceInfo != null && !BackImageAllowsBackColor ? ClockfaceInfo.MainColor + " " + ClockfaceInfo.HandColorsBanned : ColorBackground.HexString, ClockfaceInfo?.HandColorSuggestion).ToSKColor() : colorFill.ToSKColor();
-                    canvas.DrawPath(path.SkPath, fillPaint);
+                    canvas?.DrawPath(path.SkPath, fillPaint);
                 }
 
-                canvas.Translate(-(path.OffsetX), -(path.OffsetY));
+                canvas?.Translate(-(path.OffsetX), -(path.OffsetY));
             }
+            return (strokePaint.Color, fillPaint.Color);
         }
 
         public string PerformanceInfo

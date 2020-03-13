@@ -1,42 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
-
-/* Unmerged change from project 'iChronoMe.Core (uap10.0.16299)'
-Before:
-using System.Globalization;
-using iChronoMe.Core.Classes;
-After:
+using System.Diagnostics;
 using System.Globalization;
 
-using iChronoMe.Core.Classes;
-*/
-
-/* Unmerged change from project 'iChronoMe.Core (Xamarin.iOS10)'
-Before:
-using System.Globalization;
-using iChronoMe.Core.Classes;
-After:
-using System.Globalization;
-
-using iChronoMe.Core.Classes;
-*/
-
-/* Unmerged change from project 'iChronoMe.Core (MonoAndroid90)'
-Before:
-using System.Globalization;
-using iChronoMe.Core.Classes;
-After:
-using System.Globalization;
-
-using iChronoMe.Core.Classes;
-*/
-using System.Globalization;
-
-//Xamarin Forms Color clone
+//mostly cloned from Xamarin Forms Color clone
 
 namespace iChronoMe.Core.Types
 {
-    //[DebuggerDisplay("{HexString} => R={R}, G={G}, B={B}, A={A}, Hue={Hue}, Saturation={Saturation}, Luminosity={Luminosity}")]
+    [DebuggerDisplay("{xHexString} => R={R}, G={G}, B={B}, A={A}, Hue={Hue}, Saturation={Saturation}, Luminosity={Luminosity}")]
     //[TypeConverter(typeof(ColorTypeConverter))]
     public partial struct xColor
     {
@@ -415,6 +386,8 @@ namespace iChronoMe.Core.Types
         }
 
         public string HexString { get => ToHex(); }
+
+        public string xHexString { get => ToHex(true); }
 
         static uint ToHex(char c)
         {
