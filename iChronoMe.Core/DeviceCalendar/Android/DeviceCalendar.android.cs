@@ -53,6 +53,13 @@ namespace iChronoMe.DeviceCalendar
         /// <value>The owner account.</value>
         public static string OwnerAccount { get; set; }
 
+        /// <summary>
+        /// Gets or sets the account-Type to use for creating new calendars.
+        /// Defaults to application package name.
+        /// </summary>
+        /// <value>The owner account.</value>
+        public static string AccountType { get; set; }
+
         #endregion
 
         #region Constructor
@@ -63,6 +70,7 @@ namespace iChronoMe.DeviceCalendar
         static DeviceCalendar()
         {
             AccountName = OwnerAccount = Application.Context.ApplicationInfo.LoadLabel(Application.Context.PackageManager);
+            AccountType = Application.Context.ApplicationInfo.PackageName;
         }
 
         #endregion
@@ -300,7 +308,7 @@ namespace iChronoMe.DeviceCalendar
                 values.Put(CalendarContract.Calendars.InterfaceConsts.Visible, true);
                 values.Put(CalendarContract.Calendars.InterfaceConsts.SyncEvents, true);
 
-                values.Put(CalendarContract.Calendars.InterfaceConsts.AccountType, CalendarContract.AccountTypeLocal);
+                values.Put(CalendarContract.Calendars.InterfaceConsts.AccountType, AccountType);
             }
 
             await Task.Run(() =>
@@ -314,7 +322,7 @@ namespace iChronoMe.DeviceCalendar
                     var uri = _calendarsUri.BuildUpon()
                         .AppendQueryParameter(CalendarContract.CallerIsSyncadapter, "true")
                         .AppendQueryParameter(CalendarContract.Calendars.InterfaceConsts.AccountName, AccountName)
-                        .AppendQueryParameter(CalendarContract.Calendars.InterfaceConsts.AccountType, CalendarContract.AccountTypeLocal)
+                        .AppendQueryParameter(CalendarContract.Calendars.InterfaceConsts.AccountType, AccountType)
                         .Build();
 
                     calendar.ExternalID = Insert(uri, values);
@@ -659,7 +667,7 @@ namespace iChronoMe.DeviceCalendar
                 bool allDay = cursor.GetBoolean(CalendarContract.Events.InterfaceConsts.AllDay);
                 string externalID = cursor.GetString(CalendarContract.Events.InterfaceConsts.Id);
 
-                return new CalendarEvent
+                var res =  new CalendarEvent
                 {
                     ExternalID = externalId,
                     CalendarId = cursor.GetString(CalendarContract.Events.InterfaceConsts.CalendarId),
@@ -674,6 +682,7 @@ namespace iChronoMe.DeviceCalendar
                     AllDay = allDay,
                     Reminders = GetEventReminders(externalID)
                 };
+                return res;
             });
 
             try
@@ -798,7 +807,7 @@ namespace iChronoMe.DeviceCalendar
             {
                 Name = cursor.GetString(CalendarContract.Calendars.InterfaceConsts.CalendarDisplayName),
                 ExternalID = cursor.GetString(CalendarContract.Calendars.InterfaceConsts.Id),
-                CanEditCalendar = accountType == CalendarContract.AccountTypeLocal,
+                CanEditCalendar = accountType == CalendarContract.AccountTypeLocal || accountType == AccountType,
                 CanEditEvents = IsCalendarWriteable(accessLevel),
                 Color = colorString,
                 AccountName = cursor.GetString(CalendarContract.Calendars.InterfaceConsts.AccountName),

@@ -214,11 +214,29 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die delete ähnelt.
+        /// </summary>
+        public static string action_delete {
+            get {
+                return ResourceManager.GetString("action_delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die only error-logs without screenshots ähnelt.
         /// </summary>
         public static string action_deny_error_screentshot {
             get {
                 return ResourceManager.GetString("action_deny_error_screentshot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die edit ähnelt.
+        /// </summary>
+        public static string action_edit {
+            get {
+                return ResourceManager.GetString("action_edit", resourceCulture);
             }
         }
         
@@ -2236,6 +2254,15 @@ namespace iChronoMe {
         public static string question_create_new_calendar {
             get {
                 return ResourceManager.GetString("question_create_new_calendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Delete Event? ähnelt.
+        /// </summary>
+        public static string question_delete_event {
+            get {
+                return ResourceManager.GetString("question_delete_event", resourceCulture);
             }
         }
         

@@ -826,16 +826,16 @@ namespace iChronoMe.Widgets
             //apply optimal colors from ClockView
             var vClock = new WidgetView_ClockAnalog();
             vClock.ReadConfig(this);
-            var h = vClock.drawClockPaths(null, HourHandConfig.HourPathList, ColorHourHandStroke, ColorHourHandFill);
+            var h = vClock.drawClockPaths(null, HourHandConfig?.HourPathList, ColorHourHandStroke, ColorHourHandFill);
             ColorHourHandStroke = h.strokeClr.ToXColor();
             ColorHourHandFill = h.fillClr.ToXColor();
-            var m = vClock.drawClockPaths(null, MinuteHandConfig.MinutePathList, ColorMinuteHandStroke, ColorMinuteHandFill);
+            var m = vClock.drawClockPaths(null, MinuteHandConfig?.MinutePathList, ColorMinuteHandStroke, ColorMinuteHandFill);
             ColorMinuteHandStroke = m.strokeClr.ToXColor();
             ColorMinuteHandFill = m.fillClr.ToXColor();
-            var s = vClock.drawClockPaths(null, SecondHandConfig.SecondPathList, ColorSecondHandStroke, ColorSecondHandFill);
+            var s = vClock.drawClockPaths(null, SecondHandConfig?.SecondPathList, ColorSecondHandStroke, ColorSecondHandFill);
             ColorSecondHandStroke = s.strokeClr.ToXColor();
             ColorSecondHandFill = s.fillClr.ToXColor();
-            var c = vClock.drawClockPaths(null, CapConfig.CapPathList, ColorCenterCapStroke, ColorCenterCapFill);
+            var c = vClock.drawClockPaths(null, CapConfig?.CapPathList, ColorCenterCapStroke, ColorCenterCapFill);
             ColorCenterCapStroke = c.strokeClr.ToXColor();
             ColorCenterCapFill = c.fillClr.ToXColor();
         }

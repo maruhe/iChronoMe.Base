@@ -26,7 +26,7 @@ namespace iChronoMe.Core.ViewModels
         LocationTimeHolder locationTimeHolder;
         public LocationTimeHolder LocationTimeHolder { get => locationTimeHolder; }
 
-        public CalendarEventEditViewModel(string eventID, IProgressChangedHandler userIO)
+        public CalendarEventEditViewModel(string eventID, IProgressChangedHandler userIO, TimeType? tt = null, DateTime? createAtStartTime = null)
         {
             cEventID = eventID;
             ResetLocationTimeHolder();
@@ -55,18 +55,23 @@ namespace iChronoMe.Core.ViewModels
                         calEvent.DisplayStart = DateTime.Today.AddHours(DateTime.Now.Hour + 1);
                         if (calEvent.DisplayStart.Hour > 18)
                             calEvent.DisplayStart = DateTime.Today.AddDays(1).AddHours(10);
+                        if (createAtStartTime.HasValue)
+                            calEvent.DisplayStart = createAtStartTime.Value;
                         calEvent.DisplayEnd = calEvent.DisplayStart.AddHours(2);
                         cal = await DeviceCalendar.DeviceCalendar.GetDefaultCalendar();
+                        calEvent.EventColor = cal.Color;
                     }
                     else
                         cal = await DeviceCalendar.DeviceCalendar.GetCalendarByIdAsync(calEvent.CalendarId);
                     extEvent = calEvent.Extention;
-                    if (extEvent.GotCorrectPosition)
-                        locationTimeHolder.ChangePositionDelay(extEvent.Latitude, extEvent.Longitude);
+                    if (tt.HasValue)
+                        TimeType = tt.Value;
                     if (calEvent.Start == DateTime.MinValue)
                         UpdateTimes();
                     if (!string.IsNullOrEmpty(calEvent.ExternalID))
                         EventCollection.UpdateEventDisplayTime(calEvent, calEvent.Extention, locationTimeHolder, extEvent.TimeType, cal);
+                    if (extEvent.GotCorrectPosition)
+                        locationTimeHolder.ChangePositionDelay(extEvent.Latitude, extEvent.Longitude);
                     bIsReady = true;
                     tcsReady.TrySetResult(true);
                     Ready?.Invoke(this, new EventArgs());
@@ -99,8 +104,28 @@ namespace iChronoMe.Core.ViewModels
             set { calEvent.Title = value; OnPropertyChanged(); }
         }
 
-        public string CalendarId { get => calEvent.CalendarId; }
-
+        public string CalendarId { 
+            get => cal?.ExternalID ?? calEvent.CalendarId;
+            set
+            {
+                if (!string.IsNullOrEmpty(calEvent.ExternalID))
+                {
+                    OnPropertyChanged();
+                    return;
+                }
+                Task.Factory.StartNew(async () =>
+                {
+                    var newCal = await DeviceCalendar.DeviceCalendar.GetCalendarByIdAsync(value);
+                    if (newCal != null && newCal.CanEditEvents)
+                    {
+                        if (calEvent.DisplayColor == cal.Color)
+                            DisplayColor = newCal.Color;
+                        cal = newCal;
+                    }
+                    OnPropertyChanged(nameof(CalendarId));
+                });
+            }
+        }
         public xColor CalendarColor { get => calEvent.CalendarColor; }
         public xColor DisplayColor { get => calEvent.DisplayColor; set { calEvent.EventColor = value; OnPropertyChanged(nameof(DisplayColor)); OnPropertyChanged(nameof(EventColor)); } }
         public xColor EventColor { get => calEvent.EventColor; set { calEvent.EventColor = value; OnPropertyChanged(nameof(DisplayColor)); OnPropertyChanged(nameof(EventColor)); } }
@@ -205,7 +230,6 @@ namespace iChronoMe.Core.ViewModels
             {
                 if (cal == null)
                     throw new Exception("no selected calendar!");
-
 
                 if (!cal.CanEditEvents)
                     throw new Exception("selected calendar is read only!");
@@ -384,7 +408,10 @@ namespace iChronoMe.Core.ViewModels
             }
             locationTimeHolder = LocationTimeHolder.LocalInstanceClone;
             locationTimeHolder.AreaChanged += LocationTimeHolder_AreaChanged;
+            LocationTimeHolderChanged?.Invoke(this, new EventArgs());
         }
+
+        public event EventHandler LocationTimeHolderChanged;
 
         private void LocationTimeHolder_AreaChanged(object sender, AreaChangedEventArgs e)
         {
@@ -392,6 +419,7 @@ namespace iChronoMe.Core.ViewModels
             OnPropertyChanged(nameof(LocationHelper));
             OnPropertyChanged(nameof(LocationTimeInfo));
             UpdateTimes();
+            LocationTimeHolderChanged?.Invoke(sender, e);
         }
 
         Task tskPositionSearcher = null;

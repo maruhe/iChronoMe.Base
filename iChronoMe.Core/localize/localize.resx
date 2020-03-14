@@ -168,8 +168,14 @@
   <data name="action_decline" xml:space="preserve">
     <value>decline</value>
   </data>
+  <data name="action_delete" xml:space="preserve">
+    <value>delete</value>
+  </data>
   <data name="action_deny_error_screentshot" xml:space="preserve">
     <value>only error-logs without screenshots</value>
+  </data>
+  <data name="action_edit" xml:space="preserve">
+    <value>edit</value>
   </data>
   <data name="action_handcolors" xml:space="preserve">
     <value>hand colors</value>
@@ -850,6 +856,9 @@ you can create new widgets on your lauchen-screen!</value>
   <data name="question_create_new_calendar" xml:space="preserve">
     <value>you like to create a new Calendar?</value>
   </data>
+  <data name="question_delete_event" xml:space="preserve">
+    <value>Delete Event?</value>
+  </data>
   <data name="search_hint" xml:space="preserve">
     <value>the hint so search ;-)</value>
   </data>
@@ -960,6 +969,9 @@ you can create new widgets on your lauchen-screen!</value>
   </data>
   <data name="text_TickMarksColor" xml:space="preserve">
     <value>tick marks color</value>
+  </data>
+  <data name="text_Tint" xml:space="preserve">
+    <value>Tint</value>
   </data>
   <data name="text_TitleColor" xml:space="preserve">
     <value>title color</value>
@@ -1116,8 +1128,5 @@ please click here</value>
   </data>
   <data name="WidgetTitleMonthView" xml:space="preserve">
     <value>month-view</value>
-  </data>
-  <data name="text_Tint" xml:space="preserve">
-    <value>Tint</value>
   </data>
 </root>
