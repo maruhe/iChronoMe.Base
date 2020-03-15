@@ -223,6 +223,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die delete event ähnelt.
+        /// </summary>
+        public static string action_delete_event {
+            get {
+                return ResourceManager.GetString("action_delete_event", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die only error-logs without screenshots ähnelt.
         /// </summary>
         public static string action_deny_error_screentshot {
@@ -237,6 +246,15 @@ namespace iChronoMe {
         public static string action_edit {
             get {
                 return ResourceManager.GetString("action_edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die edit event ähnelt.
+        /// </summary>
+        public static string action_edit_event {
+            get {
+                return ResourceManager.GetString("action_edit_event", resourceCulture);
             }
         }
         
@@ -1696,6 +1714,51 @@ namespace iChronoMe {
         public static string just_a_moment {
             get {
                 return ResourceManager.GetString("just_a_moment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Begin ähnelt.
+        /// </summary>
+        public static string label_AppointmentBegin {
+            get {
+                return ResourceManager.GetString("label_AppointmentBegin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die End ähnelt.
+        /// </summary>
+        public static string label_AppointmentEnd {
+            get {
+                return ResourceManager.GetString("label_AppointmentEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die in timezone: ähnelt.
+        /// </summary>
+        public static string label_AppointmentInTimezone {
+            get {
+                return ResourceManager.GetString("label_AppointmentInTimezone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Location ähnelt.
+        /// </summary>
+        public static string label_AppointmentLocation {
+            get {
+                return ResourceManager.GetString("label_AppointmentLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Appointment Title ähnelt.
+        /// </summary>
+        public static string label_AppointmentTitle {
+            get {
+                return ResourceManager.GetString("label_AppointmentTitle", resourceCulture);
             }
         }
         

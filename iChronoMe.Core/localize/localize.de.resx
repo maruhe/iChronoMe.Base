@@ -168,8 +168,20 @@
   <data name="action_decline" xml:space="preserve">
     <value>ablehnen</value>
   </data>
+  <data name="action_delete" xml:space="preserve">
+    <value>löschen</value>
+  </data>
+  <data name="action_delete_event" xml:space="preserve">
+    <value>Termin löschen</value>
+  </data>
   <data name="action_deny_error_screentshot" xml:space="preserve">
     <value>nur Fehlerberichten ohne Bilder</value>
+  </data>
+  <data name="action_edit" xml:space="preserve">
+    <value>bearbeiten</value>
+  </data>
+  <data name="action_edit_event" xml:space="preserve">
+    <value>Termin bearbeiten</value>
   </data>
   <data name="action_handcolors" xml:space="preserve">
     <value>Zeiger Farben</value>
@@ -648,6 +660,21 @@ am Starbildschirm deines Geräts kannst du neue Widgets erstellen!</value>
   <data name="just_a_moment" xml:space="preserve">
     <value>einen Moment bitte...</value>
   </data>
+  <data name="label_AppointmentBegin" xml:space="preserve">
+    <value>Begin</value>
+  </data>
+  <data name="label_AppointmentEnd" xml:space="preserve">
+    <value>Ende</value>
+  </data>
+  <data name="label_AppointmentInTimezone" xml:space="preserve">
+    <value>in Zeitzone:</value>
+  </data>
+  <data name="label_AppointmentLocation" xml:space="preserve">
+    <value>Ort</value>
+  </data>
+  <data name="label_AppointmentTitle" xml:space="preserve">
+    <value>Titel</value>
+  </data>
   <data name="label_BackgroundService" xml:space="preserve">
     <value>Widget Update-Dienst</value>
   </data>
@@ -834,6 +861,9 @@ am Starbildschirm deines Geräts kannst du neue Widgets erstellen!</value>
   <data name="question_create_new_calendar" xml:space="preserve">
     <value>soll ein neuer Calendar angelegt werden?</value>
   </data>
+  <data name="question_delete_event" xml:space="preserve">
+    <value>Termin löschen?</value>
+  </data>
   <data name="search_hint" xml:space="preserve">
     <value>wenn dieser Text auftaucht bitte bescheid geben ;-)</value>
   </data>
@@ -944,6 +974,9 @@ am Starbildschirm deines Geräts kannst du neue Widgets erstellen!</value>
   </data>
   <data name="text_TickMarksColor" xml:space="preserve">
     <value>Skala-Farbe</value>
+  </data>
+  <data name="text_Tint" xml:space="preserve">
+    <value>Farbton</value>
   </data>
   <data name="text_TitleColor" xml:space="preserve">
     <value>Titelfarbe</value>

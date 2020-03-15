@@ -32,6 +32,7 @@ namespace iChronoMe.DeviceCalendar
                 {
                     Task.Delay(100).Wait();
                     guiPropertiesChanged?.Invoke();
+                    guiPropertiesChanged = null;
                 });
             }
         }

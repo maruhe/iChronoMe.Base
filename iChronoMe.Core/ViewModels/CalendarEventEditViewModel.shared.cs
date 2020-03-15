@@ -68,6 +68,7 @@ namespace iChronoMe.Core.ViewModels
                         TimeType = tt.Value;
                     if (calEvent.Start == DateTime.MinValue)
                         UpdateTimes();
+
                     if (!string.IsNullOrEmpty(calEvent.ExternalID))
                         EventCollection.UpdateEventDisplayTime(calEvent, calEvent.Extention, locationTimeHolder, extEvent.TimeType, cal);
                     if (extEvent.GotCorrectPosition)
@@ -103,6 +104,8 @@ namespace iChronoMe.Core.ViewModels
             }
             set { calEvent.Title = value; OnPropertyChanged(); }
         }
+
+        public Calendar Calendar { get => cal; }
 
         public string CalendarId { 
             get => cal?.ExternalID ?? calEvent.CalendarId;

@@ -171,11 +171,17 @@
   <data name="action_delete" xml:space="preserve">
     <value>delete</value>
   </data>
+  <data name="action_delete_event" xml:space="preserve">
+    <value>delete event</value>
+  </data>
   <data name="action_deny_error_screentshot" xml:space="preserve">
     <value>only error-logs without screenshots</value>
   </data>
   <data name="action_edit" xml:space="preserve">
     <value>edit</value>
+  </data>
+  <data name="action_edit_event" xml:space="preserve">
+    <value>edit event</value>
   </data>
   <data name="action_handcolors" xml:space="preserve">
     <value>hand colors</value>
@@ -669,6 +675,21 @@ you can create new widgets on your lauchen-screen!</value>
   </data>
   <data name="just_a_moment" xml:space="preserve">
     <value>just a moment...</value>
+  </data>
+  <data name="label_AppointmentBegin" xml:space="preserve">
+    <value>Begin</value>
+  </data>
+  <data name="label_AppointmentEnd" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="label_AppointmentInTimezone" xml:space="preserve">
+    <value>in timezone:</value>
+  </data>
+  <data name="label_AppointmentLocation" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="label_AppointmentTitle" xml:space="preserve">
+    <value>Appointment Title</value>
   </data>
   <data name="label_BackgroundService" xml:space="preserve">
     <value>Widget Update-Service</value>
