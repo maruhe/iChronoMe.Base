@@ -76,6 +76,9 @@ namespace iChronoMe.Widgets
                 else if (ca != ClickActionType.OpenApp)
                     cfg.WidgetTitle = c;
 
+                if (cfg.WidgetTitle.Contains("\'") && cfg.WidgetTitle.IndexOf("\'") != cfg.WidgetTitle.LastIndexOf("\'"))
+                    cfg.WidgetTitle = cfg.WidgetTitle.Split('\'')[1];
+
                 Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(c, cfg));
             }
 
