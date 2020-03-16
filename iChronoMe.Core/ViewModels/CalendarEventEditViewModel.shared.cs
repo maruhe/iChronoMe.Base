@@ -461,7 +461,7 @@ namespace iChronoMe.Core.ViewModels
                         if (cLoc.Equals(calEvent.Location))
                         {
                             iSame++;
-                            if (iSame >= 4)
+                            if (iSame >= 3)
                             {
                                 mUserIO?.ShowToast("a second without change => go");
                                 break;

@@ -34,6 +34,8 @@ namespace iChronoMe.Core
         public double Longitude { get; private set; } = 0;
         public string CountryName { get; private set; } = String.Empty;
         public string AreaName { get; private set; } = string.Empty;
+
+        public GeoInfo.AreaInfo AreaInfo { get => ai; }
         public double TimeZoneOffset
         {
             get
@@ -182,39 +184,6 @@ namespace iChronoMe.Core
             {
                 if ((Latitude == nLatitude) && (Longitude == nLongitude))
                     return false;
-
-                /* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (MonoAndroid90)"
-                Vor:
-                            }
-
-                            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
-                Nach:
-                            }
-
-                            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
-                */
-
-                /* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (uap10.0.16299)"
-                Vor:
-                            }
-
-                            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
-                Nach:
-                            }
-
-                            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
-                */
-
-                /* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (Xamarin.iOS10)"
-                Vor:
-                            }
-
-                            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
-                Nach:
-                            }
-
-                            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
-                */
             }
 
             double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
@@ -247,7 +216,6 @@ namespace iChronoMe.Core
                 catch (Exception ex)
                 {
                     xLog.Error(ex);
-                    return false;
                 }
             }
 

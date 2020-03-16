@@ -147,6 +147,9 @@ namespace iChronoMe.Core.Classes
 
             public string adminArea1 { get; set; }
             public string adminArea2 { get; set; }
+            public string adminArea3 { get; set; }
+            public string adminArea4 { get; set; }
+            public string adminArea5 { get; set; }
             public string locality { get; set; }
             public string route { get; set; }
             public string postalCode { get; set; }

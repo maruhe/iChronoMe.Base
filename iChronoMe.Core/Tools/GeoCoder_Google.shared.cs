@@ -54,10 +54,21 @@ namespace iChronoMe.Core.Tools
                                 {
                                     case "route":
                                         ai.route = cPartNameLong;
+                                        if (string.IsNullOrEmpty(cAreaTitle))
+                                            cAreaTitle = cPartNameLong;
                                         break;
                                     case "locality":
                                         ai.locality = cPartNameLong;
                                         cAreaTitle = cPartNameLong;
+                                        break;
+                                    case "administrative_area_level_5":
+                                        ai.adminArea5 = cPartNameLong;
+                                        break;
+                                    case "administrative_area_level_4":
+                                        ai.adminArea4 = cPartNameLong;
+                                        break;
+                                    case "administrative_area_level_3":
+                                        ai.adminArea3 = cPartNameLong;
                                         break;
                                     case "administrative_area_level_2":
                                         ai.adminArea2 = cPartNameLong;
@@ -71,6 +82,15 @@ namespace iChronoMe.Core.Tools
                                         break;
                                     case "postal_code":
                                         ai.postalCode = cPartNameLong;
+                                        break;
+                                    case "postal_town":
+                                        if (string.IsNullOrEmpty(cAreaTitle))
+                                            cAreaTitle = cPartNameLong;
+                                        if (string.IsNullOrEmpty(ai.locality))
+                                            ai.locality = cPartNameLong;
+                                        break;
+                                    default:
+                                        var x = cPartType + cPartNameShort + cPartNameLong;
                                         break;
                                 }
                             }
@@ -93,17 +113,27 @@ namespace iChronoMe.Core.Tools
                     }
                     if (!string.IsNullOrEmpty(cAreaTitle))
                     {
-                        if ("Unnamed Road".Equals(cAreaTitle))
+                        if ("unnamed road".Equals(cAreaTitle.ToLower()))
                         {
-                            if (!string.IsNullOrEmpty(ai.adminArea2))
+                            if (!string.IsNullOrEmpty(ai.adminArea5))
+                                cAreaTitle = ai.adminArea5;
+                            else if (!string.IsNullOrEmpty(ai.adminArea4))
+                                cAreaTitle = ai.adminArea4;
+                            else if (!string.IsNullOrEmpty(ai.adminArea3))
+                                cAreaTitle = ai.adminArea3;
+                            else if (!string.IsNullOrEmpty(ai.adminArea2))
                                 cAreaTitle = ai.adminArea2;
-                            if (!string.IsNullOrEmpty(ai.adminArea1))
-                                cAreaTitle += ", " + ai.adminArea1;
+                            else if (!string.IsNullOrEmpty(ai.adminArea1))
+                                cAreaTitle = ai.adminArea1;
+                            else if (!string.IsNullOrEmpty(ai.postalCode))
+                                cAreaTitle += ", " + ai.postalCode;
+                            else
+                                ai.ToString();
                         }
-
                         ai.toponymName = cAreaTitle;
-                        xLog.Debug("Final title: " + cAreaTitle);
                     }
+
+                    xLog.Debug("Final title: " + ai.toponymName);
                 }
                 return ai;
             }
@@ -180,7 +210,9 @@ namespace iChronoMe.Core.Tools
                 {
                     toponymName = string.IsNullOrEmpty(cFormattedAdress) ? cAdressComponents : cFormattedAdress,
                     centerLat = double.Parse(cLatitude, NumberStyles.Any, CultureInfo.InvariantCulture),
-                    centerLong = double.Parse(cLongitude, NumberStyles.Any, CultureInfo.InvariantCulture)
+                    centerLong = double.Parse(cLongitude, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    pointLat = double.Parse(cLatitude, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    pointLng = double.Parse(cLongitude, NumberStyles.Any, CultureInfo.InvariantCulture)
                 };
             }
             return null;
