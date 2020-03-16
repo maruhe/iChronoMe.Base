@@ -281,7 +281,15 @@ namespace iChronoMe.Core.ViewModels
             return false;
         }
 
-        public IList<CalendarEventReminder> Reminders { get => calEvent.Reminders; }
+        public IList<CalendarEventReminder> Reminders
+        {
+            get
+            {
+                if (calEvent.Reminders == null)
+                    calEvent.Reminders = new List<CalendarEventReminder>();
+                return calEvent.Reminders;
+            }
+        } 
 
         public string ExternalID { get => calEvent.ExternalID; }
 

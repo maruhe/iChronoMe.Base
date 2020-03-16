@@ -58,6 +58,9 @@ namespace iChronoMe.Widgets
 
             foreach (ClickActionType ca in Enum.GetValues(typeof(ClickActionType)))
             {
+                if (ca == ClickActionType.CreateAlarm)
+                    continue;
+
                 string c = ca.ToString();
                 var res = typeof(localize).GetProperty("ClickActionType_" + c);
                 if (res != null)

@@ -56,6 +56,14 @@ namespace iChronoMe.Core.Classes
                         WebLink = "https://www.syncfusion.com/"
                     });
 
+                    _allCredits.Add(new ContributorInfo
+                    {
+                        License = "MIT",
+                        Name = "Xamarin / Microsoft",
+                        Description = "realised sharing Code is Cool",
+                        WebLink = "https://www.xamarin.com/"
+                    });
+
                 }
 
                 return _allCredits;

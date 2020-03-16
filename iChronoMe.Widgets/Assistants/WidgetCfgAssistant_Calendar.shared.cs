@@ -269,7 +269,7 @@ namespace iChronoMe.Widgets
         {
             base.AfterSelect(handler, sample);
 
-            if (sample.WidgetConfig.DayBackgroundGradient.GradientS[0].CustomColors.Length == 0)
+            if (sample.WidgetConfig.DayBackgroundGradient.GradientS[0].CustomColors == null || sample.WidgetConfig.DayBackgroundGradient.GradientS[0].CustomColors.Length == 0)
                 NextStepAssistantType = typeof(WidgetCfgAssistant_CalendarCircleWave_OptionsBase);
         }
 
