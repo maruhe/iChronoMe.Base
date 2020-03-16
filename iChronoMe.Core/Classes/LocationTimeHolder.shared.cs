@@ -733,7 +733,6 @@ namespace iChronoMe.Core
                 Latitude = oldLatitude;
                 Longitude = oldLongitude;
             }
-            return DateTime.MinValue;
         }
 
         public override int GetHashCode()

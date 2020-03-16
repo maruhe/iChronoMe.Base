@@ -667,7 +667,7 @@ namespace iChronoMe.DeviceCalendar
                 bool allDay = cursor.GetBoolean(CalendarContract.Events.InterfaceConsts.AllDay);
                 string externalID = cursor.GetString(CalendarContract.Events.InterfaceConsts.Id);
 
-                var res =  new CalendarEvent
+                var res = new CalendarEvent
                 {
                     ExternalID = externalId,
                     CalendarId = cursor.GetString(CalendarContract.Events.InterfaceConsts.CalendarId),

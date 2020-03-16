@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
+
 using Android.App;
-using Android.Content;
 using Android.Content.PM;
-using iChronoMe.Core.Classes;
-using iChronoMe.Core.DynamicCalendar;
+
 using iChronoMe.Core.Interfaces;
-using iChronoMe.Core.Types;
 using iChronoMe.Widgets.AndroidHelpers;
 
 namespace iChronoMe.Widgets

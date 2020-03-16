@@ -291,7 +291,7 @@ namespace iChronoMe.Widgets
                 }
                 return clr;
             }
-        }    
+        }
 
         public class ClockfaceInfo
         {

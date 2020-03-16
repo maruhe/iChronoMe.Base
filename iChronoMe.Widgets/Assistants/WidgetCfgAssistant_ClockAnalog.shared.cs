@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+
 using iChronoMe.Core;
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.DynamicCalendar;
 using iChronoMe.Core.Extentions;
 using iChronoMe.Core.Interfaces;
 using iChronoMe.Core.Types;
+
 using Xamarin.Essentials;
 
 namespace iChronoMe.Widgets
@@ -125,7 +127,7 @@ namespace iChronoMe.Widgets
             }
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.LocationType, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_ClockAnalog_Start)));
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.TimeType, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_ClockAnalog_WidgetTimeType)));
-            
+
             NextStepAssistantType = null;
         }
 
@@ -514,7 +516,7 @@ namespace iChronoMe.Widgets
                 cfg.ColorSecondHandFill != def.ColorSecondHandFill ||
                 cfg.ColorCenterCapStroke != def.ColorCenterCapStroke ||
                 cfg.ColorCenterCapFill != def.ColorCenterCapFill)
-            { 
+            {
                 Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.Default, def, "SetDone"));
             }
 
@@ -535,7 +537,7 @@ namespace iChronoMe.Widgets
                     clBack.IsSimilar(clrs[1], sim) ||
                     clBack.IsSimilar(clrs[2], sim) ||
                     clBack.IsSimilar(clrs[3], sim) ||
-                    clBack.IsSimilar(clrs[4], sim) 
+                    clBack.IsSimilar(clrs[4], sim)
                     ))
                 {
                     i++;
@@ -1001,7 +1003,7 @@ namespace iChronoMe.Widgets
             BaseSample = baseSample;
             ShowPreviewImage = false;
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase);
-           
+
             var cfg = BaseSample.GetConfigClone();
             cfg.WidgetTimeType = cfg.CurrentTimeType = TimeType.RealSunTime;
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.TimeType_RealSunTime, cfg));

@@ -11,7 +11,7 @@ using Xamarin.Essentials;
 
 namespace iChronoMe.Core.DataBinding
 {
-    public partial class DataBinder : IDisposable
+    public partial class DataBinder
     {
 
         public int PushToViewDelayInterval { get; set; } = 15;
@@ -123,7 +123,7 @@ namespace iChronoMe.Core.DataBinding
                 o.PropertyChanged -= Bindable_PropertyChanged;
         }
 
-        public void Dispose()
+        public void xDispose()
         {
             if (BinderIsRunning)
             {
@@ -137,7 +137,6 @@ namespace iChronoMe.Core.DataBinding
             ObservedObjects = null;
             ValuesToViewsQue.Clear();
             ValuesToViewsQue = null;
-            PlatformDispose();
         }
 
         private Dictionary<string, ObjectLink> ObjectLinks = new Dictionary<string, ObjectLink>();

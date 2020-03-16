@@ -291,10 +291,6 @@ namespace iChronoMe.Core.DynamicCalendar
         public DynamicDate AddDays(int iAdd)
         {
             return new DynamicDate(Model, Year, Month, Day + iAdd);
-
-            if (Year - Model.ModelStartYearID > 200 || Model.ModelStartYearID - Year > 200)
-                return Model.GetDateFromUtcDate(DateTime.Now);
-            return Model.GetDateFromUtcDate(UtcDate.AddDays(iAdd));
         }
 
         public DynamicDate Add(TimeUnit unit, int count)

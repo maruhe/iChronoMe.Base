@@ -1,28 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+
 using Android.App;
 using Android.Content;
-using Android.Content.Res;
-using Android.Graphics;
-using Android.Support.V4.Content;
-using Android.Support.V7.App;
-using Android.Util;
-using Android.Views.InputMethods;
 using Android.Widget;
-
-using iChronoMe.Core;
-using iChronoMe.Core.Types;
 
 using Java.Lang;
 
 using Xamarin.Essentials;
 
-using static Android.Content.Res.Resources;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
 
 namespace iChronoMe.Widgets.AndroidHelpers
-{ 
+{
     public static class Tools
     {
         public static Activity HelperContext { get; set; }

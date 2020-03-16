@@ -1,4 +1,4 @@
-﻿using 
+﻿using
 /* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (uap10.0.16299)"
 Vor:
 using System.Text;

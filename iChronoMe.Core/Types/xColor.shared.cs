@@ -29,13 +29,13 @@ namespace iChronoMe.Core.Types
             {
                 return Luminosity < 0.5 ? AddLuminosity(nDiffPercent / 100) : AddLuminosity(nDiffPercent / -100);
             }
-            catch (Exception ex)
+            catch
             {
                 try
                 {
                     return Luminosity < 0.5 ? AddLuminosity(nDiffPercent / -100) : AddLuminosity(nDiffPercent / 100);
                 }
-                catch (Exception ex2)
+                catch
                 {
                     return this;
                 }

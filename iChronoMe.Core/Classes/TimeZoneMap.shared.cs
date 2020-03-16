@@ -128,7 +128,6 @@ namespace iChronoMe.Core.Classes
                 {
                     // get json feature
                     var jsonFeature = featureCollection.Features[featureIndex];
-                    Geometry geom = null;
 
                     // get geometry type to create appropriate geometry
                     switch (jsonFeature.Geometry.Type)
@@ -146,7 +145,6 @@ namespace iChronoMe.Core.Classes
                                 var polygon = jsonFeature.Geometry as GeoJSON.Net.Geometry.Polygon;
 
                                 List<Coordinate> coordinates = new List<Coordinate>();
-                                Coordinate first = null;
                                 foreach (var ring in polygon.Coordinates)
                                 {
                                     if (ring.IsLinearRing())

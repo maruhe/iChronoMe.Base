@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace iChronoMe.Core
+﻿namespace iChronoMe.Core
 {
     public static class localeHelper
     {

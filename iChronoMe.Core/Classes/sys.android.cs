@@ -9,7 +9,6 @@ using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Views;
-using Android.Widget;
 
 namespace iChronoMe.Core.Classes
 {
@@ -23,7 +22,8 @@ namespace iChronoMe.Core.Classes
                 //make references to prevent removing by linker 
                 string xx = Build.Board + Build.Bootloader + Build.Brand + Build.CpuAbi + Build.CpuAbi2 + Build.Device + Build.Display + Build.Fingerprint + Build.Fingerprint + Build.Hardware + Build.Host + Build.Id + Build.Manufacturer + Build.Model + Build.Product + Build.Radio + Build.RadioVersion + Build.Serial + Build.Tags + Build.Type + Build.User;
                 xx = Build.VERSION.BaseOs + Build.VERSION.Codename + Build.VERSION.Incremental + Build.VERSION.Release + Build.VERSION.Sdk + Build.VERSION.SdkInt + Build.VERSION.SecurityPatch;
-            } catch { }
+            }
+            catch { }
 
             var ctx = Application.Context;
             //Toast.MakeText(ctx, "PlatformInit", ToastLength.Long).Show();

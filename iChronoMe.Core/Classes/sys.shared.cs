@@ -101,7 +101,7 @@ namespace iChronoMe.Core.Classes
                     DisplayShortSite = DisplayWidth;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 xLog.Error(ex);
             }
@@ -156,16 +156,6 @@ namespace iChronoMe.Core.Classes
                 if (string.IsNullOrEmpty(_ConfigPathCalCfg))
                 {
                     _ConfigPathCalCfg = Path.Combine(PathData, "dynamic_calendars");
-#if DEBUG
-                    if (false)
-                    {
-                        try
-                        {
-                            Directory.Delete(_ConfigPathCalCfg, true);
-                        }
-                        catch { }
-                    }
-#endif
                     if (!Directory.Exists(_ConfigPathCalCfg))
                         Directory.CreateDirectory(_ConfigPathCalCfg);
                 }

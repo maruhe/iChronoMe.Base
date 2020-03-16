@@ -28,6 +28,7 @@ namespace iChronoMe.Core.ViewModels
 
         public CalendarEventEditViewModel(string eventID, IProgressChangedHandler userIO, TimeType? tt = null, DateTime? createAtStartTime = null)
         {
+            mUserIO = userIO;
             cEventID = eventID;
             ResetLocationTimeHolder();
             tcsReady = new TaskCompletionSource<bool>();
@@ -107,7 +108,8 @@ namespace iChronoMe.Core.ViewModels
 
         public Calendar Calendar { get => cal; }
 
-        public string CalendarId { 
+        public string CalendarId
+        {
             get => cal?.ExternalID ?? calEvent.CalendarId;
             set
             {

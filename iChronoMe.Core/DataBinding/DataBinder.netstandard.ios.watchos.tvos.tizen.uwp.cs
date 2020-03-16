@@ -13,7 +13,5 @@ namespace iChronoMe.Core.DataBinding
         private void DoWriteQueToView(List<KeyValuePair<ViewLink, object>> que) { }
 
         private void StartViewChangeListener() { }
-
-        private void PlatformDispose() { }
     }
 }

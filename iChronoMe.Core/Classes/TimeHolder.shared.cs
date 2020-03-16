@@ -4,6 +4,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+
 using iChronoMe.Core.Types;
 
 namespace iChronoMe.Core.Classes
@@ -198,7 +199,7 @@ namespace iChronoMe.Core.Classes
                 var networkDateTime = (new DateTime(1900, 1, 1, 0, 0, 0, DateTimeKind.Utc)).AddMilliseconds((long)milliseconds);
 
                 return tReceivedUtc - networkDateTime;
-            } 
+            }
             catch (Exception ex)
             {
                 State = TimeHolderState.Error;

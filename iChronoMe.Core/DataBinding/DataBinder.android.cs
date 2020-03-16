@@ -35,6 +35,7 @@ namespace iChronoMe.Core.DataBinding
 
             Activity = null;
             RootView = null;
+            xDispose();
         }
 
         private bool IsWritingToView = false;

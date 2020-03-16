@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace iChronoMe.Core.Classes
 {
@@ -28,7 +26,8 @@ namespace iChronoMe.Core.Classes
                                 }
                             }
                         }
-                    } catch { }
+                    }
+                    catch { }
                 }
                 return _faqList;
             }
