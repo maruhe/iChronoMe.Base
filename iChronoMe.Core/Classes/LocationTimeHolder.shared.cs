@@ -35,6 +35,10 @@ namespace iChronoMe.Core
         public string CountryName { get; private set; } = String.Empty;
         public string AreaName { get; private set; } = string.Empty;
 
+        private double AreaLatitude = 0;
+        private double AreaLongitude = 0;
+
+
         public GeoInfo.AreaInfo AreaInfo { get => ai; }
         public double TimeZoneOffset
         {
@@ -112,6 +116,8 @@ namespace iChronoMe.Core
         {
             var lth = new LocationTimeHolder(LocalFetchAreaInfoFlag);
             var cfg = AppConfigHolder.LocationConfig;
+            lth.AreaLatitude = cfg.Latitude;
+            lth.AreaLongitude = cfg.Longitude;
             lth.ChangePositionParameters(cfg.Latitude, cfg.Longitude, false, false, cfg.TimeZoneID, cfg.AreaName, cfg.CountryName, cfg.TimeZoneOffsetGmt, cfg.TimeZoneOffsetDst);
             if (sys.lastUserLocation.Latitude == 0 && sys.lastUserLocation.Longitude == 0)
             {
@@ -186,7 +192,7 @@ namespace iChronoMe.Core
                     return false;
             }
 
-            double nDistance = Location.CalculateDistance(Latitude, Longitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
+            double nDistance = Location.CalculateDistance(AreaLatitude, AreaLongitude, nLatitude, nLongitude, DistanceUnits.Kilometers);
             if (string.IsNullOrEmpty(cAreaName) && string.IsNullOrEmpty(cCountryName) && nDistance > 2.5)
                 bClearAreaInfo = true;
 
@@ -222,15 +228,25 @@ namespace iChronoMe.Core
             Latitude = nLatitude;
             Longitude = nLongitude;
 
+            if (this.AreaInfoFlag != FetchAreaInfoFlag.FullAreaInfo &&
+                tzj == null && !string.IsNullOrEmpty(cAreaName))
+                SetAreaConfirmed();
+
             if (Latitude != 0 || Longitude != 0)
             {
                 if (bClearAreaInfo)
                 {
-                    AreaName = string.Empty;
+                    ai = null;
                     if (bForceRefreshAreaInfo)
+                    {
                         CountryName = string.Empty;
+                        AreaName = string.Empty;
+                    }
                     else if (nDistance > 25)
+                    {
                         CountryName += "?";
+                        AreaName = string.Empty;
+                    }
                 }
             }
 
@@ -242,6 +258,12 @@ namespace iChronoMe.Core
             try { AreaChanged?.Invoke(this, new AreaChangedEventArgs(AreaChangedFlag.LocationUpdate)); } catch { }
 
             return true;
+        }
+
+        private void SetAreaConfirmed()
+        {
+            AreaLatitude = Latitude;
+            AreaLongitude = Longitude;
         }
 
         private TimeZoneInfoJson FindTimeZoneByLocation(double nLatitude, double nLongitude)
@@ -328,6 +350,7 @@ namespace iChronoMe.Core
                     tLastLocationTaskStart = DateTime.Now;
                     bStartLocationTaskAgain = false;
                     GetLocationInfo();
+                    SetAreaConfirmed();
                 }
                 catch (ThreadAbortException)
                 {
@@ -394,7 +417,7 @@ namespace iChronoMe.Core
                         }
                         catch (Exception ex)
                         {
-                            sys.LogException(ex, "TimeZoneInfoCache.FromLocation " + sys.DezimalGradToString(Latitude, Longitude));
+                            sys.LogException(ex, string.Concat("TimeZoneInfoCache.FromLocation ", sys.DezimalGradToString(Latitude, Longitude), "\nTimeZone-ID: ", tz.timezoneId));
                         }
                     }
                 }

@@ -147,42 +147,48 @@ namespace iChronoMe.Core.DataBinding
             List<object> done = new List<object>();
             foreach (var vl in ViewLinks)
             {
-                if (done.Contains(vl.Value.View))
-                    continue;
-                if (BindModes[vl.Value.ID] != BindMode.TwoWay)
-                    continue;
+                try
+                {
+                    if (done.Contains(vl.Value.View))
+                        continue;
+                    if (BindModes[vl.Value.ID] != BindMode.TwoWay)
+                        continue;
 
-                var link = vl.Value;
-                if (link.View is CheckBox)
-                {
-                    if (link.Property.Name != nameof(CheckBox.Checked))
-                        continue;
-                    (link.View as CheckBox).CheckedChange += CheckBox_CheckedChange;
-                }
-                if (link.View is Switch)
-                {
-                    if (link.Property.Name != nameof(Switch.Checked))
-                        continue;
-                    (link.View as Switch).CheckedChange += Switch_CheckedChange;
-                }
-                if (link.View is EditText)
-                {
-                    if (link.Property.Name != nameof(EditText.Text))
-                        continue;
-                    (link.View as EditText).AfterTextChanged += EditText_AfterTextChanged;
-                    (link.View as EditText).SetOnEditorActionListener(this);
-                    (link.View as EditText).FocusChange += EditText_FocusChange;
-                }
-                if (link.View is Spinner)
-                {
-                    if (link.Property.Name != nameof(Spinner.SelectedItem) && link.Property.Name != nameof(Spinner.SelectedItemId) && link.Property.Name != nameof(Spinner.SelectedItemPosition))
-                        continue;
-                    (link.View as Spinner).ItemSelected += Spinner_ItemSelected;
-                }
+                    var link = vl.Value;
+                    if (link.View is CheckBox)
+                    {
+                        if (link.Property.Name != nameof(CheckBox.Checked))
+                            continue;
+                        (link.View as CheckBox).CheckedChange += CheckBox_CheckedChange;
+                    }
+                    if (link.View is Switch)
+                    {
+                        if (link.Property.Name != nameof(Switch.Checked))
+                            continue;
+                        (link.View as Switch).CheckedChange += Switch_CheckedChange;
+                    }
+                    if (link.View is EditText)
+                    {
+                        if (link.Property.Name != nameof(EditText.Text))
+                            continue;
+                        (link.View as EditText).AfterTextChanged += EditText_AfterTextChanged;
+                        (link.View as EditText).SetOnEditorActionListener(this);
+                        (link.View as EditText).FocusChange += EditText_FocusChange;
+                    }
+                    if (link.View is Spinner)
+                    {
+                        if (link.Property.Name != nameof(Spinner.SelectedItem) && link.Property.Name != nameof(Spinner.SelectedItemId) && link.Property.Name != nameof(Spinner.SelectedItemPosition))
+                            continue;
+                        (link.View as Spinner).ItemSelected += Spinner_ItemSelected;
+                    }
 
-                ViewToModelLinks.Add(link.View, ObjectLinks[link.ID]);
-
-                done.Add(link.View);
+                    ViewToModelLinks.Add(link.View, ObjectLinks[link.ID]);
+                    done.Add(link.View);
+                }
+                catch (Exception ex)
+                {
+                    sys.LogException(ex);
+                }
             }
         }
 

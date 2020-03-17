@@ -80,11 +80,6 @@ namespace iChronoMe.Widgets
             if (baseSample.WidgetConfig.WidgetId != 0)
                 NextStepAssistantType = typeof(WidgetCfgAssistant_Calendar_OptionsBase);
         }
-
-        public override void AfterSelect(IUserIO handler, WidgetCfgSample<WidgetCfg_Calendar> sample)
-        {
-            base.AfterSelect(handler, sample);
-        }
     }
 
     public class WidgetCfgAssistant_Calendar_WidgetTimeType : WidgetConfigAssistant<WidgetCfg_Calendar>
@@ -116,6 +111,8 @@ namespace iChronoMe.Widgets
         {
             Title = localize.title_EditWidget;
             BaseSample = baseSample;
+            ShowPreviewImage = false;
+            ShowFirstPreviewImage = true;
 
             Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.action_SaveAndQuit, BaseSample.GetConfigClone()));
 
@@ -143,6 +140,9 @@ namespace iChronoMe.Widgets
             cfgPrev = BaseSample.GetConfigClone();
             cfgPrev.ColorTodayBackground = xColor.HotPink;
             Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.text_TodayColor, null, cfg, typeof(WidgetCfgAssistant_CalendarCircleWave_TodayDayColor), cfgPrev));
+
+            cfg = BaseSample.GetConfigClone();
+            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.Theme, null, cfg, typeof(WidgetCfgAssistant_CalendarCircleWave_Theme)));
 
             NextStepAssistantType = null;
         }
@@ -302,6 +302,23 @@ namespace iChronoMe.Widgets
                 NextStepAssistantType = typeof(WidgetCfgAssistant_CalendarCircleWave_CutomDayColorGradientTimeSpan);
                 handler.TriggerPositiveButtonClicked();
             }
+        }
+    }
+
+    public class WidgetCfgAssistant_CalendarCircleWave_Theme : WidgetConfigAssistant<WidgetCfg_CalendarCircleWave>
+    {
+        public WidgetCfgAssistant_CalendarCircleWave_Theme(WidgetCfgSample<WidgetCfg_CalendarCircleWave> baseSample)
+        {
+            Title = localize.Theme;
+
+            foreach (var o in Enum.GetValues(typeof(WidgetTheme)))
+            {
+                var cfg = baseSample.GetConfigClone();
+                cfg.SetTheme((WidgetTheme)o);
+                Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(o.ToString(), cfg));
+            }
+
+            NextStepAssistantType = typeof(WidgetCfgAssistant_CalendarCircleWave_OptionsBase);
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using iChronoMe.Core.Types;
 
 namespace iChronoMe.DeviceCalendar
 {
@@ -24,6 +25,11 @@ namespace iChronoMe.DeviceCalendar
             }
             catch { }
             return res;
+        }
+
+        public static Task CreateDefaulCalendar()
+        {
+            return AddOrUpdateCalendarAsync(new Calendar { Name = localize.AppName, IsPrimary = true, CanEditCalendar = true, CanEditEvents = true, Color = xColor.MaterialTeal.HexString });
         }
 
         public async static Task<IList<Calendar>> GetEditableCalendarsAsync()

@@ -64,13 +64,13 @@ namespace iChronoMe.Widgets
             cfg.ColorBackground = xColor.Transparent;
             cfg.TickMarkStyle = TickMarkStyle.Circle;
             cfg.ColorHourHandStroke = cfg.ColorHourHandFill = cfg.ColorMinuteHandStroke = cfg.ColorMinuteHandFill =
-                 cfg.ColorSecondHandStroke = cfg.ColorSecondHandFill = cfg.ColorTickMarks = xColor.White;
+                 cfg.ColorSecondHandStroke = cfg.ColorSecondHandFill = cfg.ColorTickMarks = cfg.ColorTitleText = xColor.White;
 
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("simple white", cfg));
 
             cfg = (WidgetCfg_ClockAnalog)cfg.Clone();
             cfg.ColorHourHandStroke = cfg.ColorHourHandFill = cfg.ColorMinuteHandStroke = cfg.ColorMinuteHandFill =
-                 cfg.ColorSecondHandStroke = cfg.ColorSecondHandFill = cfg.ColorTickMarks = xColor.MaterialTextBlack;
+                 cfg.ColorSecondHandStroke = cfg.ColorSecondHandFill = cfg.ColorTickMarks = cfg.ColorTitleText = xColor.MaterialTextBlack;
 
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("simple black", cfg));
 
@@ -128,6 +128,9 @@ namespace iChronoMe.Widgets
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.LocationType, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_ClockAnalog_Start)));
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.TimeType, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_ClockAnalog_WidgetTimeType)));
 
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.TextColor, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_ClockAnalog_TextColor)));
+            //Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.Theme, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_ClockAnalog_Theme)));
+
             NextStepAssistantType = null;
         }
 
@@ -140,6 +143,22 @@ namespace iChronoMe.Widgets
 
     }
 
+    public class WidgetCfgAssistant_ClockAnalog_Theme : WidgetConfigAssistant<WidgetCfg_ClockAnalog>
+    {
+        public WidgetCfgAssistant_ClockAnalog_Theme(WidgetCfgSample<WidgetCfg_ClockAnalog> baseSample)
+        {
+            Title = localize.Theme;
+
+            foreach (var o in Enum.GetValues(typeof(WidgetTheme)))
+            {
+                var cfg = baseSample.GetConfigClone();
+                cfg.SetTheme((WidgetTheme)o);
+                Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(o.ToString(), cfg));
+            }
+
+            NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase);
+        }
+    }
     public class WidgetCfgAssistant_ClockAnalog_BackgroundImage : WidgetConfigAssistant<WidgetCfg_ClockAnalog>
     {
         string cImageDir = "";
@@ -489,6 +508,60 @@ namespace iChronoMe.Widgets
                     Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>("", cfg));
                 }
             }
+        }
+    }
+
+    public class WidgetCfgAssistant_ClockAnalog_TextColor : WidgetConfigAssistant<WidgetCfg_ClockAnalog>
+    {
+        public WidgetCfgAssistant_ClockAnalog_TextColor(WidgetCfgSample<WidgetCfg_ClockAnalog> baseSample)
+        {
+            Title = localize.TextColor;
+            BaseSample = baseSample;
+            AllowCustom = true;
+            ShowPreviewImage = false;
+            NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase);
+
+            var cfg = BaseSample.GetConfigClone();
+            cfg.ColorTitleText = xColor.Black;
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(xColor.Black.HexString, cfg));
+
+            cfg = BaseSample.GetConfigClone();
+            cfg.ColorTitleText = xColor.White;
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(xColor.White.HexString, cfg));
+
+            int i = 0;
+            List<string> clrS = new List<string>(new [] { xColor.Black.HexString, xColor.White.HexString });
+            foreach (var clrs in DynamicColors.SampleColorSetS)
+            {
+                i++;
+                var clr = xColor.FromHex(clrs[0]);
+                if (!clrS.Contains(clr.HexString))
+                {
+                    clrS.Add(clr.HexString);
+
+                    cfg = BaseSample.GetConfigClone();
+                    cfg.ColorTitleText = clr;
+
+                    Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(clr.HexString, cfg));
+                }
+            }
+        }
+
+        public override async void ExecCustom(IUserIO handler)
+        {
+            base.ExecCustom(handler);
+
+            var cfg = BaseSample.GetConfigClone();
+
+            var clr = await handler.UserSelectColor(localize.TextColor, cfg.ColorTitleText);
+            if (clr == null)
+            {
+                handler.TriggerNegativeButtonClicked();
+                return;
+            }
+            cfg.ColorTitleText = clr.Value;
+            BaseSample = new WidgetCfgSample<WidgetCfg_ClockAnalog>("custom", cfg);
+            handler.TriggerPositiveButtonClicked();
         }
     }
 

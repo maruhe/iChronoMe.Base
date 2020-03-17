@@ -77,15 +77,15 @@ namespace iChronoMe.Core.ViewModels
                     bIsReady = true;
                     tcsReady.TrySetResult(true);
                     Ready?.Invoke(this, new EventArgs());
+                    OnPropertyChanged("*");
                 }
                 catch (Exception ex)
                 {
+                    xLog.Error(ex);
+                    HasErrors = true;
                     bIsReady = false;
                     tcsReady.TrySetResult(false);
-                    //bHasErrors = true;
-                    sys.LogException(ex);
                 }
-                OnPropertyChanged("*");
             });
         }
 
