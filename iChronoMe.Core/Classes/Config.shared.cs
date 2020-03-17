@@ -56,6 +56,7 @@ namespace iChronoMe.Core.Classes
         public DateTime LastCheckClockFaces { get; set; } = DateTime.MinValue;
         public DateTime LastCheckClockHands { get; set; } = DateTime.MinValue;
         public bool ContinuousLocationUpdates { get; set; } = false;
+        public bool CalendarReminderWarningDone { get; set; }
 
         [XmlIgnore]
         public int DefaultTimeType_SpinnerPosition
