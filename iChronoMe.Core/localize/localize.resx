@@ -123,6 +123,9 @@
   <data name="action_accept" xml:space="preserve">
     <value>accept</value>
   </data>
+  <data name="action_AddReminder" xml:space="preserve">
+    <value>add reminder</value>
+  </data>
   <data name="action_allow_send_errorlogs" xml:space="preserve">
     <value>allow sending error-logs</value>
   </data>
@@ -221,6 +224,9 @@
   </data>
   <data name="action_options" xml:space="preserve">
     <value>Options</value>
+  </data>
+  <data name="action_privacy_notice" xml:space="preserve">
+    <value>terms of use and data privacy</value>
   </data>
   <data name="action_refresh_location" xml:space="preserve">
     <value>refresh current location</value>

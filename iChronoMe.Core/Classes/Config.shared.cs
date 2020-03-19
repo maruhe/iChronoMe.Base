@@ -27,6 +27,21 @@ namespace iChronoMe.Core.Classes
         public double TimeZoneOffsetDst { get; set; } = 0;
     }
 
+    public class UsageInfo
+    {
+        public DateTime FirstAppStart { get; set; } = DateTime.Now;
+
+        public string FirstAppVersion { get; set; } = sys.cAppVersionInfo;
+
+        public string LastAppVersion { get; set; } = string.Empty;
+
+        public int LastAppVersionCode { get; set; } = -1;
+
+        public int AppStartCount { get; set; } = 0;
+
+        public DateTime LastAppStart { get; set; } = DateTime.MinValue;
+    }
+
     public partial class MainConfig
     {
         public MainConfig()

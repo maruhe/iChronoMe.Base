@@ -434,6 +434,7 @@ namespace iChronoMe.Core.Classes
             return cRes;
         }
 
+        public static int iAppVersionCode { get; private set; } = 0;
         public static string cAppVersionInfo { get; private set; } = "?";
         public static string cDeviceInfo { get; private set; } = "?";
         public static string cDeviceToken { get; private set; } = "?";

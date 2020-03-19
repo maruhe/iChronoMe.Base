@@ -79,6 +79,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die add reminder ähnelt.
+        /// </summary>
+        public static string action_AddReminder {
+            get {
+                return ResourceManager.GetString("action_AddReminder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die allow sending error-logs ähnelt.
         /// </summary>
         public static string action_allow_send_errorlogs {
@@ -372,6 +381,15 @@ namespace iChronoMe {
         public static string action_options {
             get {
                 return ResourceManager.GetString("action_options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die terms of use and data privacy ähnelt.
+        /// </summary>
+        public static string action_privacy_notice {
+            get {
+                return ResourceManager.GetString("action_privacy_notice", resourceCulture);
             }
         }
         

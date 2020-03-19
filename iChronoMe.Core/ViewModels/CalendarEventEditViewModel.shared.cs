@@ -471,7 +471,7 @@ namespace iChronoMe.Core.ViewModels
                             iSame++;
                             if (iSame >= 3)
                             {
-                                mUserIO?.ShowToast("a second without change => go");
+                                //mUserIO?.ShowToast("a second without change => go");
                                 break;
                             }
                         }
@@ -479,7 +479,7 @@ namespace iChronoMe.Core.ViewModels
                         {
                             if (iWordCount != calEvent.Location.Split(' ').Length)
                             {
-                                mUserIO?.ShowToast("found new word => go");
+                                //mUserIO?.ShowToast("found new word => go");
                                 break;
                             }
                         }

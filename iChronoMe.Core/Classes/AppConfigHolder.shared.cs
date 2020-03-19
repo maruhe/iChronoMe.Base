@@ -11,6 +11,7 @@ namespace iChronoMe
         private static MainConfig _mainConfig = null;
         private static DashboardConfig _dashboardConfig = null;
         private static CalendarViewConfig _calendarViewConfig = null;
+        private static UsageInfo _usageInfo = null;
 
         public static LocationConfig LocationConfig
         {
@@ -46,6 +47,24 @@ namespace iChronoMe
         {
             if (_mainConfig != null)
                 SaveConfig(_mainConfig);
+        }
+
+        public static UsageInfo UsageInfo
+        {
+            get
+            {
+                if (_usageInfo == null)
+                {
+                    _usageInfo = LoadFromFile<UsageInfo>();
+                }
+                return _usageInfo;
+            }
+        }
+
+        public static void SaveUsageInfo()
+        {
+            if (_usageInfo != null)
+                SaveConfig(_usageInfo);
         }
 
         public static DashboardConfig DashboardConfig

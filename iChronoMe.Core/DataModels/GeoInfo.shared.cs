@@ -199,6 +199,18 @@ namespace iChronoMe.Core.Classes
             {
 
             }
+
+            [Ignore]
+            public string TitleArea
+            {
+                get
+                {
+                    if (!string.IsNullOrEmpty(route))
+                        return route;
+
+                    return toponymName;
+                }
+            }
         }
     }
 }

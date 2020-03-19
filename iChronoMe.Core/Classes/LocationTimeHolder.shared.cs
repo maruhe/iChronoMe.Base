@@ -332,18 +332,21 @@ namespace iChronoMe.Core
             return true;
         }
 
-        Task locationTask = null;
+        Thread locationTask = null;
         bool bStartLocationTaskAgain = false;
         DateTime tLastLocationTaskStart = DateTime.MinValue;
         private void StartRefreshLocationInfo()
         {
             xLog.Debug("StartRefreshLocationInfo: " + (locationTask != null).ToString());
             bStartLocationTaskAgain = true;
-            if (locationTask != null && tLastLocationTaskStart.AddSeconds(30) < DateTime.Now)
+            if (locationTask != null && tLastLocationTaskStart.AddSeconds(8) < DateTime.Now)
                 return;
 
+            if (locationTask != null)
+                try { locationTask.Abort(); } catch { }
+
             tLastLocationTaskStart = DateTime.Now;
-            locationTask = Task.Factory.StartNew(() =>
+            locationTask = new Thread(() =>
             {
                 try
                 {
@@ -354,12 +357,12 @@ namespace iChronoMe.Core
                 }
                 catch (ThreadAbortException)
                 {
-                    locationTask = null;
                     return;
                 }
                 catch (Exception ex)
                 {
                     xLog.Error(ex);
+                    return;
                 }
                 finally
                 {
@@ -368,6 +371,8 @@ namespace iChronoMe.Core
                 if (bStartLocationTaskAgain)
                     StartRefreshLocationInfo();
             });
+            locationTask.IsBackground = true;
+            locationTask.Start();
         }
 
         GeoInfo.AreaInfo ai = null;
@@ -417,6 +422,7 @@ namespace iChronoMe.Core
                         }
                         catch (Exception ex)
                         {
+                            timeZoneInfo = null;
                             sys.LogException(ex, string.Concat("TimeZoneInfoCache.FromLocation ", sys.DezimalGradToString(Latitude, Longitude), "\nTimeZone-ID: ", tz.timezoneId));
                         }
                     }

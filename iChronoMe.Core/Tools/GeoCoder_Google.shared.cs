@@ -133,6 +133,38 @@ namespace iChronoMe.Core.Tools
                         ai.toponymName = cAreaTitle;
                     }
 
+                    if (!string.IsNullOrEmpty(ai.toponymName) && (
+                        string.IsNullOrEmpty(ai.adminArea1) && string.IsNullOrEmpty(ai.adminArea2) && string.IsNullOrEmpty(ai.adminArea3) &&
+                        string.IsNullOrEmpty(ai.adminArea4) && string.IsNullOrEmpty(ai.adminArea5) &&
+                        string.IsNullOrEmpty(ai.locality) && string.IsNullOrEmpty(ai.route) &&
+                        ai.toponymName.Contains(",")
+                        ))
+                    {
+                        var cx = ai.toponymName.Split(',');
+                        ai.toponymName = cx[0].Trim();
+                        ai.countryCode = cx[cx.Length - 1].Trim();
+                        if (cx.Length > 3)
+                            ai.adminArea3 = cx[1].Trim();
+                        if (cx.Length > 4)
+                            ai.adminArea2 = cx[2].Trim();
+                        if (cx.Length > 5)
+                            ai.adminArea1 = cx[3].Trim();
+                        ai.ToString();
+                    }
+                    else if (Equals(ai.toponymName, ai.postalCode))
+                    {
+                        if (!string.IsNullOrEmpty(ai.adminArea5))
+                            ai.toponymName = ai.adminArea5;
+                        else if (!string.IsNullOrEmpty(ai.adminArea4))
+                            ai.toponymName = ai.adminArea4;
+                        else if (!string.IsNullOrEmpty(ai.adminArea3))
+                            ai.toponymName = ai.adminArea3;
+                        else if (!string.IsNullOrEmpty(ai.adminArea2))
+                            ai.toponymName = ai.adminArea2;
+                        else if (!string.IsNullOrEmpty(ai.adminArea1))
+                            ai.toponymName = ai.adminArea1;
+                    }
+
                     xLog.Debug("Final title: " + ai.toponymName);
                 }
                 return ai;

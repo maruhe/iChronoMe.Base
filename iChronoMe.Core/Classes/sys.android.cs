@@ -29,7 +29,8 @@ namespace iChronoMe.Core.Classes
             //Toast.MakeText(ctx, "PlatformInit", ToastLength.Long).Show();
             Init(OsType.Android);
             var pi = ctx.PackageManager.GetPackageInfo(ctx.PackageName, 0);
-            cAppVersionInfo = pi.VersionName + ", " + pi.VersionCode.ToString(CultureInfo.InvariantCulture);
+            iAppVersionCode = pi.VersionCode;
+            cAppVersionInfo = pi.VersionName + ", " + iAppVersionCode.ToString(CultureInfo.InvariantCulture);
 #if DEBUG
             cAppVersionInfo += ", debug";
 #else

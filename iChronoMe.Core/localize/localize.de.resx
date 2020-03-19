@@ -123,6 +123,9 @@
   <data name="action_accept" xml:space="preserve">
     <value>akzeptieren</value>
   </data>
+  <data name="action_AddReminder" xml:space="preserve">
+    <value>Erinnerung hinzufühen</value>
+  </data>
   <data name="action_allow_send_errorlogs" xml:space="preserve">
     <value>Fehlerberichte senden</value>
   </data>
@@ -221,6 +224,9 @@
   </data>
   <data name="action_options" xml:space="preserve">
     <value>Optionen</value>
+  </data>
+  <data name="action_privacy_notice" xml:space="preserve">
+    <value>Informationen zu Nutzung und Datenschutz</value>
   </data>
   <data name="action_refresh_location" xml:space="preserve">
     <value>Standord aktualisieren</value>
