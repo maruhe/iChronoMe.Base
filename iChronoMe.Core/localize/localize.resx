@@ -136,7 +136,7 @@
     <value>background</value>
   </data>
   <data name="action_backgroundservice_showalways" xml:space="preserve">
-    <value>always show clock in notifocation area</value>
+    <value>always show clock in notification area</value>
   </data>
   <data name="action_block" xml:space="preserve">
     <value>block</value>
@@ -214,10 +214,10 @@
     <value>on notification click</value>
   </data>
   <data name="action_notification_config" xml:space="preserve">
-    <value>configure notifocation area</value>
+    <value>configure notification area</value>
   </data>
   <data name="action_notification_show_always" xml:space="preserve">
-    <value>always show clock in notifocation area</value>
+    <value>always show clock in notification area</value>
   </data>
   <data name="action_ok" xml:space="preserve">
     <value>ok</value>
@@ -302,7 +302,7 @@
     <value>all day</value>
   </data>
   <data name="AnimationDuriation" xml:space="preserve">
-    <value>animation duriation</value>
+    <value>animation duration</value>
   </data>
   <data name="AnimationRounds" xml:space="preserve">
     <value>animation rounds</value>
@@ -363,7 +363,7 @@
   </data>
   <data name="backgroundservice_info_explenation" xml:space="preserve">
     <value>to show a clock as widget that does show a custom time a service needs to be running in background
-since android 7 it is needet to show a notification while a background-service is running
+since android 7 it is needed to show a notification while a background-service is running
 you can customize this notification or disable it in system-settings</value>
   </data>
   <data name="backgroundservice_info_why" xml:space="preserve">
@@ -382,7 +382,7 @@ you can customize this notification or disable it in system-settings</value>
     <value>multi day</value>
   </data>
   <data name="calendar_event_position_is_determined" xml:space="preserve">
-    <value>Position wird ermittelt</value>
+    <value>determine location</value>
   </data>
   <data name="calendar_event_to" xml:space="preserve">
     <value>to</value>
@@ -520,7 +520,7 @@ you can customize this notification or disable it in system-settings</value>
     <value>dark to light</value>
   </data>
   <data name="DataLoader_error_list_broken" xml:space="preserve">
-    <value>unable to interprete data-list</value>
+    <value>unable to interpret data-list</value>
   </data>
   <data name="DataLoader_error_list_unloadable" xml:space="preserve">
     <value>unable to load data-list</value>
@@ -537,22 +537,22 @@ you can customize this notification or disable it in system-settings</value>
   <data name="DayColorTypeCustomInfo" xml:space="preserve">
     <value>there will popup color selectors
 each selected color will be added to the brush
-if you have enoug colors just click 'back' or somewhere outside the window</value>
+if you have enough colors just click 'back' or somewhere outside the window</value>
   </data>
   <data name="DayTitle" xml:space="preserve">
-    <value>Tagestitel</value>
+    <value>day-title</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>default</value>
   </data>
   <data name="DeletedWidgets" xml:space="preserve">
-    <value>deleted widges</value>
+    <value>deleted widgets</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>discription</value>
+    <value>description</value>
   </data>
   <data name="description_BackgroundService" xml:space="preserve">
-    <value>keeps the Clock-Widges going on..</value>
+    <value>keeps the Clock-Widgets going on..</value>
   </data>
   <data name="dont_ask_again" xml:space="preserve">
     <value>don't ask again</value>
@@ -564,7 +564,7 @@ if you have enoug colors just click 'back' or somewhere outside the window</valu
     <value>parameter error, try again</value>
   </data>
   <data name="error_no_location_demitered" xml:space="preserve">
-    <value>unable to demiter a location</value>
+    <value>unable to determine a location</value>
   </data>
   <data name="error_saving_event" xml:space="preserve">
     <value>error saving event</value>
@@ -576,20 +576,20 @@ if you have enoug colors just click 'back' or somewhere outside the window</valu
     <value>errors or problems</value>
   </data>
   <data name="ezmz_runningwidgets_more" xml:space="preserve">
-    <value>{0} widges aktiv</value>
+    <value>{0} widgets active</value>
   </data>
   <data name="ezmz_runningwidgets_one" xml:space="preserve">
-    <value>ein widget aktiv</value>
+    <value>one widget active</value>
   </data>
   <data name="ezmz_runningwidgets_zero" xml:space="preserve">
-    <value>no aktiv widget</value>
+    <value>no active widget</value>
   </data>
   <data name="faq_item_1" xml:space="preserve">
-    <value>this is a qute question</value>
+    <value>this is a cute question</value>
   </data>
   <data name="faq_item_1_value" xml:space="preserve">
     <value>and here the answer
-with lin 2</value>
+with line 2</value>
   </data>
   <data name="faq_item_2" xml:space="preserve">
     <value>here another question</value>
@@ -598,7 +598,7 @@ with lin 2</value>
     <value>and also a answer
 with a line 2
 line3
-and lin 4</value>
+and line 4</value>
   </data>
   <data name="Filling" xml:space="preserve">
     <value>fill</value>
@@ -611,9 +611,6 @@ and lin 4</value>
   </data>
   <data name="fourColors" xml:space="preserve">
     <value>four colors</value>
-  </data>
-  <data name="FunctionInTitle" xml:space="preserve">
-    <value>Funktionen im Titel</value>
   </data>
   <data name="HandColors" xml:space="preserve">
     <value>hand colors</value>
@@ -643,7 +640,7 @@ and lin 4</value>
     <value>icon color</value>
   </data>
   <data name="ImageLoader_error_list_broken" xml:space="preserve">
-    <value>unable to interprete image-list</value>
+    <value>unable to interpret image-list</value>
   </data>
   <data name="ImageLoader_error_list_unloadable" xml:space="preserve">
     <value>unable to load image-list</value>
@@ -664,20 +661,20 @@ and lin 4</value>
     <value>updating preview-images...</value>
   </data>
   <data name="ImageLoader_success_n_images" xml:space="preserve">
-    <value>{0} of {1} images loadet...</value>
+    <value>{0} of {1} images loaded...</value>
   </data>
   <data name="ImageLoader_success_n_packages" xml:space="preserve">
-    <value>{0} of {1} packages loadet...</value>
+    <value>{0} of {1} packages loaded...</value>
   </data>
   <data name="ImageLoader_success_one_image" xml:space="preserve">
-    <value>one image loadet...</value>
+    <value>one image loaded...</value>
   </data>
   <data name="ImageLoader_success_one_package" xml:space="preserve">
-    <value>one package loadet...</value>
+    <value>one package loaded...</value>
   </data>
   <data name="info_no_widgets_found" xml:space="preserve">
-    <value>no widget's found
-you can create new widgets on your lauchen-screen!</value>
+    <value>no widgets found
+you can create new widgets on your launcher-screen!</value>
   </data>
   <data name="just_a_moment" xml:space="preserve">
     <value>just a moment...</value>
@@ -980,7 +977,7 @@ you can create new widgets on your lauchen-screen!</value>
     <value>style</value>
   </data>
   <data name="text_Symbols" xml:space="preserve">
-    <value>Symbole</value>
+    <value>symbols</value>
   </data>
   <data name="text_threeColors" xml:space="preserve">
     <value>three Colors</value>
@@ -1025,13 +1022,13 @@ you can create new widgets on your lauchen-screen!</value>
     <value>two Weeks</value>
   </data>
   <data name="text_unknown_position" xml:space="preserve">
-    <value>unkwnown_position</value>
+    <value>unknown position</value>
   </data>
   <data name="text_withoutSecondHand" xml:space="preserve">
     <value>without second-hand</value>
   </data>
   <data name="TextColor" xml:space="preserve">
-    <value>Textfarbe</value>
+    <value>text color</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>theme</value>
@@ -1056,15 +1053,15 @@ you can create new widgets on your lauchen-screen!</value>
   </data>
   <data name="TimeType_MiddleSunTime_Desc" xml:space="preserve">
     <value>the time based on the current longitude of your location
-around the year the difference between real an middle solar time can be up to about 18 minutes
+around the year the difference between real and middle solar time can be up to about 18 minutes
 every day has exact 24 hours and the offset to timezone-time is stable</value>
   </data>
   <data name="TimeType_RealSunTime" xml:space="preserve">
     <value>real sun time</value>
   </data>
   <data name="TimeType_RealSunTime_Desc" xml:space="preserve">
-    <value>the time, by the real position of the sun where the highest point of the sun means 12 o'clock
-this means a day is a little bit less or a little bit more than 24 hours and every day is diffrent, like nature is\nthe offset to timezone-time is changing every day</value>
+    <value>the time, measured by the real position of the sun where the highest point of the sun means 12 o'clock
+this means a day is a little bit less or a little bit more than 24 hours and every day is different, like nature is\nthe offset to timezone-time is changing every day</value>
   </data>
   <data name="TimeType_TimeZoneTime" xml:space="preserve">
     <value>timezone time</value>
@@ -1089,10 +1086,7 @@ may this can be far far away from the real time on your location</value>
     <value>new event</value>
   </data>
   <data name="title_send_errorlog" xml:space="preserve">
-    <value>these informations will be send:</value>
-  </data>
-  <data name="unknown_position" xml:space="preserve">
-    <value>unkwnown_position</value>
+    <value>these information will be send:</value>
   </data>
   <data name="wallpaper_title_clock_analog" xml:space="preserve">
     <value>analog solar clock</value>
@@ -1101,14 +1095,14 @@ may this can be far far away from the real time on your location</value>
     <value>welcome to iChronoMe!</value>
   </data>
   <data name="widget_error_location_is_requered" xml:space="preserve">
-    <value>the calender-widget\'s only work with access to your calendar and location!</value>
+    <value>the calendar-widgets only work with access to your calendar and location!</value>
   </data>
   <data name="widget_error_permission_calendar" xml:space="preserve">
     <value>missing calendar-permission
 please click here</value>
   </data>
   <data name="widget_error_permission_location" xml:space="preserve">
-    <value>missing localtion-permission
+    <value>missing location-permission
 please click here</value>
   </data>
   <data name="widget_lifetime_loading" xml:space="preserve">

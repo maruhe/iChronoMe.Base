@@ -522,7 +522,7 @@ namespace iChronoMe.Core.ViewModels
                 if (string.IsNullOrEmpty(Location))
                     return "";
                 if (extEvent.GotCorrectPosition)
-                    return sys.DezimalGradToGrad(extEvent.Latitude, extEvent.Longitude) + ", " + extEvent.ConfirmedAddress;
+                    return sys.DezimalGradToGrad(extEvent.Latitude, extEvent.Longitude) + ", " + (string.IsNullOrEmpty(extEvent.ConfirmedAddress) ? LocationTimeHolder.AreaName : extEvent.ConfirmedAddress);
                 return "unknown location!";
             }
         }
@@ -587,6 +587,8 @@ namespace iChronoMe.Core.ViewModels
                 }
             }
         }
+
+        public CalendarEventExtention Extention { get => extEvent; }
 
         public bool NotAllDay { get => !calEvent.AllDay; }
 

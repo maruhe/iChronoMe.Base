@@ -124,7 +124,7 @@
     <value>akzeptieren</value>
   </data>
   <data name="action_AddReminder" xml:space="preserve">
-    <value>Erinnerung hinzufühen</value>
+    <value>Erinnerung hinzufügen</value>
   </data>
   <data name="action_allow_send_errorlogs" xml:space="preserve">
     <value>Fehlerberichte senden</value>
@@ -136,7 +136,7 @@
     <value>Hintergrund</value>
   </data>
   <data name="action_backgroundservice_showalways" xml:space="preserve">
-    <value>Uhr immer im Benachrichtigunsbereich anzeigen</value>
+    <value>Uhr immer im Benachrichtigungsbereich anzeigen</value>
   </data>
   <data name="action_block" xml:space="preserve">
     <value>blockieren</value>
@@ -229,7 +229,7 @@
     <value>Informationen zu Nutzung und Datenschutz</value>
   </data>
   <data name="action_refresh_location" xml:space="preserve">
-    <value>Standord aktualisieren</value>
+    <value>Standort aktualisieren</value>
   </data>
   <data name="action_refresh_location_continuous" xml:space="preserve">
     <value>meine Position aktualisieren</value>
@@ -262,7 +262,7 @@
     <value>einmalig senden</value>
   </data>
   <data name="action_send_testlog" xml:space="preserve">
-    <value>protokoll senden</value>
+    <value>Protokoll senden</value>
   </data>
   <data name="action_settings" xml:space="preserve">
     <value>Einstellungen</value>
@@ -293,7 +293,7 @@
 (Doppelklick = Aktion)</value>
   </data>
   <data name="ActionButtonStyle_eye_static" xml:space="preserve">
-    <value>iChronEye start</value>
+    <value>iChronEye starr</value>
   </data>
   <data name="alert_no_calendar_found" xml:space="preserve">
     <value>keine Kalender gefunden!</value>
@@ -338,19 +338,19 @@
     <value>ein Regenbogen pro Jahr</value>
   </data>
   <data name="assistant_permission_calendar" xml:space="preserve">
-    <value>um deine Termine in Sonnenzeit anzeigen zu können wird der Zugriff aud deinen Kalender benötigt</value>
+    <value>um deine Termine in Sonnenzeit anzeigen zu können wird der Zugriff auf deinen Kalender benötigt</value>
   </data>
   <data name="assistant_permission_location" xml:space="preserve">
     <value>der Zugriff auf den Standort ist wichtig um die Sonnenzeit berechnen zu können</value>
   </data>
   <data name="assistant_permission_storage" xml:space="preserve">
-    <value>und solltes du auch den Zugriff auf den Gerätespeicher zulassen kann die Voschau von Widges auch gleich mit deinem Hintergrundbild angezeigt werden</value>
+    <value>und solltest du auch den Zugriff auf den Gerätespeicher zulassen kann die Vorschau von Widgets auch gleich mit deinem Hintergrundbild angezeigt werden</value>
   </data>
   <data name="assistant_permission_welcome" xml:space="preserve">
     <value>ein paar Berechtigungen wünsche ich mir:</value>
   </data>
   <data name="assistant_privacy_question" xml:space="preserve">
-    <value>hast du Interesse an unseren Informationen zu Dateschutz und Privatsphäre?</value>
+    <value>hast du Interesse an unseren Informationen zu Datenschutz und Privatsphäre?</value>
   </data>
   <data name="Background" xml:space="preserve">
     <value>Hintergrund</value>
@@ -362,12 +362,12 @@
     <value>Hintergrundbild</value>
   </data>
   <data name="backgroundservice_info_explenation" xml:space="preserve">
-    <value>um ein Uhr-Widget mit benutzerdefinierter Zeit anzeigen zu können, muss ein Dienst im Hintergund laufen
+    <value>um ein Uhr-Widget mit benutzerdefinierter Zeit anzeigen zu können, muss ein Dienst im Hintergrund laufen
 seit Android 7 ist es notwendig eine Benachrichtigung anzuzeigen solange im Hintergrund Aktionen ausgeführt werden
-du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellungen blockieren</value>
+du kannst diese Benachrichtigung hier anpassen oder sie in den Systemeinstellungen blockieren</value>
   </data>
   <data name="backgroundservice_info_why" xml:space="preserve">
-    <value>warum sehe ich diese Uhr im Benachrichtigunsbereich?</value>
+    <value>warum sehe ich diese Uhr im Benachrichtigungsbereich?</value>
   </data>
   <data name="Border" xml:space="preserve">
     <value>Rahmen</value>
@@ -379,7 +379,7 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
     <value>ganztägig</value>
   </data>
   <data name="calendar_event_multi_day" xml:space="preserve">
-    <value>mehtägig</value>
+    <value>mehrtägig</value>
   </data>
   <data name="calendar_event_position_is_determined" xml:space="preserve">
     <value>Position wird ermittelt</value>
@@ -478,10 +478,10 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
     <value>schwarz / weiß</value>
   </data>
   <data name="colorcfgMultiColor" xml:space="preserve">
-    <value>Mehrfärbig</value>
+    <value>Mehrfarbig</value>
   </data>
   <data name="colorcfgMultiColorFilled" xml:space="preserve">
-    <value>Mehrfärbig gefüllt</value>
+    <value>Mehrfarbig gefüllt</value>
   </data>
   <data name="colorcfgSingleColor" xml:space="preserve">
     <value>einfärbig</value>
@@ -499,7 +499,7 @@ du kannst diese Banchrichtigung hier anpassen oder sie in den Systemeinstellunge
     <value>weiß / benutzerdefiniert</value>
   </data>
   <data name="colorcfgWhiteTransparent" xml:space="preserve">
-    <value>weiß / transparen</value>
+    <value>weiß / transparent</value>
   </data>
   <data name="Colors" xml:space="preserve">
     <value>Farben</value>
@@ -552,7 +552,7 @@ wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder a
     <value>Beschreibung</value>
   </data>
   <data name="description_BackgroundService" xml:space="preserve">
-    <value>damit die Widges laufen..</value>
+    <value>damit die Widgets laufen..</value>
   </data>
   <data name="dont_ask_again" xml:space="preserve">
     <value>nicht mehr fragen</value>
@@ -564,7 +564,7 @@ wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder a
     <value>Parameter-Fehler, versuch\'s nochmal</value>
   </data>
   <data name="error_no_location_demitered" xml:space="preserve">
-    <value>es konnte kein Standord ermittelt werden</value>
+    <value>es konnte kein Standort ermittelt werden</value>
   </data>
   <data name="error_saving_event" xml:space="preserve">
     <value>Fehler beim Speichern des Termins</value>
@@ -582,7 +582,7 @@ wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder a
     <value>Ein Widget aktiv</value>
   </data>
   <data name="ezmz_runningwidgets_zero" xml:space="preserve">
-    <value>keine aktiven Widges</value>
+    <value>keine aktiven Widgets</value>
   </data>
   <data name="Filling" xml:space="preserve">
     <value>Füllung</value>
@@ -595,9 +595,6 @@ wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder a
   </data>
   <data name="fourColors" xml:space="preserve">
     <value>vier Farben</value>
-  </data>
-  <data name="FunctionInTitle" xml:space="preserve">
-    <value>Funktionen im Titel</value>
   </data>
   <data name="HandColors" xml:space="preserve">
     <value>Farben</value>
@@ -661,13 +658,13 @@ wenn du genug Farben beisammen hast klick einfach außerhalb des Fensters oder a
   </data>
   <data name="info_no_widgets_found" xml:space="preserve">
     <value>keine Widgets gefunden
-am Starbildschirm deines Geräts kannst du neue Widgets erstellen!</value>
+am Startbildschirm deines Geräts kannst du neue Widgets erstellen!</value>
   </data>
   <data name="just_a_moment" xml:space="preserve">
     <value>einen Moment bitte...</value>
   </data>
   <data name="label_AppointmentBegin" xml:space="preserve">
-    <value>Begin</value>
+    <value>Beginn</value>
   </data>
   <data name="label_AppointmentEnd" xml:space="preserve">
     <value>Ende</value>
@@ -865,7 +862,7 @@ am Starbildschirm deines Geräts kannst du neue Widgets erstellen!</value>
     <value>Basisdaten werden aktualisiert</value>
   </data>
   <data name="question_create_new_calendar" xml:space="preserve">
-    <value>soll ein neuer Calendar angelegt werden?</value>
+    <value>soll ein neuer Kalender angelegt werden?</value>
   </data>
   <data name="question_delete_event" xml:space="preserve">
     <value>Termin löschen?</value>
@@ -1036,7 +1033,7 @@ am Starbildschirm deines Geräts kannst du neue Widgets erstellen!</value>
     <value>Zeit-Typ</value>
   </data>
   <data name="TimeType_MiddleSunTime" xml:space="preserve">
-    <value>mittlere Ortzzeit</value>
+    <value>mittlere Ortszeit</value>
   </data>
   <data name="TimeType_MiddleSunTime_Desc" xml:space="preserve">
     <value>die Uhrzeit basierend auf dem Längengrad deines Standortes und einer 'mittleren Sonnenposition'
@@ -1048,8 +1045,8 @@ jeder Tag ist exakt 24 Stunden lang und die Abweichung der Zeitzonen-Zeit bleibt
   </data>
   <data name="TimeType_RealSunTime_Desc" xml:space="preserve">
     <value>die Uhrzeit gemessen an der echten Position der Sonne, wobei der Tageshöchststand der Sonne 12 Uhr bedeutet
-dadurch sind manche Tage etwas kürzer und manche Tage etwas länger als 24 Stunden, wie die Natur nunmal
-die Abweichtung der Zeitzonen-Zeit ändert sich konstant</value>
+dadurch sind manche Tage etwas kürzer und manche Tage etwas länger als 24 Stunden, wie die Natur nun mal
+die Abweichung der Zeitzonen-Zeit ändert sich konstant</value>
   </data>
   <data name="TimeType_TimeZoneTime" xml:space="preserve">
     <value>Zeitzonen Zeit</value>
@@ -1076,9 +1073,6 @@ oft ist diese Angabe weit entfernt von der wahren Zeit an diesem Ort</value>
   <data name="title_send_errorlog" xml:space="preserve">
     <value>diese Informationen werden übertragen:</value>
   </data>
-  <data name="unknown_position" xml:space="preserve">
-    <value>unbekannte Position</value>
-  </data>
   <data name="wallpaper_title_clock_analog" xml:space="preserve">
     <value>analoge Sonnenuhr</value>
   </data>
@@ -1097,7 +1091,7 @@ bitte hier klicken</value>
 bitte hier klicken</value>
   </data>
   <data name="widget_lifetime_loading" xml:space="preserve">
-    <value>ein "tropisches Jahr" dauert:\n365 d 5 h 48 min and 45,261 s</value>
+    <value>ein "tropisches Jahr" dauert:\n365 d 5 h 48 min und 45,261 s</value>
   </data>
   <data name="widget_loading" xml:space="preserve">
     <value>Zeit ist nur Illusion\u2026</value>

@@ -339,7 +339,7 @@ namespace iChronoMe.Core
         {
             xLog.Debug("StartRefreshLocationInfo: " + (locationTask != null).ToString());
             bStartLocationTaskAgain = true;
-            if (locationTask != null && tLastLocationTaskStart.AddSeconds(8) < DateTime.Now)
+            if (locationTask != null && tLastLocationTaskStart.AddSeconds(8) > DateTime.Now)
                 return;
 
             if (locationTask != null)
@@ -364,12 +364,12 @@ namespace iChronoMe.Core
                     xLog.Error(ex);
                     return;
                 }
-                finally
+                try
                 {
                     locationTask = null;
-                }
-                if (bStartLocationTaskAgain)
-                    StartRefreshLocationInfo();
+                    if (bStartLocationTaskAgain)
+                        StartRefreshLocationInfo();
+                } catch { }
             });
             locationTask.IsBackground = true;
             locationTask.Start();

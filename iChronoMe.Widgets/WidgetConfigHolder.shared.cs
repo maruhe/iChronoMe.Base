@@ -657,7 +657,7 @@ namespace iChronoMe.Widgets
         public bool ShowHours = true;
         public bool ShowMinutes = true;
 #if DEBUG
-        public bool ShowSeconds = true;
+        public bool ShowSeconds = false;
 #else
         public bool ShowSeconds = false;
 #endif

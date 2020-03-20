@@ -115,7 +115,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die always show clock in notifocation area ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die always show clock in notification area ähnelt.
         /// </summary>
         public static string action_backgroundservice_showalways {
             get {
@@ -349,7 +349,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die configure notifocation area ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die configure notification area ähnelt.
         /// </summary>
         public static string action_notification_config {
             get {
@@ -358,7 +358,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die always show clock in notifocation area ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die always show clock in notification area ähnelt.
         /// </summary>
         public static string action_notification_show_always {
             get {
@@ -611,7 +611,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die animation duriation ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die animation duration ähnelt.
         /// </summary>
         public static string AnimationDuriation {
             get {
@@ -792,7 +792,7 @@ namespace iChronoMe {
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die to show a clock as widget that does show a custom time a service needs to be running in background
-        ///since android 7 it is needet to show a notification while a background-service is running
+        ///since android 7 it is needed to show a notification while a background-service is running
         ///you can customize this notification or disable it in system-settings ähnelt.
         /// </summary>
         public static string backgroundservice_info_explenation {
@@ -847,7 +847,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Position wird ermittelt ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die determine location ähnelt.
         /// </summary>
         public static string calendar_event_position_is_determined {
             get {
@@ -1261,7 +1261,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die unable to interprete data-list ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die unable to interpret data-list ähnelt.
         /// </summary>
         public static string DataLoader_error_list_broken {
             get {
@@ -1308,7 +1308,7 @@ namespace iChronoMe {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die there will popup color selectors
         ///each selected color will be added to the brush
-        ///if you have enoug colors just click &apos;back&apos; or somewhere outside the window ähnelt.
+        ///if you have enough colors just click &apos;back&apos; or somewhere outside the window ähnelt.
         /// </summary>
         public static string DayColorTypeCustomInfo {
             get {
@@ -1317,7 +1317,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tagestitel ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die day-title ähnelt.
         /// </summary>
         public static string DayTitle {
             get {
@@ -1335,7 +1335,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die deleted widges ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die deleted widgets ähnelt.
         /// </summary>
         public static string DeletedWidgets {
             get {
@@ -1344,7 +1344,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die discription ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die description ähnelt.
         /// </summary>
         public static string Description {
             get {
@@ -1353,7 +1353,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die keeps the Clock-Widges going on.. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die keeps the Clock-Widgets going on.. ähnelt.
         /// </summary>
         public static string description_BackgroundService {
             get {
@@ -1389,7 +1389,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die unable to demiter a location ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die unable to determine a location ähnelt.
         /// </summary>
         public static string error_no_location_demitered {
             get {
@@ -1425,7 +1425,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {0} widges aktiv ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0} widgets active ähnelt.
         /// </summary>
         public static string ezmz_runningwidgets_more {
             get {
@@ -1434,7 +1434,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die ein widget aktiv ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die one widget active ähnelt.
         /// </summary>
         public static string ezmz_runningwidgets_one {
             get {
@@ -1443,7 +1443,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die no aktiv widget ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die no active widget ähnelt.
         /// </summary>
         public static string ezmz_runningwidgets_zero {
             get {
@@ -1452,7 +1452,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die this is a qute question ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die this is a cute question ähnelt.
         /// </summary>
         public static string faq_item_1 {
             get {
@@ -1462,7 +1462,7 @@ namespace iChronoMe {
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die and here the answer
-        ///with lin 2 ähnelt.
+        ///with line 2 ähnelt.
         /// </summary>
         public static string faq_item_1_value {
             get {
@@ -1483,7 +1483,7 @@ namespace iChronoMe {
         ///   Sucht eine lokalisierte Zeichenfolge, die and also a answer
         ///with a line 2
         ///line3
-        ///and lin 4 ähnelt.
+        ///and line 4 ähnelt.
         /// </summary>
         public static string faq_item_2_value {
             get {
@@ -1524,15 +1524,6 @@ namespace iChronoMe {
         public static string fourColors {
             get {
                 return ResourceManager.GetString("fourColors", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Funktionen im Titel ähnelt.
-        /// </summary>
-        public static string FunctionInTitle {
-            get {
-                return ResourceManager.GetString("FunctionInTitle", resourceCulture);
             }
         }
         
@@ -1618,7 +1609,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die unable to interprete image-list ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die unable to interpret image-list ähnelt.
         /// </summary>
         public static string ImageLoader_error_list_broken {
             get {
@@ -1681,7 +1672,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {0} of {1} images loadet... ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0} of {1} images loaded... ähnelt.
         /// </summary>
         public static string ImageLoader_success_n_images {
             get {
@@ -1690,7 +1681,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {0} of {1} packages loadet... ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0} of {1} packages loaded... ähnelt.
         /// </summary>
         public static string ImageLoader_success_n_packages {
             get {
@@ -1699,7 +1690,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die one image loadet... ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die one image loaded... ähnelt.
         /// </summary>
         public static string ImageLoader_success_one_image {
             get {
@@ -1708,7 +1699,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die one package loadet... ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die one package loaded... ähnelt.
         /// </summary>
         public static string ImageLoader_success_one_package {
             get {
@@ -1717,8 +1708,8 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die no widget&apos;s found
-        ///you can create new widgets on your lauchen-screen! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die no widgets found
+        ///you can create new widgets on your launcher-screen! ähnelt.
         /// </summary>
         public static string info_no_widgets_found {
             get {
@@ -2627,7 +2618,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Symbole ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die symbols ähnelt.
         /// </summary>
         public static string text_Symbols {
             get {
@@ -2762,7 +2753,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die unkwnown_position ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die unknown position ähnelt.
         /// </summary>
         public static string text_unknown_position {
             get {
@@ -2780,7 +2771,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Textfarbe ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die text color ähnelt.
         /// </summary>
         public static string TextColor {
             get {
@@ -2853,7 +2844,7 @@ namespace iChronoMe {
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die the time based on the current longitude of your location
-        ///around the year the difference between real an middle solar time can be up to about 18 minutes
+        ///around the year the difference between real and middle solar time can be up to about 18 minutes
         ///every day has exact 24 hours and the offset to timezone-time is stable ähnelt.
         /// </summary>
         public static string TimeType_MiddleSunTime_Desc {
@@ -2872,8 +2863,8 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die the time, by the real position of the sun where the highest point of the sun means 12 o&apos;clock
-        ///this means a day is a little bit less or a little bit more than 24 hours and every day is diffrent, like nature is\nthe offset to timezone-time is changing every day ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die the time, measured by the real position of the sun where the highest point of the sun means 12 o&apos;clock
+        ///this means a day is a little bit less or a little bit more than 24 hours and every day is different, like nature is\nthe offset to timezone-time is changing every day ähnelt.
         /// </summary>
         public static string TimeType_RealSunTime_Desc {
             get {
@@ -2946,20 +2937,11 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die these informations will be send: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die these information will be send: ähnelt.
         /// </summary>
         public static string title_send_errorlog {
             get {
                 return ResourceManager.GetString("title_send_errorlog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die unkwnown_position ähnelt.
-        /// </summary>
-        public static string unknown_position {
-            get {
-                return ResourceManager.GetString("unknown_position", resourceCulture);
             }
         }
         
@@ -2982,7 +2964,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die the calender-widget\&apos;s only work with access to your calendar and location! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die the calendar-widgets only work with access to your calendar and location! ähnelt.
         /// </summary>
         public static string widget_error_location_is_requered {
             get {
@@ -3001,7 +2983,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die missing localtion-permission
+        ///   Sucht eine lokalisierte Zeichenfolge, die missing location-permission
         ///please click here ähnelt.
         /// </summary>
         public static string widget_error_permission_location {
