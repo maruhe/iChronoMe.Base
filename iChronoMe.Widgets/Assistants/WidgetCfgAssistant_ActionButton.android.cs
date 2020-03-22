@@ -18,8 +18,8 @@ namespace iChronoMe.Widgets
             {
                 try
                 {
-                    var appAdapter = new OtherAppAdapter(Tools.HelperContext);
-                    int iApp = Tools.ShowSingleChoiseDlg(Tools.HelperContext, "select", appAdapter).Result;
+                    var appAdapter = new OtherAppAdapter(AndroidHelpers.Tools.HelperContext);
+                    int iApp = AndroidHelpers.Tools.ShowSingleChoiseDlg(AndroidHelpers.Tools.HelperContext, "select", appAdapter).Result;
                     if (iApp < 0)
                         throw new Exception();
                     ApplicationInfo appInfo = appAdapter[iApp];

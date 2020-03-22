@@ -584,21 +584,17 @@ if you have enough colors just click 'back' or somewhere outside the window</val
   <data name="ezmz_runningwidgets_zero" xml:space="preserve">
     <value>no active widget</value>
   </data>
-  <data name="faq_item_1" xml:space="preserve">
-    <value>this is a cute question</value>
+  <data name="faq_item_001" xml:space="preserve">
+    <value>why does not 'timzone-time' match with the device-time?</value>
   </data>
-  <data name="faq_item_1_value" xml:space="preserve">
-    <value>and here the answer
-with line 2</value>
+  <data name="faq_item_001_value" xml:space="preserve">
+    <value>we use time-servers to determine the current gmt-time, so if there is an offset of some seconds or minutes may your device-time is not correct</value>
   </data>
-  <data name="faq_item_2" xml:space="preserve">
-    <value>here another question</value>
+  <data name="faq_item_002" xml:space="preserve">
+    <value>why isn't this app more beautiful?</value>
   </data>
-  <data name="faq_item_2_value" xml:space="preserve">
-    <value>and also a answer
-with a line 2
-line3
-and line 4</value>
+  <data name="faq_item_002_value" xml:space="preserve">
+    <value>it's not? contact us with your ideas :-)</value>
   </data>
   <data name="Filling" xml:space="preserve">
     <value>fill</value>

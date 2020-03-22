@@ -344,9 +344,9 @@ namespace iChronoMe.Core
 
             if (locationTask != null)
                 try { locationTask.Abort(); } catch { }
-
+            
             tLastLocationTaskStart = DateTime.Now;
-            locationTask = new Thread(() =>
+            var tsk = new Thread(() =>
             {
                 try
                 {
@@ -354,6 +354,10 @@ namespace iChronoMe.Core
                     bStartLocationTaskAgain = false;
                     GetLocationInfo();
                     SetAreaConfirmed();
+
+                    locationTask = null;
+                    if (bStartLocationTaskAgain)
+                        StartRefreshLocationInfo();
                 }
                 catch (ThreadAbortException)
                 {
@@ -364,15 +368,10 @@ namespace iChronoMe.Core
                     xLog.Error(ex);
                     return;
                 }
-                try
-                {
-                    locationTask = null;
-                    if (bStartLocationTaskAgain)
-                        StartRefreshLocationInfo();
-                } catch { }
             });
-            locationTask.IsBackground = true;
-            locationTask.Start();
+            tsk.IsBackground = true;
+            tsk.Start();
+            locationTask = tsk;
         }
 
         GeoInfo.AreaInfo ai = null;

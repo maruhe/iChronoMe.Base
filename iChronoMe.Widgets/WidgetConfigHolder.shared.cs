@@ -315,6 +315,8 @@ namespace iChronoMe.Widgets
                     break;
             }
         }
+
+        public virtual string GetFastPreviewID() => this.GetHashCode().ToString();
     }
 
     public class WidgetCfg_ActionButton : WidgetCfg
@@ -474,6 +476,17 @@ namespace iChronoMe.Widgets
             ColorTodayBackground = xColor.Transparent;
             ColorDayBackground = xColor.PapayaWhip;
             ColorDayText = xColor.Black;
+        }
+
+        public override string GetFastPreviewID()
+        {
+            int HashingBase = GetType().GetHashCode();
+            const int HashingMultiplier = 16777619;
+            int hash = HashingBase;
+            hash = (hash * HashingMultiplier) ^ ColorBackground.GetHashCode();
+            hash = (hash * HashingMultiplier) ^ ColorTitleText.GetHashCode();
+            hash = (hash * HashingMultiplier) ^ ColorTitleButtons.GetHashCode();
+            return hash.ToString();
         }
     }
 

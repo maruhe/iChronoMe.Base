@@ -34,6 +34,7 @@ namespace iChronoMe.Widgets
         public bool ShowFirstPreviewImage { get; set; } = false;
 
         public virtual void PerformPreperation(IUserIO handler) { }
+        public PartialLoadHandler PartialLoadHandler { get; set; } = null;
 
         public virtual void AfterSelect(IUserIO handler, WidgetCfgSample<T> sample) { }
 
@@ -46,6 +47,7 @@ namespace iChronoMe.Widgets
         public string CurstumButtonText { get; protected set; } = "custom";
 
         public bool ShowColors { get; set; } = false;
+        public PreviewImageMode PreviewImageMode { get; set; } = PreviewImageMode.Default;
 
         public virtual void ExecCustom(IUserIO handler) { }
 
@@ -60,6 +62,7 @@ namespace iChronoMe.Widgets
         string Title { get; }
         bool ShowPreviewImage { get; set; }
         bool ShowFirstPreviewImage { get; set; }
+        PreviewImageMode PreviewImageMode { get; set; }
         void PerformPreperation(IUserIO handler);
         void AfterSelect(IUserIO handler, WidgetCfgSample<T> sample);
         object PrevStepAssistant { get; set; }
@@ -67,8 +70,23 @@ namespace iChronoMe.Widgets
         bool AllowCustom { get; }
         string CurstumButtonText { get; }
         bool ShowColors { get; }
+        PartialLoadHandler PartialLoadHandler { get; set; }
 
         void ExecCustom(IUserIO handler);
         //void AfterCustom(WidgetCfgSample<T> sample);
+    }
+
+    public class PartialLoadHandler
+    {
+        public Action OnListChanged { get; set; } = null;
+        public string LoadingText { get; set; } = localize.loading;
+        public bool IsDone { get; set; } = false;
+    }
+
+    public enum PreviewImageMode
+    {
+        Default,
+        Fast,
+        SkiaOnly
     }
 }

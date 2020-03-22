@@ -246,186 +246,192 @@ namespace iChronoMe.Core.Classes
         {
             string cFullCassName = t.FullName;
 
-            if (!mappingPropertyNames.ContainsKey(cFullCassName))
+            lock (mappingPropertyNames)
             {
-                var swStart = DateTime.Now;
-                var mapping = new Dictionary<string, string>();
-                var includeClasses = new List<Type>() { t };
-                var createSubElements = new List<string>();
-
-                try
+                if (!mappingPropertyNames.ContainsKey(cFullCassName))
                 {
-                    var bt = t.BaseType;
-                    while (bt != null)
+                    var swStart = DateTime.Now;
+                    var mapping = new Dictionary<string, string>();
+                    var includeClasses = new List<Type>() { t };
+                    var createSubElements = new List<string>();
+
+                    try
                     {
-                        foreach (var att in bt.CustomAttributes)
+                        var bt = t.BaseType;
+                        while (bt != null)
                         {
-                            if (att.AttributeType == typeof(XmlIncludeAttribute))
+                            foreach (var att in bt.CustomAttributes)
                             {
-                                foreach (var arg in att.ConstructorArguments)
+                                if (att.AttributeType == typeof(XmlIncludeAttribute))
                                 {
-                                    if (arg.Value.ToString().Contains(t.FullName))
-                                        includeClasses.Add(bt);
+                                    foreach (var arg in att.ConstructorArguments)
+                                    {
+                                        if (arg.Value.ToString().Contains(t.FullName))
+                                            includeClasses.Add(bt);
+                                    }
                                 }
                             }
+                            bt.ToString();
+                            bt = bt.BaseType;
                         }
-                        bt.ToString();
-                        bt = bt.BaseType;
-                    }
-                    if (includeClasses.Contains(t))
-                    {
-                        foreach (var inf in t.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+                        if (includeClasses.Contains(t))
                         {
-                            if (inf.CanRead && inf.CanWrite)
+                            foreach (var inf in t.GetProperties(BindingFlags.Public | BindingFlags.Instance))
                             {
-                                string cXmlName = inf.Name;
-                                bool bCreateNewElement = !IsSimple(inf.PropertyType);
-                                foreach (var attr in inf.GetCustomAttributes())
+                                if (inf.CanRead && inf.CanWrite)
                                 {
-                                    if (attr is XmlIgnoreAttribute)
-                                        cXmlName = null;
-                                    if (attr is XmlElementAttribute)
+                                    string cXmlName = inf.Name;
+                                    bool bCreateNewElement = !IsSimple(inf.PropertyType);
+                                    foreach (var attr in inf.GetCustomAttributes())
                                     {
-                                        var x = (attr as XmlElementAttribute);
-                                        if (!string.IsNullOrEmpty(x.ElementName))
-                                            cXmlName = x.ElementName;
-                                        bCreateNewElement = true;
+                                        if (attr is XmlIgnoreAttribute)
+                                            cXmlName = null;
+                                        if (attr is XmlElementAttribute)
+                                        {
+                                            var x = (attr as XmlElementAttribute);
+                                            if (!string.IsNullOrEmpty(x.ElementName))
+                                                cXmlName = x.ElementName;
+                                            bCreateNewElement = true;
+                                        }
+                                        if (attr is XmlAttributeAttribute)
+                                        {
+                                            var x = (attr as XmlAttributeAttribute);
+                                            if (!string.IsNullOrEmpty(x.AttributeName))
+                                                cXmlName = x.AttributeName;
+                                            bCreateNewElement = false;
+                                        }
                                     }
-                                    if (attr is XmlAttributeAttribute)
-                                    {
-                                        var x = (attr as XmlAttributeAttribute);
-                                        if (!string.IsNullOrEmpty(x.AttributeName))
-                                            cXmlName = x.AttributeName;
+                                    if (inf.PropertyType == typeof(xColor))
                                         bCreateNewElement = false;
+                                    if (inf.PropertyType.IsSubclassOf(typeof(Enum)))
+                                        CheckEnumMapping(inf.PropertyType);
+                                    if (!string.IsNullOrEmpty(cXmlName))
+                                    {
+                                        inf.PropertyType.ToString();
+
+                                        mapping.Add(inf.Name, cXmlName);
+                                        if (bCreateNewElement)
+                                            createSubElements.Add(inf.Name);
                                     }
                                 }
-                                if (inf.PropertyType == typeof(xColor))
-                                    bCreateNewElement = false;
-                                if (inf.PropertyType.IsSubclassOf(typeof(Enum)))
-                                    CheckEnumMapping(inf.PropertyType);
-                                if (!string.IsNullOrEmpty(cXmlName))
-                                {
-                                    inf.PropertyType.ToString();
-
-                                    mapping.Add(inf.Name, cXmlName);
-                                    if (bCreateNewElement)
-                                        createSubElements.Add(inf.Name);
-                                }
                             }
-                        }
-                        foreach (var inf in t.GetFields(BindingFlags.Public | BindingFlags.Instance))
-                        {
-                            if (inf.IsPublic && !inf.IsStatic)
+                            foreach (var inf in t.GetFields(BindingFlags.Public | BindingFlags.Instance))
                             {
-                                string cXmlName = inf.Name;
-                                bool bCreateNewElement = !IsSimple(inf.FieldType);
-                                foreach (var attr in inf.GetCustomAttributes())
+                                if (inf.IsPublic && !inf.IsStatic)
                                 {
-                                    if (attr is XmlIgnoreAttribute)
-                                        cXmlName = null;
-                                    if (attr is XmlElementAttribute)
+                                    string cXmlName = inf.Name;
+                                    bool bCreateNewElement = !IsSimple(inf.FieldType);
+                                    foreach (var attr in inf.GetCustomAttributes())
                                     {
-                                        var x = (attr as XmlElementAttribute);
-                                        if (!string.IsNullOrEmpty(x.ElementName))
-                                            cXmlName = x.ElementName;
-                                        bCreateNewElement = true;
+                                        if (attr is XmlIgnoreAttribute)
+                                            cXmlName = null;
+                                        if (attr is XmlElementAttribute)
+                                        {
+                                            var x = (attr as XmlElementAttribute);
+                                            if (!string.IsNullOrEmpty(x.ElementName))
+                                                cXmlName = x.ElementName;
+                                            bCreateNewElement = true;
+                                        }
+                                        if (attr is XmlAttributeAttribute)
+                                        {
+                                            var x = (attr as XmlAttributeAttribute);
+                                            if (!string.IsNullOrEmpty(x.AttributeName))
+                                                cXmlName = x.AttributeName;
+                                            bCreateNewElement = false;
+                                        }
                                     }
-                                    if (attr is XmlAttributeAttribute)
-                                    {
-                                        var x = (attr as XmlAttributeAttribute);
-                                        if (!string.IsNullOrEmpty(x.AttributeName))
-                                            cXmlName = x.AttributeName;
+                                    if (inf.FieldType == typeof(xColor))
                                         bCreateNewElement = false;
-                                    }
-                                }
-                                if (inf.FieldType == typeof(xColor))
-                                    bCreateNewElement = false;
-                                if (inf.FieldType.IsSubclassOf(typeof(Enum)))
-                                    CheckEnumMapping(inf.FieldType);
-                                if (!string.IsNullOrEmpty(cXmlName))
-                                {
-                                    inf.FieldType.ToString();
+                                    if (inf.FieldType.IsSubclassOf(typeof(Enum)))
+                                        CheckEnumMapping(inf.FieldType);
+                                    if (!string.IsNullOrEmpty(cXmlName))
+                                    {
+                                        inf.FieldType.ToString();
 
-                                    mapping.Add(inf.Name, cXmlName);
-                                    if (bCreateNewElement)
-                                        createSubElements.Add(inf.Name);
+                                        mapping.Add(inf.Name, cXmlName);
+                                        if (bCreateNewElement)
+                                            createSubElements.Add(inf.Name);
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    ex.ToString();
-                }
-                try
-                {
-                    List<string> includeClassesNames = new List<string>();
-                    foreach (var x in includeClasses)
+                    catch (Exception ex)
                     {
-                        includeClassesNames.Add(x.FullName);
-                        typeAssemblies[x.FullName] = x.Assembly;
+                        ex.ToString();
                     }
+                    try
+                    {
+                        List<string> includeClassesNames = new List<string>();
+                        foreach (var x in includeClasses)
+                        {
+                            includeClassesNames.Add(x.FullName);
+                            typeAssemblies[x.FullName] = x.Assembly;
+                        }
 
-                    mappingPropertyNames.Add(cFullCassName, mapping);
-                    mappingIncludeClasses.Add(cFullCassName, includeClassesNames);
-                    mappingCreateSubElements.Add(cFullCassName, createSubElements);
-                    classMappings.Add(t.Name, cFullCassName);
-                    var mappingReverse = new Dictionary<string, string>();
-                    foreach (string key in mapping.Keys)
-                    {
-                        string val = mapping[key];
-                        mappingReverse.Add(val, key);
-                    }
-                    mappingPropertyNamesReverse.Add(cFullCassName, mappingReverse);
+                        mappingPropertyNames.Add(cFullCassName, mapping);
+                        mappingIncludeClasses.Add(cFullCassName, includeClassesNames);
+                        mappingCreateSubElements.Add(cFullCassName, createSubElements);
+                        classMappings.Add(t.Name, cFullCassName);
+                        var mappingReverse = new Dictionary<string, string>();
+                        foreach (string key in mapping.Keys)
+                        {
+                            string val = mapping[key];
+                            mappingReverse.Add(val, key);
+                        }
+                        mappingPropertyNamesReverse.Add(cFullCassName, mappingReverse);
 
-                    foreach (var tSub in t.Assembly.GetTypes())
-                    {
-                        if (tSub.IsSubclassOf(t))
-                            CheckObjectMapping(tSub);
+                        foreach (var tSub in t.Assembly.GetTypes())
+                        {
+                            if (tSub.IsSubclassOf(t))
+                                CheckObjectMapping(tSub);
+                        }
                     }
+                    catch (Exception ex)
+                    {
+                        ex.ToString();
+                    }
+                    tsMapping += DateTime.Now - swStart;
                 }
-                catch (Exception ex)
-                {
-                    ex.ToString();
-                }
-                tsMapping += DateTime.Now - swStart;
             }
         }
 
         private void CheckEnumMapping(Type t)
         {
             string cT = t.Name + "_";
-            if (!enumMappings.ContainsKey(cT))
+            lock (enumMappings)
             {
-                enumMappings.Add(cT, "done");
-                bool bUseString = false;
-
-                foreach (var att in t.CustomAttributes)
+                if (!enumMappings.ContainsKey(cT))
                 {
-                    if (att.AttributeType == typeof(XmlTypeAttribute))
+                    enumMappings.Add(cT, "done");
+                    bool bUseString = false;
+
+                    foreach (var att in t.CustomAttributes)
                     {
-                        foreach (var arg in att.ConstructorArguments)
+                        if (att.AttributeType == typeof(XmlTypeAttribute))
                         {
-                            if ("string".Equals(arg.Value))
-                                bUseString = true;
+                            foreach (var arg in att.ConstructorArguments)
+                            {
+                                if ("string".Equals(arg.Value))
+                                    bUseString = true;
+                            }
                         }
                     }
-                }
 
-                foreach (var x in Enum.GetValues(t))
-                {
-                    string cId = string.Format("{0}{1}", cT, x);
-                    string cVal = bUseString ? x.ToString() : ((int)x).ToString();
-
-                    var Z = t.GetField(x.ToString());
-                    foreach (var a in Z.GetCustomAttributes())
+                    foreach (var x in Enum.GetValues(t))
                     {
-                        if (a is XmlEnumAttribute)
-                            cVal = (a as XmlEnumAttribute).Name;
+                        string cId = string.Format("{0}{1}", cT, x);
+                        string cVal = bUseString ? x.ToString() : ((int)x).ToString();
+
+                        var Z = t.GetField(x.ToString());
+                        foreach (var a in Z.GetCustomAttributes())
+                        {
+                            if (a is XmlEnumAttribute)
+                                cVal = (a as XmlEnumAttribute).Name;
+                        }
+                        enumMappings.Add(cId, cVal);
+                        enumMappingsReverse.Add(string.Format("{0}{1}", cT, cVal), x);
                     }
-                    enumMappings.Add(cId, cVal);
-                    enumMappingsReverse.Add(string.Format("{0}{1}", cT, cVal), x);
                 }
             }
         }

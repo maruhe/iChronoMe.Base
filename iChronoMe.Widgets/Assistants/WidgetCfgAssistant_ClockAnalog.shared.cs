@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-
+using System.Threading;
 using iChronoMe.Core;
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.DynamicCalendar;
@@ -162,6 +162,7 @@ namespace iChronoMe.Widgets
     public class WidgetCfgAssistant_ClockAnalog_BackgroundImage : WidgetConfigAssistant<WidgetCfg_ClockAnalog>
     {
         string cImageDir = "";
+        public static Thread LoaderThread { get; set; } = null;
 
         public WidgetCfgAssistant_ClockAnalog_BackgroundImage(WidgetCfgSample<WidgetCfg_ClockAnalog> baseSample)
         {
@@ -195,8 +196,8 @@ namespace iChronoMe.Widgets
 
         public override void PerformPreperation(IUserIO handler)
         {
-            if (AppConfigHolder.MainConfig.LastCheckClockFaces.AddDays(1) < DateTime.Now)
-                ImageLoader.CheckImageThumbCache(handler, ImageLoader.filter_clockfaces);
+            if (AppConfigHolder.MainConfig.LastCheckClockFaces.AddDays(1) < DateTime.Now || !File.Exists(Path.Combine(cImageDir, "index")))
+                ImageLoader.CheckImageThumbCache(handler, ImageLoader.filter_clockfaces, 150, true);
             ClockHandConfig.CheckUpdateLocalData(handler);
 
             Samples.Clear();
@@ -259,34 +260,64 @@ namespace iChronoMe.Widgets
 
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase);
 
-            LoadSamples();
+            string[] cFiles = Directory.GetFiles(cImageDir, "*.png");
+            foreach (string cFile in cFiles)
+            {
+                AddSample(cFile);
+            }
         }
 
-        void LoadSamples()
+        public override void PerformPreperation(IUserIO handler)
+        {
+            base.PerformPreperation(handler);
+
+            if (File.Exists(Path.Combine(Path.GetDirectoryName(cImageDir), "index")))
+            {
+                PartialLoadHandler = new PartialLoadHandler();
+                WidgetCfgAssistant_ClockAnalog_BackgroundImage.LoaderThread?.Abort();
+                WidgetCfgAssistant_ClockAnalog_BackgroundImage.LoaderThread = new Thread(() => ImageLoader.CheckImageThumbCache(null, ImageLoader.filter_clockfaces, 150, false, Path.GetFileName(cImageDir), ImageLoadet));
+                WidgetCfgAssistant_ClockAnalog_BackgroundImage.LoaderThread.IsBackground = true; 
+                WidgetCfgAssistant_ClockAnalog_BackgroundImage.LoaderThread.Start();
+            }
+        }
+
+        void AddSample(string cFile)
         {
             try
             {
-                string[] cFiles = Directory.GetFiles(cImageDir, "*.png");
-                foreach (string cFile in cFiles)
+                if (string.IsNullOrEmpty(cFile) || !File.Exists(cFile))
+                    return;
+
+                WidgetCfg_ClockAnalog cfg = BaseSample.GetConfigClone();
+                cfg.BackgroundImage = cFile;
+                cfg.BackgroundImageTint = xColor.Transparent;
+                cfg.ColorBackground = xColor.Transparent;
+                cfg.ColorTickMarks = xColor.Transparent;
+
+                cfg.SetDefaultColors();
+
+                string cDefaultHands = ClockHandConfig.GetDefaultID(Path.GetFileNameWithoutExtension(cfg.BackgroundImage));
+                if (!string.IsNullOrEmpty(cDefaultHands))
                 {
-                    WidgetCfg_ClockAnalog cfg = BaseSample.GetConfigClone();
-                    cfg.BackgroundImage = cFile;
-                    cfg.BackgroundImageTint = xColor.Transparent;
-                    cfg.ColorBackground = xColor.Transparent;
-                    cfg.ColorTickMarks = xColor.Transparent;
-
+                    cfg.AllHandConfigID = cDefaultHands;
                     cfg.SetDefaultColors();
-
-                    string cDefaultHands = ClockHandConfig.GetDefaultID(Path.GetFileNameWithoutExtension(cfg.BackgroundImage));
-                    if (!string.IsNullOrEmpty(cDefaultHands))
-                    {
-                        cfg.AllHandConfigID = cDefaultHands;
-                        cfg.SetDefaultColors();
-                    }
-                    Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(sys.Debugmode ? Path.GetFileNameWithoutExtension(cFile) : "", cfg));
                 }
+                Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(sys.Debugmode ? Path.GetFileNameWithoutExtension(cFile) : "", cfg));                
             }
             catch { }
+        }
+
+        public void ImageLoadet(ImageLoadetEventArgs e)
+        {
+            AddSample(e.ImagePath);
+            if (e.InQue == 0)
+            {
+                PartialLoadHandler.IsDone = true;
+                PartialLoadHandler.LoadingText = "done";
+            }
+            else
+                PartialLoadHandler.LoadingText = sys.EzMzText(e.InQue, localize.ImageLoader_progress_one_image, localize.ImageLoader_progress_n_images);
+            PartialLoadHandler.OnListChanged?.Invoke();
         }
 
         public override void AfterSelect(IUserIO handler, WidgetCfgSample<WidgetCfg_ClockAnalog> sample)

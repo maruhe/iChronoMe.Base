@@ -1452,42 +1452,38 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die this is a cute question ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die why does not &apos;timzone-time&apos; match with the device-time? ähnelt.
         /// </summary>
-        public static string faq_item_1 {
+        public static string faq_item_001 {
             get {
-                return ResourceManager.GetString("faq_item_1", resourceCulture);
+                return ResourceManager.GetString("faq_item_001", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die and here the answer
-        ///with line 2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die we use time-servers to determine the current gmt-time, so if there is an offset of some seconds or minutes may your device-time is not correct ähnelt.
         /// </summary>
-        public static string faq_item_1_value {
+        public static string faq_item_001_value {
             get {
-                return ResourceManager.GetString("faq_item_1_value", resourceCulture);
+                return ResourceManager.GetString("faq_item_001_value", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die here another question ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die why isn&apos;t this app more beautiful? ähnelt.
         /// </summary>
-        public static string faq_item_2 {
+        public static string faq_item_002 {
             get {
-                return ResourceManager.GetString("faq_item_2", resourceCulture);
+                return ResourceManager.GetString("faq_item_002", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die and also a answer
-        ///with a line 2
-        ///line3
-        ///and line 4 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die it&apos;s not? contact us with your ideas :-) ähnelt.
         /// </summary>
-        public static string faq_item_2_value {
+        public static string faq_item_002_value {
             get {
-                return ResourceManager.GetString("faq_item_2_value", resourceCulture);
+                return ResourceManager.GetString("faq_item_002_value", resourceCulture);
             }
         }
         

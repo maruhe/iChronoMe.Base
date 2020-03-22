@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.Types;
-
+using iChronoMe.Tools;
 using SkiaSharp;
 
 using static iChronoMe.Widgets.ClockHandConfig;
@@ -376,7 +376,7 @@ namespace iChronoMe.Widgets
 
         public event EventHandler ClockFaceLoaded;
 
-        static List<(string filter, string group, string file, int size, string destFile, string maxFile)> imgsToLoad = new List<(string, string, string, int, string, string)>();
+        static List<(string filter, string group, string file, int size, string destFile)> imgsToLoad = new List<(string, string, string, int, string)>();
         static Thread imgLoader = null;
 
         public string GetClockFacePng(string backgroundImage, int size)
@@ -394,20 +394,30 @@ namespace iChronoMe.Widgets
 
                 string maxFile = Path.Combine(Path.Combine(Path.Combine(Path.Combine(sys.PathShare, "imgCache_" + cFilter), cGroup), "thumb_max", cFile));
 
-                lock (imgsToLoad)
-                    imgsToLoad.Add((cFilter, cGroup, cFile, size, cThumbPath, maxFile));
+                if (!File.Exists(maxFile))
+                {
+                    lock (imgsToLoad)
+                        imgsToLoad.Add((cFilter, cGroup, cFile, sys.DisplayShortSite, maxFile));
 
-                if (imgLoader == null)
-                    StartImageLoader();
+                    if (imgLoader == null)
+                        StartImageLoader();
+                }
 
                 if (File.Exists(backgroundImage) && File.Exists(maxFile))
                 {
-                    if (File.GetLastWriteTime(backgroundImage).AddMinutes(1) > File.GetLastWriteTime(maxFile))
+                    if (File.GetLastWriteTime(backgroundImage) > File.GetLastWriteTime(maxFile).AddMinutes(1))
                         try { File.Delete(maxFile); } catch { }
                 }
 
                 if (File.Exists(maxFile))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(cThumbPath));
+                    if (DrawableHelper.ResizeImage(maxFile, cThumbPath, size))
+                        return cThumbPath;
+
                     return maxFile;
+                }
+
             }
             return backgroundImage;
             /*
@@ -470,16 +480,9 @@ namespace iChronoMe.Widgets
                                 Directory.CreateDirectory(Path.GetDirectoryName(item.destFile));
                                 webClient.DownloadFile(Secrets.zAppDataUrl + "imageprev.php?filter=" + item.filter + "&group=" + item.group + "&image=" + item.file + "&max=" + item.size, item.destFile + "_");
 
-                                if (!File.Exists(item.maxFile) || new FileInfo(item.maxFile).Length < new FileInfo(item.destFile + "_").Length)
-                                {
-                                    Directory.CreateDirectory(Path.GetDirectoryName(item.maxFile));
-                                    File.Copy(item.destFile + "_", item.maxFile, true);
-                                    Thread.Sleep(500);
-                                }
                                 if (File.Exists(item.destFile))
                                     File.Delete(item.destFile);
                                 File.Move(item.destFile + "_", item.destFile);
-                                Thread.Sleep(500);
 
                                 ClockFaceLoaded?.Invoke(null, null);
                             }
