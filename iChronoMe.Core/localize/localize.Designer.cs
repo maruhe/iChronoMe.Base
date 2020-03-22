@@ -2416,6 +2416,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Icon ähnelt.
+        /// </summary>
+        public static string text_Icon {
+            get {
+                return ResourceManager.GetString("text_Icon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Offset ähnelt.
         /// </summary>
         public static string text_Offset {

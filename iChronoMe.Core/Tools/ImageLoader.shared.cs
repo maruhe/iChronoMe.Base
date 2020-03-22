@@ -168,6 +168,17 @@ namespace iChronoMe.Core.Classes
 
             return true;
         }
+
+        public static void ClearCache(string filter)
+        {
+            try
+            {
+                string index = Path.Combine(ImageLoader.GetImagePathThumb(filter), "index");
+                if (File.Exists(index))
+                    File.Delete(index);
+            }
+            catch { }
+        }
     }
 
     public class ImageLoadetEventArgs

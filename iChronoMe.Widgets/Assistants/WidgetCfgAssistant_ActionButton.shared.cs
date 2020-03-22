@@ -21,7 +21,7 @@ namespace iChronoMe.Widgets
 
             var cfg = BaseSample.GetConfigClone();
             var cfgPrev = BaseSample.GetConfigClone();
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(localize.ActionButtonStyle, null, cfg, typeof(WidgetCfgAssistant_ActionButton_Style), cfgPrev));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(localize.ActionButtonStyle, null, cfg, typeof(WidgetCfgAssistant_ActionButton_Icon), cfgPrev));
 
             cfg = BaseSample.GetConfigClone();
             cfgPrev = BaseSample.GetConfigClone();
@@ -85,15 +85,15 @@ namespace iChronoMe.Widgets
                 Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(c, cfg));
             }
 
-            NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_Style);
+            NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_Icon);
         }
     }
 
-    public class WidgetCfgAssistant_ActionButton_Style : WidgetConfigAssistant<WidgetCfg_ActionButton>
+    public class WidgetCfgAssistant_ActionButton_Icon : WidgetConfigAssistant<WidgetCfg_ActionButton>
     {
-        public WidgetCfgAssistant_ActionButton_Style(WidgetCfgSample<WidgetCfg_ActionButton> baseSample)
+        public WidgetCfgAssistant_ActionButton_Icon(WidgetCfgSample<WidgetCfg_ActionButton> baseSample)
         {
-            Title = localize.ActionButtonStyle;
+            Title = localize.text_Icon;
             BaseSample = baseSample;
 
             var cfg = baseSample.GetConfigClone();

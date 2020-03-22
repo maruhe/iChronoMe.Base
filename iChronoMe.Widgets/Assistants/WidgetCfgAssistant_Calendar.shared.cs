@@ -396,7 +396,7 @@ namespace iChronoMe.Widgets
                     xclrs.Add(clr2);
                 }
                 cfg.DayBackgroundGradient = new DateGradient() { GradientS = { new DynamicGradient(cfg.TimeUnit, xclrs.ToArray()) } };
-                Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.text_Sample + " " + i, cfg));
+                Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.text_Sample + " " + i, xclrs.ToArray(), cfg));
 
             }
 
