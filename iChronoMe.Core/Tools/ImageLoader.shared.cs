@@ -135,6 +135,10 @@ namespace iChronoMe.Core.Classes
                                 sys.EzMzText(cLoadImgS.Count, localize.ImageLoader_success_one_image, string.Format(localize.ImageLoader_success_n_images, iSuccess, cLoadImgS.Count)));                            
 
                             imageLoadet?.Invoke(new ImageLoadetEventArgs(cDestPath, cLoadImgS.Count - iSuccess));
+
+                            if (false && sys.Debugmode && !bOnlyOnePerGroup)
+                                Task.Delay(2500).Wait();
+
 #if DEBUG
                             if (iSuccess >= 200)
                                 break;
@@ -147,11 +151,6 @@ namespace iChronoMe.Core.Classes
                     }
                 }
 
-                if (iSuccess == cLoadImgS.Count && filter_clockfaces.Equals(imageFilter))
-                {
-                    AppConfigHolder.MainConfig.LastCheckClockFaces = DateTime.Now;
-                    AppConfigHolder.SaveMainConfig();
-                }
                 if (iSuccess == cLoadImgS.Count && !bOnlyOnePerGroup && string.IsNullOrEmpty(cGroupFilter) && File.Exists(cIndexPath))
                     File.Delete(cIndexPath);
                 handler?.SetProgressDone();

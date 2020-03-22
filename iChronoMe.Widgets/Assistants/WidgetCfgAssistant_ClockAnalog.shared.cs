@@ -196,7 +196,8 @@ namespace iChronoMe.Widgets
 
         public override void PerformPreperation(IUserIO handler)
         {
-            if (AppConfigHolder.MainConfig.LastCheckClockFaces.AddDays(1) < DateTime.Now || !File.Exists(Path.Combine(cImageDir, "index")))
+            string index = Path.Combine(cImageDir, "index");
+            if (!File.Exists(index) || File.GetLastWriteTime(index).AddDays(7) < DateTime.Now)
                 ImageLoader.CheckImageThumbCache(handler, ImageLoader.filter_clockfaces, 150, true);
             ClockHandConfig.CheckUpdateLocalData(handler);
 

@@ -69,15 +69,22 @@ namespace iChronoMe.Widgets
             ReloadHands();
         }
 
+        public static void ClearCache()
+        {
+            try
+            {
+                if (File.Exists(dbFile))
+                    File.SetLastWriteTime(dbFile, DateTime.Now.AddDays(-10));
+            } catch { }
+        }
+
         public static void CheckUpdateLocalData(IProgressChangedHandler handler)
         {
-            if (AppConfigHolder.MainConfig.LastCheckClockHands.AddDays(7) < DateTime.Now || !File.Exists(dbFile))
+            if (!File.Exists(dbFile) || File.GetLastWriteTime(dbFile).AddDays(7) < DateTime.Now)
             {
                 if (DataLoader.CheckDataPackage(handler, DataLoader.filter_clockhands, sys.PathDBdata, localize.ProgressUpdateBaseData))
                 {
                     ReloadHands();
-                    AppConfigHolder.MainConfig.LastCheckClockHands = DateTime.Now;
-                    AppConfigHolder.SaveMainConfig();
                 }
             }
         }
@@ -302,6 +309,9 @@ namespace iChronoMe.Widgets
             public bool AskUserBackgroundColor { get; set; }
             public bool AllowTint { get; set; }
             public string Info { get; set; }
+            
+            [Ignore]
+            public xColor xMainColor { get => xColor.FromHex(MainColor, xColor.MaterialPink); }
         }
     }
 }

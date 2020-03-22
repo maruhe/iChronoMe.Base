@@ -50,7 +50,6 @@ namespace iChronoMe.Core.Classes
                         {
                             if (!string.IsNullOrEmpty(cFile) && !string.IsNullOrEmpty(cMd5))
                             {
-                                //if (cFile.EndsWith(".png"))
                                 {
                                     bool bLoadFile = true;
                                     string cLocal = Path.Combine(string.IsNullOrEmpty(cGroup) ? cBasePath : Path.Combine(cBasePath, cGroup), cFile);
@@ -58,7 +57,17 @@ namespace iChronoMe.Core.Classes
                                     {
                                         string cLocalMd5 = sys.CalculateFileMD5(cLocal);
                                         if (cMd5.Equals(cLocalMd5))
+                                        {
                                             bLoadFile = false;
+                                            try
+                                            {
+                                                File.SetLastWriteTime(cLocal, DateTime.Now);
+                                            } 
+                                            catch (Exception ex)
+                                            {
+                                                sys.LogException(ex);
+                                            }
+                                        }
                                     }
 
                                     if (bLoadFile)

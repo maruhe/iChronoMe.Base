@@ -68,8 +68,8 @@ namespace iChronoMe.Core.Classes
         public bool AlwaysShowForegroundNotification { get; set; } = false;
         public bool SendErrorLogs { get; set; } = false;
         public bool DenyErrorScreens { get; set; } = false;
-        public DateTime LastCheckClockFaces { get; set; } = DateTime.MinValue;
-        public DateTime LastCheckClockHands { get; set; } = DateTime.MinValue;
+        //public DateTime LastCheckClockFaces { get; set; } = DateTime.MinValue;
+        //public DateTime LastCheckClockHands { get; set; } = DateTime.MinValue;
         public bool ContinuousLocationUpdates { get; set; } = false;
         public bool CalendarReminderWarningDone { get; set; }
 

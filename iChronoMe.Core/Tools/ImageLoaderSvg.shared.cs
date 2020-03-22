@@ -12,7 +12,6 @@ namespace iChronoMe.Core.Classes
         public const string filter_clockfaces = "clockfaces";
 
         static bool bDone;
-        public const string cUrlDir = Secrets.zAppDataUrl + (sys.Debugmode ? "debug" : "release") + "/";
 
         public static string GetImagePathThumb(string imageGroup, int size = 150)
         {
@@ -22,21 +21,32 @@ namespace iChronoMe.Core.Classes
             return cPath;
         }
 
-        public static bool CheckImageThumbCache(IProgressChangedHandler handler, string imageGroup, int size = 150)
+        public static bool CheckImageThumbCache(IProgressChangedHandler handler, string imageFilter, int size = 150, bool bOnlyOnePerGroup = false, string cGroupFilter = null, Action<ImageLoadetEventArgs> imageLoadet = null)
         {
-            string cBasePath = GetImagePathThumb(imageGroup, size);
+            string cBasePath = GetImagePathThumb(imageFilter, size);
+            string cIndexPath = Path.Combine(cBasePath, "index");
             try
             {
-                handler.StartProgress(localize.ImageLoader_progress_title);
-                string cImgList = sys.GetUrlContent(cUrlDir + "filelist.php?filter=" + imageGroup).Result;
+                handler?.StartProgress(localize.ImageLoader_progress_title);
+                string cImgList = string.Empty;
+
+                if (!bOnlyOnePerGroup && File.Exists(cIndexPath) && File.GetLastWriteTime(cIndexPath).AddDays(3) > DateTime.Now)
+                    cImgList = File.ReadAllText(cIndexPath);
 
                 if (string.IsNullOrEmpty(cImgList))
-                    throw new Exception(localize.ImageLoader_error_list_unloadable);
+                {
+                    cImgList = sys.GetUrlContent(Secrets.zAppDataUrl + "filelist.php?filter=" + imageFilter + "&size=" + size).Result;
 
-                cImgList = cImgList.Trim().Replace("<br>", "").Replace("<BR>", "");
+                    if (string.IsNullOrEmpty(cImgList))
+                        throw new Exception(localize.ImageLoader_error_list_unloadable);
 
-                if (!cImgList.StartsWith("path:"))
-                    throw new Exception(localize.ImageLoader_error_list_broken);
+                    cImgList = cImgList.Trim().Replace("<br>", "").Replace("<BR>", "");
+
+                    if (!cImgList.StartsWith("group:") && !cImgList.StartsWith("path:"))
+                        throw new Exception(localize.ImageLoader_error_list_broken);
+                }
+
+                File.WriteAllText(cIndexPath, cImgList);
 
                 List<string> cLoadImgS = new List<string>();
                 var list = cImgList.Split(new char[] { '\n' });
@@ -95,7 +105,7 @@ namespace iChronoMe.Core.Classes
                             iImg++;
 
                             string cDestPath = Path.Combine(cBasePath, cLoadImage);
-                            webClient.DownloadFile(cUrlDir + imageGroup + "/" + cLoadImage, cDestPath + "_");
+                            webClient.DownloadFile(Secrets.zAppDataUrl + imageFilter + "/" + cLoadImage, cDestPath + "_");
 
                             if (File.Exists(cDestPath))
                                 File.Delete(cDestPath);
@@ -123,11 +133,6 @@ namespace iChronoMe.Core.Classes
 
                     foreach (string cPackage in Directory.GetFiles(cBasePath, "*.zip"))
                         ZipManager.ExtractToDirectory(cPackage, cBasePath);
-                }
-                if (!sys.Debugmode && iSuccess == cLoadImgS.Count && filter_clockfaces.Equals(imageGroup))
-                {
-                    AppConfigHolder.MainConfig.LastCheckClockFaces = DateTime.Now;
-                    AppConfigHolder.SaveMainConfig();
                 }
                 handler.SetProgressDone();
             }
