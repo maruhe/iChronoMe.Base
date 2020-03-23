@@ -38,6 +38,8 @@ namespace iChronoMe.Core.Classes
                 catch (ThreadAbortException) { }
                 catch (Exception ex)
                 {
+                    if (ex.InnerException is ThreadAbortException)
+                        return null;
                     sys.LogException(ex, "Error checking TZ-Polyhon " + i + " for LatLong: " + lat + ", " + lng);
                 }
                 i++;

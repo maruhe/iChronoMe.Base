@@ -124,6 +124,7 @@ namespace iChronoMe.Core
                 sys.lastUserLocation.Latitude = cfg.Latitude;
                 sys.lastUserLocation.Longitude = cfg.Longitude;
             }
+            lth.StartRefreshLocationInfo();
             return lth;
         }
 
@@ -268,6 +269,9 @@ namespace iChronoMe.Core
 
         private TimeZoneInfoJson FindTimeZoneByLocation(double nLatitude, double nLongitude)
         {
+            var cache = TimeZoneInfoCache.FromLocation(nLatitude, nLongitude, true);
+            if (cache != null)
+                return new TimeZoneInfoJson { timezoneId = cache.timezoneId, gmtOffset = cache.gmtOffset, dstOffset = cache.dstOffset };
             if (TimeZoneMap.MapIsReady)
             {
                 var xxTZ = TimeZoneMap.GetTimeZone((float)nLatitude, (float)nLongitude);
@@ -276,9 +280,6 @@ namespace iChronoMe.Core
                     return xxTZ;
                 }
             }
-            var cache = TimeZoneInfoCache.FromLocation(nLatitude, nLongitude, true);
-            if (cache != null)
-                return new TimeZoneInfoJson { timezoneId = cache.timezoneId, gmtOffset = cache.gmtOffset, dstOffset = cache.dstOffset };
             return null;
         }
 

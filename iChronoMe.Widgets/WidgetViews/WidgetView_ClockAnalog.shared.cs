@@ -382,45 +382,52 @@ namespace iChronoMe.Widgets
 
         public string GetClockFacePng(string backgroundImage, int size)
         {
-            if (backgroundImage.EndsWith(".png"))
+            try
             {
-                string cFilter = ImageLoader.filter_clockfaces;
-                string cGroup = Path.GetFileName(Path.GetDirectoryName(backgroundImage));
-                string cFile = Path.GetFileName(backgroundImage);
-
-                string cThumbPath = Path.Combine(Path.Combine(Path.Combine(Path.Combine(sys.PathShare, "imgCache_" + cFilter), cGroup), "thumb_" + size, cFile));
-
-                if (File.Exists(cThumbPath) && (!File.Exists(backgroundImage) || File.GetLastWriteTime(cThumbPath).AddMinutes(1) >= File.GetLastWriteTime(backgroundImage)))
-                    return cThumbPath;
-
-                string maxFile = Path.Combine(Path.Combine(Path.Combine(Path.Combine(sys.PathShare, "imgCache_" + cFilter), cGroup), "thumb_max", cFile));
-
-                if (!File.Exists(maxFile))
+                if (backgroundImage.EndsWith(".png"))
                 {
-                    lock (imgsToLoad)
-                        imgsToLoad.Add((cFilter, cGroup, cFile, sys.DisplayShortSite, maxFile));
+                    string cFilter = ImageLoader.filter_clockfaces;
+                    string cGroup = Path.GetFileName(Path.GetDirectoryName(backgroundImage));
+                    string cFile = Path.GetFileName(backgroundImage);
 
-                    if (imgLoader == null)
-                        StartImageLoader();
-                }
+                    string cThumbPath = Path.Combine(Path.Combine(Path.Combine(Path.Combine(sys.PathShare, "imgCache_" + cFilter), cGroup), "thumb_" + size, cFile));
 
-                if (File.Exists(backgroundImage) && File.Exists(maxFile))
-                {
-                    if (File.GetLastWriteTime(backgroundImage) > File.GetLastWriteTime(maxFile).AddMinutes(1))
-                        try { File.Delete(maxFile); } catch { }
-                }
-
-                if (File.Exists(maxFile))
-                {
-                    Directory.CreateDirectory(Path.GetDirectoryName(cThumbPath));
-                    if (DrawableHelper.ResizeImage(maxFile, cThumbPath, size))
+                    if (File.Exists(cThumbPath) && (!File.Exists(backgroundImage) || File.GetLastWriteTime(cThumbPath).AddMinutes(1) >= File.GetLastWriteTime(backgroundImage)))
                         return cThumbPath;
 
-                    return maxFile;
-                }
+                    string maxFile = Path.Combine(Path.Combine(Path.Combine(Path.Combine(sys.PathShare, "imgCache_" + cFilter), cGroup), "thumb_max", cFile));
 
+                    if (!File.Exists(maxFile))
+                    {
+                        lock (imgsToLoad)
+                            imgsToLoad.Add((cFilter, cGroup, cFile, sys.DisplayShortSite, maxFile));
+
+                        if (imgLoader == null)
+                            StartImageLoader();
+                    }
+
+                    if (File.Exists(backgroundImage) && File.Exists(maxFile))
+                    {
+                        if (File.GetLastWriteTime(backgroundImage) > File.GetLastWriteTime(maxFile).AddMinutes(1))
+                            try { File.Delete(maxFile); } catch { }
+                    }
+
+                    if (File.Exists(maxFile))
+                    {
+                        Directory.CreateDirectory(Path.GetDirectoryName(cThumbPath));
+                        if (DrawableHelper.ResizeImage(maxFile, cThumbPath, size))
+                            return cThumbPath;
+
+                        return maxFile;
+                    }
+
+                }
+                return backgroundImage;
+            } 
+            catch
+            {
+                return backgroundImage;
             }
-            return backgroundImage;
             /*
             if (backgroundImage.EndsWith(".svg"))
             {

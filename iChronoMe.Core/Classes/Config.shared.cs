@@ -64,7 +64,6 @@ namespace iChronoMe.Core.Classes
         public int InitScreenUserLocation { get; set; } = sys.Debugmode ? xxDebugDone : 0;
         public int InitBaseDataDownload { get; set; } = 0;
 
-        public string AppThemeName { get; set; }
         public bool AlwaysShowForegroundNotification { get; set; } = false;
         public bool SendErrorLogs { get; set; } = false;
         public bool DenyErrorScreens { get; set; } = false;

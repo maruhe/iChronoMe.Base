@@ -101,42 +101,7 @@ namespace iChronoMe.Core.Classes
 
         static DateTime requestStart;
         static int iErrorCount;
-        /*
-        private static void Client_ErrorOccurred(object sender, NtpNetworkErrorEventArgs e)
-        {
-            State = TimeHolderState.Error;
-            iErrorCount++;
-            if (iErrorCount <= 5)
-            {
-                Task.Factory.StartNew(async () =>
-                {
-                    await Task.Delay(500);
-                    NewServer();
-                    requestStart = DateTime.Now;
-                    mNtp.BeginRequestTime();
-                });
-            }
-        }
-
-        private static void Client_TimeReceived(object sender, NtpTimeReceivedEventArgs e)
-        {
-            var tsResponse = DateTime.Now - requestStart;
-            var tsDeviceTimeOffset = e.ReceivedAt - e.CurrentTime - tsResponse;
-
-            if (tsDeviceTimeOffset.TotalMinutes > -15 && tsDeviceTimeOffset.TotalMinutes < 15)
-            {
-                mLastNtpDiff = tsDeviceTimeOffset;
-                State = TimeHolderState.Synchron;
-            }
-            else
-            {
-                mLastNtpDiff = TimeSpan.FromTicks(0);
-                State = TimeHolderState.Error;
-            }
-            mLastNtp = e.ReceivedAt;
-        }
-        */
-
+        
         //https://stackoverflow.com/questions/1193955/how-to-query-an-ntp-server-using-c
         public static TimeSpan? GetNetworkTimeOffset()
         {
