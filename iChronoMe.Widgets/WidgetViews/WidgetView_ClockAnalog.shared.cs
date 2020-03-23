@@ -272,6 +272,7 @@ namespace iChronoMe.Widgets
                 }
             }
 
+
             if (!FlowHourHand)
                 hour = Math.Truncate(hour);
             if (!FlowMinuteHand)
@@ -335,14 +336,14 @@ namespace iChronoMe.Widgets
 
                     if (!string.IsNullOrEmpty(path.StrokeColor) && !"-".Equals(path.StrokeColor))
                     {
-                        strokePaint.Color = colorStroke.IsEmpty ? path.GetStrokeColor(ClockfaceInfo != null && !BackImageAllowsBackColor ? ClockfaceInfo.MainColor + " " + ClockfaceInfo.HandColorsBanned : ColorBackground.HexString, ClockfaceInfo?.HandColorSuggestion).ToSKColor() : colorStroke.ToSKColor();
+                        strokePaint.Color = colorStroke.IsDefault || colorStroke.IsEmpty ? path.GetStrokeColor(ClockfaceInfo != null && !BackImageAllowsBackColor ? ClockfaceInfo.MainColor + " " + ClockfaceInfo.HandColorsBanned : ColorBackground.HexString, ClockfaceInfo?.HandColorSuggestion).ToSKColor() : colorStroke.ToSKColor();
                         strokePaint.StrokeWidth = path.StrokeWidth;
                         canvas?.DrawPath(path.SkPath, strokePaint);
                     }
 
                     if (!string.IsNullOrEmpty(path.FillColor) && !"-".Equals(path.FillColor))
                     {
-                        fillPaint.Color = colorFill.IsEmpty ? path.GetFillColor(ClockfaceInfo != null && !BackImageAllowsBackColor ? ClockfaceInfo.MainColor + " " + ClockfaceInfo.HandColorsBanned : ColorBackground.HexString, ClockfaceInfo?.HandColorSuggestion).ToSKColor() : colorFill.ToSKColor();
+                        fillPaint.Color = colorFill.IsDefault || colorFill.IsEmpty ? path.GetFillColor(ClockfaceInfo != null && !BackImageAllowsBackColor ? ClockfaceInfo.MainColor + " " + ClockfaceInfo.HandColorsBanned : ColorBackground.HexString, ClockfaceInfo?.HandColorSuggestion).ToSKColor() : colorFill.ToSKColor();
                         canvas?.DrawPath(path.SkPath, fillPaint);
                     }
 

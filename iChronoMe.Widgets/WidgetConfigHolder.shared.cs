@@ -850,8 +850,8 @@ namespace iChronoMe.Widgets
             ColorSecondHandStroke = s.strokeClr.ToXColor();
             ColorSecondHandFill = s.fillClr.ToXColor();
             var c = vClock.drawClockPaths(null, CapConfig?.CapPathList, ColorCenterCapStroke, ColorCenterCapFill);
-            ColorCenterCapStroke = c.strokeClr.ToXColor();
-            ColorCenterCapFill = c.fillClr.ToXColor();
+            ColorCenterCapStroke = ColorCenterCapStroke.IsDefault ? ColorCenterCapStroke : c.strokeClr.ToXColor();
+            ColorCenterCapFill = ColorCenterCapFill.IsDefault ? ColorCenterCapFill : c.fillClr.ToXColor();
         }
 
         public bool BackImageAllowsBackColor { get => !string.IsNullOrEmpty(BackgroundImage) && BackgroundImage.Contains("01_simple_face"); }

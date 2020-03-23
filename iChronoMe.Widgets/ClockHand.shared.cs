@@ -140,6 +140,9 @@ namespace iChronoMe.Widgets
                         if (!string.IsNullOrEmpty(cfg.CapPaths) && PathList.ContainsKey(cfg.CapPaths))
                         {
                             cfg.CapPathList = new List<ClockPath>(PathList[cfg.CapPaths]);
+                            var x = CheckHasCustomizablePaths(cfg.CapPathList);
+                            cfg.AllowCustomCapStroke = x.stroke;
+                            cfg.AllowCustomCapFill = x.fill;
                         }
 
                         if (!string.IsNullOrEmpty(cfg.Defaults))
@@ -205,6 +208,8 @@ namespace iChronoMe.Widgets
         [Ignore] public bool AllowCustomMinuteFill { get; set; } = false;
         [Ignore] public bool AllowCustomSecondStroke { get; set; } = false;
         [Ignore] public bool AllowCustomSecondFill { get; set; } = false;
+        [Ignore] public bool AllowCustomCapStroke { get; set; } = false;
+        [Ignore] public bool AllowCustomCapFill { get; set; } = false;
 
         [Ignore] public List<ClockPath> HourPathList { get; set; }
         [Ignore] public List<ClockPath> MinutePathList { get; set; }

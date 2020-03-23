@@ -110,7 +110,7 @@ namespace iChronoMe.Widgets
             var cfg = BaseSample.GetConfigClone();
             var cfgPrev = BaseSample.GetConfigClone();
             cfgPrev.ColorBackground = xColor.HotPink;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.Background, null, cfg, typeof(WidgetCfgAssistant_ClockAnalog_BackgroundImage), cfgPrev));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.Background, null, cfg, typeof(WidgetCfgAssistant_ClockAnalog_Background), cfgPrev));
             if (ClockHandConfig.Count > 1)
                 Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.HandTypes, null, cfg, typeof(WidgetCfgAssistant_ClockAnalog_HandType)));
             cfg = BaseSample.GetConfigClone();
@@ -159,12 +159,12 @@ namespace iChronoMe.Widgets
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase);
         }
     }
-    public class WidgetCfgAssistant_ClockAnalog_BackgroundImage : WidgetConfigAssistant<WidgetCfg_ClockAnalog>
+    public class WidgetCfgAssistant_ClockAnalog_Background : WidgetConfigAssistant<WidgetCfg_ClockAnalog>
     {
         string cImageDir = "";
         public static Thread LoaderThread { get; set; } = null;
 
-        public WidgetCfgAssistant_ClockAnalog_BackgroundImage(WidgetCfgSample<WidgetCfg_ClockAnalog> baseSample)
+        public WidgetCfgAssistant_ClockAnalog_Background(WidgetCfgSample<WidgetCfg_ClockAnalog> baseSample)
         {
             Title = localize.Background;
             BaseSample = baseSample;
@@ -190,6 +190,7 @@ namespace iChronoMe.Widgets
                     cfg.ColorTickMarks = x.ColorTickMarks;
                 }
                 cfg.ColorBackground = clrBack;
+                cfg.SetDefaultColors();
                 return cfg;
             }
         }
@@ -275,10 +276,10 @@ namespace iChronoMe.Widgets
             if (File.Exists(Path.Combine(Path.GetDirectoryName(cImageDir), "index")))
             {
                 PartialLoadHandler = new PartialLoadHandler();
-                WidgetCfgAssistant_ClockAnalog_BackgroundImage.LoaderThread?.Abort();
-                WidgetCfgAssistant_ClockAnalog_BackgroundImage.LoaderThread = new Thread(() => ImageLoader.CheckImageThumbCache(null, ImageLoader.filter_clockfaces, 150, false, Path.GetFileName(cImageDir), ImageLoadet));
-                WidgetCfgAssistant_ClockAnalog_BackgroundImage.LoaderThread.IsBackground = true; 
-                WidgetCfgAssistant_ClockAnalog_BackgroundImage.LoaderThread.Start();
+                WidgetCfgAssistant_ClockAnalog_Background.LoaderThread?.Abort();
+                WidgetCfgAssistant_ClockAnalog_Background.LoaderThread = new Thread(() => ImageLoader.CheckImageThumbCache(null, ImageLoader.filter_clockfaces, 150, false, Path.GetFileName(cImageDir), ImageLoadet));
+                WidgetCfgAssistant_ClockAnalog_Background.LoaderThread.IsBackground = true;
+                WidgetCfgAssistant_ClockAnalog_Background.LoaderThread.Start();
             }
         }
 
@@ -301,7 +302,8 @@ namespace iChronoMe.Widgets
                 if (!string.IsNullOrEmpty(cDefaultHands))
                 {
                     cfg.AllHandConfigID = cDefaultHands;
-                    cfg.SetDefaultColors();
+                    cfg.ApplyDefaultColors();
+                    cfg.ColorCenterCapStroke = cfg.ColorCenterCapFill = xColor.Default;
                 }
                 Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(sys.Debugmode ? Path.GetFileNameWithoutExtension(cFile) : "", cfg));                
             }
@@ -622,6 +624,7 @@ namespace iChronoMe.Widgets
                 cfg.ColorCenterCapStroke != def.ColorCenterCapStroke ||
                 cfg.ColorCenterCapFill != def.ColorCenterCapFill)
             {
+                cfg.ColorCenterCapStroke = cfg.ColorCenterCapFill = xColor.Default;
                 Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.Default, def, "SetDone"));
             }
 
@@ -786,12 +789,30 @@ namespace iChronoMe.Widgets
                     cfg.ColorSecondHandStroke = clr.Value;
                 }
 
-                if (cfg.ShowSeconds && BaseSample.WidgetConfig.SecondHandConfig.AllowCustomSecondFill)
+                if (cfg.ShowSeconds && BaseSample.WidgetConfig.SecondHandConfig?.AllowCustomSecondFill == true)
                 {
                     clr = await handler.UserSelectColor(localize.text_SecondHandFill, org.ColorSecondHandFill);
                     if (clr == null)
                         return;
                     cfg.ColorSecondHandFill = clr.Value;
+                }
+
+                if (BaseSample.WidgetConfig.CapConfig != null)
+                {
+                    if (BaseSample.WidgetConfig.CapConfig.AllowCustomCapStroke)
+                    {
+                        clr = await handler.UserSelectColor("center cap", org.ColorCenterCapStroke.IsDefault ? xColor.Transparent : org.ColorCenterCapStroke);
+                        if (clr == null)
+                            return;
+                        cfg.ColorCenterCapStroke = clr.Value;
+                    }
+                    if (BaseSample.WidgetConfig.CapConfig.AllowCustomCapFill)
+                    {
+                        clr = await handler.UserSelectColor("center cap", org.ColorCenterCapFill.IsDefault ? xColor.Transparent : org.ColorCenterCapFill);
+                        if (clr == null)
+                            return;
+                        cfg.ColorCenterCapFill = clr.Value;
+                    }
                 }
             }
             catch

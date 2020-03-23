@@ -372,7 +372,12 @@ namespace iChronoMe.Core.Types
         public string ToHex(bool bIncludeEmptyToken)
         {
             if (bIncludeEmptyToken)
-                return IsEmpty ? ToHex().Replace('#', '$') : ToHex();
+            {
+                if (IsDefault)
+                    return "x";
+                if (IsEmpty)
+                    return ToHex().Replace('#', '$');
+            }
             return ToHex();
         }
 
@@ -409,6 +414,8 @@ namespace iChronoMe.Core.Types
 
         public static xColor FromHex(string hex, xColor? defaultColor = null)
         {
+            if ("x".Equals(hex))
+                return Default;
             // Undefined
             if (string.IsNullOrEmpty(hex) || hex.Length < 3)
                 return defaultColor ?? Default;
@@ -492,10 +499,14 @@ namespace iChronoMe.Core.Types
 
         public static xColor MakeEmptyColor(xColor color)
         {
+            if (color.IsDefault)
+                return color;
             return new xColor((object)null, color);
         }
         public static xColor MakeNonEmptyColor(xColor color)
         {
+            if (color.IsDefault)
+                return color;
             return new xColor(color.R, color.G, color.B, color.A);
         }
 
