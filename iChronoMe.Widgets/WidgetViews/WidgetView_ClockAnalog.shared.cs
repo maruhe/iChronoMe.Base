@@ -53,7 +53,8 @@ namespace iChronoMe.Widgets
             Color = SKColors.Black,
             StrokeWidth = 10,
             StrokeCap = SKStrokeCap.Round,
-            IsAntialias = true
+            IsAntialias = true,
+            StrokeJoin = SKStrokeJoin.Bevel
         };
 
 
@@ -90,7 +91,10 @@ namespace iChronoMe.Widgets
         public Stream GetBitmap(double nHour, double nMinute, double nSecond, int width = 512, int height = 512, bool bDrawBackImage = false)
         {
             if (bitmap == null || bitmap.Width != width || bitmap.Height != height)
+            {
+                bitmap?.Dispose();
                 bitmap = new SKBitmap(width, height);
+            }
 
             SKCanvas canvas = new SKCanvas(bitmap);
 

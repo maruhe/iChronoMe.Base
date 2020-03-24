@@ -70,11 +70,6 @@ namespace iChronoMe.Core.Classes
             if (_osType != OsType.Undefined || os == OsType.Undefined)
                 return;
             _osType = os;
-        }
-
-        static sys()
-        {
-            SQLitePCL.Batteries_V2.Init();
 
             try
             {
@@ -105,6 +100,11 @@ namespace iChronoMe.Core.Classes
             {
                 xLog.Error(ex);
             }
+        }
+
+        static sys()
+        {
+            SQLitePCL.Batteries_V2.Init();
 
             PlatformInit();
         }
