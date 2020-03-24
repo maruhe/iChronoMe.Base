@@ -12,6 +12,8 @@ namespace iChronoMe.Tools
     {
         public static bool ResizeImage(string input, string output, int maxSize)
         {
+            string tmp = output + "_" + DateTime.Now.Ticks;
+
             try
             {                
                 UIImage originalImage = UIImage.FromFile(input);
@@ -45,12 +47,15 @@ namespace iChronoMe.Tools
 
                 var bytesImagen = resizedImage.AsPNG().ToArray();
                 resizedImage.Dispose();
-                
-                using (FileStream ms = new FileStream(output, FileMode.CreateNew))
+
+                using (FileStream ms = new FileStream(tmp, FileMode.CreateNew))
                 {
                     ms.Write(bytesImagen);
                     ms.Close();
 
+                    if (File.Exists(output))
+                        File.Delete(output);
+                    File.Move(tmp, output);
                     return true;
                 }
             } 
@@ -58,6 +63,11 @@ namespace iChronoMe.Tools
             {
                 sys.LogException(ex);
                 return false;
+            }
+            finally
+            {
+                if (File.Exists(tmp))
+                    File.Delete(tmp);
             }
         }
     }

@@ -11,7 +11,7 @@ namespace iChronoMe.Tools
         {
             try
             {
-                File.Copy(input, output);
+                File.Copy(input, output, true);
                 return true;
             }
             catch (Exception ex)
