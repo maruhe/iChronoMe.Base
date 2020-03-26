@@ -738,6 +738,9 @@ am Startbildschirm deines Geräts kannst du neue Widgets erstellen!</value>
   <data name="Location" xml:space="preserve">
     <value>Standort</value>
   </data>
+  <data name="location_premission_denied" xml:space="preserve">
+    <value>Zugriff auf Standort-Dieste verweigert</value>
+  </data>
   <data name="location_provider_disabled_alert" xml:space="preserve">
     <value>die Standort-Dienste scheinen deaktiviert zu sein</value>
   </data>
@@ -883,13 +886,13 @@ am Startbildschirm deines Geräts kannst du neue Widgets erstellen!</value>
     <value>long description...</value>
   </data>
   <data name="shortcut_create_calender_event" xml:space="preserve">
-    <value>Termin erstellen</value>
+    <value>neuer Termin</value>
   </data>
   <data name="shortcut_create_calender_event_disabled" xml:space="preserve">
     <value>geht nit? warum nit?</value>
   </data>
   <data name="shortcut_create_calender_event_long" xml:space="preserve">
-    <value>long description...</value>
+    <value>neuen Termin anlegen</value>
   </data>
   <data name="stop_alarm" xml:space="preserve">
     <value>danke</value>

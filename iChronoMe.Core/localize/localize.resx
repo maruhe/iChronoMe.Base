@@ -750,6 +750,9 @@ you can create new widgets on your launcher-screen!</value>
   <data name="Location" xml:space="preserve">
     <value>location</value>
   </data>
+  <data name="location_premission_denied" xml:space="preserve">
+    <value>missing location premission</value>
+  </data>
   <data name="location_provider_disabled_alert" xml:space="preserve">
     <value>location-services seems to be disabled</value>
   </data>
@@ -895,13 +898,13 @@ you can create new widgets on your launcher-screen!</value>
     <value>long description...</value>
   </data>
   <data name="shortcut_create_calender_event" xml:space="preserve">
-    <value>create event</value>
+    <value>new event</value>
   </data>
   <data name="shortcut_create_calender_event_disabled" xml:space="preserve">
     <value>not working? why not?</value>
   </data>
   <data name="shortcut_create_calender_event_long" xml:space="preserve">
-    <value>long description...</value>
+    <value>create new event</value>
   </data>
   <data name="stop_alarm" xml:space="preserve">
     <value>thanks</value>

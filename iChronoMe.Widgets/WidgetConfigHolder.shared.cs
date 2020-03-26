@@ -129,6 +129,16 @@ namespace iChronoMe.Widgets
                 SaveToFile();
         }
 
+        public bool CheckUpdate()
+        {
+            if (tLastModifyTime != File.GetLastWriteTime(CfgFile))
+            {
+                LoadFromFile();
+                return true;
+            }
+            return false;
+        }
+
         public void DeleteWidget(int iWidgetId, bool bSaveToFile = true)
         {
             if (WidgetConfigList.ContainsKey(iWidgetId))
@@ -165,10 +175,13 @@ namespace iChronoMe.Widgets
             }
         }
 
+        private DateTime tLastModifyTime = DateTime.MinValue;
+
         public void LoadFromFile()
         {
             try
             {
+                tLastModifyTime = File.GetLastWriteTime(CfgFile);
                 using (var stream = new StreamReader(CfgFile))
                 {
                     var serializer = new SmoothXmlSerializer();

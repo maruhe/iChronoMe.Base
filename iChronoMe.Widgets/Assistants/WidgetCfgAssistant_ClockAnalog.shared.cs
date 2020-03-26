@@ -413,7 +413,6 @@ namespace iChronoMe.Widgets
         public override async void ExecCustom(IUserIO handler)
         {
             base.ExecCustom(handler);
-            NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase);
 
             var cfg = BaseSample.GetConfigClone();
 
@@ -464,7 +463,6 @@ namespace iChronoMe.Widgets
         public override async void ExecCustom(IUserIO handler)
         {
             base.ExecCustom(handler);
-            NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase);
 
             var cfg = BaseSample.GetConfigClone();
 

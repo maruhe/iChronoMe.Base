@@ -49,13 +49,13 @@ namespace iChronoMe.Core.Classes
         public static void Resync()
         {
 
-            /*
+            /* */
             //   NTP DISABLED !!!
             mLastNtpDiff = TimeSpan.FromTicks(0);
             State = TimeHolderState.Synchron;
             mLastNtp = DateTime.Now;
             return;
-            */
+            /* */
             State = TimeHolderState.Init;
 
             iErrorCount = 0;

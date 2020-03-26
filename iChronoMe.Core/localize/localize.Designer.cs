@@ -1948,6 +1948,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die missing location premission ähnelt.
+        /// </summary>
+        public static string location_premission_denied {
+            get {
+                return ResourceManager.GetString("location_premission_denied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die location-services seems to be disabled ähnelt.
         /// </summary>
         public static string location_provider_disabled_alert {
@@ -2380,7 +2389,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die create event ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die new event ähnelt.
         /// </summary>
         public static string shortcut_create_calender_event {
             get {
@@ -2398,7 +2407,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die long description... ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die create new event ähnelt.
         /// </summary>
         public static string shortcut_create_calender_event_long {
             get {
