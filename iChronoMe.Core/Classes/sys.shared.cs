@@ -25,8 +25,8 @@ namespace iChronoMe.Core.Classes
         public static int DisplayHeight { get; private set; } = 768;
         public static int DisplayLongSite { get; private set; } = 1024;
         public static int DisplayShortSite { get; private set; } = 768;
-        public static int DisplayDensity { get; private set; } = 1;
-        public static int DisplayShortSiteDp { get => DisplayShortSite / DisplayDensity; }
+        public static float DisplayDensity { get; private set; } = 1;
+        public static float DisplayShortSiteDp { get => DisplayShortSite / DisplayDensity; }
 
         public static IProgressChangedHandler MainUserIO { get; set; } = null;
 
@@ -83,7 +83,7 @@ namespace iChronoMe.Core.Classes
                 DisplayHeight = (int)mDisplayInfo.Height;
 
                 // Screen density
-                DisplayDensity = (int)mDisplayInfo.Density;
+                DisplayDensity = (float)mDisplayInfo.Density;
 
                 if (DisplayWidth > DisplayHeight)
                 {
@@ -176,6 +176,29 @@ namespace iChronoMe.Core.Classes
                 }
                 return _SharePath;
             }
+        }
+
+        private static string _WidgetCachePath;
+        public static string PathWidgetCache
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_WidgetCachePath))
+                {
+                    _WidgetCachePath = Path.Combine(PathShare, "WidgetCache");
+                    if (!Directory.Exists(_WidgetCachePath))
+                        Directory.CreateDirectory(_WidgetCachePath);
+                }
+                return _WidgetCachePath;
+            }
+        }
+
+        public static string GetPathWidgetCache(int iWidgetID)
+        {
+            string cParh = Path.Combine(PathWidgetCache, iWidgetID.ToString());
+            if (!Directory.Exists(cParh))
+                Directory.CreateDirectory(cParh);
+            return cParh;
         }
 
         private static string _PathDBdata;

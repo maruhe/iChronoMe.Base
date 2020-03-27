@@ -77,7 +77,11 @@ namespace iChronoMe.Core.DataBinding
             {
                 Task.Delay(250).Wait();
 
-                MainThread.BeginInvokeOnMainThread(() => StartViewChangeListener());
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    if (BinderIsRunning)
+                        StartViewChangeListener();
+                });
             });
         }
 

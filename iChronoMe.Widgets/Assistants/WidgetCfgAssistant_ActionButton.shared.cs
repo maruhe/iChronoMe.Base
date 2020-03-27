@@ -106,14 +106,25 @@ namespace iChronoMe.Widgets
             cfg.AnimateOnFirstClick = true;
             Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(localize.ActionButtonStyle_eye_animated, cfg));
 
+            cfg = baseSample.GetConfigClone();
+            cfg.Style = ActionButton_Style.Icon;
+            cfg.IconName = "sunface_junior";
+            //Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>("", cfg));
+
             string cIconPrefix = "";
             switch (cfg.ClickAction.Type)
             {
                 case ClickActionType.OpenApp:
                     //cIconPrefix = "icons8_calendar_plus";
                     break;
+                case ClickActionType.OpenClock:
+                    cIconPrefix = "icons8_alarm_clock";
+                    break;
                 case ClickActionType.OpenCalendar:
                     cIconPrefix = "icons8_calendar";
+                    break;
+                case ClickActionType.OpenWorldTimeMap:
+                    cIconPrefix = "*_globe";
                     break;
                 case ClickActionType.CreateEvent:
                     cIconPrefix = "icons8_calendar_plus_";
@@ -129,7 +140,9 @@ namespace iChronoMe.Widgets
             {
                 foreach (var prop in sys.AllDrawables)
                 {
-                    if (prop.ToLower().StartsWith(cIconPrefix) && prop.Replace("_clrd", "").Length - 3 < cIconPrefix.Length)
+                    if (prop.ToLower().StartsWith(cIconPrefix) && prop.Replace("_clrd", "").Length - 3 < cIconPrefix.Length ||
+                        (cIconPrefix.StartsWith("*") && prop.ToLower().Contains(cIconPrefix.Substring(1)))
+                        )
                     {
                         cfg = baseSample.GetConfigClone();
                         cfg.Style = ActionButton_Style.Icon;

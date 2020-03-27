@@ -111,6 +111,15 @@ namespace iChronoMe.Core
             lth.ChangePositionParameters(nLatitude, nLongitude, false, false, cTimeZoneID, AreaName, CountryName);
             return lth;
         }
+        public static LocationTimeHolder NewInstanceOffline(double nLatitude, double nLongitude, string cTimeZoneID, GeoInfo.AreaInfo ai, string AreaName, string CountryName, FetchAreaInfoFlag faiType = FetchAreaInfoFlag.FullOffline)
+        {
+            var lth = new LocationTimeHolder(faiType);
+            lth.ai = ai;
+            lth.ChangePositionParameters(nLatitude, nLongitude, false, false, cTimeZoneID, ai?.toponymName ?? AreaName, ai?.countryName ?? CountryName);
+            if (ai == null && string.IsNullOrEmpty(AreaName) && faiType != FetchAreaInfoFlag.FullOffline)
+                lth.StartRefreshLocationInfo();
+            return lth;
+        }
 
         private static LocationTimeHolder TryRestoreLocalInstance()
         {
@@ -143,13 +152,12 @@ namespace iChronoMe.Core
         {
             get
             {
-                var res = LocationTimeHolder.NewInstanceOffline(LocalInstance.Latitude, LocalInstance.Longitude, LocalInstance.TimeZoneName, false);
-                res.AreaInfoFlag = FetchAreaInfoFlag.FullAreaInfo;
+                var res = LocationTimeHolder.NewInstanceOffline(LocalInstance.Latitude, LocalInstance.Longitude, LocalInstance.TimeZoneName, LocalInstance.AreaInfo, LocalInstance.AreaName, LocalInstance.CountryName, LocalInstance.AreaInfoFlag);
                 return res;
             }
         }
 
-        protected FetchAreaInfoFlag AreaInfoFlag = FetchAreaInfoFlag.FullAreaInfo;
+        public FetchAreaInfoFlag AreaInfoFlag { get; private set; } = FetchAreaInfoFlag.FullAreaInfo;
         public static FetchAreaInfoFlag LocalFetchAreaInfoFlag { get; set; } = FetchAreaInfoFlag.FullAreaInfo;
 
         protected LocationTimeHolder(FetchAreaInfoFlag faiType)
