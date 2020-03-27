@@ -1152,4 +1152,7 @@ please click here</value>
   <data name="WidgetTitleMonthView" xml:space="preserve">
     <value>month-view</value>
   </data>
+  <data name="TitleClickAction" xml:space="preserve">
+    <value>action on title click</value>
+  </data>
 </root>

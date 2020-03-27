@@ -229,6 +229,8 @@ namespace iChronoMe.Widgets
         public static readonly xColor tcLightGlass5 = xColor.FromHex("#C0FFFFFF");
         public static readonly xColor tcDarkGlass5 = xColor.FromHex("#C0000000");
 
+        public ClickAction ClickAction = new ClickAction(ClickActionType.OpenSettings);
+
         public int WidgetId;
 
         public string WidgetTitle;
@@ -339,8 +341,6 @@ namespace iChronoMe.Widgets
             WidgetTitle = "iChronoMe";
         }
 
-        public ClickAction ClickAction = new ClickAction(ClickActionType.OpenApp);
-
         public ActionButton_Style Style = ActionButton_Style.iChronEye;
 
         public string IconName;
@@ -417,6 +417,11 @@ namespace iChronoMe.Widgets
     [XmlInclude(typeof(WidgetCfg_CalendarCircleWave))]
     public abstract class WidgetCfg_Calendar : WidgetCfg
     {
+        public WidgetCfg_Calendar()
+        {
+            ClickAction = new ClickAction(ClickActionType.OpenCalendar);
+        }
+
         public bool ShowAllCalendars = true;
 
         public List<string> ShowCalendars = new List<string>();
@@ -674,7 +679,6 @@ namespace iChronoMe.Widgets
     [XmlInclude(typeof(WidgetCfg_ClockAnalog))]
     public abstract class WidgetCfg_Clock : WidgetCfg
     {
-        public ClickAction ClickAction = new ClickAction(ClickActionType.OpenSettings);
         public WidgetCfgPositionType PositionType = WidgetCfgPositionType.None;
 
         public double Latitude = 0;

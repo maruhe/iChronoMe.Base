@@ -2960,6 +2960,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die action on title click ähnelt.
+        /// </summary>
+        public static string TitleClickAction {
+            get {
+                return ResourceManager.GetString("TitleClickAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die analog solar clock ähnelt.
         /// </summary>
         public static string wallpaper_title_clock_analog {

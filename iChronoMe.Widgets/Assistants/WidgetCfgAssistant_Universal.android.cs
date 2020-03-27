@@ -8,9 +8,9 @@ using iChronoMe.Widgets.AndroidHelpers;
 
 namespace iChronoMe.Widgets
 {
-    public partial class WidgetCfgAssistant_ActionButton_ClickAction : WidgetConfigAssistant<WidgetCfg_ActionButton>
+    public partial class WidgetCfgAssistant_Universal_ClickAction<T>
     {
-        public override void AfterSelect(IUserIO handler, WidgetCfgSample<WidgetCfg_ActionButton> sample)
+        public override void AfterSelect(IUserIO handler, WidgetCfgSample<T> sample)
         {
             base.AfterSelect(handler, sample);
 
@@ -26,7 +26,8 @@ namespace iChronoMe.Widgets
 
                     sample.WidgetConfig.ClickAction = new ClickAction(ClickActionType.OpenOtherApp);
                     sample.WidgetConfig.ClickAction.Params = new string[] { "PackageName=" + appInfo.PackageName };
-                    sample.WidgetConfig.WidgetTitle = appInfo.LoadLabel(Application.Context.PackageManager);
+                    if (sample.WidgetConfig is WidgetCfg_ActionButton)
+                        sample.WidgetConfig.WidgetTitle = appInfo.LoadLabel(Application.Context.PackageManager);
                 }
                 catch
                 {

@@ -30,7 +30,7 @@ namespace iChronoMe.Widgets
 
             cfg = BaseSample.GetConfigClone();
             cfgPrev = BaseSample.GetConfigClone();
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(localize.ClickAction, null, cfg, typeof(WidgetCfgAssistant_ActionButton_ClickAction), cfgPrev));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(localize.ClickAction, null, cfg, typeof(WidgetCfgAssistant_Universal_ClickAction<WidgetCfg_ActionButton>), cfgPrev));
 
 
             cfg = BaseSample.GetConfigClone();
@@ -45,47 +45,6 @@ namespace iChronoMe.Widgets
             base.AfterSelect(handler, sample);
 
             NextStepAssistantType = (sample.Tag as Type);
-        }
-    }
-
-    public partial class WidgetCfgAssistant_ActionButton_ClickAction : WidgetConfigAssistant<WidgetCfg_ActionButton>
-    {
-        public WidgetCfgAssistant_ActionButton_ClickAction(WidgetCfgSample<WidgetCfg_ActionButton> baseSample)
-        {
-            Title = localize.ClickAction;
-            BaseSample = baseSample;
-            ShowPreviewImage = false;
-
-            foreach (ClickActionType ca in Enum.GetValues(typeof(ClickActionType)))
-            {
-                if (ca == ClickActionType.CreateAlarm)
-                    continue;
-
-                string c = ca.ToString();
-                var res = typeof(localize).GetProperty("ClickActionType_" + c);
-                if (res != null)
-                    c = (string)res.GetValue(null);
-
-                var cfg = new WidgetCfg_ActionButton();
-                cfg.ClickAction = new ClickAction(ca);
-                if (ca == ClickActionType.Animate)
-                {
-                    cfg.WidgetTitle = "";
-                    cfg.Style = ActionButton_Style.iChronEye;
-                    cfg.AnimateOnFirstClick = true;
-                }
-                else if (ca == ClickActionType.None)
-                    cfg.WidgetTitle = "  ";
-                else if (ca != ClickActionType.OpenApp)
-                    cfg.WidgetTitle = c;
-
-                if (cfg.WidgetTitle.Contains("\'") && cfg.WidgetTitle.IndexOf("\'") != cfg.WidgetTitle.LastIndexOf("\'"))
-                    cfg.WidgetTitle = cfg.WidgetTitle.Split('\'')[1];
-
-                Samples.Add(new WidgetCfgSample<WidgetCfg_ActionButton>(c, cfg));
-            }
-
-            NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_Icon);
         }
     }
 

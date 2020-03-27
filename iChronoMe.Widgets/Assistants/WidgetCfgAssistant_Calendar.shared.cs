@@ -53,6 +53,8 @@ namespace iChronoMe.Widgets
             if (cfg.SupportsWidgetTimeType)
                 Samples.Add(new WidgetCfgSample<WidgetCfg_Calendar>(localize.TimeType, null, cfg, typeof(WidgetCfgAssistant_Calendar_WidgetTimeType)));
 
+            Samples.Add(new WidgetCfgSample<WidgetCfg_Calendar>(localize.TitleClickAction, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_Universal_ClickAction<WidgetCfg_Calendar>)));
+
             NextStepAssistantType = null;
         }
 
@@ -143,6 +145,8 @@ namespace iChronoMe.Widgets
 
             cfg = BaseSample.GetConfigClone();
             Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.Theme, null, cfg, typeof(WidgetCfgAssistant_CalendarCircleWave_Theme)));
+
+            Samples.Add(new WidgetCfgSample<WidgetCfg_CalendarCircleWave>(localize.TitleClickAction, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_Universal_ClickAction<WidgetCfg_CalendarCircleWave>)));
 
             NextStepAssistantType = null;
         }

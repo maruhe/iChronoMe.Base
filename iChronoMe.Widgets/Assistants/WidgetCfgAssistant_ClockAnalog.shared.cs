@@ -131,6 +131,8 @@ namespace iChronoMe.Widgets
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.TextColor, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_ClockAnalog_TextColor)));
             //Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.Theme, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_ClockAnalog_Theme)));
 
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.ClickAction, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_Universal_ClickAction<WidgetCfg_ClockAnalog>)));
+
             NextStepAssistantType = null;
         }
 
