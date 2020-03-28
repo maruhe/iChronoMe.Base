@@ -95,6 +95,8 @@ namespace iChronoMe.Core.Classes
                 }
             }
         }
+
+        public bool MainNavigationPiddend { get; set; } = false;
     }
 
     public partial class CalendarViewConfig

@@ -399,6 +399,9 @@ you can customize this notification or disable it in system-settings</value>
   <data name="calendar_monthview_appointmentviewtypes_title" xml:space="preserve">
     <value>show appointments:</value>
   </data>
+  <data name="calendar_monthview_navigation_direction" xml:space="preserve">
+    <value>navigation direction</value>
+  </data>
   <data name="calendar_viewtype_DayView" xml:space="preserve">
     <value>day-view</value>
   </data>
@@ -1090,6 +1093,9 @@ may this can be far far away from the real time on your location</value>
   <data name="title_send_errorlog" xml:space="preserve">
     <value>these information will be send:</value>
   </data>
+  <data name="TitleClickAction" xml:space="preserve">
+    <value>action on title click</value>
+  </data>
   <data name="wallpaper_title_clock_analog" xml:space="preserve">
     <value>analog solar clock</value>
   </data>
@@ -1151,8 +1157,5 @@ please click here</value>
   </data>
   <data name="WidgetTitleMonthView" xml:space="preserve">
     <value>month-view</value>
-  </data>
-  <data name="TitleClickAction" xml:space="preserve">
-    <value>action on title click</value>
   </data>
 </root>

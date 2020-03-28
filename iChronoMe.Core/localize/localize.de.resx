@@ -142,7 +142,7 @@
     <value>blockieren</value>
   </data>
   <data name="action_calendar_UsesDefaultTimeType" xml:space="preserve">
-    <value>Kalender verwendet den selben Zeit-Typ</value>
+    <value>Kalender verwendet den standard Zeit-Typ</value>
   </data>
   <data name="action_cancel" xml:space="preserve">
     <value>abbrechen</value>
@@ -398,6 +398,9 @@ du kannst diese Benachrichtigung hier anpassen oder sie in den Systemeinstellung
   </data>
   <data name="calendar_monthview_appointmentviewtypes_title" xml:space="preserve">
     <value>Termine anzeigen:</value>
+  </data>
+  <data name="calendar_monthview_navigation_direction" xml:space="preserve">
+    <value>Navigationsrichtung</value>
   </data>
   <data name="calendar_viewtype_DayView" xml:space="preserve">
     <value>Tagesansicht</value>
@@ -1079,6 +1082,9 @@ oft ist diese Angabe weit entfernt von der wahren Zeit an diesem Ort</value>
   <data name="title_send_errorlog" xml:space="preserve">
     <value>diese Informationen werden übertragen:</value>
   </data>
+  <data name="TitleClickAction" xml:space="preserve">
+    <value>Aktion beim Klick auf den Titel</value>
+  </data>
   <data name="wallpaper_title_clock_analog" xml:space="preserve">
     <value>analoge Sonnenuhr</value>
   </data>
@@ -1141,8 +1147,5 @@ bitte hier klicken</value>
   </data>
   <data name="WidgetTitleMonthView" xml:space="preserve">
     <value>Monatsansicht</value>
-  </data>
-  <data name="TitleClickAction" xml:space="preserve">
-    <value>Aktion beim Klick auf den Titel</value>
   </data>
 </root>

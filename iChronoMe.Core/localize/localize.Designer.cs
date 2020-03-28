@@ -901,6 +901,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die navigation direction ähnelt.
+        /// </summary>
+        public static string calendar_monthview_navigation_direction {
+            get {
+                return ResourceManager.GetString("calendar_monthview_navigation_direction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die day-view ähnelt.
         /// </summary>
         public static string calendar_viewtype_DayView {
