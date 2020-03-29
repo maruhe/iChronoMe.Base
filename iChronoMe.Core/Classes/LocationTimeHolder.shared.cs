@@ -341,10 +341,15 @@ namespace iChronoMe.Core
             return true;
         }
 
-        Thread locationTask = null;
+        public void ChangePositionOffline(double nLatitude, double nLongitude)
+        {
+            ChangePositionParameters(nLatitude, nLongitude);
+        }
+
+            Thread locationTask = null;
         bool bStartLocationTaskAgain = false;
         DateTime tLastLocationTaskStart = DateTime.MinValue;
-        private void StartRefreshLocationInfo()
+        public void StartRefreshLocationInfo()
         {
             xLog.Debug("StartRefreshLocationInfo: " + (locationTask != null).ToString());
             bStartLocationTaskAgain = true;
@@ -368,9 +373,9 @@ namespace iChronoMe.Core
                     if (bStartLocationTaskAgain)
                         StartRefreshLocationInfo();
                 }
-                catch (ThreadAbortException)
+                catch (ThreadAbortException ex)
                 {
-                    return;
+                    ex.ToString();
                 }
                 catch (Exception ex)
                 {

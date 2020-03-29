@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 using iChronoMe.Core.Classes;
@@ -92,6 +93,13 @@ namespace iChronoMe
                 if (_calendarViewConfig == null)
                 {
                     _calendarViewConfig = LoadFromFile<CalendarViewConfig>();
+                    var days = new List<int>();
+                    foreach (var day in _calendarViewConfig.SfScheduldeConfig.NonWorkingDays)
+                    {
+                        if (!days.Contains(day))
+                            days.Add(day);
+                    }
+                    _calendarViewConfig.SfScheduldeConfig.NonWorkingDays = days;
                 }
                 return _calendarViewConfig;
             }

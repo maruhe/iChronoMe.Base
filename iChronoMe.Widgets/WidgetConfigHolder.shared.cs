@@ -179,6 +179,12 @@ namespace iChronoMe.Widgets
 
         public void LoadFromFile()
         {
+            if (!File.Exists(CfgFile))
+            {
+                WidgetConfigList = new Dictionary<int, WidgetCfg>();
+                return;
+            }
+
             try
             {
                 tLastModifyTime = File.GetLastWriteTime(CfgFile);
@@ -198,8 +204,8 @@ namespace iChronoMe.Widgets
             }
             catch (Exception e)
             {
-                e.ToString();
-                WidgetConfigList = new Dictionary<int, WidgetCfg>();
+                sys.LogException(e);
+                WidgetConfigList = new Dictionary<int, WidgetCfg>();                
             }
         }
     }

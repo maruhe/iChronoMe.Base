@@ -15,22 +15,18 @@ namespace iChronoMe.Core.Classes
 
         public Delayer(int maxDelayMs)
             : this(null, 0, maxDelayMs == 0 ? DateTime.MinValue : DateTime.Now.AddMilliseconds(maxDelayMs))
-        {
-            MaxDelayMs = maxDelayMs;
-        }
+        { }
 
         public Delayer(Action action, int initDelayMs, int maxDelayMs = 0)
             : this(action, initDelayMs, maxDelayMs == 0 ? DateTime.MinValue : DateTime.Now.AddMilliseconds(maxDelayMs))
-        {
-            MaxDelayMs = maxDelayMs;
-        }
+        { }
 
         public Delayer(Action action, int initDelayMs, DateTime maxDelay)
         {
             Action = action;
             tAllStart = DateTime.Now;
             tMaxDelay = maxDelay;
-            MaxDelayMs = (int)(maxDelay - DateTime.Now).TotalMilliseconds;
+            MaxDelayMs = maxDelay == DateTime.MinValue || maxDelay == DateTime.MaxValue ? 0 : (int)(maxDelay - DateTime.Now).TotalMilliseconds;
             SetDelay(initDelayMs);
         }
 
@@ -45,17 +41,17 @@ namespace iChronoMe.Core.Classes
         {
             if (action != null)
                 Action = action;
-            if (action == null)
+            if (Action == null)
                 return;
             SetDelay(DateTime.Now.AddMilliseconds(delayMS));
         }
 
         public void SetDelay(DateTime delayUntil)
         {
-            if (tMaxDelay < DateTime.Now && tCurrentDelay < tMaxDelay)
+            if (MaxDelayMs > 0 && tMaxDelay < DateTime.Now && tCurrentDelay < tMaxDelay)
                 tMaxDelay = DateTime.Now.AddMilliseconds(MaxDelayMs);
             tCurrentDelay = delayUntil;
-            if (DelayTask == null || tMaxDelay.AddMilliseconds(MaxDelayMs) < DateTime.Now)
+            if (DelayTask == null || (MaxDelayMs > 0 && tMaxDelay.AddMilliseconds(MaxDelayMs) < DateTime.Now))
             {
                 DelayTask = Task.Factory.StartNew(() =>
                 {
@@ -66,7 +62,7 @@ namespace iChronoMe.Core.Classes
                         {
                             if (Aborted)
                                 return;
-                            if (tMaxDelay > DateTime.MinValue && tMaxDelay < DateTime.Now)
+                            if (MaxDelayMs > 0 && tMaxDelay < DateTime.Now)
                                 break;
                             Task.Delay(25).Wait();
                         }

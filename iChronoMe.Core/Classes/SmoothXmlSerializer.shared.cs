@@ -182,7 +182,7 @@ namespace iChronoMe.Core.Classes
                     }
                     catch (Exception ex)
                     {
-                        ex.ToString();
+                        xLog.Error(ex);
                     }
                 }
             }
@@ -359,7 +359,7 @@ namespace iChronoMe.Core.Classes
                 }
                 catch (Exception ex)
                 {
-                    ex.ToString();
+                    xLog.Error(ex);
                 }
                 try
                 {
@@ -390,7 +390,7 @@ namespace iChronoMe.Core.Classes
                 }
                 catch (Exception ex)
                 {
-                    ex.ToString();
+                    xLog.Error(ex);
                 }
                 tsMapping += DateTime.Now - swStart;
             }
@@ -519,7 +519,7 @@ namespace iChronoMe.Core.Classes
             }
             catch (Exception ex)
             {
-                ex.ToString();
+                xLog.Error(ex);
             }
 
             if (instance == null)
@@ -583,7 +583,7 @@ namespace iChronoMe.Core.Classes
 
                 catch (Exception ex)
                 {
-                    ex.ToString();
+                    xLog.Error(ex);
                 }
             }
 
@@ -703,7 +703,7 @@ namespace iChronoMe.Core.Classes
 
                 catch (Exception ex)
                 {
-                    ex.ToString();
+                    xLog.Error(ex);
                 }
             }
             return instance;
