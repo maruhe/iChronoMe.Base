@@ -1,4 +1,7 @@
 # iChronoMe.Base
+[![GitHub License](https://img.shields.io/badge/license-IDM-lightgrey.svg)](https://github.com/maruhe/iChronoMe.Base/blob/master/LICENSE.md)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/maruhe/iChronoMe.Base/issues)
+
 iChrono.me cause time is dynamic
 
 currently working features:
