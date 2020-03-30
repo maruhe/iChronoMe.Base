@@ -42,7 +42,16 @@ namespace iChronoMe.Core.Classes
             {
                 if (_dbAreaCache == null)
                 {
-                    _dbAreaCache = new mySQLiteConnection(Path.Combine(sys.PathDBcache, "area_cache.db"), SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.FullMutex);
+                    string cPath = Path.Combine(sys.PathDBcache, "area_cache.db");
+                    /*if (AppConfigHolder.MainConfig.LocationCacheLimit.TotalHours < 6)
+                    {
+                        //switch to in-memory db
+                        if (File.Exists(cPath))
+                            try { File.Delete(cPath); } catch  { }
+                        //cPath += "::memory:?cache=shared";
+                        cPath = ":memory:";
+                    }*/
+                    _dbAreaCache = new mySQLiteConnection(cPath, SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.FullMutex);
                     try { _dbAreaCache.CreateTable<AreaInfo>(); }
                     catch { _dbAreaCache.DropTable<AreaInfo>(); _dbAreaCache.CreateTable<AreaInfo>(); }
                     try { _dbAreaCache.CreateTable<TimeZoneInfoCache>(); }

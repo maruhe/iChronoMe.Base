@@ -69,8 +69,11 @@ namespace iChronoMe.Core.Classes
         public bool DenyErrorScreens { get; set; } = false;
         //public DateTime LastCheckClockFaces { get; set; } = DateTime.MinValue;
         //public DateTime LastCheckClockHands { get; set; } = DateTime.MinValue;
-        public bool ContinuousLocationUpdates { get; set; } = false;
-        public bool CalendarReminderWarningDone { get; set; }
+        public bool ContinuousLocationUpdates { get; set; } = false;        
+
+        //public TimeSpan LocationCacheLimit { get; set; } = TimeSpan.FromDays(14);
+
+        //public bool LocationCacheLimitWarningDone { get; set; } = false;
 
         [XmlIgnore]
         public int DefaultTimeType_SpinnerPosition
@@ -102,9 +105,8 @@ namespace iChronoMe.Core.Classes
     public partial class CalendarViewConfig
     {
         public float WelcomeScreenDone { get; set; } = 0;
-
+        public bool CalendarReminderWarningDone { get; set; } = false;
         public List<string> HideCalendars { get; set; } = new List<string>();
-
         public TimeType CalendarTimeType { get; set; } = sys.DefaultTimeType;
 
         [XmlIgnore]
