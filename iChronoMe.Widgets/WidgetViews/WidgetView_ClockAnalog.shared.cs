@@ -421,8 +421,6 @@ namespace iChronoMe.Widgets
                         Directory.CreateDirectory(Path.GetDirectoryName(cThumbPath));
                         if (DrawableHelper.ResizeImage(maxFile, cThumbPath, size))
                             return cThumbPath;
-
-                        return maxFile;
                     }
 
                 }

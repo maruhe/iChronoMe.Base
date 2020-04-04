@@ -101,6 +101,8 @@ namespace iChronoMe.Core.Classes
 
         public class AreaInfo : dbObject
         {
+            public string dataSource { get; set; }
+            public string sourceServer { get; set; }
             public string countryCode { get; set; }
             public string countryName { get; set; }
 

@@ -832,7 +832,7 @@ am Startbildschirm deines Geräts kannst du neue Widgets erstellen!</value>
     <value>Zwischenspeicher löschen</value>
   </data>
   <data name="progress_clearcache_message" xml:space="preserve">
-    <value>anschließend kannst du iChronoMe einfach wieder starten</value>
+    <value>anschließend sollte sich iChronoMe erneut öffnen</value>
   </data>
   <data name="progress_clearcache_title" xml:space="preserve">
     <value>Zwischenspeicher löschen?</value>

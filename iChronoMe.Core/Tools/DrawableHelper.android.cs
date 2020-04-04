@@ -20,6 +20,12 @@ namespace iChronoMe.Tools
                 options.InPurgeable = true; // inPurgeable is used to free up memory while required
                 Bitmap originalImage = BitmapFactory.DecodeFile(input);
 
+                if (originalImage == null)
+                {
+                    File.Delete(input);
+                    return false;
+                }
+
                 float newHeight = 0;
                 float newWidth = 0;
 

@@ -32,10 +32,14 @@ namespace iChronoMe.Core.Tools
 
         public AreaInfo GetAreaInfo(double lat, double lng)
         {
-            string cUri = "https://photon.komoot.de/reverse?lat=" + lat.ToString("0.######", CultureInfo.InvariantCulture) + "&lon=" + lng.ToString("0.######", CultureInfo.InvariantCulture);
+            string cUri = photonUrl+"reverse?lat=" + lat.ToString("0.######", CultureInfo.InvariantCulture) + "&lon=" + lng.ToString("0.######", CultureInfo.InvariantCulture);
             string cGeoInfo = sys.GetUrlContent(cUri).Result;
 
-            CheckServerResponse(cGeoInfo);
+            if (CheckServerResponse(cGeoInfo) > 0)
+            {
+                cUri = photonUrl + "reverse?lat=" + lat.ToString("0.######", CultureInfo.InvariantCulture) + "&lon=" + lng.ToString("0.######", CultureInfo.InvariantCulture);
+                cGeoInfo = sys.GetUrlContent(cUri).Result;
+            }
 
             var res = AreInfoFromGeoJson(cGeoInfo);
             if (res == null)
@@ -45,10 +49,14 @@ namespace iChronoMe.Core.Tools
 
         public AreaInfo GetPositionByName(string location)
         {
-            string cUri = "https://photon.komoot.de/api?q=" + WebUtility.UrlEncode(location) + "&limit=1&lat=" + sys.lastUserLocation.Latitude.ToString("0.######", CultureInfo.InvariantCulture) + "&lon=" + sys.lastUserLocation.Longitude.ToString("0.######", CultureInfo.InvariantCulture);
+            string cUri = photonUrl+"api?q=" + WebUtility.UrlEncode(location) + "&limit=1&lat=" + sys.lastUserLocation.Latitude.ToString("0.######", CultureInfo.InvariantCulture) + "&lon=" + sys.lastUserLocation.Longitude.ToString("0.######", CultureInfo.InvariantCulture);
             string cGeoInfo = sys.GetUrlContent(cUri).Result;
 
-            CheckServerResponse(cGeoInfo);
+            if (CheckServerResponse(cGeoInfo) > 0)
+            {
+                cUri = photonUrl + "api?q=" + WebUtility.UrlEncode(location) + "&limit=1&lat=" + sys.lastUserLocation.Latitude.ToString("0.######", CultureInfo.InvariantCulture) + "&lon=" + sys.lastUserLocation.Longitude.ToString("0.######", CultureInfo.InvariantCulture);
+                cGeoInfo = sys.GetUrlContent(cUri).Result;
+            }
 
             var res = AreInfoFromGeoJson(cGeoInfo);
             if (res == null)
@@ -56,17 +64,30 @@ namespace iChronoMe.Core.Tools
             return res;
         }
 
-        private static void CheckServerResponse(string response)
+        private static int CheckServerResponse(string response)
         {
-             
+            if (!string.IsNullOrEmpty(response))
+                return 0;
+            if (Secrets.osmPhotonUrls.Length <= 1)
+                return 0;
+            urlID++;
+            if (urlID >= Secrets.osmPhotonUrls.Length)
+                urlID = 0;
+            photonUrl = Secrets.osmPhotonUrls[urlID];
+            return 1;
         }
 
         public static AreaInfo AreInfoFromGeoJson(string geoJson)
         {
             try
             {
+                if (string.IsNullOrEmpty(geoJson))
+                    return null; 
+
                 var fc = JsonConvert.DeserializeObject<GeoJSON.Net.Feature.FeatureCollection>(geoJson);
                 var ai = new AreaInfo();
+                try {
+                    ai.dataSource = "osm"; ai.sourceServer = new Uri(photonUrl).Host.Split('.')[1]; } catch { }
 
                 if (fc != null && fc.Features.Count > 0)
                 {
@@ -97,7 +118,13 @@ namespace iChronoMe.Core.Tools
 
                     string cArea = string.IsNullOrEmpty(ai.adminArea3) ? string.IsNullOrEmpty(ai.adminArea2) ? (string.IsNullOrEmpty(ai.adminArea1) ? ai.countryName : ai.adminArea1) : ai.adminArea2 : ai.adminArea3;
 
+                    if (!string.IsNullOrEmpty(ai.locality))
+                        ai.ToString();
+                    if (!string.IsNullOrEmpty(ai.route))
+                        ai.ToString();
                     ai.toponymName = string.IsNullOrEmpty(ai.locality) ? (string.IsNullOrEmpty(ai.route) ? cArea : ai.route) : ai.locality;
+                    if (string.IsNullOrEmpty(ai.locality) || !string.IsNullOrEmpty(string.Concat(ai.route, ai.postalCode, ai.adminArea3)))
+                        ai.toponymName = cArea;
 
                     if (fe.Properties.ContainsKey("extent"))
                     {

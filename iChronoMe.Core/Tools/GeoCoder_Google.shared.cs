@@ -11,8 +11,15 @@ namespace iChronoMe.Core.Tools
 {
     public class GeoCoder_Google : IGeoCoder
     {
+        private static int RequestCount = 0;
+        private static int RequestMax = 250;
+
         public AreaInfo GetAreaInfo(double lat, double lng)
         {
+            if (RequestCount > RequestMax)
+                return null;
+            RequestCount++;
+
             string cUri = "https://maps.googleapis.com/maps/api/geocode/xml?key=" + Secrets.GoogleMapsApiKey + "&latlng=" + lat.ToString("0.######", CultureInfo.InvariantCulture) + "," + lng.ToString("0.######", CultureInfo.InvariantCulture) + "&sensor=true";
             string cGeoInfo = sys.GetUrlContent(cUri).Result;
 
@@ -27,7 +34,7 @@ namespace iChronoMe.Core.Tools
 
                 eArea.ToString();
 
-                AreaInfo ai = new AreaInfo();
+                AreaInfo ai = new AreaInfo { dataSource = "google", sourceServer = "maps.googleapis.com" };
                 if ("result".Equals(eArea.Name))
                 {
                     string cType = eArea.SelectSingleNode("type").InnerText;
@@ -178,6 +185,10 @@ namespace iChronoMe.Core.Tools
 
         public AreaInfo GetPositionByName(string location)
         {
+            if (RequestCount > RequestMax)
+                return null;
+            RequestCount++;
+
             String urlString = "https://maps.googleapis.com/maps/api/geocode/xml?key=" + Secrets.GoogleMapsApiKey + "&address=" + WebUtility.UrlEncode(location);
             String cXml = sys.GetUrlContent(urlString).Result;
             if (string.IsNullOrEmpty(cXml))
@@ -240,6 +251,9 @@ namespace iChronoMe.Core.Tools
 
                 return new AreaInfo
                 {
+                    dataSource = "google",
+                    sourceServer = "maps.googleapis.com",
+
                     toponymName = string.IsNullOrEmpty(cFormattedAdress) ? cAdressComponents : cFormattedAdress,
                     centerLat = double.Parse(cLatitude, NumberStyles.Any, CultureInfo.InvariantCulture),
                     centerLong = double.Parse(cLongitude, NumberStyles.Any, CultureInfo.InvariantCulture),
