@@ -32,7 +32,7 @@ namespace iChronoMe.Core.Tools
 
         public AreaInfo GetAreaInfo(double lat, double lng)
         {
-            string cUri = photonUrl+"reverse?lat=" + lat.ToString("0.######", CultureInfo.InvariantCulture) + "&lon=" + lng.ToString("0.######", CultureInfo.InvariantCulture);
+            string cUri = photonUrl + "reverse?lat=" + lat.ToString("0.######", CultureInfo.InvariantCulture) + "&lon=" + lng.ToString("0.######", CultureInfo.InvariantCulture);
             string cGeoInfo = sys.GetUrlContent(cUri).Result;
 
             if (CheckServerResponse(cGeoInfo) > 0)
@@ -49,7 +49,7 @@ namespace iChronoMe.Core.Tools
 
         public AreaInfo GetPositionByName(string location)
         {
-            string cUri = photonUrl+"api?q=" + WebUtility.UrlEncode(location) + "&limit=1&lat=" + sys.lastUserLocation.Latitude.ToString("0.######", CultureInfo.InvariantCulture) + "&lon=" + sys.lastUserLocation.Longitude.ToString("0.######", CultureInfo.InvariantCulture);
+            string cUri = photonUrl + "api?q=" + WebUtility.UrlEncode(location) + "&limit=1&lat=" + sys.lastUserLocation.Latitude.ToString("0.######", CultureInfo.InvariantCulture) + "&lon=" + sys.lastUserLocation.Longitude.ToString("0.######", CultureInfo.InvariantCulture);
             string cGeoInfo = sys.GetUrlContent(cUri).Result;
 
             if (CheckServerResponse(cGeoInfo) > 0)
@@ -82,12 +82,15 @@ namespace iChronoMe.Core.Tools
             try
             {
                 if (string.IsNullOrEmpty(geoJson))
-                    return null; 
+                    return null;
 
                 var fc = JsonConvert.DeserializeObject<GeoJSON.Net.Feature.FeatureCollection>(geoJson);
                 var ai = new AreaInfo();
-                try {
-                    ai.dataSource = "osm"; ai.sourceServer = new Uri(photonUrl).Host.Split('.')[1]; } catch { }
+                try
+                {
+                    ai.dataSource = "osm"; ai.sourceServer = new Uri(photonUrl).Host.Split('.')[1];
+                }
+                catch { }
 
                 if (fc != null && fc.Features.Count > 0)
                 {
@@ -403,7 +406,7 @@ namespace iChronoMe.Core.Tools
                     tmp.Add("United Arab Emirates", "AE");
                     tmp.Add("United Kingdom", "GB");
                     tmp.Add("United States", "US");
-                    tmp.Add("United States of America", "US");                    
+                    tmp.Add("United States of America", "US");
                     tmp.Add("Uruguay", "UY");
                     tmp.Add("Uzbekistan", "UZ");
                     tmp.Add("Vanuatu", "VU");

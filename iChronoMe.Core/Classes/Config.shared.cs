@@ -69,7 +69,7 @@ namespace iChronoMe.Core.Classes
         public bool DenyErrorScreens { get; set; } = false;
         //public DateTime LastCheckClockFaces { get; set; } = DateTime.MinValue;
         //public DateTime LastCheckClockHands { get; set; } = DateTime.MinValue;
-        public bool ContinuousLocationUpdates { get; set; } = false;        
+        public bool ContinuousLocationUpdates { get; set; } = false;
 
         //public TimeSpan LocationCacheLimit { get; set; } = TimeSpan.FromDays(14);
 

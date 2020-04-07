@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 
 using iChronoMe.Core.Classes;
+
 using UIKit;
 
 namespace iChronoMe.Tools
@@ -15,7 +15,7 @@ namespace iChronoMe.Tools
             string tmp = output + "_" + DateTime.Now.Ticks;
 
             try
-            {                
+            {
                 UIImage originalImage = UIImage.FromFile(input);
 
                 var originalHeight = originalImage.Size.Height;
@@ -58,8 +58,8 @@ namespace iChronoMe.Tools
                     File.Move(tmp, output);
                     return true;
                 }
-            } 
-            catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 sys.LogException(ex);
                 return false;

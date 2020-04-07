@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.Types;
 using iChronoMe.Tools;
+
 using SkiaSharp;
 
 using static iChronoMe.Widgets.ClockHandConfig;
@@ -425,7 +426,7 @@ namespace iChronoMe.Widgets
 
                 }
                 return backgroundImage;
-            } 
+            }
             catch
             {
                 return backgroundImage;

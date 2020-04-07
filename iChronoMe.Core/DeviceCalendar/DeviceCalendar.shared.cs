@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using iChronoMe.Core.Types;
 
 namespace iChronoMe.DeviceCalendar

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Threading;
+
 using iChronoMe.Core.Tools;
+
 using SQLite;
+
 using Xamarin.Essentials;
 
 namespace iChronoMe.Core.Classes

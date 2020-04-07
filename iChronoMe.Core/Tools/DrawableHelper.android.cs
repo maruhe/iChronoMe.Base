@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using Android.Content;
+
 using Android.Graphics;
-using Android.Graphics.Drawables;
+
 using iChronoMe.Core.Classes;
 
 namespace iChronoMe.Tools
@@ -62,9 +61,9 @@ namespace iChronoMe.Tools
 
                     return true;
                 }
-            } 
+            }
             catch (ThreadAbortException) { return false; }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 sys.LogException(ex);
                 return false;
