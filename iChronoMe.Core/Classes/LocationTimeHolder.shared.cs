@@ -346,7 +346,7 @@ namespace iChronoMe.Core
             ChangePositionParameters(nLatitude, nLongitude);
         }
 
-            Thread locationTask = null;
+        Thread locationTask = null;
         bool bStartLocationTaskAgain = false;
         DateTime tLastLocationTaskStart = DateTime.MinValue;
         public void StartRefreshLocationInfo()
@@ -358,7 +358,7 @@ namespace iChronoMe.Core
 
             if (locationTask != null)
                 try { locationTask.Abort(); } catch { }
-            
+
             tLastLocationTaskStart = DateTime.Now;
             var tsk = new Thread(() =>
             {

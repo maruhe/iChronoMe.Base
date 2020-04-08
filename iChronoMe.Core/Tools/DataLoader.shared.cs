@@ -62,7 +62,7 @@ namespace iChronoMe.Core.Classes
                                             try
                                             {
                                                 File.SetLastWriteTime(cLocal, DateTime.Now);
-                                            } 
+                                            }
                                             catch (Exception ex)
                                             {
                                                 sys.LogException(ex);

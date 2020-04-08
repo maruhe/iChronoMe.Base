@@ -289,7 +289,7 @@ namespace iChronoMe.Core.ViewModels
                     calEvent.Reminders = new List<CalendarEventReminder>();
                 return calEvent.Reminders;
             }
-        } 
+        }
 
         public string ExternalID { get => calEvent.ExternalID; }
 

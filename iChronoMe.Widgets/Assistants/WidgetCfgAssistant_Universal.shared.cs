@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-
-using iChronoMe.Core.Classes;
-using iChronoMe.Core.DynamicCalendar;
-using iChronoMe.Core.Interfaces;
-using iChronoMe.Core.Types;
 
 namespace iChronoMe.Widgets
 {
@@ -54,13 +48,13 @@ namespace iChronoMe.Widgets
                     }
 
                     Samples.Add(new WidgetCfgSample<T>(c, cfg));
-                } 
-                catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     xLog.Error(ex);
                 }
             }
-            
+
             if (t is WidgetCfg_ActionButton)
                 NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_Icon);
             else if (t is WidgetCfg_Clock)

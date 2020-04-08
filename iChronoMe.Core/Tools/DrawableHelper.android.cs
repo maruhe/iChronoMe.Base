@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using Android.Content;
+
 using Android.Graphics;
-using Android.Graphics.Drawables;
+
 using iChronoMe.Core.Classes;
 
 namespace iChronoMe.Tools
@@ -19,6 +18,12 @@ namespace iChronoMe.Tools
                 BitmapFactory.Options options = new BitmapFactory.Options();// Create object of bitmapfactory's option method for further option use
                 options.InPurgeable = true; // inPurgeable is used to free up memory while required
                 Bitmap originalImage = BitmapFactory.DecodeFile(input);
+
+                if (originalImage == null)
+                {
+                    File.Delete(input);
+                    return false;
+                }
 
                 float newHeight = 0;
                 float newWidth = 0;
@@ -56,9 +61,9 @@ namespace iChronoMe.Tools
 
                     return true;
                 }
-            } 
+            }
             catch (ThreadAbortException) { return false; }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 sys.LogException(ex);
                 return false;

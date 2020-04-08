@@ -205,7 +205,7 @@ namespace iChronoMe.Widgets
             catch (Exception e)
             {
                 sys.LogException(e);
-                WidgetConfigList = new Dictionary<int, WidgetCfg>();                
+                WidgetConfigList = new Dictionary<int, WidgetCfg>();
             }
         }
     }

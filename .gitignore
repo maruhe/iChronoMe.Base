@@ -342,3 +342,6 @@ healthchecksdb
 #Secrets
 secrets.cs
 secrets.*.cs
+
+#just for the moment
+/iChronoMe.Server

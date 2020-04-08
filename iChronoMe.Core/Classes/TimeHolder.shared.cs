@@ -101,7 +101,7 @@ namespace iChronoMe.Core.Classes
 
         static DateTime requestStart;
         static int iErrorCount;
-        
+
         //https://stackoverflow.com/questions/1193955/how-to-query-an-ntp-server-using-c
         public static TimeSpan? GetNetworkTimeOffset()
         {

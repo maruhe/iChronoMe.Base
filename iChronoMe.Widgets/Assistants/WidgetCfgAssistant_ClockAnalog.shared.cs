@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading;
+
 using iChronoMe.Core;
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.DynamicCalendar;
@@ -307,7 +308,7 @@ namespace iChronoMe.Widgets
                     cfg.ApplyDefaultColors();
                     cfg.ColorCenterCapStroke = cfg.ColorCenterCapFill = xColor.Default;
                 }
-                Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(sys.Debugmode ? Path.GetFileNameWithoutExtension(cFile) : "", cfg));                
+                Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(sys.Debugmode ? Path.GetFileNameWithoutExtension(cFile) : "", cfg));
             }
             catch { }
         }
@@ -564,7 +565,7 @@ namespace iChronoMe.Widgets
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(xColor.White.HexString, cfg));
 
             int i = 0;
-            List<string> clrS = new List<string>(new [] { xColor.Black.HexString, xColor.White.HexString });
+            List<string> clrS = new List<string>(new[] { xColor.Black.HexString, xColor.White.HexString });
             foreach (var clrs in DynamicColors.SampleColorSetS)
             {
                 i++;

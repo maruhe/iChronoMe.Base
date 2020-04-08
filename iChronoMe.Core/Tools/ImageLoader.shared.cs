@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+
 using iChronoMe.Core.Interfaces;
 
 namespace iChronoMe.Core.Classes
@@ -132,7 +133,7 @@ namespace iChronoMe.Core.Classes
 
                             iSuccess++;
                             handler?.SetProgress(iSuccess, cLoadImgS.Count,
-                                sys.EzMzText(cLoadImgS.Count, localize.ImageLoader_success_one_image, string.Format(localize.ImageLoader_success_n_images, iSuccess, cLoadImgS.Count)));                            
+                                sys.EzMzText(cLoadImgS.Count, localize.ImageLoader_success_one_image, string.Format(localize.ImageLoader_success_n_images, iSuccess, cLoadImgS.Count)));
 
                             imageLoadet?.Invoke(new ImageLoadetEventArgs(cDestPath, cLoadImgS.Count - iSuccess));
 

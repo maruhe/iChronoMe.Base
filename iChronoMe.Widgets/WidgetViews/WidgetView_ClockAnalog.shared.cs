@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.Types;
 using iChronoMe.Tools;
+
 using SkiaSharp;
 
 using static iChronoMe.Widgets.ClockHandConfig;
@@ -421,13 +422,11 @@ namespace iChronoMe.Widgets
                         Directory.CreateDirectory(Path.GetDirectoryName(cThumbPath));
                         if (DrawableHelper.ResizeImage(maxFile, cThumbPath, size))
                             return cThumbPath;
-
-                        return maxFile;
                     }
 
                 }
                 return backgroundImage;
-            } 
+            }
             catch
             {
                 return backgroundImage;

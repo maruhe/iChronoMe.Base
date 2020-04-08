@@ -1,61 +1,5 @@
 ﻿using System;
-/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (uap10.0.16299)"
-Vor:
-using System.Xml;
-using GeoJSON.Net.Geometry;
-using iChronoMe.Core.Tools;
-using Newtonsoft.Json;
-using SQLite;
-Nach:
-using System.Xml;
-
-using GeoJSON.Net.Geometry;
-
-using iChronoMe.Core.Tools;
-
-using Newtonsoft.Json;
-
-using SQLite;
-*/
-
-/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (Xamarin.iOS10)"
-Vor:
-using System.Xml;
-using GeoJSON.Net.Geometry;
-using iChronoMe.Core.Tools;
-using Newtonsoft.Json;
-using SQLite;
-Nach:
-using System.Xml;
-
-using GeoJSON.Net.Geometry;
-
-using iChronoMe.Core.Tools;
-
-using Newtonsoft.Json;
-
-using SQLite;
-*/
-
-/* Nicht gemergte Änderung aus Projekt "iChronoMe.Core (MonoAndroid90)"
-Vor:
-using System.Xml;
-using GeoJSON.Net.Geometry;
-using iChronoMe.Core.Tools;
-using Newtonsoft.Json;
-using SQLite;
-Nach:
-using System.Xml;
-
-using GeoJSON.Net.Geometry;
-
-using iChronoMe.Core.Tools;
-
-using Newtonsoft.Json;
-
-using SQLite;
-*/
-
+using System.Threading;
 
 using iChronoMe.Core.Tools;
 
@@ -140,8 +84,28 @@ namespace iChronoMe.Core.Classes
             }
         }
 
+        static DateTime tNextCacheCheck = DateTime.MinValue;
+        public static void CheckCache()
+        {
+            if (tNextCacheCheck < DateTime.Now)
+            {
+                tNextCacheCheck = DateTime.Now.AddHours(6);
+
+                new Thread(() =>
+                {
+                    Thread.Sleep(2500);
+                    //clear the cache 
+                    //AppConfigHolder.MainConfig.LocationCacheLimit
+                })
+                { IsBackground = false }
+                .Start();
+            }
+        }
+
         public class AreaInfo : dbObject
         {
+            public string dataSource { get; set; }
+            public string sourceServer { get; set; }
             public string countryCode { get; set; }
             public string countryName { get; set; }
 

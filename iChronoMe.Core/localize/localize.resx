@@ -844,7 +844,7 @@ you can create new widgets on your launcher-screen!</value>
     <value>clear cache</value>
   </data>
   <data name="progress_clearcache_message" xml:space="preserve">
-    <value>you will have to restart iChronome after continue</value>
+    <value>iChronome should restart after continue</value>
   </data>
   <data name="progress_clearcache_title" xml:space="preserve">
     <value>clear cache?</value>
