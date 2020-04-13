@@ -14,7 +14,7 @@ namespace iChronoMe.Widgets
 {
     public class WidgetConfigHolder
     {
-        public string CfgFile { get; } = System.IO.Path.Combine(sys.PathConfig, "widgetcfg.cfg");
+        public string CfgFile { get; } = Path.Combine(sys.PathConfig, "widgetcfg.cfg");
 
         static bool bTest = false;
         static int iTest = 0;
