@@ -372,9 +372,9 @@ namespace iChronoMe.Widgets
                 }
                 if (iAllCount > 0)
                 {
-                    return "min: " + tsMin.TotalMilliseconds.ToString() + "\n" +
-                           "max: " + tsMax.TotalMilliseconds.ToString() + "\n" +
-                           "avg: " + TimeSpan.FromTicks(tsAllSum.Ticks / iAllCount).ToString();
+                    return "min: " + tsMin.TotalMilliseconds.ToString("#.00") + "\n" +
+                           "max: " + tsMax.TotalMilliseconds.ToString("#.00") + "\n" +
+                           "avg: " + TimeSpan.FromTicks(tsAllSum.Ticks / iAllCount).TotalMilliseconds.ToString("#.00");
                 }
                 return "init..";
             }

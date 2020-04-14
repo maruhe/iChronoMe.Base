@@ -16,8 +16,8 @@ using SkiaSharp.Views.Android;
 //based on SkiaSharp.Views.Android.SKCanvasView
 namespace iChronoMe.Widgets.AndroidHelpers
 {
-    public class SKCanvasMapper : Java.Lang.Object
-    {
+	public class SKCanvasMapper : Java.Lang.Object
+	{
 		private Bitmap bitmap;
 		private SKImageInfo info;
 
@@ -29,7 +29,7 @@ namespace iChronoMe.Widgets.AndroidHelpers
 
 		public SKSize CanvasSize => info.Size;
 
-		public void Draw(Canvas canvas)
+		public void Draw(Canvas canvas, object param = null)
 		{
 			if (info.Width == 0 || info.Height == 0)
 			{
@@ -48,7 +48,7 @@ namespace iChronoMe.Widgets.AndroidHelpers
 			using (var surface = SKSurface.Create(info, bitmap.LockPixels(), info.RowBytes))
 			{
 				// draw using SkiaSharp
-				OnPaintSurface(new SKPaintSurfaceEventArgs(surface, info));
+				OnPaintSurface(new CMPaintSurfaceEventArgs(surface, info, param));
 				surface.Canvas.Flush();
 			}
 			bitmap.UnlockPixels();
@@ -64,9 +64,9 @@ namespace iChronoMe.Widgets.AndroidHelpers
 			info.Height = height;
 		}
 
-		public event EventHandler<SKPaintSurfaceEventArgs> PaintSurface;
+		public event EventHandler<CMPaintSurfaceEventArgs> PaintSurface;
 
-		protected virtual void OnPaintSurface(SKPaintSurfaceEventArgs e)
+		protected virtual void OnPaintSurface(CMPaintSurfaceEventArgs e)
 		{
 			PaintSurface?.Invoke(this, e);
 		}
@@ -95,5 +95,29 @@ namespace iChronoMe.Widgets.AndroidHelpers
 				bitmap = null;
 			}
 		}
+
+		public object ViewTag { get; set; }
+		public object ConfigTag { get; set; }
+	}
+
+	public class CMPaintSurfaceEventArgs : EventArgs
+	{
+		public CMPaintSurfaceEventArgs(SKSurface surface, SKImageInfo info, object param)
+		{
+			Surface = surface;
+			Info = info;
+			Param = param;
+		}
+
+		//
+		// Zusammenfassung:
+		//     Gets the surface that is currently being drawn on.
+		public SKSurface Surface { get; }
+		//
+		// Zusammenfassung:
+		//     Gets the information about the surface that is currently being drawn.
+		public SKImageInfo Info { get; }
+
+		public object Param { get; }
 	}
 }
