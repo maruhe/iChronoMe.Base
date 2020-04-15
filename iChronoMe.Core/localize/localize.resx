@@ -1131,6 +1131,9 @@ please click here</value>
   <data name="widget_title_clock_analog" xml:space="preserve">
     <value>analog solar time</value>
   </data>
+  <data name="widget_title_clock_digital" xml:space="preserve">
+    <value>digital solar time</value>
+  </data>
   <data name="widget_title_lifetime" xml:space="preserve">
     <value>lifetime</value>
   </data>

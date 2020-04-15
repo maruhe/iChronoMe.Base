@@ -79,17 +79,17 @@ namespace iChronoMe.Widgets
             {
                 try
                 {
-                    if (!vClock.FlowSecondHand)
+                    if (!vClock.FlowSeconds)
                     {
                         startS = Math.Truncate(startS);
                         endS = Math.Truncate(endS);
                     }
-                    if (!vClock.FlowMinuteHand)
+                    if (!vClock.FlowMinutes)
                     {
                         startM = Math.Truncate(startM);
                         endM = Math.Truncate(endM);
                     }
-                    if (!vClock.FlowHourHand)
+                    if (!vClock.FlowHours)
                     {
                         startH = Math.Truncate(startH);
                         endH = Math.Truncate(endH);

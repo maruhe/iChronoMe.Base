@@ -683,6 +683,7 @@ namespace iChronoMe.Widgets
     }
 
     [XmlInclude(typeof(WidgetCfg_ClockAnalog))]
+    [XmlInclude(typeof(WidgetCfg_ClockDigital))]
     public abstract class WidgetCfg_Clock : WidgetCfg
     {
         public WidgetCfgPositionType PositionType = WidgetCfgPositionType.None;
@@ -698,6 +699,14 @@ namespace iChronoMe.Widgets
         public bool ShowSeconds = false;
 #endif
 
+    }
+
+    public class WidgetCfg_ClockDigital : WidgetCfg_Clock
+    {
+        public WidgetCfg_ClockDigital()
+        {
+            SupportsWidgetTimeType = SupportsChangeTimeType = true;
+        }
     }
 
     public class WidgetCfg_ClockAnalog : WidgetCfg_Clock

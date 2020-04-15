@@ -15,11 +15,15 @@ namespace iChronoMe.Core.Classes
 
         public Delayer(int maxDelayMs)
             : this(null, 0, maxDelayMs == 0 ? DateTime.MinValue : DateTime.Now.AddMilliseconds(maxDelayMs))
-        { }
+        {
+            MaxDelayMs = maxDelayMs;
+        }
 
         public Delayer(Action action, int initDelayMs, int maxDelayMs = 0)
             : this(action, initDelayMs, maxDelayMs == 0 ? DateTime.MinValue : DateTime.Now.AddMilliseconds(maxDelayMs))
-        { }
+        {
+            MaxDelayMs = maxDelayMs;
+        }
 
         public Delayer(Action action, int initDelayMs, DateTime maxDelay)
         {

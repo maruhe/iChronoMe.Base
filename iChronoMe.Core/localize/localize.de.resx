@@ -1121,6 +1121,9 @@ bitte hier klicken</value>
   <data name="widget_title_clock_analog" xml:space="preserve">
     <value>analoge Sonnenzeit</value>
   </data>
+  <data name="widget_title_clock_digital" xml:space="preserve">
+    <value>digitale Sonnenzeit</value>
+  </data>
   <data name="widget_title_lifetime" xml:space="preserve">
     <value>Lebenszeit</value>
   </data>

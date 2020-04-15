@@ -16,13 +16,8 @@ using static iChronoMe.Widgets.ClockHandConfig;
 
 namespace iChronoMe.Widgets
 {
-    public class WidgetView_ClockAnalog
+    public class WidgetView_ClockAnalog : WidgetView_Clock
     {
-        private string cfgInstance = Guid.NewGuid().ToString();
-        public string BackgroundImage { get; set; } = string.Empty;
-        public bool BackImageAllowsBackColor { get; set; } = false;
-
-        public xColor ColorBackground { get; set; } = xColor.Transparent;
         public xColor ColorTickMarks { get; set; } = xColor.Black;
         public TickMarkStyle TickMarkStyle { get; set; } = TickMarkStyle.Dotts;
         public xColor ColorHourHandStroke { get; set; } = xColor.Black;
@@ -33,14 +28,6 @@ namespace iChronoMe.Widgets
         public xColor ColorSecondHandFill { get; set; } = xColor.Blue;
         public xColor ColorCenterCapStroke { get; set; } = xColor.Black;
         public xColor ColorCenterCapFill { get; set; } = xColor.Blue;
-
-        public bool ShowHourHand { get; set; } = true;
-        public bool ShowMinuteHand { get; set; } = true;
-        public bool ShowSecondHand { get; set; } = true;
-
-        public bool FlowHourHand { set; get; } = true;
-        public bool FlowMinuteHand { set; get; } = true;
-        public bool FlowSecondHand { set; get; } = false;
 
         public SKPaint fillPaint = new SKPaint
         {
@@ -136,13 +123,13 @@ namespace iChronoMe.Widgets
             ColorCenterCapStroke = cfg.ColorCenterCapStroke;
             ColorCenterCapFill = cfg.ColorCenterCapFill;
 
-            ShowHourHand = cfg.ShowHours;
-            ShowMinuteHand = cfg.ShowMinutes;
-            ShowSecondHand = cfg.ShowSeconds;
+            ShowHours = cfg.ShowHours;
+            ShowMinutes = cfg.ShowMinutes;
+            ShowSeconds = cfg.ShowSeconds;
 
-            FlowHourHand = cfg.FlowHourHand;
-            FlowMinuteHand = cfg.FlowMinuteHand;
-            FlowSecondHand = cfg.FlowSecondHand;
+            FlowHours = cfg.FlowHourHand;
+            FlowMinutes = cfg.FlowMinuteHand;
+            FlowSeconds = cfg.FlowSecondHand;
 
             HourPathList = cfg.HourHandConfig.HourPathList;
             MinutePathList = cfg.MinuteHandConfig.MinutePathList;
@@ -278,15 +265,15 @@ namespace iChronoMe.Widgets
             }
 
 
-            if (!FlowHourHand)
+            if (!FlowHours)
                 hour = Math.Truncate(hour);
-            if (!FlowMinuteHand)
+            if (!FlowMinutes)
                 minute = Math.Truncate(minute);
-            if (!FlowSecondHand)
+            if (!FlowSeconds)
                 second = Math.Truncate(second);
 
             // Hour hand
-            if (ShowHourHand && HourPathList != null)
+            if (ShowHours && HourPathList != null)
             {
                 canvas.RotateDegrees((float)(30 * hour), 500, 500);
 
@@ -296,7 +283,7 @@ namespace iChronoMe.Widgets
             }
 
             // Minute hand
-            if (ShowMinuteHand && MinutePathList != null)
+            if (ShowMinutes && MinutePathList != null)
             {
                 canvas.RotateDegrees((float)(6 * minute), 500, 500);
 
@@ -306,7 +293,7 @@ namespace iChronoMe.Widgets
             }
 
             // Second hand
-            if (ShowSecondHand && SecondPathList != null)
+            if (ShowSeconds && SecondPathList != null)
             {
                 canvas.RotateDegrees((float)(6 * second), 500, 500);
 
@@ -419,6 +406,8 @@ namespace iChronoMe.Widgets
 
                     if (File.Exists(maxFile))
                     {
+                        if (size == sys.DisplayShortSite)
+                            return maxFile;
                         Directory.CreateDirectory(Path.GetDirectoryName(cThumbPath));
                         if (DrawableHelper.ResizeImage(maxFile, cThumbPath, size))
                             return cThumbPath;

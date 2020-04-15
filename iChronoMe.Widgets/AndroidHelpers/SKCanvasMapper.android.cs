@@ -16,7 +16,7 @@ using SkiaSharp.Views.Android;
 //based on SkiaSharp.Views.Android.SKCanvasView
 namespace iChronoMe.Widgets.AndroidHelpers
 {
-	public class SKCanvasMapper : Java.Lang.Object
+	public class SKCanvasMapper : IDisposable
 	{
 		private Bitmap bitmap;
 		private SKImageInfo info;
@@ -37,6 +37,19 @@ namespace iChronoMe.Widgets.AndroidHelpers
 				return;
 			}
 
+			// draw bitmap to canvas
+			//canvas.DrawBitmap(bitmap, info.Rect.ToRect(), new RectF(0, 0, Width, Height), null);
+			canvas.DrawBitmap(GetBitmap(param), 0, 0, null);
+		}
+
+		public Bitmap GetBitmap(object param = null)
+		{
+			if (info.Width == 0 || info.Height == 0)
+			{
+				FreeBitmap();
+				return null;
+			}
+
 			// create the bitmap data if we need it
 			if (bitmap == null || bitmap.Handle == IntPtr.Zero || bitmap.Width != info.Width || bitmap.Height != info.Height)
 			{
@@ -53,9 +66,7 @@ namespace iChronoMe.Widgets.AndroidHelpers
 			}
 			bitmap.UnlockPixels();
 
-			// draw bitmap to canvas
-			//canvas.DrawBitmap(bitmap, info.Rect.ToRect(), new RectF(0, 0, Width, Height), null);
-			canvas.DrawBitmap(bitmap, 0, 0, null);
+			return bitmap;
 		}
 
 		public void UpdateCanvasSize(int width, int height)
@@ -76,12 +87,9 @@ namespace iChronoMe.Widgets.AndroidHelpers
 			FreeBitmap();
 		}
 
-		protected override void Dispose(bool disposing)
+		public void Dispose()
 		{
-			if (disposing)
-				FreeBitmap();
-
-			base.Dispose(disposing);
+			FreeBitmap();
 		}
 
 		private void FreeBitmap()

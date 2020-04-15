@@ -2227,7 +2227,7 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die you will have to restart iChronome after continue ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die iChronome should restart after continue ähnelt.
         /// </summary>
         public static string progress_clearcache_message {
             get {
@@ -3075,6 +3075,15 @@ namespace iChronoMe {
         public static string widget_title_clock_analog {
             get {
                 return ResourceManager.GetString("widget_title_clock_analog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die digital solar time ähnelt.
+        /// </summary>
+        public static string widget_title_clock_digital {
+            get {
+                return ResourceManager.GetString("widget_title_clock_digital", resourceCulture);
             }
         }
         
