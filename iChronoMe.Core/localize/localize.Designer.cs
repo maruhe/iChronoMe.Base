@@ -656,6 +656,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die iChronoMe Wallpaper ähnelt.
+        /// </summary>
+        public static string AppNameWallpaper {
+            get {
+                return ResourceManager.GetString("AppNameWallpaper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die event name ähnelt.
         /// </summary>
         public static string AppointmentName {
@@ -2978,11 +2987,11 @@ namespace iChronoMe {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die analog solar clock ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die iChronoMe solar clock ähnelt.
         /// </summary>
-        public static string wallpaper_title_clock_analog {
+        public static string wallpaper_title {
             get {
-                return ResourceManager.GetString("wallpaper_title_clock_analog", resourceCulture);
+                return ResourceManager.GetString("wallpaper_title", resourceCulture);
             }
         }
         

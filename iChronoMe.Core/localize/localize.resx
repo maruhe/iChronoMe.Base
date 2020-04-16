@@ -316,6 +316,9 @@
   <data name="AppName" xml:space="preserve">
     <value>iChronoMe</value>
   </data>
+  <data name="AppNameWallpaper" xml:space="preserve">
+    <value>iChronoMe Wallpaper</value>
+  </data>
   <data name="AppointmentName" xml:space="preserve">
     <value>event name</value>
   </data>
@@ -1096,8 +1099,8 @@ may this can be far far away from the real time on your location</value>
   <data name="TitleClickAction" xml:space="preserve">
     <value>action on title click</value>
   </data>
-  <data name="wallpaper_title_clock_analog" xml:space="preserve">
-    <value>analog solar clock</value>
+  <data name="wallpaper_title" xml:space="preserve">
+    <value>iChronoMe solar clock</value>
   </data>
   <data name="welcome_ichronomy" xml:space="preserve">
     <value>welcome to iChronoMe!</value>

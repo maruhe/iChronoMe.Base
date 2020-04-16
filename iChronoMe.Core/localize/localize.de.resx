@@ -316,6 +316,9 @@
   <data name="AppName" xml:space="preserve">
     <value>iChronoMe</value>
   </data>
+  <data name="AppNameWallpaper" xml:space="preserve">
+    <value>iChronoMeWallpaper</value>
+  </data>
   <data name="AppointmentName" xml:space="preserve">
     <value>Termin-Name</value>
   </data>
@@ -1085,8 +1088,8 @@ oft ist diese Angabe weit entfernt von der wahren Zeit an diesem Ort</value>
   <data name="TitleClickAction" xml:space="preserve">
     <value>Aktion beim Klick auf den Titel</value>
   </data>
-  <data name="wallpaper_title_clock_analog" xml:space="preserve">
-    <value>analoge Sonnenuhr</value>
+  <data name="wallpaper_title" xml:space="preserve">
+    <value>iChronoMe Sonnenuhr</value>
   </data>
   <data name="welcome_ichronomy" xml:space="preserve">
     <value>willkommen bei iChronoMe!</value>
