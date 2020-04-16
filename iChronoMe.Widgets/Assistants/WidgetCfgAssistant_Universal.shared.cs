@@ -57,8 +57,10 @@ namespace iChronoMe.Widgets
 
             if (t is WidgetCfg_ActionButton)
                 NextStepAssistantType = typeof(WidgetCfgAssistant_ActionButton_Icon);
-            else if (t is WidgetCfg_Clock)
+            else if (t is WidgetCfg_ClockAnalog)
                 NextStepAssistantType = typeof(WidgetCfgAssistant_ClockAnalog_OptionsBase);
+            else if (t is WidgetCfg_ClockDigital)
+                NextStepAssistantType = typeof(WidgetCfgAssistant_ClockDigital_OptionsBase);
             else if (t is WidgetCfg_CalendarCircleWave)
                 NextStepAssistantType = typeof(WidgetCfgAssistant_CalendarCircleWave_OptionsBase);
             else if (t is WidgetCfg_Calendar)

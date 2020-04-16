@@ -48,7 +48,7 @@ namespace iChronoMe.Widgets
         int iAllCount = 0;
         SKBitmap bitmap;
 
-        public Stream GetBitmap(DateTime dateTime, int width = 512, int height = 512, bool bDrawBackImage = false)
+        public Stream GetBitmap(DateTime dateTime, int width = 512, int height = 512, WidgetCfg_ClockDigital cfg = null, bool bDrawBackImage = false)
         {
             if (bitmap == null || bitmap.Width != width || bitmap.Height != height)
             {
@@ -58,7 +58,7 @@ namespace iChronoMe.Widgets
 
             SKCanvas canvas = new SKCanvas(bitmap);
 
-            DrawCanvas(canvas, dateTime, width, height, bDrawBackImage);
+            DrawCanvas(canvas, dateTime, width, height, cfg, bDrawBackImage);
 
             // create an image COPY
             //SKImage image = SKImage.FromBitmap(bitmap);
@@ -84,22 +84,70 @@ namespace iChronoMe.Widgets
             ShowSeconds = cfg.ShowSeconds;
         }
 
-        public void DrawCanvas(SKCanvas canvas, DateTime dateTime, int width = 512, int height = 512, bool bDrawBackImage = false)
+        public void DrawCanvas(SKCanvas canvas, DateTime dateTime, int width = 512, int height = 512, WidgetCfg_ClockDigital cfg = null, bool bDrawBackImage = false)
         {
             var t = dateTime.TimeOfDay;
             DateTime swStart = DateTime.Now;
 
             canvas.Clear();
-            int x = Math.Min(width, height);
 
-            // Set scale to draw on a 1000*1000 points base
-            canvas.Translate(width > height ? (width - height) / 2 : 0, height > width ? (height - width) / 2 : 0);
-            //canvas.Scale(Math.Min(width / 1000f, height / 1000f));
+            if (bDrawBackImage && ColorBackground.A>0)
+            {
+                fillPaint.Color = ColorBackground.ToSKColor();
+                canvas.DrawRoundRect(0, 0, width, height, sys.DpPx(8), sys.DpPx(8), fillPaint);
+            }
 
-            string cTime = dateTime.ToLongTimeString();
+            int padding = sys.DpPx(5);
+            canvas.Translate(padding, padding);
+            width -= padding * 2;
+            height -= padding * 2;
 
-            canvas.DrawText(cTime, 100, 100, textPaint);
+            string cTime = ShowSeconds ? dateTime.ToLongTimeString() : dateTime.ToShortTimeString();
 
+            float x = 0;
+
+            textPaint.TextSize = sys.DpPx(24);
+
+            DigitalClockStyle clockStyle = DigitalClockStyle.Default;
+            if (cfg != null)
+            {
+                clockStyle = cfg.ClockStyle;
+                textPaint.Color = cfg.ColorTitleText.ToSKColor();
+            }
+
+            switch (clockStyle)
+            {
+                case DigitalClockStyle.LocationUp:
+
+                    cTime = dateTime.ToShortTimeString();
+
+                    x += textPaint.TextSize;
+                    canvas.DrawText(cTime, 0, x, textPaint);
+
+                    float y = textPaint.MeasureText(cTime) + padding / 2;
+
+                    textPaint.TextSize = sys.DpPx(12);
+                    canvas.DrawText(cfg.WidgetTitle, y, x, textPaint); 
+                    x += textPaint.TextSize + padding / 2;
+                    canvas.DrawText(dateTime.ToShortDateString(), 0, x, textPaint);
+
+                    break;
+
+                case DigitalClockStyle.JustTime:
+                    textPaint.TextSize = sys.DpPx(36);
+                    x += textPaint.TextSize;
+                    canvas.DrawText(cTime, 0, x, textPaint);
+                    break;
+
+                default:
+                    x += textPaint.TextSize;
+                    canvas.DrawText(cTime, 0, x, textPaint);
+
+                    textPaint.TextSize = sys.DpPx(12);
+                    x += textPaint.TextSize + padding / 2;
+                    canvas.DrawText(dateTime.ToShortDateString() + ", " + cfg.WidgetTitle, 0, x, textPaint);
+                    break;
+            }
             TimeSpan tsDraw = DateTime.Now - swStart;
             iAllCount++;
             tsAllSum += tsDraw;

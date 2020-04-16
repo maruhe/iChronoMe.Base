@@ -1091,6 +1091,9 @@ oft ist diese Angabe weit entfernt von der wahren Zeit an diesem Ort</value>
   <data name="welcome_ichronomy" xml:space="preserve">
     <value>willkommen bei iChronoMe!</value>
   </data>
+  <data name="widget_chronospan_loading" xml:space="preserve">
+    <value>ein "tropisches Jahr" dauert:\n365 d 5 h 48 min und 45,261 s</value>
+  </data>
   <data name="widget_error_location_is_requered" xml:space="preserve">
     <value>Die Kalender-Widget\'s funktionieren nur mit Zugriff auf Kalender und Standort!</value>
   </data>
@@ -1101,9 +1104,6 @@ bitte hier klicken</value>
   <data name="widget_error_permission_location" xml:space="preserve">
     <value>Standort-Berechtigungen fehlen
 bitte hier klicken</value>
-  </data>
-  <data name="widget_lifetime_loading" xml:space="preserve">
-    <value>ein "tropisches Jahr" dauert:\n365 d 5 h 48 min und 45,261 s</value>
   </data>
   <data name="widget_loading" xml:space="preserve">
     <value>Zeit ist nur Illusion\u2026</value>
@@ -1118,14 +1118,14 @@ bitte hier klicken</value>
   <data name="widget_title_calendar" xml:space="preserve">
     <value>Kalender Widget in Sonnenzeit</value>
   </data>
+  <data name="widget_title_chronospan" xml:space="preserve">
+    <value>Zeitspanne</value>
+  </data>
   <data name="widget_title_clock_analog" xml:space="preserve">
     <value>analoge Sonnenzeit</value>
   </data>
   <data name="widget_title_clock_digital" xml:space="preserve">
     <value>digitale Sonnenzeit</value>
-  </data>
-  <data name="widget_title_lifetime" xml:space="preserve">
-    <value>Lebenszeit</value>
   </data>
   <data name="widget_unconfigured" xml:space="preserve">
     <value>hier klicken um das Widget zu konfigurieren</value>

@@ -2996,6 +2996,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die one &quot;tropical year&quot; is:\n365 d 5 h 48 min and 45,261 s ähnelt.
+        /// </summary>
+        public static string widget_chronospan_loading {
+            get {
+                return ResourceManager.GetString("widget_chronospan_loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die the calendar-widgets only work with access to your calendar and location! ähnelt.
         /// </summary>
         public static string widget_error_location_is_requered {
@@ -3021,15 +3030,6 @@ namespace iChronoMe {
         public static string widget_error_permission_location {
             get {
                 return ResourceManager.GetString("widget_error_permission_location", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die one &quot;tropical year&quot; is:\n365 d 5 h 48 min and 45,261 s ähnelt.
-        /// </summary>
-        public static string widget_lifetime_loading {
-            get {
-                return ResourceManager.GetString("widget_lifetime_loading", resourceCulture);
             }
         }
         
@@ -3070,6 +3070,15 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die time span ähnelt.
+        /// </summary>
+        public static string widget_title_chronospan {
+            get {
+                return ResourceManager.GetString("widget_title_chronospan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die analog solar time ähnelt.
         /// </summary>
         public static string widget_title_clock_analog {
@@ -3084,15 +3093,6 @@ namespace iChronoMe {
         public static string widget_title_clock_digital {
             get {
                 return ResourceManager.GetString("widget_title_clock_digital", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die lifetime ähnelt.
-        /// </summary>
-        public static string widget_title_lifetime {
-            get {
-                return ResourceManager.GetString("widget_title_lifetime", resourceCulture);
             }
         }
         

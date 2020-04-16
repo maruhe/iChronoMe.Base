@@ -22,7 +22,7 @@ namespace iChronoMe.Widgets
         public bool ShowSeconds { get; set; } = true;
 
         public bool FlowHours { set; get; } = true;
-        public bool FlowMinutes { set; get; } = true;
+        public bool FlowMinutes { set; get; } = false;
         public bool FlowSeconds { set; get; } = false;
     }
 }

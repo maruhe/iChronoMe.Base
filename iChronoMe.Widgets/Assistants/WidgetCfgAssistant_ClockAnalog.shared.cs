@@ -386,6 +386,7 @@ namespace iChronoMe.Widgets
             cfg.ColorBackground = xColor.Transparent;
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockAnalog>(localize.text_transparent, cfg));
 
+            int iSim = 15;
             int i = 0;
             List<string> clrS = new List<string>();
             foreach (var clrs in DynamicColors.SampleColorSetS)
@@ -396,7 +397,6 @@ namespace iChronoMe.Widgets
                 {
                     clrS.Add(clr.HexString);
 
-                    int iSim = 15;
                     if (clr.IsSimilar(cfg.ColorHourHandStroke, iSim) ||
                         clr.IsSimilar(cfg.ColorHourHandFill, iSim) ||
                         clr.IsSimilar(cfg.ColorMinuteHandStroke, iSim) ||

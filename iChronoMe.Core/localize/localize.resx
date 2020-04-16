@@ -1102,6 +1102,9 @@ may this can be far far away from the real time on your location</value>
   <data name="welcome_ichronomy" xml:space="preserve">
     <value>welcome to iChronoMe!</value>
   </data>
+  <data name="widget_chronospan_loading" xml:space="preserve">
+    <value>one "tropical year" is:\n365 d 5 h 48 min and 45,261 s</value>
+  </data>
   <data name="widget_error_location_is_requered" xml:space="preserve">
     <value>the calendar-widgets only work with access to your calendar and location!</value>
   </data>
@@ -1112,9 +1115,6 @@ please click here</value>
   <data name="widget_error_permission_location" xml:space="preserve">
     <value>missing location-permission
 please click here</value>
-  </data>
-  <data name="widget_lifetime_loading" xml:space="preserve">
-    <value>one "tropical year" is:\n365 d 5 h 48 min and 45,261 s</value>
   </data>
   <data name="widget_loading" xml:space="preserve">
     <value>time is just illusion\u2026</value>
@@ -1128,14 +1128,14 @@ please click here</value>
   <data name="widget_title_calendar" xml:space="preserve">
     <value>solar time calendar widget</value>
   </data>
+  <data name="widget_title_chronospan" xml:space="preserve">
+    <value>time span</value>
+  </data>
   <data name="widget_title_clock_analog" xml:space="preserve">
     <value>analog solar time</value>
   </data>
   <data name="widget_title_clock_digital" xml:space="preserve">
     <value>digital solar time</value>
-  </data>
-  <data name="widget_title_lifetime" xml:space="preserve">
-    <value>lifetime</value>
   </data>
   <data name="widget_unconfigured" xml:space="preserve">
     <value>click here to configure the widget</value>

@@ -47,6 +47,9 @@ namespace iChronoMe.Widgets
                 sample.WidgetConfig.Latitude = pos.Latitude;
                 sample.WidgetConfig.Longitude = pos.Longitude;
             }
+            else
+                sample.WidgetConfig.WidgetTitle = LocationTimeHolder.LocalInstance.AreaName;
+
             if (sample.WidgetConfig.WidgetId == 0 && ClockHandConfig.Count > 1)
                 NextStepAssistantType = typeof(WidgetCfgAssistant_ClockDigital_StartStyle);
         }
@@ -60,7 +63,20 @@ namespace iChronoMe.Widgets
             BaseSample = baseSample;
 
             var cfg = BaseSample.GetConfigClone();
-            cfg.ColorBackground = xColor.Transparent;
+            cfg.ClockStyle = DigitalClockStyle.Default;
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Sample + " 1", cfg));
+
+            cfg = BaseSample.GetConfigClone();
+            cfg.ClockStyle = DigitalClockStyle.LocationUp;
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Sample + " 1", cfg));
+
+            cfg = BaseSample.GetConfigClone();
+            cfg.ClockStyle = DigitalClockStyle.JustTime;
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Sample + " 1", cfg));
+
+            cfg = BaseSample.GetConfigClone();
+            cfg.ColorBackground = xColor.MaterialPink;
+            cfg.ColorTitleText = xColor.Blue;
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.MoreOptionsAndColors, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_ClockDigital_OptionsBase), cfg));
 
             NextStepAssistantType = null;
@@ -88,7 +104,7 @@ namespace iChronoMe.Widgets
             var cfg = BaseSample.GetConfigClone();
             var cfgPrev = BaseSample.GetConfigClone();
             cfgPrev.ColorBackground = xColor.HotPink;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.Background, null, cfg, typeof(WidgetCfgAssistant_ClockDigital_Background), cfgPrev));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.Background, null, cfg, typeof(WidgetCfgAssistant_ClockDigital_BackgroundColor), cfgPrev));
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.LocationType, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_ClockDigital_Start)));
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.TimeType, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_ClockDigital_WidgetTimeType)));
 
@@ -125,73 +141,6 @@ namespace iChronoMe.Widgets
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockDigital_OptionsBase);
         }
     }
-    public class WidgetCfgAssistant_ClockDigital_Background : WidgetConfigAssistant<WidgetCfg_ClockDigital>
-    {
-        string cImageDir = "";
-        public static Thread LoaderThread { get; set; } = null;
-
-        public WidgetCfgAssistant_ClockDigital_Background(WidgetCfgSample<WidgetCfg_ClockDigital> baseSample)
-        {
-            Title = localize.Background;
-            BaseSample = baseSample;
-
-            cImageDir = ImageLoader.GetImagePathThumb(ImageLoader.filter_clockfaces);
-
-            //create samples on PerformPreperation()
-
-            //NextStepAssistantType = typeof(WidgetCfgAssistant_ClockDigital_BackgroundImageGroup);
-        }
-
-        private WidgetCfg_ClockDigital EmptyBackSample
-        {
-            get
-            {
-                var cfg = (WidgetCfg_ClockDigital)(BaseSample.WidgetConfig.Clone());
-                return cfg;
-            }
-        }
-
-        public override void PerformPreperation(IUserIO handler)
-        {
-            string index = Path.Combine(cImageDir, "index");
-            if (!File.Exists(index) || File.GetLastWriteTime(index).AddDays(7) < DateTime.Now)
-                ImageLoader.CheckImageThumbCache(handler, ImageLoader.filter_clockfaces, 150, true);
-            ClockHandConfig.CheckUpdateLocalData(handler);
-
-            Samples.Clear();
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_SingleColor, EmptyBackSample));
-            LoadSamples();
-            base.PerformPreperation(handler);
-        }
-
-        void LoadSamples()
-        {
-            try
-            {
-                var rnd = new Random(DateTime.Now.Millisecond);
-                var cGroups = new List<string>(Directory.GetDirectories(cImageDir));
-                cGroups.Sort();
-                foreach (string cGroup in cGroups)
-                {
-                    string[] cFiles = Directory.GetFiles(cGroup, "*.png");
-                    if (cFiles.Length > 0)
-                    {
-                        WidgetCfg_ClockDigital cfg = BaseSample.GetConfigClone();
-                        Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(Path.GetFileNameWithoutExtension(cGroup).Replace("_", " "), cfg));
-                    }
-                }
-            }
-            catch { }
-        }
-
-        public override void AfterSelect(IUserIO handler, WidgetCfgSample<WidgetCfg_ClockDigital> sample)
-        {
-            base.AfterSelect(handler, sample);
-
-            //if (string.IsNullOrEmpty(sample.WidgetConfig.BackgroundImage))
-            //    NextStepAssistantType = typeof(WidgetCfgAssistant_ClockDigital_BackgroundColor);
-        }
-    }
 
     public class WidgetCfgAssistant_ClockDigital_BackgroundColor : WidgetConfigAssistant<WidgetCfg_ClockDigital>
     {
@@ -222,9 +171,8 @@ namespace iChronoMe.Widgets
                     clrS.Add(clr.HexString);
 
                     int iSim = 15;
-                    if (clr.IsSimilar(cfg.ColorTitleText, iSim)
-                        )
-                        continue;
+                    if (clr.IsSimilar(cfg.ColorTitleText, iSim))
+                        cfg.ColorTitleText = cfg.ColorTitleText.Invert();
 
                     cfg = BaseSample.GetConfigClone();
                     cfg.ColorBackground = clr;
@@ -259,7 +207,6 @@ namespace iChronoMe.Widgets
             Title = localize.TextColor;
             BaseSample = baseSample;
             AllowCustom = true;
-            ShowPreviewImage = false;
             NextStepAssistantType = typeof(WidgetCfgAssistant_ClockDigital_OptionsBase);
 
             var cfg = BaseSample.GetConfigClone();
@@ -270,6 +217,7 @@ namespace iChronoMe.Widgets
             cfg.ColorTitleText = xColor.White;
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(xColor.White.HexString, cfg));
 
+            int iSim = 15;
             int i = 0;
             List<string> clrS = new List<string>(new[] { xColor.Black.HexString, xColor.White.HexString });
             foreach (var clrs in DynamicColors.SampleColorSetS)
@@ -279,6 +227,9 @@ namespace iChronoMe.Widgets
                 if (!clrS.Contains(clr.HexString))
                 {
                     clrS.Add(clr.HexString);
+                    
+                    if (cfg.ColorBackground.A >= .75 && clr.IsSimilar(cfg.ColorBackground, iSim))
+                        continue;
 
                     cfg = BaseSample.GetConfigClone();
                     cfg.ColorTitleText = clr;

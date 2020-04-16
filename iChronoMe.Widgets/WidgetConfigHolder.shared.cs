@@ -211,12 +211,13 @@ namespace iChronoMe.Widgets
     }
 
     [XmlInclude(typeof(WidgetCfg_Clock))]
-    [XmlInclude(typeof(WidgetCfg_Lifetime))]
+    [XmlInclude(typeof(WidgetCfg_ChronoSpan))]
     [XmlInclude(typeof(WidgetCfg_Moon))]
     [XmlInclude(typeof(WidgetCfg_ActionButton))]
-    [XmlInclude(typeof(WidgetCfg_CalendarTimetable))]
-    [XmlInclude(typeof(WidgetCfg_CalendarMonthView))]
-    [XmlInclude(typeof(WidgetCfg_CalendarCircleWave))]
+    [XmlInclude(typeof(WidgetCfg_Calendar))]
+    //[XmlInclude(typeof(WidgetCfg_CalendarTimetable))]
+    //[XmlInclude(typeof(WidgetCfg_CalendarMonthView))]
+    //[XmlInclude(typeof(WidgetCfg_CalendarCircleWave))]
     public abstract class WidgetCfg
     {
         public static readonly xColor tcTransparent = xColor.FromHex("#00000000");
@@ -400,21 +401,21 @@ namespace iChronoMe.Widgets
 
     }
 
-    public class WidgetCfg_Lifetime : WidgetCfg
+    public class WidgetCfg_ChronoSpan : WidgetCfg
     {
         public DateTime LifeStartTime = DateTime.MinValue;
 
         public DateTime EndOfLifeTime = DateTime.MinValue;
 
-        public bool ShowLifeTimeProgress = false;
+        public bool ShowTimeProgress = false;
 
-        public bool ShowLifeTimePercentage = false;
+        public bool ShowTimePercentage = false;
 
-        public xColor ColorLifetimeText = xColor.White;
+        public xColor ColorTimeText = xColor.White;
 
-        public xColor ColorLifeTimeProgress = xColor.White;
+        public xColor ColorTimeProgress = xColor.White;
 
-        public xColor ColorLifeTimePercentage = xColor.White;
+        public xColor ColorTimePercentage = xColor.White;
     }
 
 
@@ -703,10 +704,19 @@ namespace iChronoMe.Widgets
 
     public class WidgetCfg_ClockDigital : WidgetCfg_Clock
     {
+        public DigitalClockStyle ClockStyle = DigitalClockStyle.Default;
         public WidgetCfg_ClockDigital()
         {
             SupportsWidgetTimeType = SupportsChangeTimeType = true;
+            ShowSeconds = true;
         }
+    }
+
+    public enum DigitalClockStyle
+    {
+        Default,
+        LocationUp,
+        JustTime
     }
 
     public class WidgetCfg_ClockAnalog : WidgetCfg_Clock
