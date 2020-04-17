@@ -91,7 +91,7 @@ namespace iChronoMe.Widgets
 
             canvas.Clear();
 
-            if (bDrawBackImage && ColorBackground.A>0)
+            if (bDrawBackImage && ColorBackground.A > 0)
             {
                 fillPaint.Color = ColorBackground.ToSKColor();
                 canvas.DrawRoundRect(0, 0, width, height, sys.DpPx(8), sys.DpPx(8), fillPaint);
@@ -117,35 +117,37 @@ namespace iChronoMe.Widgets
 
             switch (clockStyle)
             {
-                case DigitalClockStyle.LocationUp:
+                case DigitalClockStyle.Detailed:
 
-                    cTime = dateTime.ToShortTimeString();
 
-                    x += textPaint.TextSize;
+                    GetMaxTextSize(textPaint, cTime, height * 2 / 3, width * .6f);
+                    x += textPaint.TextSize * .8f;
                     canvas.DrawText(cTime, 0, x, textPaint);
 
-                    float y = textPaint.MeasureText(cTime) + padding / 2;
+                    float y = textPaint.MeasureText(cTime) + padding * 2;
 
-                    textPaint.TextSize = sys.DpPx(12);
-                    canvas.DrawText(cfg.WidgetTitle, y, x, textPaint); 
+                    textPaint.TextSize /= 2;
+                    canvas.DrawText("lala", y, x, textPaint);
+
                     x += textPaint.TextSize + padding / 2;
-                    canvas.DrawText(dateTime.ToShortDateString(), 0, x, textPaint);
-
+                    canvas.DrawText(dateTime.ToString("ddd") + ". " + dateTime.ToShortDateString() + ", " + cfg.WidgetTitle, 0, x, textPaint);
                     break;
 
                 case DigitalClockStyle.JustTime:
-                    textPaint.TextSize = sys.DpPx(36);
-                    x += textPaint.TextSize;
-                    canvas.DrawText(cTime, 0, x, textPaint);
+                    GetMaxTextSize(textPaint, cTime, height, width);
+                    x += textPaint.TextSize * .8f;
+                    textPaint.TextAlign = SKTextAlign.Center;
+                    canvas.DrawText(cTime, width / 2, x + (height - x) / 2, textPaint);
                     break;
 
                 default:
-                    x += textPaint.TextSize;
+                    GetMaxTextSize(textPaint, cTime, height * 2 / 3, width * .6f);
+                    x += textPaint.TextSize * .8f;
                     canvas.DrawText(cTime, 0, x, textPaint);
 
-                    textPaint.TextSize = sys.DpPx(12);
+                    textPaint.TextSize /= 2;
                     x += textPaint.TextSize + padding / 2;
-                    canvas.DrawText(dateTime.ToShortDateString() + ", " + cfg.WidgetTitle, 0, x, textPaint);
+                    canvas.DrawText(dateTime.ToString("ddd") + ". " + dateTime.ToShortDateString() + ", " + cfg.WidgetTitle, 0, x, textPaint);
                     break;
             }
             TimeSpan tsDraw = DateTime.Now - swStart;
@@ -179,5 +181,12 @@ namespace iChronoMe.Widgets
             }
         }
 
+        public float GetMaxTextSize(SKPaint p, string text, float initSize, float maxWidth)
+        {
+            p.TextSize = initSize;
+            while (p.MeasureText(text) > maxWidth)
+                p.TextSize -= .5f;
+            return p.TextSize;
+        }
     }
 }

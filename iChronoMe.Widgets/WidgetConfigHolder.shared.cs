@@ -708,14 +708,14 @@ namespace iChronoMe.Widgets
         public WidgetCfg_ClockDigital()
         {
             SupportsWidgetTimeType = SupportsChangeTimeType = true;
-            ShowSeconds = true;
+            ShowSeconds = false;
         }
     }
 
     public enum DigitalClockStyle
     {
         Default,
-        LocationUp,
+        Detailed,
         JustTime
     }
 

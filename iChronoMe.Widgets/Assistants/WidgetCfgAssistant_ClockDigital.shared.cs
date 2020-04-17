@@ -67,17 +67,12 @@ namespace iChronoMe.Widgets
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Sample + " 1", cfg));
 
             cfg = BaseSample.GetConfigClone();
-            cfg.ClockStyle = DigitalClockStyle.LocationUp;
+            cfg.ClockStyle = DigitalClockStyle.Detailed;
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Sample + " 1", cfg));
 
             cfg = BaseSample.GetConfigClone();
             cfg.ClockStyle = DigitalClockStyle.JustTime;
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Sample + " 1", cfg));
-
-            cfg = BaseSample.GetConfigClone();
-            cfg.ColorBackground = xColor.MaterialPink;
-            cfg.ColorTitleText = xColor.Blue;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.MoreOptionsAndColors, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_ClockDigital_OptionsBase), cfg));
 
             NextStepAssistantType = null;
         }
