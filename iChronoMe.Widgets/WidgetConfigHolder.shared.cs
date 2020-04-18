@@ -716,7 +716,8 @@ namespace iChronoMe.Widgets
     {
         Default,
         Detailed,
-        JustTime
+        JustTime,
+        WeatherTime
     }
 
     public class WidgetCfg_ClockAnalog : WidgetCfg_Clock

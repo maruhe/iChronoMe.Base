@@ -16,5 +16,7 @@ namespace iChronoMe.Widgets
     public abstract class WidgetView
     {
         protected string cfgInstance = Guid.NewGuid().ToString();
+
+        public virtual bool NeedsWeatherInfo { get; }
     }
 }

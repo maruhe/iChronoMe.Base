@@ -51,13 +51,13 @@ namespace iChronoMe.Widgets
                 sample.WidgetConfig.WidgetTitle = LocationTimeHolder.LocalInstance.AreaName;
 
             if (sample.WidgetConfig.WidgetId == 0 && ClockHandConfig.Count > 1)
-                NextStepAssistantType = typeof(WidgetCfgAssistant_ClockDigital_StartStyle);
+                NextStepAssistantType = typeof(WidgetCfgAssistant_ClockDigital_Style);
         }
     }
 
-    public class WidgetCfgAssistant_ClockDigital_StartStyle : WidgetConfigAssistant<WidgetCfg_ClockDigital>
+    public class WidgetCfgAssistant_ClockDigital_Style : WidgetConfigAssistant<WidgetCfg_ClockDigital>
     {
-        public WidgetCfgAssistant_ClockDigital_StartStyle(WidgetCfgSample<WidgetCfg_ClockDigital> baseSample)
+        public WidgetCfgAssistant_ClockDigital_Style(WidgetCfgSample<WidgetCfg_ClockDigital> baseSample)
         {
             Title = localize.text_Style;
             BaseSample = baseSample;
@@ -68,11 +68,15 @@ namespace iChronoMe.Widgets
 
             cfg = BaseSample.GetConfigClone();
             cfg.ClockStyle = DigitalClockStyle.Detailed;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Sample + " 1", cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Sample + " 2", cfg));
 
             cfg = BaseSample.GetConfigClone();
             cfg.ClockStyle = DigitalClockStyle.JustTime;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Sample + " 1", cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Sample + " 3", cfg));
+
+            cfg = BaseSample.GetConfigClone();
+            cfg.ClockStyle = DigitalClockStyle.WeatherTime;
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Sample + " 4", cfg));
 
             NextStepAssistantType = null;
         }
@@ -98,7 +102,8 @@ namespace iChronoMe.Widgets
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.action_SaveAndQuit, BaseSample.GetConfigClone()));
             var cfg = BaseSample.GetConfigClone();
             var cfgPrev = BaseSample.GetConfigClone();
-            cfgPrev.ColorBackground = xColor.HotPink;
+
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Style, null, cfg, typeof(WidgetCfgAssistant_ClockDigital_Style), cfgPrev));
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.Background, null, cfg, typeof(WidgetCfgAssistant_ClockDigital_BackgroundColor), cfgPrev));
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.LocationType, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_ClockDigital_Start)));
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.TimeType, null, BaseSample.GetConfigClone(), typeof(WidgetCfgAssistant_ClockDigital_WidgetTimeType)));

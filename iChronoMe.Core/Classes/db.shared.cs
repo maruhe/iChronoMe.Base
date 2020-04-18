@@ -56,6 +56,8 @@ namespace iChronoMe.Core.Classes
                     catch { _dbAreaCache.DropTable<AreaInfo>(); _dbAreaCache.CreateTable<AreaInfo>(); }
                     try { _dbAreaCache.CreateTable<TimeZoneInfoCache>(); }
                     catch { _dbAreaCache.DropTable<TimeZoneInfoCache>(); _dbAreaCache.CreateTable<TimeZoneInfoCache>(); }
+                    try { _dbAreaCache.CreateTable<WeatherInfo>(); }
+                    catch { _dbAreaCache.DropTable<WeatherInfo>(); _dbAreaCache.CreateTable<WeatherInfo>(); }
                 }
                 return (_dbAreaCache);
             }
