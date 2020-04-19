@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 
 using iChronoMe.Core.Types;
+using iChronoMe.Core.Types.xUnit;
 
 namespace iChronoMe.Core.Classes
 {
@@ -74,6 +75,28 @@ namespace iChronoMe.Core.Classes
         //public TimeSpan LocationCacheLimit { get; set; } = TimeSpan.FromDays(14);
 
         //public bool LocationCacheLimitWarningDone { get; set; } = false;
+
+        public UnitSystem UnitSystem { get; set; } = UnitSystem.Default;
+        public Distance UnitDistance { get; set; } = Distance.Default;
+        public Temp UnitTemp { get; set; } = Temp.Default;
+        public WindSpeed UnitWindSpeed { get; set; } = WindSpeed.Default;
+        public BarumPressure UnitBarumPressure { get; set; } = BarumPressure.Default;
+        public Precipitation UnitPrecipitation { get; set; } = Precipitation.Default;
+        public CloudHeight UnitCloudHeight { get; set; } = CloudHeight.Default;
+
+        internal string GetUnitHash()
+        {
+            string c = string.Concat(
+                xUnits.GetUnitStringClimacell(UnitSystem),
+                xUnits.GetUnitStringClimacell(UnitDistance),
+                xUnits.GetUnitStringClimacell(UnitTemp),
+                xUnits.GetUnitStringClimacell(UnitWindSpeed),
+                xUnits.GetUnitStringClimacell(UnitBarumPressure),
+                xUnits.GetUnitStringClimacell(UnitPrecipitation),
+                xUnits.GetUnitStringClimacell(UnitCloudHeight)
+                );
+            return sys.CalculateMD5Hash(c);
+        }
 
         [XmlIgnore]
         public int DefaultTimeType_SpinnerPosition

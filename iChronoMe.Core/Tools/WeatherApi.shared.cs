@@ -4,24 +4,38 @@ using System.Globalization;
 using System.Text;
 using iChronoMe.Core.Classes;
 using iChronoMe.Core.DataModels;
+using iChronoMe.Core.Types;
+using iChronoMe.Core.Types.xUnit;
 using Newtonsoft.Json.Linq;
 
 namespace iChronoMe.Core.Tools
 {
     public class WeatherApi
     {
+        static object oLock = new object();
+
         public static bool UpdateWeatherInfo(DateTime gmtNow, double lat, double lng)
         {
-            gmtNow = new DateTime(gmtNow.Year, gmtNow.Month, gmtNow.Day, gmtNow.Hour, gmtNow.Minute / 5 * 5, 0, DateTimeKind.Utc).AddMinutes(5);
+            lock (oLock)
+            {
+                //block multiple Update
+                if (WeatherInfo.GetWeatherInfo(gmtNow, lat, lng) != null)
+                    return true;
 
-            string cFields = "temp:C,feels_like:C,humidity,wind_speed:kph,wind_direction,baro_pressure:hPa,precipitation:mm/hr,precipitation_type,sunrise,sunset,visibility:km,cloud_cover,weather_code,fire_index";
-            string cUrl = string.Concat("https://api.climacell.co/v3/weather/nowcast?apikey=", Secrets.ClimaCellApiKey, "&lat=", lat.ToString("0.######", CultureInfo.InvariantCulture), "&lon=", lng.ToString("0.######", CultureInfo.InvariantCulture), "&start_time=", gmtNow.ToString("yyyy-MM-ddTHH:mm:ssZ"), "&fields=", cFields);
+                //Update Weather Info
+                gmtNow = new DateTime(gmtNow.Year, gmtNow.Month, gmtNow.Day, gmtNow.Hour, gmtNow.Minute / 5 * 5, 0, DateTimeKind.Utc).AddMinutes(5);
 
-            string cWeatherInfo = sys.GetUrlContent(cUrl).Result;
+                string temp = xUnits.GetUnitStringClimacell(Temp.Default);
 
-            var res = WeatherInfoFromGeoJson(cWeatherInfo, gmtNow, lat, lng);
+                string cFields = string.Concat("temp:", temp, ",feels_like:", temp, ",humidity,wind_speed:", xUnits.GetUnitStringClimacell(WindSpeed.Default), ",wind_direction,baro_pressure:", xUnits.GetUnitStringClimacell(BarumPressure.Default), ",precipitation:", xUnits.GetUnitStringClimacell(Precipitation.Default), ",precipitation_type,sunrise,sunset,visibility:", xUnits.GetUnitStringClimacell(Distance.Default), ",cloud_cover,weather_code,fire_index");
+                string cUrl = string.Concat("https://api.climacell.co/v3/weather/nowcast?apikey=", Secrets.ClimaCellApiKey, "&lat=", lat.ToString("0.######", CultureInfo.InvariantCulture), "&lon=", lng.ToString("0.######", CultureInfo.InvariantCulture), "&start_time=", gmtNow.ToString("yyyy-MM-ddTHH:mm:ssZ"), "&fields=", cFields);
 
-            return res != null && res.Count > 0;
+                string cWeatherInfo = sys.GetUrlContent(cUrl).Result;
+
+                var res = WeatherInfoFromGeoJson(cWeatherInfo, gmtNow, lat, lng);
+
+                return res != null && res.Count > 0;
+            }
         }
 
         public static List<WeatherInfo> WeatherInfoFromGeoJson(string cWeatherInfo, DateTime gmtNow, double lat, double lng)
@@ -79,6 +93,7 @@ namespace iChronoMe.Core.Tools
                 }
                 
                 cache?.InsertAll(res);
+                int del = cache.Execute("delete from WeatherInfo where ObservationTime < ?", gmtNow.AddDays(-1));
 
                 return res;
             }

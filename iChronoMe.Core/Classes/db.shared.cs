@@ -17,19 +17,24 @@ namespace iChronoMe.Core.Classes
 {
     public static class db
     {
+        static object oLock = new object();
+
         static mySQLiteConnection _dbConfig;
         public static mySQLiteConnection dbConfig
         {
             get
             {
-                if (_dbConfig == null)
+                lock (oLock)
                 {
-                    _dbConfig = new mySQLiteConnection(Path.Combine(sys.PathDBdata, "config.db"), SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.FullMutex);
-                    var c = _dbConfig.GetTableInfo("SelectPositionResult");
-                    try { _dbConfig.CreateTable<SelectPositionResult>(); }
-                    catch { _dbConfig.DropTable<SelectPositionResult>(); _dbConfig.CreateTable<SelectPositionResult>(); }
-                    try { _dbConfig.CreateTable<Creature>(); }
-                    catch { _dbConfig.DropTable<Creature>(); _dbConfig.CreateTable<Creature>(); }
+                    if (_dbConfig == null)
+                    {
+                        _dbConfig = new mySQLiteConnection(Path.Combine(sys.PathDBdata, "config.db"), SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.FullMutex);
+                        var c = _dbConfig.GetTableInfo("SelectPositionResult");
+                        try { _dbConfig.CreateTable<SelectPositionResult>(); }
+                        catch { _dbConfig.DropTable<SelectPositionResult>(); _dbConfig.CreateTable<SelectPositionResult>(); }
+                        try { _dbConfig.CreateTable<Creature>(); }
+                        catch { _dbConfig.DropTable<Creature>(); _dbConfig.CreateTable<Creature>(); }
+                    }
                 }
                 return (_dbConfig);
             }
@@ -40,26 +45,64 @@ namespace iChronoMe.Core.Classes
         {
             get
             {
-                if (_dbAreaCache == null)
+                lock (oLock)
                 {
-                    string cPath = Path.Combine(sys.PathDBcache, "area_cache.db");
-                    /*if (AppConfigHolder.MainConfig.LocationCacheLimit.TotalHours < 6)
+                    if (_dbAreaCache == null)
                     {
-                        //switch to in-memory db
-                        if (File.Exists(cPath))
-                            try { File.Delete(cPath); } catch  { }
-                        //cPath += "::memory:?cache=shared";
-                        cPath = ":memory:";
-                    }*/
-                    _dbAreaCache = new mySQLiteConnection(cPath, SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.FullMutex);
-                    try { _dbAreaCache.CreateTable<AreaInfo>(); }
-                    catch { _dbAreaCache.DropTable<AreaInfo>(); _dbAreaCache.CreateTable<AreaInfo>(); }
-                    try { _dbAreaCache.CreateTable<TimeZoneInfoCache>(); }
-                    catch { _dbAreaCache.DropTable<TimeZoneInfoCache>(); _dbAreaCache.CreateTable<TimeZoneInfoCache>(); }
-                    try { _dbAreaCache.CreateTable<WeatherInfo>(); }
-                    catch { _dbAreaCache.DropTable<WeatherInfo>(); _dbAreaCache.CreateTable<WeatherInfo>(); }
+                        string cPath = Path.Combine(sys.PathDBcache, "area_cache.db");
+                        /*if (AppConfigHolder.MainConfig.LocationCacheLimit.TotalHours < 6)
+                        {
+                            //switch to in-memory db
+                            if (File.Exists(cPath))
+                                try { File.Delete(cPath); } catch  { }
+                            //cPath += "::memory:?cache=shared";
+                            cPath = ":memory:";
+                        }*/
+                        _dbAreaCache = new mySQLiteConnection(cPath, SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.FullMutex);
+                        try { _dbAreaCache.CreateTable<AreaInfo>(); }
+                        catch { _dbAreaCache.DropTable<AreaInfo>(); _dbAreaCache.CreateTable<AreaInfo>(); }
+                        try { _dbAreaCache.CreateTable<TimeZoneInfoCache>(); }
+                        catch { _dbAreaCache.DropTable<TimeZoneInfoCache>(); _dbAreaCache.CreateTable<TimeZoneInfoCache>(); }
+                        try { _dbAreaCache.CreateTable<WeatherInfo>(); }
+                        catch { _dbAreaCache.DropTable<WeatherInfo>(); _dbAreaCache.CreateTable<WeatherInfo>(); }
+
+                        string cDbUnitHash = Path.Combine(sys.PathDBcache, "units.hash");
+                        try
+                        {
+                            string cCurrUnitHash = AppConfigHolder.MainConfig.GetUnitHash();
+                            if (File.Exists(cDbUnitHash))
+                            {
+                                if (!cCurrUnitHash.Equals(File.ReadAllText(cDbUnitHash)))
+                                    _dbAreaCache.DropCreateTable<WeatherInfo>();
+
+                            }
+                            File.WriteAllText(cDbUnitHash, cCurrUnitHash);
+                        }
+                        catch (Exception ex)
+                        {
+                            try
+                            {
+                                _dbAreaCache.DropCreateTable<WeatherInfo>();
+                                File.Delete(cDbUnitHash);
+                            }
+                            catch { }
+                        }
+                    }
                 }
                 return (_dbAreaCache);
+            }
+        }
+        public static void CloseDbAreaCache()
+        {
+            if (_dbAreaCache == null)
+                return;
+            try
+            {
+                _dbAreaCache.Close();
+            } catch { }
+            finally
+            {
+                _dbAreaCache = null;
             }
         }
 
@@ -68,11 +111,14 @@ namespace iChronoMe.Core.Classes
         {
             get
             {
-                if (_dbCalendarExtention == null)
+                lock (oLock)
                 {
-                    _dbCalendarExtention = new mySQLiteConnection(Path.Combine(sys.PathDBcache, "calendar_extention.db"), SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.FullMutex);
-                    try { _dbCalendarExtention.CreateTable<CalendarEventExtention>(); }
-                    catch { _dbCalendarExtention.DropTable<CalendarEventExtention>(); _dbCalendarExtention.CreateTable<CalendarEventExtention>(); }
+                    if (_dbCalendarExtention == null)
+                    {
+                        _dbCalendarExtention = new mySQLiteConnection(Path.Combine(sys.PathDBcache, "calendar_extention.db"), SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.FullMutex);
+                        try { _dbCalendarExtention.CreateTable<CalendarEventExtention>(); }
+                        catch { _dbCalendarExtention.DropTable<CalendarEventExtention>(); _dbCalendarExtention.CreateTable<CalendarEventExtention>(); }
+                    }
                 }
                 return (_dbCalendarExtention);
             }
@@ -178,6 +224,21 @@ namespace iChronoMe.Core.Classes
 
             return newPoint;
 
+        }
+
+        public bool DropCreateTable<T>()
+        {
+            try
+            {
+                DropTable<T>(); 
+                CreateTable<T>(); 
+                return true;
+            }
+            catch(Exception ex)
+            {
+                xLog.Error(ex);
+                return false;
+            }
         }
 
         protected override SQLiteCommand NewCommand()

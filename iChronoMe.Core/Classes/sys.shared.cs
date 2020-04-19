@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 
 using iChronoMe.Core.Abstractions;
 using iChronoMe.Core.Interfaces;
-
+using iChronoMe.Core.Types;
 using Xamarin.Essentials;
 
 namespace iChronoMe.Core.Classes
@@ -107,6 +107,33 @@ namespace iChronoMe.Core.Classes
             SQLitePCL.Batteries_V2.Init();
 
             PlatformInit();
+        }
+
+        static object oLock = new object();
+        static CultureInfo currentCulture = CultureInfo.CurrentCulture;
+        public static void RefreshCultureInfo(string ciTag)
+        {
+            lock (oLock)
+            {
+                if (!ciTag.Equals(currentCulture.IetfLanguageTag))
+                {
+                    try
+                    {
+                        currentCulture = CultureInfo.GetCultureInfoByIetfLanguageTag(ciTag);
+                        currentCulture.ClearCachedData();
+                        CultureInfo.CurrentCulture = currentCulture;
+                        CultureInfo.CurrentUICulture = currentCulture;
+                        CultureInfo.DefaultThreadCurrentCulture = currentCulture;
+                        CultureInfo.DefaultThreadCurrentUICulture = currentCulture;
+                        xUnits.UpdateDefaultUnitSystem();
+                        db.CloseDbAreaCache();
+                    }
+                    catch (Exception ex)
+                    {
+                        xLog.Error(ex);
+                    }
+                }
+            }
         }
 
         public static int DpPx(double dp)

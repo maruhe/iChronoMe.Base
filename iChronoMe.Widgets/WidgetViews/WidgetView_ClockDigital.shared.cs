@@ -181,8 +181,8 @@ namespace iChronoMe.Widgets
                     }
 
                     textPaint.TextSize = fMainText / 3;
-                    string cWeatherText1 = wi == null ? "" : (int)wi.Temp + "°C";
-                    y = width - iconWidth - textPaint.MeasureText(cWeatherText1) - padding / 2;
+                    string cWeatherText1 = wi == null ? "" : (int)wi.Temp + "°" + xUnits.GetUnitStringClimacell(Core.Types.xUnit.Temp.Default);
+                    y = width - iconWidth - textPaint.MeasureText(cWeatherText1) - padding;
                     canvas.DrawText(cWeatherText1, y, x, textPaint);
 
                     textPaint.TextSize = fMainText / 2;
