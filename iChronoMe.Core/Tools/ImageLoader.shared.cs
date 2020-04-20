@@ -36,7 +36,7 @@ namespace iChronoMe.Core.Classes
 
                 if (string.IsNullOrEmpty(cImgList))
                 {
-                    cImgList = sys.GetUrlContent(Secrets.zAppDataUrl + "filelist.php?filter=" + imageFilter + "&size=" + size).Result;
+                    cImgList = sys.GetUrlContent(Secrets.zAppDataUrl + "filelist.php?filter=" + imageFilter + "&size=" + size, 15).Result;
 
                     if (string.IsNullOrEmpty(cImgList))
                         throw new Exception(localize.ImageLoader_error_list_unloadable);

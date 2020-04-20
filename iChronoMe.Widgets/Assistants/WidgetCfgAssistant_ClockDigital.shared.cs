@@ -20,8 +20,8 @@ namespace iChronoMe.Widgets
         public WidgetCfgAssistant_ClockDigital_Start(WidgetCfgSample<WidgetCfg_ClockDigital> baseSample)
         {
             Title = localize.LocationType;
-
             ShowPreviewImage = false;
+
             var cfg = baseSample == null ? new WidgetCfg_ClockDigital() : baseSample.GetConfigClone();
             cfg.PositionType = WidgetCfgPositionType.LivePosition;
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.CurrentLocation, (WidgetCfg_ClockDigital)cfg.Clone()));
@@ -77,6 +77,10 @@ namespace iChronoMe.Widgets
             cfg = BaseSample.GetConfigClone();
             cfg.ClockStyle = DigitalClockStyle.WeatherTime;
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Sample + " 4", cfg));
+
+            cfg = BaseSample.GetConfigClone();
+            cfg.ClockStyle = DigitalClockStyle.Debug;
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>("debug", cfg));
 
             NextStepAssistantType = null;
         }

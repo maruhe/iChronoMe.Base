@@ -47,6 +47,21 @@ namespace iChronoMe.Widgets
             IsAntialias = true
         };
 
+        public SKPaint errorPaint = new SKPaint
+        {
+            Style = SKPaintStyle.Fill,
+            TextSize = sys.DpPx(24),
+            Color = SKColors.Red,
+            IsAntialias = true
+        };
+        public SKPaint shadowPaint = new SKPaint
+        {
+            Style = SKPaintStyle.Fill,
+            TextSize = sys.DpPx(24),
+            Color = SKColors.Black,
+            IsAntialias = true
+        };
+
         TimeSpan tsMin = TimeSpan.FromHours(1);
         TimeSpan tsMax = TimeSpan.FromTicks(0);
         TimeSpan tsAllSum = TimeSpan.FromTicks(0);
@@ -151,7 +166,7 @@ namespace iChronoMe.Widgets
 
                     float iconWidth = 0;
                     string icon = "42";
-                    if (wi != null)
+                    if (wi != null && wi.IsValid())
                         icon = wi.GetWeatherIcon().ToString("00");
                     try
                     {
@@ -180,15 +195,44 @@ namespace iChronoMe.Widgets
                         xLog.Error(ex);
                     }
 
-                    textPaint.TextSize = fMainText / 3;
-                    string cWeatherText1 = wi == null ? "" : (int)wi.Temp + "°" + xUnits.GetUnitStringClimacell(Core.Types.xUnit.Temp.Default);
-                    y = width - iconWidth - textPaint.MeasureText(cWeatherText1) - padding;
-                    canvas.DrawText(cWeatherText1, y, x, textPaint);
+                    if (wi != null)
+                    {
+                        if (wi.IsValid())
+                        {
+                            textPaint.TextSize = fMainText / 3;
+                            string cWeatherText1 = (int)wi.Temp + "°" + xUnits.GetUnitStringClimacell(Core.Types.xUnit.Temp.Default);
+                            y = width - iconWidth - textPaint.MeasureText(cWeatherText1) - padding;
+                            canvas.DrawText(cWeatherText1, y, x, textPaint);
+                        }
+                        else
+                        {
+                            shadowPaint.TextSize = fMainText / 3;
+                            errorPaint.TextSize = fMainText / 3;
+                            float dp1 = sys.DisplayDensity;
+                            string cWeatherText1 = "temporary";
+                            y = width - iconWidth / 4 - errorPaint.MeasureText(cWeatherText1) - padding;
+                            canvas.DrawText(cWeatherText1, y - dp1, x - errorPaint.TextSize + dp1, shadowPaint);
+                            canvas.DrawText(cWeatherText1, y, x - errorPaint.TextSize, errorPaint);
+                            canvas.DrawText(wi.Error, y - dp1, x - padding + dp1, shadowPaint);
+                            canvas.DrawText(wi.Error, y, x - padding, errorPaint);
+                        }
+                    }
 
                     textPaint.TextSize = fMainText / 2;
                     x += textPaint.TextSize + padding / 2;
                     canvas.DrawText(dateTime.ToString("ddd") + ". " + dateTime.ToShortDateString() + ", " + cfg.WidgetTitle, 0, x, textPaint);
+                    break;
 
+                case DigitalClockStyle.Debug:
+                    canvas.DrawColor(SKColors.Aqua);
+                    textPaint.Color = SKColors.IndianRed;
+                    textPaint.TextSize = sys.DpPx(24);
+                    x += textPaint.TextSize * .8f;
+                    canvas.DrawText(string.Concat("FullSize: ", width + padding * 2, "x", height + padding * 2), 0, x, textPaint);
+                    x += textPaint.TextSize * .8f;
+                    canvas.DrawText(string.Concat("Padding: ", padding), 0, x, textPaint);
+                    x += textPaint.TextSize * .8f;
+                    canvas.DrawText(string.Concat("Inner Size: ", width , "x", height), 0, x, textPaint);
                     break;
 
                 default:

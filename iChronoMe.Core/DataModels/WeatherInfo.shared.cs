@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using iChronoMe.Core.Classes;
 using SQLite;
 
 namespace iChronoMe.Core.DataModels
 {
+    [DebuggerDisplay("{xString}")]
     public class WeatherInfo
     {
         public static WeatherInfo GetWeatherInfo(DateTime gmtNow, double Latitude, double Longitude)
@@ -14,13 +16,10 @@ namespace iChronoMe.Core.DataModels
 
             try
             {
-                var cache = db.dbAreaCache.Query<WeatherInfo>("select * from WeatherInfo where boxWest <= ? and boxNorth >= ? and boxEast >= ? and boxSouth <= ? and ObservationTime > ?", Longitude, Latitude, Longitude, Latitude, gmtNow);
+                var cache = db.dbAreaCache.Query<WeatherInfo>("select * from WeatherInfo where ((boxWest <= ? and boxNorth >= ? and boxEast >= ? and boxSouth <= ?) or (boxWest == 0 and boxNorth == 0)) and ObservationTime > ? limit 1", Longitude, Latitude, Longitude, Latitude, gmtNow.AddMinutes(-20));
                 cache.ToString();
                 if (cache.Count > 0)
                 {
-                    //xLog.Debug("AreaCacheCheck Volltreffer");
-                    if (cache.Count > 1)
-                        cache.ToString();
                     var ret = cache[0];
                     return ret;
                 }
@@ -40,6 +39,37 @@ namespace iChronoMe.Core.DataModels
             return null;
         }
 
+        public WeatherInfo() { } //just for sql
+
+        public WeatherInfo(double lat, double lng, DateTime observationTime)
+        {
+            ObservationTime = observationTime;
+
+            if (lat == 0 && lng == 0)
+            {
+                boxNorth = 0;
+                boxEast = 0;
+                boxSouth = 0;
+                boxWest = 0;
+            }
+            else
+            {
+                int radius = 3000;
+                System.Drawing.PointF center = new System.Drawing.PointF((float)lat, (float)lng);
+                double mult = 1.1; // mult = 1.1; is more reliable
+                System.Drawing.PointF pn, pe, ps, pw;
+                pn = pe = ps = pw = new System.Drawing.PointF();
+                pn = mySQLiteConnection.calculateDerivedPosition(center, mult * radius, 0);
+                pe = mySQLiteConnection.calculateDerivedPosition(center, mult * radius, 90);
+                ps = mySQLiteConnection.calculateDerivedPosition(center, mult * radius, 180);
+                pw = mySQLiteConnection.calculateDerivedPosition(center, mult * radius, 270);
+
+                boxNorth = pn.X;
+                boxEast = pe.Y;
+                boxSouth = ps.X;
+                boxWest = pw.Y;
+            }
+        }
 
         [PrimaryKey, AutoIncrement]
         [Indexed] public long RecNo { get; set; }
@@ -62,7 +92,10 @@ namespace iChronoMe.Core.DataModels
         public double Visibility { get; set; }
         public double CloudCover { get; set; }
         public string WeatherCode { get; set; }
-        public int FireIndex { get; set; }
+        public string Error { get; set; }
+
+        public bool IsValid()
+            => string.IsNullOrEmpty(Error);
 
         public int GetWeatherIcon()
         {
@@ -133,5 +166,13 @@ namespace iChronoMe.Core.DataModels
                 return _dummy;
             }
         }
+
+        public override string ToString()
+        {
+            return ObservationTime.ToShortDateString() + " " + ObservationTime.ToLongTimeString() + " " + (WeatherCode ?? Error);
+        }
+
+        [Ignore]
+        public string xString { get => ToString(); }
     }
 }

@@ -13,6 +13,9 @@ namespace iChronoMe.Core.Tools
     public class WeatherApi
     {
         static object oLock = new object();
+        static int requestCount = 0;
+        static DateTime limitReset = DateTime.Now.AddDays(1);
+        const string climacellUrl = "https://api.climacell.co/v3/weather/forecast/hourly";
 
         public static bool UpdateWeatherInfo(DateTime gmtNow, double lat, double lng)
         {
@@ -22,15 +25,58 @@ namespace iChronoMe.Core.Tools
                 if (WeatherInfo.GetWeatherInfo(gmtNow, lat, lng) != null)
                     return true;
 
+                if (requestCount > 30)
+                {
+                    if (limitReset < DateTime.Now)
+                    {
+                        requestCount = 0;
+                        limitReset = DateTime.Now.AddDays(1);
+                    }
+                    else
+                    {
+                        db.dbAreaCache?.Insert(new WeatherInfo(0, 0, limitReset.ToUniversalTime()) { Error = "api limit" });
+                        return false;
+                    }
+                }
+
                 //Update Weather Info
-                gmtNow = new DateTime(gmtNow.Year, gmtNow.Month, gmtNow.Day, gmtNow.Hour, gmtNow.Minute / 5 * 5, 0, DateTimeKind.Utc).AddMinutes(5);
+                requestCount++;
+                gmtNow = new DateTime(gmtNow.Year, gmtNow.Month, gmtNow.Day-1, gmtNow.Hour, gmtNow.Minute / 5 * 5, 0, DateTimeKind.Utc).AddMinutes(5);
 
                 string temp = xUnits.GetUnitStringClimacell(Temp.Default);
 
-                string cFields = string.Concat("temp:", temp, ",feels_like:", temp, ",humidity,wind_speed:", xUnits.GetUnitStringClimacell(WindSpeed.Default), ",wind_direction,baro_pressure:", xUnits.GetUnitStringClimacell(BarumPressure.Default), ",precipitation:", xUnits.GetUnitStringClimacell(Precipitation.Default), ",precipitation_type,sunrise,sunset,visibility:", xUnits.GetUnitStringClimacell(Distance.Default), ",cloud_cover,weather_code,fire_index");
-                string cUrl = string.Concat("https://api.climacell.co/v3/weather/nowcast?apikey=", Secrets.ClimaCellApiKey, "&lat=", lat.ToString("0.######", CultureInfo.InvariantCulture), "&lon=", lng.ToString("0.######", CultureInfo.InvariantCulture), "&start_time=", gmtNow.ToString("yyyy-MM-ddTHH:mm:ssZ"), "&fields=", cFields);
+                string cFields = string.Concat("temp:", temp, ",feels_like:", temp, ",humidity,wind_speed:", xUnits.GetUnitStringClimacell(WindSpeed.Default), ",wind_direction,baro_pressure:", xUnits.GetUnitStringClimacell(BarumPressure.Default), ",precipitation:", xUnits.GetUnitStringClimacell(Precipitation.Default), ",precipitation_type,precipitation_probability,sunrise,sunset,visibility:", xUnits.GetUnitStringClimacell(Distance.Default), ",cloud_cover,weather_code");
+                string cUrl = string.Concat(climacellUrl, "?apikey=", Secrets.ClimaCellApiKey, "&lat=", lat.ToString("0.######", CultureInfo.InvariantCulture), "&lon=", lng.ToString("0.######", CultureInfo.InvariantCulture), "&end_time=", DateTime.UtcNow.AddHours(3).ToString("yyyy-MM-ddTHH:mm:ssZ"), "&fields=", cFields);
 
                 string cWeatherInfo = sys.GetUrlContent(cUrl).Result;
+
+                if (!string.IsNullOrEmpty(cWeatherInfo) && cWeatherInfo.StartsWith("{"))
+                {
+                    try
+                    {
+                        var error = JObject.Parse(cWeatherInfo);
+                        string statusCode = error["statusCode"]?.ToString() ?? "x";
+                        string errorCode = error["errorCode"]?.ToString() ?? "x";
+                        string message = error["message"]?.ToString() ?? "x";
+
+                        requestCount = 10000;
+                        limitReset = DateTime.Now.AddMinutes(30);
+                        if (message.ToLower().Contains("api") && message.ToLower().Contains("limit"))
+                        {
+                            //change weather server
+                            db.dbAreaCache?.Insert(new WeatherInfo(0, 0, limitReset.ToUniversalTime()) { Error = "api limit" });
+                            return false;
+                        }
+                        else if (sys.Debugmode)
+                        {
+                            sys.LogException(new Exception("climacell-error\n" + statusCode + "\n" + errorCode + "\n" + message));
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        xLog.Error(ex, cWeatherInfo);
+                    }
+                }
 
                 var res = WeatherInfoFromGeoJson(cWeatherInfo, gmtNow, lat, lng);
 
@@ -53,27 +99,7 @@ namespace iChronoMe.Core.Tools
 
                 foreach (JObject wInfo in jlist)
                 {
-                    var wi = new WeatherInfo();
-
-                    double nLat = (double)wInfo["lat"];
-                    double nLng = (double)wInfo["lon"];
-
-                    int radius = 3000;
-                    System.Drawing.PointF center = new System.Drawing.PointF((float)nLat, (float)nLng);
-                    double mult = 1.1; // mult = 1.1; is more reliable
-                    System.Drawing.PointF pn, pe, ps, pw;
-                    pn = pe = ps = pw = new System.Drawing.PointF();
-                    pn = mySQLiteConnection.calculateDerivedPosition(center, mult * radius, 0);
-                    pe = mySQLiteConnection.calculateDerivedPosition(center, mult * radius, 90);
-                    ps = mySQLiteConnection.calculateDerivedPosition(center, mult * radius, 180);
-                    pw = mySQLiteConnection.calculateDerivedPosition(center, mult * radius, 270);
-
-                    wi.boxNorth = pn.X;
-                    wi.boxEast = pe.Y;
-                    wi.boxSouth = ps.X;
-                    wi.boxWest = pw.Y;
-
-                    wi.ObservationTime = (DateTime)wInfo["observation_time"]["value"];
+                    var wi = new WeatherInfo((double)wInfo["lat"], (double)wInfo["lon"], (DateTime)wInfo["observation_time"]["value"]);
 
                     try { wi.WeatherCode = (string)wInfo["weather_code"]["value"]; } catch { }
                     try { wi.Temp = (double)wInfo["temp"]["value"]; } catch { }

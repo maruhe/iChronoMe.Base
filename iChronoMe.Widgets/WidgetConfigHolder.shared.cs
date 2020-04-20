@@ -715,6 +715,7 @@ namespace iChronoMe.Widgets
     public enum DigitalClockStyle
     {
         Default,
+        Debug,
         Detailed,
         JustTime,
         WeatherTime
