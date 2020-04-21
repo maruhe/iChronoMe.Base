@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -16,6 +17,8 @@ namespace iChronoMe.Core.Classes
                                        "2.pool.ntp.org",
                                        "3.pool.ntp.org"};
 
+        static string offsetFile { get; } = Path.Combine(sys.PathCache, "ntp.offset");
+
         public enum TimeHolderState
         {
             Init,
@@ -28,6 +31,8 @@ namespace iChronoMe.Core.Classes
         static TimeHolder()
         {
             State = TimeHolderState.Init;
+            if (File.Exists(offsetFile))
+                try { mLastNtpDiff = TimeSpan.FromTicks(long.Parse(File.ReadAllText(offsetFile))); } catch { };
             NewServer();
             Resync();
         }
@@ -46,25 +51,30 @@ namespace iChronoMe.Core.Classes
         public static TimeSpan mLastNtpDiff { get; private set; }
         public static DateTime GMTTime { get => DateTime.UtcNow - mLastNtpDiff; }
 
-        public static void Resync()
+        public static void Resync(bool force = false)
         {
 
-            /* */
+            /* * /
             //   NTP DISABLED !!!
             mLastNtpDiff = TimeSpan.FromTicks(0);
             State = TimeHolderState.Synchron;
             mLastNtp = DateTime.Now;
             return;
             /* */
+
+            if (!force && mLastNtp.AddHours(6) > DateTime.Now)
+                return;
+            mLastNtp = DateTime.Now;
             State = TimeHolderState.Init;
 
             iErrorCount = 0;
-
+            
             new Thread(() =>
             {
                 requestStart = DateTime.Now;
                 try
                 {
+                    Thread.Sleep(500);
                     var ping = new Ping();
                     var res = ping.Send(NtpServer, 1500);
                     if (res.Status != IPStatus.Success)
@@ -73,17 +83,16 @@ namespace iChronoMe.Core.Classes
                     var offset = GetNetworkTimeOffset();
                     if (offset != null)
                     {
-                        if (true || offset.Value.ToPositive() < TimeSpan.FromMinutes(15))
-                            mLastNtpDiff = offset.Value;
-                        else
-                            mLastNtpDiff = TimeSpan.FromTicks(0);
+                        mLastNtpDiff = offset.Value;
                         mLastNtp = DateTime.Now;
                         State = TimeHolderState.Synchron;
                         iErrorCount = 0;
+                        try { File.WriteAllText(offsetFile, mLastNtpDiff.Ticks.ToString()); } catch { };
                     }
                 }
                 catch (Exception ex)
                 {
+                    mLastNtp = DateTime.MinValue;
                     State = TimeHolderState.Error;
                     ErrorText = ex.Message;
                     NewServer();
@@ -99,11 +108,59 @@ namespace iChronoMe.Core.Classes
             }).Start();
         }
 
+        public static void Reset(bool saveToFile = false)
+        {
+            mLastNtpDiff = TimeSpan.FromTicks(0);
+            mLastNtp = DateTime.MinValue;
+            iErrorCount = 0;
+            State = TimeHolderState.Error;
+            if (saveToFile)
+                try { File.WriteAllText(offsetFile, mLastNtpDiff.Ticks.ToString()); } catch { };
+        }
+
+
         static DateTime requestStart;
         static int iErrorCount;
 
         //https://stackoverflow.com/questions/1193955/how-to-query-an-ntp-server-using-c
         public static TimeSpan? GetNetworkTimeOffset()
+        {
+            try
+            {
+                var ntpData = new byte[48];
+                ntpData[0] = 0x1B; //LeapIndicator = 0 (no warning), VersionNum = 3 (IPv4 only), Mode = 3 (Client Mode)
+
+                var addresses = Dns.GetHostEntry(NtpServer).AddressList;
+                var ipEndPoint = new IPEndPoint(addresses[0], 123);
+                var swStart = DateTime.Now;
+                var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
+                socket.ReceiveTimeout = 5000;
+                socket.Connect(ipEndPoint);
+                socket.Send(ntpData);
+                socket.Receive(ntpData);
+                socket.Close();
+
+                TimeSpan tsResponse = DateTime.Now - swStart;
+                var tReceivedUtc = DateTime.Now.ToUniversalTime();
+
+                ulong intPart = (ulong)ntpData[40] << 24 | (ulong)ntpData[41] << 16 | (ulong)ntpData[42] << 8 | (ulong)ntpData[43];
+                ulong fractPart = (ulong)ntpData[44] << 24 | (ulong)ntpData[45] << 16 | (ulong)ntpData[46] << 8 | (ulong)ntpData[47];
+
+                var milliseconds = (intPart * 1000) + ((fractPart * 1000) / 0x100000000L);
+                var networkDateTime = (new DateTime(1900, 1, 1, 0, 0, 0, DateTimeKind.Utc)).AddMilliseconds((long)milliseconds);
+
+                return tReceivedUtc - networkDateTime;
+            }
+            catch (Exception ex)
+            {
+                State = TimeHolderState.Error;
+                ErrorText = ex.Message;
+                return null;
+            }
+        }
+
+        static TimeSpan? xx1GetNetworkTimeOffset()
         {
             try
             {
@@ -153,7 +210,7 @@ namespace iChronoMe.Core.Classes
                 //this should be the half of the response-time
                 ulong fractMS = (fractPart * 1000) / 0x100000000L;
                 //so thist should be the "absolute" GMT-Time at the Moment of Data is received
-                var milliseconds = intMs + fractMS;
+                var milliseconds = intMs;// + fractMS;
                 //but somehow it is not, so we use the halt of the request-response-time we measured
                 milliseconds = intMs + (uint)(tsResponse.TotalMilliseconds / 2);
                 var testDiff = fractMS - (uint)(tsResponse.TotalMilliseconds / 2);
