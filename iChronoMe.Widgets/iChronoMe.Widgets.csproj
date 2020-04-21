@@ -172,11 +172,6 @@
 	<PackageReference Include="Xamarin.Android.Support.v7.AppCompat">
 		<Version>28.0.0.3</Version>
 	</PackageReference>		  
-    <ProjectReference Include="D:\Projects\Repos\xamsvg\XamSvg.csproj">
-      <Project>{B70EDB4C-A85E-45BE-A180-5B0462020C6F}</Project>
-      <Name>XamSvg</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <PackageReference Condition=" '$(OS)' == 'Windows_NT' And $(TargetFrameworkVersion.TrimStart('vV')) &lt; 9.0" Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.3" />
     <PackageReference Condition=" '$(OS)' != 'Windows_NT' " Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.3" />
   </ItemGroup>

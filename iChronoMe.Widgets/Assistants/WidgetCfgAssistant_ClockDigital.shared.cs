@@ -78,9 +78,11 @@ namespace iChronoMe.Widgets
             cfg.ClockStyle = DigitalClockStyle.WeatherTime;
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Sample + " 4", cfg));
 
+#if DEBUG
             cfg = BaseSample.GetConfigClone();
             cfg.ClockStyle = DigitalClockStyle.Debug;
             Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>("debug", cfg));
+#endif
 
             NextStepAssistantType = null;
         }
