@@ -51,6 +51,13 @@ namespace iChronoMe.Core.Classes
 
                     _allCredits.Add(new ContributorInfo
                     {
+                        Name = "ClimaCell",
+                        Description = "ClimaCell weather API",
+                        WebLink = "https://www.climacell.co/weather-api/"
+                    }); 
+
+                    _allCredits.Add(new ContributorInfo
+                    {
                         Name = "syncfusion",
                         Description = "our nice calendar-view",
                         WebLink = "https://www.syncfusion.com/"

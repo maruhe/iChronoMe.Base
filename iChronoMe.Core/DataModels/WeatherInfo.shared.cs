@@ -139,7 +139,7 @@ namespace iChronoMe.Core.DataModels
                     case "mostly_clear":
                         return day ? 6 : 7;
                     case "clear":
-                        return day ? 2 : 1;
+                        return day ? 2 : 15;
                     default:
                         return 42;
                 }
