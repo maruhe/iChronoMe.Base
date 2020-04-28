@@ -35,12 +35,23 @@ namespace iChronoMe.Core.ViewModels
             }
         }
 
-        public bool AlwaysShowForegroundNotification
+        public bool AlwaysShowTimeNotification
         {
-            get => main.AlwaysShowForegroundNotification;
+            get => main.AlwaysShowTimeNotification;
             set
             {
-                main.AlwaysShowForegroundNotification = value;
+                main.AlwaysShowTimeNotification = value;
+                saveMain();
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ShowBigTimeNotification
+        {
+            get => main.ShowBigTimeNotification;
+            set
+            {
+                main.ShowBigTimeNotification = value;
                 saveMain();
                 OnPropertyChanged();
             }

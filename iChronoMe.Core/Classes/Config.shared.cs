@@ -65,7 +65,8 @@ namespace iChronoMe.Core.Classes
         public int InitScreenUserLocation { get; set; } = sys.Debugmode ? xxDebugDone : 0;
         public int InitBaseDataDownload { get; set; } = 0;
 
-        public bool AlwaysShowForegroundNotification { get; set; } = false;
+        public bool AlwaysShowTimeNotification { get; set; } = false;
+        public bool ShowBigTimeNotification { get; set; } = false;
         public bool SendErrorLogs { get; set; } = false;
         public bool DenyErrorScreens { get; set; } = false;
         //public DateTime LastCheckClockFaces { get; set; } = DateTime.MinValue;
@@ -122,7 +123,7 @@ namespace iChronoMe.Core.Classes
             }
         }
 
-        public bool MainNavigationPiddend { get; set; } = false;
+        public bool MainNavigationPiddend { get; set; } = false;        
     }
 
     public partial class CalendarViewConfig
