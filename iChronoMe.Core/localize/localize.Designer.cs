@@ -2443,11 +2443,29 @@ namespace iChronoMe {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die big ähnelt.
+        /// </summary>
+        public static string text_Big {
+            get {
+                return ResourceManager.GetString("text_Big", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Icon ähnelt.
         /// </summary>
         public static string text_Icon {
             get {
                 return ResourceManager.GetString("text_Icon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die initialising... ähnelt.
+        /// </summary>
+        public static string text_initialising {
+            get {
+                return ResourceManager.GetString("text_initialising", resourceCulture);
             }
         }
         

@@ -31,21 +31,11 @@ namespace iChronoMe.Core.Classes
                 handler?.StartProgress(localize.ImageLoader_progress_title);
                 string cImgList = string.Empty;
 
-                if (!bOnlyOnePerGroup && File.Exists(cIndexPath) && File.GetLastWriteTime(cIndexPath).AddDays(3) > DateTime.Now)
+                if (File.Exists(cIndexPath) && File.GetLastWriteTime(cIndexPath).AddDays(3) > DateTime.Now)
                     cImgList = File.ReadAllText(cIndexPath);
 
                 if (string.IsNullOrEmpty(cImgList))
-                {
-                    cImgList = sys.GetUrlContent(Secrets.zAppDataUrl + "filelist.php?filter=" + imageFilter + "&size=" + size, 15).Result;
-
-                    if (string.IsNullOrEmpty(cImgList))
-                        throw new Exception(localize.ImageLoader_error_list_unloadable);
-
-                    cImgList = cImgList.Trim().Replace("<br>", "").Replace("<BR>", "");
-
-                    if (!cImgList.StartsWith("group:") && !cImgList.StartsWith("path:"))
-                        throw new Exception(localize.ImageLoader_error_list_broken);
-                }
+                    cImgList = LoadListFromServer(imageFilter, size);
 
                 File.WriteAllText(cIndexPath, cImgList);
 
@@ -150,10 +140,17 @@ namespace iChronoMe.Core.Classes
                             exLoad.ToString();
                         }
                     }
+
+                    try
+                    {
+                        //Load index again cause new preview files could have been created on server through download
+                        File.Delete(cIndexPath);
+                        cImgList = LoadListFromServer(imageFilter, size);
+                        if (!string.IsNullOrEmpty(cImgList))
+                            File.WriteAllText(cIndexPath, cImgList);
+                    } catch { }
                 }
 
-                if (iSuccess == cLoadImgS.Count && !bOnlyOnePerGroup && string.IsNullOrEmpty(cGroupFilter) && File.Exists(cIndexPath))
-                    File.Delete(cIndexPath);
                 handler?.SetProgressDone();
                 imageLoadet?.Invoke(new ImageLoadetEventArgs(null, 0));
             }
@@ -168,6 +165,24 @@ namespace iChronoMe.Core.Classes
             }
 
             return true;
+        }
+
+        private static string LoadListFromServer(string imageFilter, int size)
+        {
+            string cImgList = sys.GetUrlContent(Secrets.zAppDataUrl + "filelist.php?filter=" + imageFilter + "&size=" + size).Result;
+
+            if (string.IsNullOrEmpty(cImgList))
+                cImgList = sys.GetUrlContent(Secrets.zAppDataUrl + "filelist.php?filter=" + imageFilter + "&size=" + size).Result;
+
+            if (string.IsNullOrEmpty(cImgList))
+                throw new Exception(localize.ImageLoader_error_list_unloadable);
+
+            cImgList = cImgList.Trim().Replace("<br>", "").Replace("<BR>", "");
+
+            if (!cImgList.StartsWith("group:") && !cImgList.StartsWith("path:"))
+                throw new Exception(localize.ImageLoader_error_list_broken);
+
+            return cImgList;
         }
 
         public static void ClearCache(string filter)

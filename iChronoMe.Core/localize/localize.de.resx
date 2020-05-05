@@ -906,6 +906,9 @@ am Startbildschirm deines Geräts kannst du neue Widgets erstellen!</value>
   <data name="text_Icon" xml:space="preserve">
     <value>Symbol</value>
   </data>
+  <data name="text_initialising" xml:space="preserve">
+    <value>initialisiere...</value>
+  </data>
   <data name="text_Offset" xml:space="preserve">
     <value>Abweichung</value>
   </data>

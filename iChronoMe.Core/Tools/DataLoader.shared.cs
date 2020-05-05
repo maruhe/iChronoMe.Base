@@ -17,7 +17,10 @@ namespace iChronoMe.Core.Classes
             try
             {
                 handler.StartProgress(title);
-                string cDataList = sys.GetUrlContent(Secrets.zAppDataUrl + "filelist.php?filter=" + dataFilter, 15).Result;
+                string cDataList = sys.GetUrlContent(Secrets.zAppDataUrl + "filelist.php?filter=" + dataFilter).Result;
+
+                if (string.IsNullOrEmpty(cDataList))
+                    cDataList = sys.GetUrlContent(Secrets.zAppDataUrl + "filelist.php?filter=" + dataFilter).Result;
 
                 if (string.IsNullOrEmpty(cDataList))
                     throw new Exception(localize.DataLoader_error_list_unloadable);

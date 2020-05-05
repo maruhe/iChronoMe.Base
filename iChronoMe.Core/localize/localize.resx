@@ -915,8 +915,14 @@ you can create new widgets on your launcher-screen!</value>
   <data name="stop_alarm" xml:space="preserve">
     <value>thanks</value>
   </data>
+  <data name="text_Big" xml:space="preserve">
+    <value>big</value>
+  </data>
   <data name="text_Icon" xml:space="preserve">
     <value>Icon</value>
+  </data>
+  <data name="text_initialising" xml:space="preserve">
+    <value>initialising...</value>
   </data>
   <data name="text_Offset" xml:space="preserve">
     <value>Offset</value>
