@@ -39,48 +39,57 @@ namespace iChronoMe.Core.Tools
                     }
                 }
 
-                //Update Weather Info
-                requestCount++;
-                gmtNow = new DateTime(gmtNow.Year, gmtNow.Month, gmtNow.Day-1, gmtNow.Hour, gmtNow.Minute / 5 * 5, 0, DateTimeKind.Utc).AddMinutes(5);
+                //Update Weather Info                
+                //gmtNow = new DateTime(gmtNow.Year, gmtNow.Month, gmtNow.Day - 1, gmtNow.Hour, gmtNow.Minute / 5 * 5, 0, DateTimeKind.Utc).AddMinutes(5);
+
+                if (gmtNow.AddMinutes(1) < TimeHolder.GMTTime)
+                    gmtNow = TimeHolder.GMTTime;
 
                 string temp = xUnits.GetUnitStringClimacell(Temp.Default);
 
                 string cFields = string.Concat("temp:", temp, ",feels_like:", temp, ",humidity,wind_speed:", xUnits.GetUnitStringClimacell(WindSpeed.Default), ",wind_direction,baro_pressure:", xUnits.GetUnitStringClimacell(BarumPressure.Default), ",precipitation:", xUnits.GetUnitStringClimacell(Precipitation.Default), ",precipitation_type,precipitation_probability,sunrise,sunset,visibility:", xUnits.GetUnitStringClimacell(Distance.Default), ",cloud_cover,weather_code");
-                string cUrl = string.Concat(climacellUrl, "?apikey=", Secrets.ClimaCellApiKey, "&lat=", lat.ToString("0.######", CultureInfo.InvariantCulture), "&lon=", lng.ToString("0.######", CultureInfo.InvariantCulture), "&end_time=", DateTime.UtcNow.AddHours(3).ToString("yyyy-MM-ddTHH:mm:ssZ"), "&fields=", cFields);
+                string cUrl = string.Concat(climacellUrl, "?apikey=", Secrets.ClimaCellApiKey, "&lat=", lat.ToString("0.######", CultureInfo.InvariantCulture), "&lon=", lng.ToString("0.######", CultureInfo.InvariantCulture), "&end_time=", gmtNow.AddHours(3).ToString("yyyy-MM-ddTHH:mm:ssZ"), "&fields=", cFields);
+                if (gmtNow > TimeHolder.GMTTime)
+                    cUrl += "&start_time=" + gmtNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
 
                 string cWeatherInfo = sys.GetUrlContent(cUrl).Result;
 
-                if (!string.IsNullOrEmpty(cWeatherInfo) && cWeatherInfo.StartsWith("{"))
+                if (!string.IsNullOrEmpty(cWeatherInfo))
                 {
-                    try
-                    {
-                        var error = JObject.Parse(cWeatherInfo);
-                        string statusCode = error["statusCode"]?.ToString() ?? "x";
-                        string errorCode = error["errorCode"]?.ToString() ?? "x";
-                        string message = error["message"]?.ToString() ?? "x";
+                    requestCount++;
 
-                        requestCount = 10000;
-                        limitReset = DateTime.Now.AddMinutes(30);
-                        if (message.ToLower().Contains("api") && message.ToLower().Contains("limit"))
-                        {
-                            //change weather server
-                            db.dbAreaCache?.Insert(new WeatherInfo(0, 0, limitReset.ToUniversalTime()) { Error = "api limit" });
-                            return false;
-                        }
-                        else if (sys.Debugmode)
-                        {
-                            sys.LogException(new Exception("climacell-error\n" + statusCode + "\n" + errorCode + "\n" + message));
-                        }
-                    }
-                    catch (Exception ex)
+                    if (cWeatherInfo.StartsWith("{"))
                     {
-                        xLog.Error(ex, cWeatherInfo);
+                        try
+                        {
+                            var error = JObject.Parse(cWeatherInfo);
+                            string statusCode = error["statusCode"]?.ToString() ?? "x";
+                            string errorCode = error["errorCode"]?.ToString() ?? "x";
+                            string message = error["message"]?.ToString() ?? "x";
+
+                            requestCount = 10000;
+                            limitReset = DateTime.Now.AddMinutes(30);
+                            if (message.ToLower().Contains("api") && message.ToLower().Contains("limit"))
+                            {
+                                //change weather server
+                                db.dbAreaCache?.Insert(new WeatherInfo(0, 0, limitReset.ToUniversalTime()) { Error = "api limit" });
+                                return false;
+                            }
+                            else if (sys.Debugmode)
+                            {
+                                sys.LogException(new Exception("climacell-error\n" + statusCode + "\n" + errorCode + "\n" + message));
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            xLog.Error(ex, cWeatherInfo);
+                        }
                     }
+                    var res = WeatherInfoFromGeoJson(cWeatherInfo, gmtNow, lat, lng);
+
+                    return res != null && res.Count > 0;
                 }
-
-                var res = WeatherInfoFromGeoJson(cWeatherInfo, gmtNow, lat, lng);
-
-                return res != null && res.Count > 0;
+                return false;
             }
         }
 

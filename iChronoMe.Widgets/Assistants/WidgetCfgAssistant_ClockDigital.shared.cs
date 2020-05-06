@@ -64,19 +64,19 @@ namespace iChronoMe.Widgets
 
             var cfg = BaseSample.GetConfigClone();
             cfg.ClockStyle = DigitalClockStyle.Default;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Sample + " 1", cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(" ", cfg));
 
             cfg = BaseSample.GetConfigClone();
             cfg.ClockStyle = DigitalClockStyle.Detailed;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Sample + " 2", cfg));
+            //Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(" ", cfg));
 
             cfg = BaseSample.GetConfigClone();
             cfg.ClockStyle = DigitalClockStyle.JustTime;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Sample + " 3", cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(" ", cfg));
 
             cfg = BaseSample.GetConfigClone();
             cfg.ClockStyle = DigitalClockStyle.WeatherTime;
-            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(localize.text_Sample + " 4", cfg));
+            Samples.Add(new WidgetCfgSample<WidgetCfg_ClockDigital>(" ", cfg));
 
 #if DEBUG
             cfg = BaseSample.GetConfigClone();

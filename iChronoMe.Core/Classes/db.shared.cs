@@ -32,8 +32,8 @@ namespace iChronoMe.Core.Classes
                         var c = _dbConfig.GetTableInfo("SelectPositionResult");
                         try { _dbConfig.CreateTable<SelectPositionResult>(); }
                         catch { _dbConfig.DropTable<SelectPositionResult>(); _dbConfig.CreateTable<SelectPositionResult>(); }
-                        try { _dbConfig.CreateTable<Creature>(); }
-                        catch { _dbConfig.DropTable<Creature>(); _dbConfig.CreateTable<Creature>(); }
+                        try { _dbConfig.CreateTable<ChronoSpan>(); }
+                        catch { _dbConfig.DropTable<ChronoSpan>(); _dbConfig.CreateTable<ChronoSpan>(); }
                     }
                 }
                 return (_dbConfig);
